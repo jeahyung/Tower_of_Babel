@@ -9,7 +9,7 @@ public class RotateClock : MonoBehaviour
     private int i = 0;
     private int sideCnt;
     private int clockDegree;
-
+    private float firstAngle = 18f;
     private float targetRotation = 0f;
     [SerializeField] private bool mover = true;
   
@@ -17,7 +17,8 @@ public class RotateClock : MonoBehaviour
     {
         mover = true;
         sideCnt = 5;
-        clockDegree = 180 / 5;
+        clockDegree = 180 / sideCnt;
+      
     }
 
     
@@ -27,13 +28,13 @@ public class RotateClock : MonoBehaviour
     {
         if (mover)
         {
-            targetRotation = clockDegree * i;
+            targetRotation = firstAngle + (clockDegree * i);
             i++;
             StartCoroutine(RotateXAxis());
         }
         else
         {
-            targetRotation = clockDegree * i;
+            targetRotation = firstAngle + (clockDegree * i);
             i--;
             StartCoroutine(ReRotateXAxis());
         }
@@ -53,7 +54,7 @@ public class RotateClock : MonoBehaviour
     private IEnumerator RotateXAxis()
     {
    
-        if (i == 5)
+        if (i == 4)
         {
             mover = false;
         }
