@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wordId: 1
   wordImg: {fileID: 21300000, guid: 897c3a3f5c4038345a7143573bbb4a40, type: 3}
+  wordMean: two

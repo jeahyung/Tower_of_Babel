@@ -7,17 +7,20 @@ public class BookData
 {
     public List<WordData> words;
     public List<string> memos;
+    public List<bool> meanings;
     
     public BookData()
     {
         words = new List<WordData>();
         memos = new List<string>();
+        meanings = new List<bool>();
     }
 
-    public void AddBookData(WordData word, string memo)
+    public void AddBookData(WordData word, string memo, bool meaning)
     {
         words.Add(word);
         memos.Add(memo);
+        meanings.Add(meaning);
     }
 }
 
@@ -50,7 +53,7 @@ public class SaveAndLoad : MonoBehaviour
         BookData bookData = new BookData();
         foreach(var book in books)
         {
-            bookData.AddBookData(book.WordData, book.memo);
+            bookData.AddBookData(book.WordData, book.Memo, book.Meaning);
         }
         string jsonSave = JsonUtility.ToJson(bookData, true);
         Debug.Log(jsonSave);

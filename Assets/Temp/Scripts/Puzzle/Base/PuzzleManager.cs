@@ -8,7 +8,7 @@ public abstract class PuzzleManager : MonoBehaviour
 
     protected GameObject player;
     protected UIManager manager_UI;
-    protected Book manager_Book;
+    //protected Book manager_Book;
     protected bool isSolvingPuzzle = false;
     protected bool solvedPuzzle = false;
     public bool SolvedPuzzle => solvedPuzzle;//∆€¡Ò «ÿ∞·
@@ -19,7 +19,7 @@ public abstract class PuzzleManager : MonoBehaviour
     protected virtual void Awake()
     {
         manager_UI = GameObject.Find("Canvas").GetComponent<UIManager>();
-        manager_Book = manager_UI.gameObject.GetComponentInChildren<Book>();
+        //manager_Book = manager_UI.gameObject.GetComponentInChildren<Book>();
     }
     protected virtual void Start()
     {

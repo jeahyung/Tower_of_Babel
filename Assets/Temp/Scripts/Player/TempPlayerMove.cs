@@ -25,4 +25,9 @@ public class TempPlayerMove : MonoBehaviour
         canMove = b;
         mesh.enabled = b;
     }
+
+    public void StopMovingForBook(bool b)   //사전 읽을 땐 못 움직인다
+    {
+        canMove = b;
+    }
 }

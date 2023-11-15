@@ -13,6 +13,7 @@ public class RotatePuzzleManager : PuzzleManager
     private List<RotatePuzzlePiece> pieces;
     [SerializeField]
     private List<WordData> words;
+    private List<int> wordMeanings;
 
     protected override void Awake()
     {
@@ -68,9 +69,10 @@ public class RotatePuzzleManager : PuzzleManager
     {
         if (isSolvingPuzzle == true || solvedPuzzle == true || player == null) { return; }
         isSolvingPuzzle = true;             //퍼즐 시작
-        manager_Book.AddWordList(words);    //문자 추가
-        player.SendMessage("StopMoving", false); //플레이어 움직임 제한
+        manager_UI.AddWord(words);          //문자 추가
         manager_UI.ShowInteractMessage(false);
+        manager_UI.StartPuzzleAndBookOpen();
+        player.SendMessage("StopMoving", false); //플레이어 움직임 제한
     }
 
     public override void EndPuzzleSolving()
@@ -80,6 +82,7 @@ public class RotatePuzzleManager : PuzzleManager
         if (solvedPuzzle == false)
             manager_UI.ShowInteractMessage(true);
         isSolvingPuzzle = false;
+        manager_UI.EndPuzzleAndBookClose();
     }
 
     public void SetPuzzleAnswer(int aindex, int i)
@@ -89,6 +92,13 @@ public class RotatePuzzleManager : PuzzleManager
         if(Enumerable.SequenceEqual(PuzzleAnswer, AnswerSheet)) 
         {
             solvedPuzzle = true;
+            //뜻을 추가
+            wordMeanings = new List<int>();
+            foreach(var word in words)
+            {
+                wordMeanings.Add(word.wordId);
+            }
+            manager_UI.AddMeaning(wordMeanings);    //뜻 추가
             onEndPuzzle.Invoke();
         }
     }
