@@ -6,11 +6,16 @@ using UnityEngine.Events;
 public class Book : MonoBehaviour
 {
     private KeyCode OpenKey = KeyCode.B;    //오픈 키
-    private List<WordData> wordDatas = new List<WordData>();    //획득한 단어 데이터
 
-    private Transform bookObj;  //노트 패널
-    private List<WordBookData> bookDatas = new List<WordBookData>();    //단어 노트 칸
-    private int bookIndex = 0;  //단어 노트 칸 index
+    //획득한 단어 데이터
+    private List<WordData> wordDatas = new List<WordData>();
+
+    //노트 패널
+    private Transform bookObj;
+    //단어 노트 칸
+    private List<WordBookData> bookDatas = new List<WordBookData>();
+    //단어 노트 칸 index
+    private int bookIndex = 0;
 
     private bool isOpen = false;
 
@@ -58,6 +63,8 @@ public class Book : MonoBehaviour
         {
             if(bookData.words[i] == null) { break; }
             book.LoadData(bookData.words[i], bookData.memos[i], bookData.meanings[i]);
+            wordDatas.Add(bookData.words[i]);
+            bookIndex++;
             i++;
         }
         Debug.Log("로드 완료");

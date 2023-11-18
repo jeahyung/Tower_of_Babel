@@ -15,6 +15,10 @@ public class RotatePuzzleManager : PuzzleManager
     private List<WordData> words;
     private List<int> wordMeanings;
 
+    public Vector3 bookPos;     // y값 : 적당히 / z값 : 퍼즐 캠의 z값 + 2.5f
+    public float upPos;
+    public float objSize;
+
     protected override void Awake()
     {
         base.Awake();
@@ -69,25 +73,33 @@ public class RotatePuzzleManager : PuzzleManager
     {
         if (isSolvingPuzzle == true || solvedPuzzle == true || player == null) { return; }
         isSolvingPuzzle = true;             //퍼즐 시작
+        player.SendMessage("StopMoving", false); //플레이어 움직임 제한
+
+        //UI
         manager_UI.AddWord(words);          //문자 추가
         manager_UI.ShowInteractMessage(false);
-        manager_UI.StartPuzzleAndBookOpen();
-        player.SendMessage("StopMoving", false); //플레이어 움직임 제한
+        manager_UI.StartPuzzleAndBookOpen(bookPos, upPos, objSize);
+
+        //manager_UI.StartPuzzleAndBookOpen();
     }
 
     public override void EndPuzzleSolving()
     {
         if(isSolvingPuzzle == false || player == null) { return; }
-        player.SendMessage("StopMoving", true); //플레이어 움직임 제한 해제
-        if (solvedPuzzle == false)
-            manager_UI.ShowInteractMessage(true);
-        isSolvingPuzzle = false;
+
+        //플레이어 움직임 제한 해제
+        player.SendMessage("StopMoving", true);
         manager_UI.EndPuzzleAndBookClose();
+        //퍼즐풀이가 완료 전이라면
+        if (solvedPuzzle == false)
+        {
+            manager_UI.ShowInteractMessage(true);
+        }
+        isSolvingPuzzle = false;
     }
 
     public void SetPuzzleAnswer(int aindex, int i)
     {
-        //if(i > maxCount - 1 || i < 0 || aindex > maxCount -1) { return; }
         AnswerSheet[aindex] = i;
         if(Enumerable.SequenceEqual(PuzzleAnswer, AnswerSheet)) 
         {
