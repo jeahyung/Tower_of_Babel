@@ -17,8 +17,6 @@ public class UIManager : MonoBehaviour
     [SerializeField] private int bookPos_up;    //사전을 불러왔을 때
     //private Book manager_Book;
 
-    private bool isSolving = false;
-
     private void Awake()
     {
         InteractMessage = GameObject.Find("InteractMessage");
@@ -33,7 +31,6 @@ public class UIManager : MonoBehaviour
         //노트 오픈/클로즈
         if (Input.GetKeyDown(OpenKey))
         {
-            if(isSolving == true) { return; }
             manager_Book.OpenOrClose();
         }
     }
@@ -51,7 +48,6 @@ public class UIManager : MonoBehaviour
     public void StartPuzzleAndBookOpen(Vector3 pos, float upos, float objSize)
     {
         manager_Book.SetBookObject_Open(objSize, pos, upos);
-        isSolving = true;
         //OpenBook();
         //manager_Book.MoveBookObject(bookPos_down, true);
         //manager_Book.MoveBookObject(-900f);
@@ -59,7 +55,6 @@ public class UIManager : MonoBehaviour
     public void EndPuzzleAndBookClose()
     {
         manager_Book.SetBookObject_Close();
-        isSolving = false;
         //CloseBook();
         //manager_Book.MoveBookObject(bookPos_up, false);
         //manager_Book.MoveBookObject(0f);

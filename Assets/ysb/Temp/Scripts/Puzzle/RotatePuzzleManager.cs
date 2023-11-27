@@ -89,12 +89,12 @@ public class RotatePuzzleManager : PuzzleManager
 
         //플레이어 움직임 제한 해제
         player.SendMessage("StopMoving", true);
-        manager_UI.EndPuzzleAndBookClose();
         //퍼즐풀이가 완료 전이라면
         if (solvedPuzzle == false)
         {
             manager_UI.ShowInteractMessage(true);
         }
+        manager_UI.EndPuzzleAndBookClose();
         isSolvingPuzzle = false;
     }
 

@@ -30,8 +30,8 @@ public class Tmp_Book : MonoBehaviour
     public UnityEvent onBookClose;
 
     //퍼즐 풀이 중에 사용하는 변수들
-    private GameObject openBtn;
-    private GameObject closeBtn;
+    private bool isSolving = false; //퍼즐 풀이 중인가?
+    private bool isMoving = false;  //사전이 움직이고 있는 중인가?
 
     public float smoothTime = 0.3F;
     private float yVelocity = 5.0F;
@@ -43,7 +43,7 @@ public class Tmp_Book : MonoBehaviour
     //
     private float upPos;    //올라오는 위치
     private float downPos;  //내려가는 위치
-    public float sTime = 0.0005f;
+    public float offsetTime = 0.0005f;
 
     private void Awake()
     {
@@ -57,12 +57,6 @@ public class Tmp_Book : MonoBehaviour
         pages = new List<BookPage>();
         pages.AddRange(bookPanel.GetComponentsInChildren<BookPage>());
         pages[0].OnPage();
-
-        //퍼즐 전용
-        openBtn = bookPanel.transform.Find("OpenBtn").gameObject;
-        closeBtn = bookPanel.transform.Find("CloseBtn").gameObject;
-        openBtn.SetActive(false);
-        closeBtn.SetActive(false);
 
         //사전 위치
         basePos = mainCam.position + new Vector3(-2.5f, -2f, 2.5f);     //초기 위치
@@ -106,7 +100,6 @@ public class Tmp_Book : MonoBehaviour
             bookIndex++;
         }
     }
-
     public void AddWordMeaning(List<int> meanings)
     {
         foreach (WordBookData word in bookDatas)
@@ -119,26 +112,39 @@ public class Tmp_Book : MonoBehaviour
     public void OpenOrClose()
     {
         isOpen = !isOpen;
-        if (isOpen) { OpenPanel(); }
-        else { ClosePanel(); }
+        if (isSolving)
+        {
+            if (isOpen) { UpBookObject(); }
+            else { DownBookObject(); }
+        }
+        else
+        {
+            if (isOpen) { OpenPanel(); }
+            else { ClosePanel(); }
+        }
     }
-
     public void OpenPanel()
     {
+        if (!isOpen) { return; }
+        isOpen = true;
         bookObj.position = mainCam.position + new Vector3(-2.5f, -2f, 2.5f);
         onBookOpen.Invoke();
     }
     public void ClosePanel()
     {
-        bookObj.position = new Vector3(0f, -100f, 0f);
+        if (isOpen) { return; }
+        isOpen = false;
         onBookClose.Invoke();
+        bookObj.position = new Vector3(0f, -100f, 0f);
     }
 
     //====================================== 퍼즐 풀이 중
     public void SetBookObject_Open(float objSize, Vector3 pos, float upos = 0)
     {
         onBookOpen.Invoke();
-        openBtn.SetActive(true);
+        isOpen = false;
+        isSolving = true;
+
         //사전 세팅
         bookObj.position = pos;
         bookObj.eulerAngles = new Vector3(0, 0, 0);
@@ -153,32 +159,28 @@ public class Tmp_Book : MonoBehaviour
         bookObj.rotation = baseRot;
         bookObj.localScale = new Vector3(1f, 1f, 1f);
 
-        BtnOff();
+        isSolving = false;
         ClosePanel();
-    }
-    public void BtnOff()    //버튼 off
-    {
-        openBtn.SetActive(false);
-        closeBtn.SetActive(false);
     }
 
     //====================================== 업
     public void UpBookObject()
     {
-        openBtn.SetActive(false);
+        if (isMoving) { return; }
         StartCoroutine(UPBook());
     }
     private IEnumerator UPBook()
     {
+        isMoving = true;
         while (true)
         {
             float yPos = Mathf.SmoothDamp(bookObj.position.y, upPos, ref yVelocity, smoothTime);
             bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-            if (yPos >= (upPos - sTime))
+            if (yPos >= (upPos - offsetTime))
             {
                 yPos = upPos;
                 bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-                closeBtn.SetActive(true);
+                isMoving = false;
                 yield break;
             }
             yield return null;
@@ -188,20 +190,21 @@ public class Tmp_Book : MonoBehaviour
     //====================================== 다운
     public void DownBookObject()
     {
-        closeBtn.SetActive(false);
+        if (isMoving) { return; }
         StartCoroutine(DownBook());
     }
     private IEnumerator DownBook()
     {
+        isMoving = true;
         while (true)
         {
             float yPos = Mathf.SmoothDamp(bookObj.position.y, downPos, ref yVelocity, smoothTime);
             bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-            if (yPos <= (downPos + sTime))
+            if (yPos <= (downPos + offsetTime))
             {
                 yPos = downPos;
                 bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-                openBtn.SetActive(true);
+                isMoving = false;
                 yield break;
             }
             yield return null;
@@ -211,7 +214,7 @@ public class Tmp_Book : MonoBehaviour
     //====================================== 페이지 넘김
     public void onNextPage()
     {
-        if(animDone == true || pageIndex >= pages.Count - 1) { return; }
+        if(!isOpen || animDone == true || pageIndex >= pages.Count - 1) { return; }
         anim.SetTrigger("NextPage");
         StartCoroutine(NextPage());
     }
@@ -232,7 +235,7 @@ public class Tmp_Book : MonoBehaviour
     
     public void onPreviousPage()
     {
-        if (animDone == true || pageIndex <= 0) { return; }
+        if (!isOpen || animDone == true || pageIndex <= 0) { return; }
         anim.SetTrigger("PreviousPage");
         StartCoroutine(PreviousPage());
     }
