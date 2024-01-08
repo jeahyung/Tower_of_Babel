@@ -32,6 +32,8 @@ public class CrossSelectGrid : MonoBehaviour
     private bool isRotate = false;  //
     private float x = 0;
     private float targetX;
+    [SerializeField]
+    private float rotateSpeed = 150f;
     private void Awake()
     {
         mgr_puzzle = GetComponentInParent<CrossSelectPuzzleManager>();
@@ -89,10 +91,10 @@ public class CrossSelectGrid : MonoBehaviour
     }
     private IEnumerator Rotate()
     {
-        targetX = x + 180;
+        targetX = x + 360;
         while (true)
         {
-            x += Time.deltaTime * 100f;
+            x += Time.deltaTime * rotateSpeed;
             rotObj.transform.rotation = Quaternion.Euler(new Vector2(x, 0));
 
             if (x >= targetX)
