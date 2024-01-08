@@ -5,14 +5,14 @@ using UnityEngine;
 public class UIManager : MonoBehaviour
 {
     private GameObject InteractMessage;
-    private Book manager_Book;
-
+    //private Book manager_Book;
+    private Tmp_Book manager_Book;
     private void Awake()
     {
         InteractMessage = GameObject.Find("InteractMessage");
         InteractMessage.SetActive(false);
 
-        manager_Book = GameObject.Find("Book").GetComponent<Book>();
+        manager_Book = GameObject.Find("Book").GetComponent<Tmp_Book>();//GameObject.Find("Book").GetComponent<Book>();
     }
     public void ShowInteractMessage(bool active)
     {
@@ -25,13 +25,13 @@ public class UIManager : MonoBehaviour
     public void StartPuzzleAndBookOpen()
     {
         OpenBook();
-        manager_Book.MoveBookObject(-900f);
+        //manager_Book.MoveBookObject(-900f);
     }
     public void EndPuzzleAndBookClose()
     {
         CloseBook();
-        manager_Book.MoveBookObject(0f);
-        manager_Book.BtnOff();
+        //manager_Book.MoveBookObject(0f);
+        //manager_Book.BtnOff();
     }
     public void OpenBook()
     {

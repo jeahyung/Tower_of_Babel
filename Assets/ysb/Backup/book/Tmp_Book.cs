@@ -5,6 +5,8 @@ using UnityEngine.Events;
 
 public class Tmp_Book : MonoBehaviour
 {
+    private KeyCode OpenKey = KeyCode.B;    //오픈 키
+
     [SerializeField]
     private Transform mainCam;
     private Animator anim;
@@ -31,7 +33,7 @@ public class Tmp_Book : MonoBehaviour
     public UnityEvent onBookClose;
 
     //퍼즐 풀이 중에 사용하는 변수들
-    private bool isSolving = false; //퍼즐 풀이 중인가?
+    public bool isSolving = false; //퍼즐 풀이 중인가?
     private bool isMoving = false;  //사전이 움직이고 있는 중인가?
 
     public float smoothTime = 0.3F;
@@ -69,6 +71,14 @@ public class Tmp_Book : MonoBehaviour
     {
         //Load
         LoadBookData();
+    }
+    private void Update()
+    {
+        //노트 오픈/클로즈
+        if (Input.GetKeyDown(OpenKey))
+        {
+            OpenOrClose();
+        }
     }
     public void SaveBookData()
     {
