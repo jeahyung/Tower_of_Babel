@@ -15,3 +15,6 @@ MonoBehaviour:
   wordId: 0
   wordImg: {fileID: 21300000, guid: 38236a82ff44aaa4b972248479d5f970, type: 3}
   wordMean: won
+  piece:
+  - "\uC778"
+  - "\uAC04"

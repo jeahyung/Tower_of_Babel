@@ -7,8 +7,13 @@ public abstract class PuzzleManager : MonoBehaviour
     protected KeyCode endkey = KeyCode.Escape;
 
     protected GameObject player;
+    [SerializeField]
     protected UIManager manager_UI;
-    //protected Book manager_Book;
+
+    [SerializeField]
+    protected List<WordData> words;
+    protected List<int> wordMeanings;
+
     protected bool isSolvingPuzzle = false;
     protected bool solvedPuzzle = false;
     public bool SolvedPuzzle => solvedPuzzle;//퍼즐 해결
@@ -18,16 +23,29 @@ public abstract class PuzzleManager : MonoBehaviour
 
     protected virtual void Awake()
     {
-        manager_UI = GameObject.Find("Canvas").GetComponent<UIManager>();
+        manager_UI = FindObjectOfType<UIManager>();
         //manager_Book = manager_UI.gameObject.GetComponentInChildren<Book>();
-    }
-    protected virtual void Start()
-    {
+
         onStartPuzzle.AddListener(StartPuzzleSolving);
         onEndPuzzle.AddListener(EndPuzzleSolving);
     }
+
+    public void QuitPuzzle()
+    {
+        if (Input.GetKeyDown(endkey))    // if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            onEndPuzzle.Invoke();
+            return;
+        }
+    }
     public abstract void StartPuzzleSolving();  //퍼즐 풀이 시작
     public abstract void EndPuzzleSolving();    //퍼즐 풀이 종료
+
+    //임시
+    public virtual void MoveBook()
+    {
+
+    }
 
     private void OnTriggerEnter(Collider other)
     {

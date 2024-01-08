@@ -17,9 +17,12 @@ public class WordBookData : MonoBehaviour
     public WordData WordData => wordData;
     public string Memo => memoText.text;
 
+    public GameObject WordObj => wordImage.gameObject;    //문자 이미지
+    public Sprite WordImg => wordImage.sprite;
+
     private void Awake()
     {
-        wordImage = transform.GetChild(0).GetComponent<Image>();
+        wordImage = transform.GetChild(0).GetChild(0).GetComponent<Image>();
         memoText = transform.GetChild(1).GetComponent<TMP_InputField>();
         meaningText = transform.GetChild(2).GetComponent<TMP_Text>();
 
