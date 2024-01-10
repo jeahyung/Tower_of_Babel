@@ -9,6 +9,12 @@ public class CamManager : MonoBehaviour
     private CinemachineVirtualCamera mainCam;
     [SerializeField]
     private List<CinemachineVirtualCamera> subCams;
+
+    ICinemachineCamera currentCam;
+    Vector3 camPos;
+    public float shakeAmount = 1.0f;
+    public float shakeTime = 1.0f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,5 +29,26 @@ public class CamManager : MonoBehaviour
     public void BackMainCam()
     {
         mainCam.MoveToTopOfPrioritySubqueue();
+    }
+
+    public void CamShake()
+    {
+        currentCam = CinemachineCore.Instance.GetActiveBrain(0).ActiveVirtualCamera;
+        camPos = currentCam.VirtualCameraGameObject.transform.position;
+
+        StartCoroutine(Shake(shakeAmount, shakeTime));
+
+    }
+    IEnumerator Shake(float ShakeAmount, float ShakeTime)
+    {
+        float timer = 0;
+        while (timer <= ShakeTime)
+        {
+            currentCam.VirtualCameraGameObject.transform.position = 
+                camPos + Random.insideUnitSphere * ShakeAmount;
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        currentCam.VirtualCameraGameObject.transform.position = camPos;
     }
 }
