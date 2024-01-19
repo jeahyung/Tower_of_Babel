@@ -15,6 +15,18 @@ public class CrossSelectPuzzleManager : PuzzleManager
         gridMgrs.AddRange(GetComponentsInChildren<CrossSelectGridMgr>());
         //pieces.AddRange(GetComponentsInChildren<CrossPuzzlePiece>());
     }
+
+
+    //==============테스트
+    public void SelectGrid(CrossSelectGrid g)
+    {
+        //if (isSolvingPuzzle == false || solvedPuzzle == true) { return; }
+        //if (isAct == true) { return; }
+        //grid = g;
+        //grid.SelectPiece();
+    }
+
+    //=============테스트
     void Update()
     {
         if (isSolvingPuzzle == false || solvedPuzzle == true) { return; }  //퍼즐 풀이가 시작됐을 때 퍼즐 조각과 상호작용 가능
@@ -24,7 +36,7 @@ public class CrossSelectPuzzleManager : PuzzleManager
             if (isAct == true) { return; }
             //조각 찾기
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit[] hits = Physics.RaycastAll(ray, 50);
+            RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
             foreach (var hit in hits)
             {
                 if (hit.collider.CompareTag("PuzzleGrid"))

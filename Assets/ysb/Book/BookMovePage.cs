@@ -4,14 +4,15 @@ using UnityEngine;
 
 public class BookMovePage : MonoBehaviour
 {
+    [SerializeField]
     private Transform book;
 
     private void Awake()
     {
-        book = transform.parent;
+        
     }
     public void LoadingEnd_NextPage()
     {
-        book.SendMessage("CheckAnimEnd");
+        book.SendMessage("CheckAnimEnd"); 
     }
 }

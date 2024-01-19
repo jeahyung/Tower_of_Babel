@@ -3,18 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public class Tmp_Book : MonoBehaviour
+public class Dictionary : MonoBehaviour
 {
     private KeyCode OpenKey = KeyCode.B;    //오픈 키
 
     [SerializeField]
     private Transform mainCam;
+    [SerializeField]
     private Animator anim;
     private bool pageMoving = false;
     private bool animDone = false;
 
     //(온/오프)
-    private Transform bookObj;      //노트 오브젝트
+    [SerializeField]
+    private GameObject bookObj;
     [SerializeField]
     private Transform bookPanel;    //노트 패널(UI)
 
@@ -48,13 +50,8 @@ public class Tmp_Book : MonoBehaviour
     private float downPos;  //내려가는 위치
     public float offsetTime = 0.0005f;
 
-    public PuzzleBook pb;
-
     private void Awake()
     {
-        anim = GetComponentInChildren<Animator>();
-
-        bookObj = this.transform;
         bookDatas.AddRange(bookPanel.GetComponentsInChildren<WordBookData>());
         if (isOpen == false) { ClosePanel(); }
 
@@ -70,7 +67,7 @@ public class Tmp_Book : MonoBehaviour
     private void Start()
     {
         //Load
-        //LoadBookData();
+        LoadBookData();
     }
     private void Update()
     {
@@ -112,8 +109,6 @@ public class Tmp_Book : MonoBehaviour
             bookDatas[bookIndex].AddWord(word);
             bookIndex++;
         }
-
-        //pb.AddWordList(wordDatas);
     }
     public void AddWordMeaning(List<int> meanings)
     {
@@ -129,8 +124,8 @@ public class Tmp_Book : MonoBehaviour
         isOpen = !isOpen;
         if (isSolving)
         {
-            if (isOpen) { UpBookObject(); }
-            else { DownBookObject(); }
+            //if (isOpen) { UpBookObject(); }
+            //else { DownBookObject(); }
         }
         else
         {
@@ -142,95 +137,95 @@ public class Tmp_Book : MonoBehaviour
     {
         if (!isOpen) { return; }
         isOpen = true;
-        bookObj.position = mainCam.position + new Vector3(-2.5f, -2f, 2.5f);
+        bookPanel.localScale = new Vector3(1, 1, 1);
         onBookOpen.Invoke();
     }
     public void ClosePanel()
     {
         if (isOpen) { return; }
         isOpen = false;
+        bookPanel.localScale = new Vector3(0, 1, 1);
         onBookClose.Invoke();
-        bookObj.position = new Vector3(0f, -100f, 0f);
     }
 
     //====================================== 퍼즐 풀이 중
-    public void SetBookObject_Open(float objSize, Vector3 pos, float upos = 0)
-    {
-        onBookOpen.Invoke();
-        isOpen = false;
-        isSolving = true;
+    //public void SetBookObject_Open(float objSize, Vector3 pos, float upos = 0)
+    //{
+    //    onBookOpen.Invoke();
+    //    isOpen = false;
+    //    isSolving = true;
 
-        //사전 세팅
-        bookObj.position = pos;
-        bookObj.eulerAngles = new Vector3(0, 0, 0);
-        bookObj.localScale = new Vector3(objSize, objSize, objSize);
-        upPos = upos;       //올라올 위치
-        downPos = pos.y;    //내려갈 위치
-    }
+    //    //사전 세팅
+    //    bookObj.position = pos;
+    //    bookObj.eulerAngles = new Vector3(0, 0, 0);
+    //    bookObj.localScale = new Vector3(objSize, objSize, objSize);
+    //    upPos = upos;       //올라올 위치
+    //    downPos = pos.y;    //내려갈 위치
+    //}
 
-    public void SetBookObject_Close()
-    {
-        //사전
-        bookObj.rotation = baseRot;
-        bookObj.localScale = new Vector3(1f, 1f, 1f);
+    //public void SetBookObject_Close()
+    //{
+    //    //사전
+    //    bookObj.rotation = baseRot;
+    //    bookObj.localScale = new Vector3(1f, 1f, 1f);
 
-        isSolving = false;
-        ClosePanel();
-    }
+    //    isSolving = false;
+    //    ClosePanel();
+    //}
 
     //====================================== 업
-    public void UpBookObject()
-    {
-        if (isMoving) { return; }
-        StartCoroutine(UPBook());
-    }
-    private IEnumerator UPBook()
-    {
-        isMoving = true;
-        while (true)
-        {
-            float yPos = Mathf.SmoothDamp(bookObj.position.y, upPos, ref yVelocity, smoothTime);
-            bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-            if (yPos >= (upPos - offsetTime))
-            {
-                yPos = upPos;
-                bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-                isMoving = false;
-                yield break;
-            }
-            yield return null;
-        }
-    }
+    //public void UpBookObject()
+    //{
+    //    if (isMoving) { return; }
+    //    StartCoroutine(UPBook());
+    //}
+    //private IEnumerator UPBook()
+    //{
+    //    isMoving = true;
+    //    while (true)
+    //    {
+    //        float yPos = Mathf.SmoothDamp(bookObj.position.y, upPos, ref yVelocity, smoothTime);
+    //        bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
+    //        if (yPos >= (upPos - offsetTime))
+    //        {
+    //            yPos = upPos;
+    //            bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
+    //            isMoving = false;
+    //            yield break;
+    //        }
+    //        yield return null;
+    //    }
+    //}
 
     //====================================== 다운
-    public void DownBookObject()
-    {
-        if (isMoving) { return; }
-        StartCoroutine(DownBook());
-    }
-    private IEnumerator DownBook()
-    {
-        isMoving = true;
-        while (true)
-        {
-            float yPos = Mathf.SmoothDamp(bookObj.position.y, downPos, ref yVelocity, smoothTime);
-            bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-            if (yPos <= (downPos + offsetTime))
-            {
-                yPos = downPos;
-                bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
-                isMoving = false;
-                yield break;
-            }
-            yield return null;
-        }
-    }
+    //public void DownBookObject()
+    //{
+    //    if (isMoving) { return; }
+    //    StartCoroutine(DownBook());
+    //}
+    //private IEnumerator DownBook()
+    //{
+    //    isMoving = true;
+    //    while (true)
+    //    {
+    //        float yPos = Mathf.SmoothDamp(bookObj.position.y, downPos, ref yVelocity, smoothTime);
+    //        bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
+    //        if (yPos <= (downPos + offsetTime))
+    //        {
+    //            yPos = downPos;
+    //            bookObj.position = new Vector3(bookObj.position.x, yPos, bookObj.position.z);
+    //            isMoving = false;
+    //            yield break;
+    //        }
+    //        yield return null;
+    //    }
+    //}
 
     //====================================== 페이지 넘김
     public void onNextPage()
     {
         if (!isOpen || pageMoving != false || pageIndex >= pages.Count - 1) { return; }
-        anim.SetTrigger("NextPage");
+        anim.SetTrigger("isNext");
         StartCoroutine(NextPage());
     }
     private IEnumerator NextPage()
@@ -250,10 +245,15 @@ public class Tmp_Book : MonoBehaviour
         }
     }
 
+    public void PageNext()
+    {
+        anim.SetTrigger("isNext");
+    }
+
     public void onPreviousPage()
     {
         if (!isOpen || pageMoving != false || pageIndex <= 0) { return; }
-        anim.SetTrigger("PreviousPage");
+        anim.SetTrigger("isPre");
         StartCoroutine(PreviousPage());
     }
     private IEnumerator PreviousPage()
@@ -274,6 +274,7 @@ public class Tmp_Book : MonoBehaviour
     }
     public void CheckAnimEnd()
     {
+        Debug.Log("end");
         animDone = true;
     }
 

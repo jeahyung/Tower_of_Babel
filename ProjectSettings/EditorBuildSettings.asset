@@ -4,5 +4,8 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/ysb/Scenes/ysb_UI Test.unity
+    guid: 3c037a911bfca2a499ef97bda7553c44
   m_configObjects: {}

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class SelectPiece : MonoBehaviour
 {
-    [SerializeField]
+    private PieceManager manager_Piece;
     private int pieceId;
 
     public string word;
@@ -13,12 +13,26 @@ public class SelectPiece : MonoBehaviour
     private Image img;
 
     public bool isSelected = false;    //
-    public int PieceId => pieceId;
+    public int PieceId
+    {
+        get { return pieceId; }
+        set { pieceId = value; }
+    }
 
+
+    public void onSelectPiece()
+    {
+        if(isSelected == true) { return; }
+        manager_Piece.AddWord(wordImg, word, this);
+    }
+    //===================
     private void Awake()
     {
         img = GetComponent<Image>();
         wordImg = img.sprite;
+
+        manager_Piece = GetComponentInParent<PieceManager>();
+        this.GetComponent<Button>().onClick.AddListener(() => onSelectPiece());
     }
     public bool IsSelected
     {
@@ -28,6 +42,10 @@ public class SelectPiece : MonoBehaviour
             isSelected = value;
             if (isSelected == false)
                 img.color = new Color(1f, 1f, 1f);
+            else
+            {
+                img.color = new Color(0.5f, 0.5f, 0.5f);
+            }
         }
     }
 
