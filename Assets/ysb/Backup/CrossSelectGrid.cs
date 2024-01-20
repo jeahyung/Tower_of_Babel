@@ -55,22 +55,22 @@ public class CrossSelectGrid : MonoBehaviour
         rotObj = transform.Find("rotObj").gameObject;
         resultObj = rotObj.transform.GetChild(0).GetChild(1).GetComponent<MeshRenderer>();
 
-        panel_Canvas = mgr_puzzle.transform.Find("Puzzle_Canvas").gameObject;
-        panel_Select = panel_Canvas.transform.Find("Panel_Select").gameObject;
+        //panel_Canvas = mgr_puzzle.transform.Find("Puzzle_Canvas").gameObject;
+        //panel_Select = panel_Canvas.transform.Find("Panel_Select").gameObject;
         //panel_Canvas.GetComponent<Canvas>().scaleFactor = 0;
-        panel_Select.transform.localScale = new Vector3(0, 1, 1);
+        //panel_Select.transform.localScale = new Vector3(0, 1, 1);
 
-        graphicRaycaster = panel_Canvas.GetComponent<GraphicRaycaster>();
-        pointerEventData = new PointerEventData(null);
-        raycastResults = new List<RaycastResult>();
+        //graphicRaycaster = panel_Canvas.GetComponent<GraphicRaycaster>();
+        //pointerEventData = new PointerEventData(null);
+        //raycastResults = new List<RaycastResult>();
 
         outline = new Material(Shader.Find("Unlit/GridOutline"));
 
-        manager_Piece = panel_Select.GetComponent<PieceManager>();
+        manager_Piece = FindObjectOfType<PieceManager>();
 
 
-        btn = GetComponentInChildren<Button>();
-        btn.onClick.AddListener(() => mgr_puzzle.SelectGrid(this));
+        //btn = GetComponentInChildren<Button>();
+        //btn.onClick.AddListener(() => mgr_puzzle.SelectGrid(this));
     }
 
 
@@ -98,6 +98,15 @@ public class CrossSelectGrid : MonoBehaviour
         isAct = false;
         mgr_puzzle.isAct = isAct;
     }
+
+    public void ClosePanel()
+    {
+        isAct = false;
+        NoneSelectGrid();
+        manager_Piece.ClosePanel();
+    }
+
+    //====================================test
     public void SelectPiece()
     {
         if (isAct == true || isRotate == true) { return; }
@@ -105,6 +114,11 @@ public class CrossSelectGrid : MonoBehaviour
         mgr_puzzle.isAct = isAct;
         //panel_Canvas.GetComponent<Canvas>().scaleFactor = 1;
         //panel_Select.transform.localScale = new Vector3(1, 1, 1);
+        
+        if(manager_Piece == null)
+        {
+            manager_Piece = FindObjectOfType<PieceManager>();
+        }
 
         manager_Piece.OpenSelectPanel(this);
 

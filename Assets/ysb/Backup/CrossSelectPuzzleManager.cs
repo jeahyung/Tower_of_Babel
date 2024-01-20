@@ -83,6 +83,12 @@ public class CrossSelectPuzzleManager : PuzzleManager
         {
             manager_UI.ShowInteractMessage(true);
         }
+
+        if(grid!=null)
+        {
+            grid.ClosePanel();
+            isAct = false;
+        }
     }
 
     //퍼즐이 완성됐나? - 이것도 매니저쪽으로 빼는게 좋겠는데..
