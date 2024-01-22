@@ -6,31 +6,26 @@ using UnityEngine.EventSystems;
 
 public class CrossSelectGrid : MonoBehaviour
 {
-    private CrossSelectPuzzleManager mgr_puzzle;
-    private CrossSelectGridMgr mgr_grid;
+    private CrossSelectPuzzleManager manager_Puzzle;
+    private CrossSelectGridMgr manager_Grid;
     public int grid_id;
 
-    private GameObject panel_Canvas;
-    private GameObject panel_Select;
-    private GraphicRaycaster graphicRaycaster;
-    private PointerEventData pointerEventData;
-    private List<RaycastResult> raycastResults;
 
     private bool isAct = false;
-    private bool isMoving = false;  //
-    private int piece_result = -2; //null = -2
+    private bool isMoving = false;  
+    private int piece_result = -2;  //null = -2
 
-    public SelectPiece selectedPiece = null;    //
+    public SelectPiece selectedPiece = null;
 
     private SpriteRenderer wordimg;
-    private GameObject rotObj; //
+    private GameObject rotObj;
     private string wordmean;
 
     [SerializeField]
     private Material[] resMaterals; 
     private MeshRenderer resultObj;
 
-    private bool isRotate = false;  //
+    private bool isRotate = false;
     private float x = 0;
     private float targetX;
     [SerializeField]
@@ -38,39 +33,26 @@ public class CrossSelectGrid : MonoBehaviour
 
 
     //¿Ü°û
-    [SerializeField]
-    private Material outline;
-    private Renderer renderer;
-    private List<Material> materials = new List<Material>();
+    //[SerializeField]
+    //private Material outline;
+    //private Renderer renderer;
+    //private List<Material> materials = new List<Material>();
 
     //Å×½ºÆ®
     private PieceManager manager_Piece;
-    private Button btn;
 
     private void Awake()
     {
-        mgr_puzzle = GetComponentInParent<CrossSelectPuzzleManager>();
-        mgr_grid = GetComponentInParent<CrossSelectGridMgr>();
-        wordimg = transform.Find("wordimg").GetComponent<SpriteRenderer>();    //transform.GetChild(0).GetComponent<SpriteRenderer>();
+        manager_Puzzle = GetComponentInParent<CrossSelectPuzzleManager>();
+        manager_Grid = GetComponentInParent<CrossSelectGridMgr>();
+
+        wordimg = transform.Find("wordimg").GetComponent<SpriteRenderer>();
         rotObj = transform.Find("rotObj").gameObject;
         resultObj = rotObj.transform.GetChild(0).GetChild(1).GetComponent<MeshRenderer>();
 
-        //panel_Canvas = mgr_puzzle.transform.Find("Puzzle_Canvas").gameObject;
-        //panel_Select = panel_Canvas.transform.Find("Panel_Select").gameObject;
-        //panel_Canvas.GetComponent<Canvas>().scaleFactor = 0;
-        //panel_Select.transform.localScale = new Vector3(0, 1, 1);
-
-        //graphicRaycaster = panel_Canvas.GetComponent<GraphicRaycaster>();
-        //pointerEventData = new PointerEventData(null);
-        //raycastResults = new List<RaycastResult>();
-
-        outline = new Material(Shader.Find("Unlit/GridOutline"));
+        //outline = new Material(Shader.Find("Unlit/GridOutline"));
 
         manager_Piece = FindObjectOfType<PieceManager>();
-
-
-        //btn = GetComponentInChildren<Button>();
-        //btn.onClick.AddListener(() => mgr_puzzle.SelectGrid(this));
     }
 
 
@@ -83,27 +65,25 @@ public class CrossSelectGrid : MonoBehaviour
 
         if(piece.IsSelected == true) { return; }
         piece.IsSelected = true;
+
         if(selectedPiece != null) { selectedPiece.IsSelected = false; }
         selectedPiece = piece;
 
-        //wordimg.sprite = sprite;
         wordmean = mean;
         img = sprite;
 
         RotateGrid();
         NoneSelectGrid();   //½¦ÀÌ´õ
 
-
-        //panel_Select.transform.localScale = new Vector3(0, 1, 1);
         isAct = false;
-        mgr_puzzle.isAct = isAct;
+        manager_Puzzle.isAct = isAct;
     }
 
     public void ClosePanel()
     {
         isAct = false;
         NoneSelectGrid();
-        manager_Piece.ClosePanel();
+        manager_Piece.CloseSelectPanel();
     }
 
     //====================================test
@@ -111,22 +91,19 @@ public class CrossSelectGrid : MonoBehaviour
     {
         if (isAct == true || isRotate == true) { return; }
         isAct = true;
-        mgr_puzzle.isAct = isAct;
-        //panel_Canvas.GetComponent<Canvas>().scaleFactor = 1;
-        //panel_Select.transform.localScale = new Vector3(1, 1, 1);
+        manager_Puzzle.isAct = isAct;
         
         if(manager_Piece == null)
         {
             manager_Piece = FindObjectOfType<PieceManager>();
         }
-
         manager_Piece.OpenSelectPanel(this);
 
         SelectGrid();
     }
     public void SetResult(int i)
     {
-        if (isMoving == false) { return; }
+        if (isMoving == false || selectedPiece == null) { return; }
         piece_result = i;
 
         switch (i)
@@ -147,6 +124,7 @@ public class CrossSelectGrid : MonoBehaviour
     }
     public void CompleteWord()
     {
+        if(selectedPiece == null) { return; }
         resultObj.material = resMaterals[3];
     }
 
@@ -179,84 +157,40 @@ public class CrossSelectGrid : MonoBehaviour
     private void SendWordData()
     {
         isRotate = false;
-        mgr_grid.AddWordPiece(grid_id, wordmean);
+        manager_Grid.AddWordPiece(grid_id, wordmean);
 
         wordimg.sprite = img;
-        //wordimg.sprite = selectedPiece.SetWordPieceImg();
     }
-
-    //private void Update()
-    //{
-    //    if (isAct == false || isRotate == true) { return; }
-    //    if (Input.GetMouseButtonDown(0))
-    //    {
-    //        raycastResults.Clear();
-
-    //        pointerEventData.position = Input.mousePosition;
-    //        graphicRaycaster.Raycast(pointerEventData, raycastResults);
-
-    //        if (raycastResults.Count > 0)
-    //        {
-    //            foreach (var result in raycastResults)
-    //            {
-    //                if (result.gameObject.CompareTag("WordData"))
-    //                {
-    //                    wordmean = "";
-    //                    wordimg.sprite = null;
-
-    //                    bool isSelected = result.gameObject.GetComponent<SelectPiece>().IsSelected;
-    //                    if (isSelected == true) { return; }
-    //                    if (selectedPiece != null) { selectedPiece.IsSelected = false; }
-
-    //                    selectedPiece = result.gameObject.GetComponent<SelectPiece>();
-    //                    wordmean = selectedPiece.SetWordPieceMean();
-
-    //                    RotateGrid();
-    //                    NoneSelectGrid();   //½¦ÀÌ´õ
-
-    //                    panel_Select.transform.localScale = new Vector3(0, 1, 1);
-    //                    //panel_Canvas.GetComponent<Canvas>().scaleFactor = 0;
-    //                    //Debug.Log(result.gameObject.name);
-    //                    isAct = false;
-    //                    mgr_puzzle.isAct = isAct;
-    //                    break;
-    //                }
-    //            }
-
-    //        }
-    //    }
-    //}
-
-    //-------------------------------------------Reset
     public void ResetGrid()
     {
         if (selectedPiece == null) { return; }
         wordmean = "";
         wordimg.sprite = null;
         resultObj.material = resMaterals[4];    //default
+        selectedPiece = null;
     }
 
     //==================================================½¦ÀÌ´õ
     private void SelectGrid()
     {
-        renderer = rotObj.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        //renderer = rotObj.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
 
-        materials.Clear();
-        materials.AddRange(renderer.sharedMaterials);
-        materials.Add(outline);
+        //materials.Clear();
+        //materials.AddRange(renderer.sharedMaterials);
+        //materials.Add(outline);
 
-        renderer.materials = materials.ToArray();
+        //renderer.materials = materials.ToArray();
     }
 
     private void NoneSelectGrid()
     {
-        renderer = rotObj.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
+        //renderer = rotObj.transform.GetChild(0).GetChild(0).GetComponent<Renderer>();
 
-        materials.Clear();
-        materials.AddRange(renderer.sharedMaterials);
-        materials.Remove(outline);
+        //materials.Clear();
+        //materials.AddRange(renderer.sharedMaterials);
+        //materials.Remove(outline);
 
-        renderer.materials = materials.ToArray();
+        //renderer.materials = materials.ToArray();
     }
 
     //public void SetPos()
@@ -313,5 +247,49 @@ public class CrossSelectGrid : MonoBehaviour
     //    grid = null;
     //    transform.SetParent(baseParent);
     //}
+
+    //private void Update()
+    //{
+    //    if (isAct == false || isRotate == true) { return; }
+    //    if (Input.GetMouseButtonDown(0))
+    //    {
+    //        raycastResults.Clear();
+
+    //        pointerEventData.position = Input.mousePosition;
+    //        graphicRaycaster.Raycast(pointerEventData, raycastResults);
+
+    //        if (raycastResults.Count > 0)
+    //        {
+    //            foreach (var result in raycastResults)
+    //            {
+    //                if (result.gameObject.CompareTag("WordData"))
+    //                {
+    //                    wordmean = "";
+    //                    wordimg.sprite = null;
+
+    //                    bool isSelected = result.gameObject.GetComponent<SelectPiece>().IsSelected;
+    //                    if (isSelected == true) { return; }
+    //                    if (selectedPiece != null) { selectedPiece.IsSelected = false; }
+
+    //                    selectedPiece = result.gameObject.GetComponent<SelectPiece>();
+    //                    wordmean = selectedPiece.SetWordPieceMean();
+
+    //                    RotateGrid();
+    //                    NoneSelectGrid();   //½¦ÀÌ´õ
+
+    //                    panel_Select.transform.localScale = new Vector3(0, 1, 1);
+    //                    //panel_Canvas.GetComponent<Canvas>().scaleFactor = 0;
+    //                    //Debug.Log(result.gameObject.name);
+    //                    isAct = false;
+    //                    mgr_puzzle.isAct = isAct;
+    //                    break;
+    //                }
+    //            }
+
+    //        }
+    //    }
+    //}
+
+    //-------------------------------------------Reset
 
 }

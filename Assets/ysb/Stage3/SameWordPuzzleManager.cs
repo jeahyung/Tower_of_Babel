@@ -2,9 +2,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class SameWordPuzzleManager : MonoBehaviour
 {
+
+    //타이머
+    private UIManager manager_UI;
+    [SerializeField]
+    private float maxTime = 1000;
+    private float timer = 0;
+    private float speed = 1f;
+
+
+
     [SerializeField]
     private WordData[] wordDatas;
 
@@ -16,6 +25,8 @@ public class SameWordPuzzleManager : MonoBehaviour
 
     private void Awake()
     {
+        manager_UI = FindObjectOfType<UIManager>();
+
         array.AddRange(wordDatas);
 
         int count = array.Count;
@@ -24,6 +35,26 @@ public class SameWordPuzzleManager : MonoBehaviour
             WordData word = array[Random.Range(0, array.Count)];
             array.Remove(word);
             question.Add(word);
+        }
+
+        StartPuzzle();
+    }
+
+    public void StartPuzzle()
+    {
+        timer = maxTime;
+        manager_UI.ActiveTimer();
+
+        StartCoroutine(Timer());
+    }
+
+    private IEnumerator Timer()
+    {
+        while(true)
+        {
+            timer -= Time.deltaTime * speed;
+            manager_UI.SetTimer(timer / maxTime);
+            yield return null;
         }
     }
 
@@ -55,5 +86,15 @@ public class SameWordPuzzleManager : MonoBehaviour
     private void ResetPuzzle()
     {
         answer.Clear();
+    }
+
+    //타이머
+    public void OpenBook()
+    {
+        speed = 0.3f;
+    }
+    public void CloseBook()
+    {
+        speed = 1.0f;
     }
 }

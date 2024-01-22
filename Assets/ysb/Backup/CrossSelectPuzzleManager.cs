@@ -8,25 +8,15 @@ public class CrossSelectPuzzleManager : PuzzleManager
     private CrossSelectGrid grid = null;
     public bool isAct = false;
     //리셋을 위한
-    private List<CrossSelectGridMgr> gridMgrs = new List<CrossSelectGridMgr>();
-    //private List<CrossPuzzlePiece> pieces = new List<CrossPuzzlePiece>();
+    private List<CrossSelectGridMgr> manager_Grids;
+    private PieceManager manager_Piece;
     private void Start()
     {
-        gridMgrs.AddRange(GetComponentsInChildren<CrossSelectGridMgr>());
-        //pieces.AddRange(GetComponentsInChildren<CrossPuzzlePiece>());
+        manager_Grids = new List<CrossSelectGridMgr>();
+        manager_Grids.AddRange(GetComponentsInChildren<CrossSelectGridMgr>());
+
+        manager_Piece = FindObjectOfType<PieceManager>();
     }
-
-
-    //==============테스트
-    public void SelectGrid(CrossSelectGrid g)
-    {
-        //if (isSolvingPuzzle == false || solvedPuzzle == true) { return; }
-        //if (isAct == true) { return; }
-        //grid = g;
-        //grid.SelectPiece();
-    }
-
-    //=============테스트
     void Update()
     {
         if (isSolvingPuzzle == false || solvedPuzzle == true) { return; }  //퍼즐 풀이가 시작됐을 때 퍼즐 조각과 상호작용 가능
@@ -41,8 +31,6 @@ public class CrossSelectPuzzleManager : PuzzleManager
             {
                 if (hit.collider.CompareTag("PuzzleGrid"))
                 {
-                    //piece = hit.collider.GetComponent<CrossPuzzlePiece>();
-                    //piece.ResetGrid();
                     grid = hit.collider.GetComponent<CrossSelectGrid>();
                     grid.SelectPiece();
                     break;
@@ -53,18 +41,15 @@ public class CrossSelectPuzzleManager : PuzzleManager
 
     public void ResetPuzzle()
     {
-        foreach (var gm in gridMgrs)
+        foreach (var gm in manager_Grids)
         {
             gm.gameObject.SetActive(true);
             gm.ResetPuzzle();
         }
-        //foreach (var p in pieces)
-        //{
-        //    p.ResetPuzzle();
-        //}
+        manager_Piece.ResetPanel();
     }
 
-    //필수 기능
+    //==============================================필수 기능
     public override void StartPuzzleSolving()
     {
         if (isSolvingPuzzle == true || solvedPuzzle == true || player == null) { return; }
@@ -84,7 +69,7 @@ public class CrossSelectPuzzleManager : PuzzleManager
             manager_UI.ShowInteractMessage(true);
         }
 
-        if(grid!=null)
+        if(grid != null)
         {
             grid.ClosePanel();
             isAct = false;

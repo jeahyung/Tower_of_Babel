@@ -153,6 +153,7 @@ public class CrossSelectGridMgr : MonoBehaviour
         for (int i = 0; i < word.Count; ++i)
         {
             word[i] = "";
+            results[i] = -1;
         }
         isComplete = false;
     }

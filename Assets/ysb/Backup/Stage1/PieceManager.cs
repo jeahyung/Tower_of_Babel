@@ -21,7 +21,7 @@ public class PieceManager : MonoBehaviour
             pieces[i].PieceId = i;
         }
 
-        panel_Select.transform.localScale = new Vector3(0, 1, 1);
+        CloseSelectPanel();
     }
 
     public void OpenSelectPanel(CrossSelectGrid g)
@@ -31,15 +31,23 @@ public class PieceManager : MonoBehaviour
         grid = null;
         grid = g;
     }
+    public void CloseSelectPanel()
+    {
+        panel_Select.transform.localScale = new Vector3(0, 1, 1);
+    }
 
     public void AddWord(Sprite img, string mean, SelectPiece piece)
     {
         grid.AddWord(img, mean, piece);
-        panel_Select.transform.localScale = new Vector3(0, 1, 1);
+        CloseSelectPanel();
     }
 
-    public void ClosePanel()
+    //===================================================Reset
+    public void ResetPanel()
     {
-        panel_Select.transform.localScale = new Vector3(0, 1, 1);
+        for (int i = 0; i < pieces.Count; ++i)
+        {
+            pieces[i].IsSelected = false;
+        }
     }
 }
