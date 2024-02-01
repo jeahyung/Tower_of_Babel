@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   wordId: 2
   wordImg: {fileID: 21300000, guid: 46930b20180b59e46b73494adf53abbb, type: 3}
-  wordMean: three
+  wordMean: pray
   piece:
   - "\uAE30"
   - "\uB3C4"

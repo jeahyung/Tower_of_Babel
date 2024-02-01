@@ -25,6 +25,7 @@ public class Dictionary : MonoBehaviour
     private int bookIndex = 0;              //단어 노트 칸 index
 
     private bool isOpen = false;
+    public bool IsOpen => isOpen;
 
     //페이지
     private int pageIndex = 0;

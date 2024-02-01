@@ -6,6 +6,7 @@ TagManager:
   tags:
   - WordData
   - PuzzleGrid
+  - Wall
   layers:
   - Default
   - TransparentFX

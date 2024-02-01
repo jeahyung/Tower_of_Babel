@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     //private Tmp_Book manager_Book;  //삭제할 예정
 
     private Dictionary manager_Dictionary;
+    
     private void Awake()
     {
         InteractMessage = GameObject.Find("InteractMessage");
@@ -29,6 +30,10 @@ public class UIManager : MonoBehaviour
     ///////
     //사전
     ///////
+    public bool IsBookOpen()
+    {
+        return manager_Dictionary.IsOpen;
+    }
     public void StartPuzzleAndBookOpen()
     {
         manager_Dictionary.SetBookForPuzzle();

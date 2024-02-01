@@ -17,7 +17,7 @@ public class WordBookData : MonoBehaviour
     public WordData WordData => wordData;
     public string Memo => memoText.text;
 
-    public GameObject WordObj => wordImage.gameObject;    //문자 이미지
+    public GameObject WordObject => wordImage.gameObject;    //문자 이미지
     public Sprite WordImg => wordImage.sprite;
 
     private void Awake()

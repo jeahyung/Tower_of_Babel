@@ -9,6 +9,8 @@ public class PieceManager : MonoBehaviour
     private List<SelectPiece> pieces;
     private CrossSelectGrid grid = null;
 
+    public GameObject closeBtn;
+
     private void Awake()
     {
         panel_Select = this.gameObject;
@@ -30,10 +32,13 @@ public class PieceManager : MonoBehaviour
 
         grid = null;
         grid = g;
+
+        closeBtn.SetActive(true);
     }
     public void CloseSelectPanel()
     {
         panel_Select.transform.localScale = new Vector3(0, 1, 1);
+        closeBtn.SetActive(false);
     }
 
     public void AddWord(Sprite img, string mean, SelectPiece piece)

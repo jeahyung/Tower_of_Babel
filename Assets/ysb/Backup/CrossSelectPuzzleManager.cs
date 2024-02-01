@@ -71,8 +71,7 @@ public class CrossSelectPuzzleManager : PuzzleManager
 
         if(grid != null)
         {
-            grid.ClosePanel();
-            isAct = false;
+            EndSelect();
         }
     }
 
@@ -89,5 +88,11 @@ public class CrossSelectPuzzleManager : PuzzleManager
 
         onEndPuzzle.Invoke();
         solvedPuzzle = true;
+    }
+
+    public void EndSelect()
+    {
+        grid.ClosePanel();
+        isAct = false;
     }
 }

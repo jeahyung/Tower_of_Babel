@@ -12,7 +12,9 @@ public class CrossSelectGridMgr : MonoBehaviour
 
     public List<int> results;    
 
-    private bool isComplete = false;   
+    private bool isComplete = false;
+
+    private Collider col;
 
     private void Awake()
     {
@@ -23,6 +25,8 @@ public class CrossSelectGridMgr : MonoBehaviour
             word.Add("");
             results.Add(-1);
         }
+
+        col = this.GetComponent<BoxCollider>();
     }
 
     public void AddWordPiece(int id, string piece)
@@ -67,6 +71,7 @@ public class CrossSelectGridMgr : MonoBehaviour
                 if (answer.Contains(w) == false)
                 {
                     isComplete = false;
+                    col.enabled = true;
                 }
 
             }
@@ -78,6 +83,10 @@ public class CrossSelectGridMgr : MonoBehaviour
             {
                 grids[i].CompleteWord();    
             }
+        }
+        if(isComplete == true)
+        {
+            col.enabled = false;
         }
     }
 
@@ -159,11 +168,11 @@ public class CrossSelectGridMgr : MonoBehaviour
     }
 
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (isComplete == false)
-        {
-            gameObject.SetActive(false);
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if (isComplete == false)
+    //    {
+    //        gameObject.SetActive(false);
+    //    }
+    //}
 }

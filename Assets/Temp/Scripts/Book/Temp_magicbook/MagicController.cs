@@ -171,7 +171,7 @@ public class MagicController : MonoBehaviour
                     //이거 문자 데이터임?
                     if (raycastResults[i].gameObject.CompareTag("WordData"))
                     {
-                        clickWord = raycastResults[i].gameObject.GetComponent<WordBookData>().WordObj;
+                        clickWord = raycastResults[i].gameObject.GetComponent<WordBookData>().WordObject;
                         wbd = raycastResults[i].gameObject.GetComponent<WordBookData>();
                         wordParent = clickWord.transform.parent;
                         //Debug.Log(wordParent.name);
