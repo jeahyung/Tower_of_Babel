@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class MovingBoxManager : MonoBehaviour
@@ -11,6 +12,9 @@ public class MovingBoxManager : MonoBehaviour
     public Vector2 maxPoint;
     
     public List<BoxMove> boxes;
+
+    public List<int> cntNum = new List<int>();
+
     public bool isOneMove = true;
 
     public void Chage()
@@ -22,7 +26,13 @@ public class MovingBoxManager : MonoBehaviour
         boxes = new List<BoxMove>();
         boxes.AddRange(GetComponentsInChildren<BoxMove>());
 
-        minPoint = new Vector2(center.position.x - (size.x / 2), center.position.y - (size.y / 2));
+        for (int i = 0; i < boxes.Count; ++i)
+        {
+            cntNum.Add(boxes[i].wordData.wordId);//wordData.wordId
+        }
+
+
+            minPoint = new Vector2(center.position.x - (size.x / 2), center.position.y - (size.y / 2));
         maxPoint = new Vector2(center.position.x + (size.x / 2), center.position.y + (size.y / 2));
     }
 

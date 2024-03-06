@@ -7,7 +7,7 @@ public class RotateClock : MonoBehaviour
     public float rotationSpeed = 3f;
     private float[] values = new float[] { 18.0f, 54.0f, 90.0f, 126.0f, 162.0f };
     private int i = 0;
-    private int sideCnt;
+  //  private int sideCnt;
     private int clockDegree;
 
     private float targetRotation = 0f;
@@ -16,7 +16,7 @@ public class RotateClock : MonoBehaviour
     void Start()
     {
         mover = true;
-        sideCnt = 5;
+       // sideCnt = 5;
         clockDegree = 180 / 5;
     }
 
