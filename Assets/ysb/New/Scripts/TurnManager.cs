@@ -6,6 +6,7 @@ public class TurnManager : MonoBehaviour
 {
     private Map manager_map;
     private PlayerMovement player;
+    private ItemManager manager_Item;
 
     public bool isPlayerTurn = false;
     public bool isEnemyTurn = true;
@@ -18,6 +19,7 @@ public class TurnManager : MonoBehaviour
     {
         manager_map = FindObjectOfType<Map>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
+        manager_Item = player.GetComponent<ItemManager>();
     }
 
     public void StartGame()
@@ -61,6 +63,8 @@ public class TurnManager : MonoBehaviour
     {
         isEnemyTurn = false;
         Debug.Log("몬스터 턴 end");
+
+        manager_Item.RemoveObj();
         StartPlayerTurn();
     }
 }

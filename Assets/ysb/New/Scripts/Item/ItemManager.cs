@@ -8,6 +8,8 @@ public class ItemManager : MonoBehaviour
     private ItemInventory inven;
     private Item selectedItem;
 
+    private List<CreatedObject> objs = new List<CreatedObject>();
+
     private void Awake()
     {
         map = FindObjectOfType<Map>();
@@ -39,6 +41,8 @@ public class ItemManager : MonoBehaviour
     {
         GameObject newObejct = Instantiate(obj);
         map.SetObjectPosition(newObejct);
+
+        objs.Add(newObejct.GetComponent<CreatedObject>());
     }
     public void MovePlayer()
     {
@@ -48,5 +52,14 @@ public class ItemManager : MonoBehaviour
     public void SetPlayerPos()
     {
         map.SetPlayerPosition();
+    }
+
+    //설치물 제거
+    public void RemoveObj()
+    {
+        foreach(var obj in objs)
+        {
+            obj.DestroyObj();
+        }
     }
 }
