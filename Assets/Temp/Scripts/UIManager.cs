@@ -12,6 +12,7 @@ public class UIManager : MonoBehaviour
     //private Tmp_Book manager_Book;  //삭제할 예정
 
     private Dictionary manager_Dictionary;
+    private InputMouse inputMouse;
     
     private void Awake()
     {
@@ -21,6 +22,7 @@ public class UIManager : MonoBehaviour
         //manager_Book = GameObject.Find("Book").GetComponent<Tmp_Book>();//GameObject.Find("Book").GetComponent<Book>();
 
         manager_Dictionary = GetComponentInChildren<Dictionary>();
+        inputMouse = manager_Dictionary.gameObject.GetComponent<InputMouse>();
     }
     public void ShowInteractMessage(bool active)
     {
@@ -34,9 +36,13 @@ public class UIManager : MonoBehaviour
     {
         return manager_Dictionary.IsOpen;
     }
-    public void StartPuzzleAndBookOpen()
+    public void StartPuzzleAndBookOpen(bool isStage3 = false)
     {
         manager_Dictionary.SetBookForPuzzle();
+        if(isStage3 == true)
+        {
+            inputMouse.isAct = true;
+        }
 
         //manager_Book.MoveBookObject(-900f);
     }
@@ -45,7 +51,8 @@ public class UIManager : MonoBehaviour
         manager_Dictionary.isSolving = false;
         manager_Dictionary.ClosePanel();
 
-      
+        inputMouse.isAct = false;
+
         //manager_Book.MoveBookObject(0f);
         //manager_Book.BtnOff();
     }

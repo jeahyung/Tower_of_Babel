@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/ysb/Scenes/ysb_stage2.unity
+    path: Assets/ysb/Old/Scenes/ysb_stage2.unity
     guid: 7f73a31a8e58edc41a10ed8461570694
   m_configObjects: {}

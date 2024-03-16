@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1_Noon
   m_EditorClassIdentifier: 
   wordId: 1
-  wordImg: {fileID: 21300000, guid: 897c3a3f5c4038345a7143573bbb4a40, type: 3}
+  wordImg: {fileID: 21300000, guid: be423a54b981d38428de82ad12534629, type: 3}
   wordMean: noon
   piece:
   - "\uC815"

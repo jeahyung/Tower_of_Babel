@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 2_Pray
   m_EditorClassIdentifier: 
   wordId: 2
-  wordImg: {fileID: 21300000, guid: 46930b20180b59e46b73494adf53abbb, type: 3}
+  wordImg: {fileID: 21300000, guid: b528c1b33a65cf94ea74f830b54c9acb, type: 3}
   wordMean: pray
   piece:
   - "\uAE30"
