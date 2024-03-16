@@ -29,8 +29,6 @@ public class PlayerMovement : MonoBehaviour
     {
         moveRange += UpgradeManager.instance.bonusRange;
     }
-
-
     void Update()
     {
         if(isControl == false) { return; }
@@ -39,12 +37,47 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = new Vector3(x * 5, rigid.velocity.y, z * 5);
     }
 
+    public void SetControl(bool b)
+    {
+        isControl = b;
+        rigid.velocity = Vector3.zero;
+    }
+
+    //에너지 사용
+    public void UseEnergy(int i = 1)
+    {
+        energySysteam.UseEnergy(i);
+    }
+    //순간이동
+    public void TeleportPlayer(Vector3 target)
+    {
+        if (target == Vector3.zero) { return; }
+        if (canMove == false) { return; }
+
+        UseEnergy();
+
+        Vector3 pos = new Vector3(target.x, transform.position.y, target.z);
+        manager_Turn.isDone = false;
+        StartCoroutine(Teleport(pos));
+    }
+    private IEnumerator Teleport(Vector3 target)
+    {
+        canMove = false;
+        //애니메이션 or 이펙트 재생
+        yield return new WaitForSeconds(0.5f);
+        canMove = true;
+        transform.position = target;
+
+        manager_Turn.EndPlayerTurn();
+    }
+
+    //이동
     public void SetPosition(Vector3 target)
     {
         if(target == Vector3.zero) { return; }
         if(canMove == false) { return; }
 
-        energySysteam.UseEnergy(1);
+        UseEnergy();
 
         Vector3 pos = new Vector3(target.x, transform.position.y, target.z);
         manager_Turn.isDone = false;

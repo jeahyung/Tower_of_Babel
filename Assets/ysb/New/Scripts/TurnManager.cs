@@ -20,6 +20,15 @@ public class TurnManager : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
     }
 
+    public void StartGame()
+    {
+        player.SetControl(false);
+        StartPlayerTurn();
+    }
+    public void EndGame()
+    {
+        player.SetControl(true);
+    }
     public void StartPlayerTurn()
     {
         if(isEnemyTurn == true) { return; }
@@ -54,5 +63,4 @@ public class TurnManager : MonoBehaviour
         Debug.Log("몬스터 턴 end");
         StartPlayerTurn();
     }
-
 }

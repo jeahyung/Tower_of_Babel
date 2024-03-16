@@ -8,6 +8,8 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
     public int bonusRange = 0;
     public int bonusScore = 0;
+
+    public int num; //선택한 행동 번호
     public void AddUpgrade(Upgrade up)
     {
         selectedUp.Add(up);
@@ -23,6 +25,10 @@ public class UpgradeManager : Singleton<UpgradeManager>
         else if(up.upType == UpType.score)
         {
             bonusScore += up.state;
+        }
+        else if(up.upType == UpType.action)
+        {
+            num = up.state;
         }
     }
 }

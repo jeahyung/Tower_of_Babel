@@ -5,12 +5,14 @@ using UnityEngine;
 
 public class ItemObject : MonoBehaviour
 {
+    private ItemInventory inven;
     public Item item;
     //public Sprite img;
 
     private void Awake()
     {
-        //item = new Item(img);
+        item = GetComponent<Item>();
+        inven = FindObjectOfType<ItemInventory>();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -18,7 +20,9 @@ public class ItemObject : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             //other.GetComponent<ItemManager>().GetItem(item);
+            inven.PickUpItem(item);
             this.gameObject.SetActive(false);
+
         }
     }
 }

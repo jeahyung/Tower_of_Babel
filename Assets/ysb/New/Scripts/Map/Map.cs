@@ -6,6 +6,7 @@ public class Map : MonoBehaviour
 {
     private PlayerMovement player;
     private TurnManager manager_Turn;
+    private SpecialActionManager manager_Action;
 
     public int LineCount;
     public Transform[] tileLines;
@@ -18,6 +19,7 @@ public class Map : MonoBehaviour
     public Vector2Int startCoord;   //시작점
     public Vector2Int[] distance;
 
+    public bool useAction = false;
     public bool useItem = false;
     private ItemManager manager_Item;
 
@@ -28,6 +30,7 @@ public class Map : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Turn = player.GetComponent<TurnManager>();
         manager_Item = FindObjectOfType<ItemManager>();
+        manager_Action = FindObjectOfType<SpecialActionManager>();
 
         tiles = new Tile[LineCount + 2, LineCount];
         for(int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
@@ -93,6 +96,7 @@ public class Map : MonoBehaviour
         FindTileInRange_Four(nowTile, range);
     }
 
+    #region 타일 탐색
     //4방향
     public void FindTileInRange_Four(Tile startTile, int range) //시작점 / 범위
     {
@@ -116,10 +120,11 @@ public class Map : MonoBehaviour
     }
     
     //8방향
-    public void FindTileInRange_Eight(int range) //시작점 / 범위
+    public void FindTileInRange_Eight(Tile startTile, int range) //시작점 / 범위
     {
         moveArea.Clear();
-        startCoord = nowTile.coord;
+        if(startTile == null) { startTile = nowTile; }
+        startCoord = startTile.coord;
 
         for(int i = startCoord.x - range; i <= startCoord.x + range; ++i)
         {
@@ -170,6 +175,39 @@ public class Map : MonoBehaviour
 
         ShowArea(moveArea);
     }
+    //4방향 쭉
+    public void FindTileInRange_FourLong()
+    {
+        moveArea.Clear();
+        startCoord = nowTile.coord;
+
+        //시작점에서 4방향으로 쭉 탐색 -> 못 가는 타일이 있으면 탐색 종료 다음 방향으로
+        int i = 0;
+        while (i < 4)
+        {
+            int j = 0;
+            while (j < LineCount)
+            {
+                if (j >= LineCount) { i++; }
+                Vector2Int nowCoord = startCoord + distance[i] * (j + 1);
+                Tile findTile = GetTile(nowCoord);
+
+                if (findTile != null && findTile.tileType == TileType.possible)
+                {
+                    moveArea.Add(findTile);
+                    j++;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            i++;
+        }
+
+        ShowArea(moveArea);
+    }
+    #endregion
 
     public Tile GetTile(Vector2Int coord)
     {
@@ -177,6 +215,14 @@ public class Map : MonoBehaviour
         if(tiles[coord.x, coord.y].gameObject.activeSelf == false || tiles[coord.x, coord.y].tileType != TileType.possible) { return null; }
 
         return tiles[coord.x, coord.y];
+    }
+
+    public void HideArea()
+    {
+        foreach (var t in moveArea)
+        {
+            t.HideArea();
+        }
     }
 
     public void ShowArea(List<Tile> tileInArea)
@@ -194,30 +240,35 @@ public class Map : MonoBehaviour
         {
             if (moveArea.Contains(clickTile) == false)
             {
-                foreach (var t in moveArea)
-                {
-                    t.HideArea();
-                }
+                HideArea();
                 FindTileInRange_Four(nowTile, player.moveRange);
                 useItem = false;
                 return;
             }
-            foreach (var t in moveArea)
-            {
-                t.HideArea();
-            }
+            HideArea();
             manager_Item.UseItem();
             //selectedItem.UseItem();
             useItem = false;
             return;
         }
+        if(useAction)   //액션 사용 
+        {
+            //if (moveArea.Contains(clickTile) == false)
+            //{
+            //    HideArea();
+            //    FindTileInRange_Four(nowTile, player.moveRange);
+            //    manager_Action.ActDone();
+            //    useAction = false;
+            //    return;
+            //}
+            if (moveArea.Contains(clickTile) == false) { return; }
+            manager_Action.ActDone();
+            useAction = false;
+        }
         if(moveArea.Contains(clickTile) == true)
         {
             if(useItem == true) { useItem = false; }
-            foreach(var t in moveArea)
-            {
-                t.HideArea();
-            }
+            HideArea();
             MovePlayerPosition();            
         }
     }
@@ -228,25 +279,21 @@ public class Map : MonoBehaviour
         //selectedItem = item;
     }
 
+    #region 아이템
+
     //아이템 사용
     public void UseItem_Four(int r)
     {
         useItem = true;
-        foreach (var t in moveArea)
-        {
-            t.HideArea();
-        }
+        HideArea();
         FindTileInRange_Four(nowTile, r);
     }
     
     public void UseItem_Eight(int r)
     {
         useItem = true;
-        foreach (var t in moveArea)
-        {
-            t.HideArea();
-        }
-        FindTileInRange_Eight(r);
+        HideArea();
+        FindTileInRange_Eight(nowTile, r);
     }
 
 
@@ -258,6 +305,7 @@ public class Map : MonoBehaviour
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
         clickTile.ChangeTileState(TileType.impossible);
+        player.UseEnergy(); //에너지 사용
 
         manager_Turn.EndPlayerTurn();
     }
@@ -267,5 +315,25 @@ public class Map : MonoBehaviour
     {
         player.SetPosition(clickTile.GetPosition());
         nowTile = clickTile;
+        //에너지 사용 -> 플레이어쪽에서
+    }
+
+    //플레이어 순간이동
+    public void SetPlayerPosition()
+    {
+        HideArea();
+        player.TeleportPlayer(tiles[0, 0].GetPosition());
+        nowTile = tiles[0, 0];
+        //에너지 사용 -> 플레이어쪽에서
+        useItem = false;
+    }
+    #endregion
+
+    public void CancelAct()
+    {
+        HideArea();
+        FindTileInRange_Four(nowTile, player.moveRange);
+        manager_Action.ActDone();
+        useAction = false;
     }
 }

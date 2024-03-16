@@ -5,11 +5,13 @@ using UnityEngine;
 public class ItemManager : MonoBehaviour
 {
     private Map map;
+    private ItemInventory inven;
     private Item selectedItem;
 
     private void Awake()
     {
         map = FindObjectOfType<Map>();
+        inven = FindObjectOfType<ItemInventory>();
     }
     public void SeletItem_Four(Item item, int range)
     {
@@ -30,6 +32,7 @@ public class ItemManager : MonoBehaviour
     public void UseItem()
     {
         selectedItem.UseItem();
+        inven.RemoveItem(selectedItem);
     }
 
     public void CreateObject(GameObject obj)
@@ -40,5 +43,10 @@ public class ItemManager : MonoBehaviour
     public void MovePlayer()
     {
         map.MovePlayerPosition();
+    }
+
+    public void SetPlayerPos()
+    {
+        map.SetPlayerPosition();
     }
 }
