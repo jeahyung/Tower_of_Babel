@@ -6310,7 +6310,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   bonusRange: 0
   bonusScore: 0
-  num: 1
+  num: 0
 --- !u!4 &1352076224
 Transform:
   m_ObjectHideFlags: 0

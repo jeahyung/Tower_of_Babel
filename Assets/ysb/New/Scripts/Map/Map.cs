@@ -97,13 +97,25 @@ public class Map : MonoBehaviour
     }
 
     #region 타일 탐색
+    private void CheckTileObject()
+    {
+        foreach(var t in tiles)
+        {
+            if(t != null)
+            {
+                t.CheckObject();
+            }
+        }
+    }
     //4방향
     public void FindTileInRange_Four(Tile startTile, int range) //시작점 / 범위
     {
         moveArea.Clear();
         startCoord = startTile.coord;
 
-        for(int i = 0; i < 4; ++i)
+        CheckTileObject();
+
+        for (int i = 0; i < 4; ++i)
         {
             for(int j = 0; j < range; ++j)
             {
@@ -126,7 +138,9 @@ public class Map : MonoBehaviour
         if(startTile == null) { startTile = nowTile; }
         startCoord = startTile.coord;
 
-        for(int i = startCoord.x - range; i <= startCoord.x + range; ++i)
+        CheckTileObject();
+
+        for (int i = startCoord.x - range; i <= startCoord.x + range; ++i)
         {
             for(int j = startCoord.y - range; j <= startCoord.y + range; ++j)
             {
@@ -148,6 +162,8 @@ public class Map : MonoBehaviour
     {
         moveArea.Clear();
         startCoord = nowTile.coord;
+
+        CheckTileObject();
 
         //시작점에서 대각선 방향으로 쭉 탐색 -> 못 가는 타일이 있으면 탐색 종료 다음 방향으로
         int i = 0;
@@ -172,7 +188,6 @@ public class Map : MonoBehaviour
             }
             i++;
         }
-
         ShowArea(moveArea);
     }
     //4방향 쭉
@@ -180,6 +195,8 @@ public class Map : MonoBehaviour
     {
         moveArea.Clear();
         startCoord = nowTile.coord;
+
+        CheckTileObject();
 
         //시작점에서 4방향으로 쭉 탐색 -> 못 가는 타일이 있으면 탐색 종료 다음 방향으로
         int i = 0;
@@ -204,7 +221,6 @@ public class Map : MonoBehaviour
             }
             i++;
         }
-
         ShowArea(moveArea);
     }
     #endregion

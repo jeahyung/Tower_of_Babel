@@ -57,9 +57,20 @@ public class ItemManager : MonoBehaviour
     //설치물 제거
     public void RemoveObj()
     {
+        List<CreatedObject> tempList = new List<CreatedObject>();
         foreach(var obj in objs)
         {
-            obj.DestroyObj();
+            //if(obj.gameObject == null) { return; }
+            if(obj.DestroyObj() == true) { tempList.Add(obj); }
         }
+        for(int i = 0; i < tempList.Count;++i)
+        {
+            objs.Remove(tempList[i]);
+        }
+    }
+
+    public void RemoveList(CreatedObject i)
+    {
+        objs.Remove(i);
     }
 }

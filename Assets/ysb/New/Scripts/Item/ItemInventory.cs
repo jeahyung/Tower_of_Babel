@@ -38,9 +38,10 @@ public class ItemInventory : Singleton<ItemInventory>
     {
         foreach (ItemUISlot slot in slots)
         {
-            if (slot.addItem == i)
+            if (slot.addItem != null && slot.addItem == i)
             {
                 slot.RemoveItem();
+                
                 break;
             }
         }

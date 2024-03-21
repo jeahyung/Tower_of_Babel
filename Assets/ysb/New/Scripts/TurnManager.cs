@@ -38,12 +38,12 @@ public class TurnManager : MonoBehaviour
         isDone = true;
         manager_map.StartPlayerTurn(player.moveRange);
 
-        Debug.Log("player turn");
+        //Debug.Log("player turn");
     }
 
     public void EndPlayerTurn()
     {
-        Debug.Log("player turn end");
+       // Debug.Log("player turn end");
         isPlayerTurn = false;
         isDone = true;
 
@@ -54,7 +54,7 @@ public class TurnManager : MonoBehaviour
     {
         if(isPlayerTurn == true) { return; }
         isEnemyTurn = true;
-        Debug.Log("몬스터 턴");
+        //Debug.Log("몬스터 턴");
 
         EndEnemyTurn();
     }
@@ -62,7 +62,7 @@ public class TurnManager : MonoBehaviour
     public void EndEnemyTurn()
     {
         isEnemyTurn = false;
-        Debug.Log("몬스터 턴 end");
+        //Debug.Log("몬스터 턴 end");
 
         manager_Item.RemoveObj();
         StartPlayerTurn();

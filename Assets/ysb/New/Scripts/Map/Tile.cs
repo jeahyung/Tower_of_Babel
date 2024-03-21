@@ -58,4 +58,21 @@ public class Tile : MonoBehaviour
         tileType = tp;
     }
 
+    public void CheckObject()
+    {
+        if(tileType != TileType.possible)
+        {
+            RaycastHit[] hit = Physics.RaycastAll(transform.position, Vector3.up, 1 << LayerMask.NameToLayer("Object"));
+            foreach(var h in hit)
+            {
+                if(h.collider != null)
+                {
+                    Debug.Log(h.collider.name);
+                    return;
+                }
+            }
+
+            tileType = TileType.possible;
+        }
+    }
 }
