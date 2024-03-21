@@ -6,9 +6,13 @@ using System;
 
 public class RandomPattern : MonoBehaviour
 {
-    
+    /*
+     ChooseRandomNumber(); 호출 후 sum 사용으로 맵 구현
+     */
     public int[] arr = new int[8];
+    
     private bool stop = false;
+    public int sum = 0;
 
     void Start()
     {
@@ -21,6 +25,8 @@ public class RandomPattern : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.A))
         {
             ChooseRandomNumber();
+            Debug.Log("----");
+            Debug.Log(sum);
         }
         else if (Input.GetKeyDown(KeyCode.Q))
         {
@@ -29,12 +35,12 @@ public class RandomPattern : MonoBehaviour
     }
 
     //보스 이후 초기화 필요
-    private void ChooseRandomNumber()
+    public void ChooseRandomNumber()
     {
         //쓸데없이 계속 호출되어 돌아가는 함수는 효율이 거지라 개선필요한데 
         //이건 패턴 중 총4 번 호출되며 이외의 추가호출은 없다. 개선 보류
         
-        int randomIndex = UnityEngine.Random.Range(1, 9);
+        int randomIndex = UnityEngine.Random.Range(1, 9); // 1 ~8까지
        
         CheckStopBool();
 
@@ -42,6 +48,7 @@ public class RandomPattern : MonoBehaviour
         {
             arr[randomIndex-1] = randomIndex;
             Debug.Log(randomIndex);
+            sum = randomIndex;
         }
         else if (stop)
         {
@@ -50,7 +57,9 @@ public class RandomPattern : MonoBehaviour
         else
         {
             Debug.Log("모든 패턴이 다 나왔다");
+            sum = -1;
         }
+
         
     }
 
