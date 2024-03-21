@@ -12,30 +12,43 @@ public class RandomPattern : MonoBehaviour
     public int[] arr = new int[8];
     
     private bool stop = false;
-    public int sum = 0;
+    private int sum = 0;
 
     void Start()
     {
         
     }
 
+    public int Number()
+    {
+        ChooseRandomNumber();
+  
+        return sum;
+    }
+
+    public void ClearArrPattern()
+    {
+        Array.Clear(arr, 0, arr.Length);
+    }
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A))
+        //if(Input.GetKeyDown(KeyCode.A))
+        //{
+        //    ChooseRandomNumber();
+        //    Debug.Log("----");
+        //    Debug.Log(sum);
+        //}
+         if (Input.GetKeyDown(KeyCode.Q))
         {
-            ChooseRandomNumber();
-            Debug.Log("----");
-            Debug.Log(sum);
-        }
-        else if (Input.GetKeyDown(KeyCode.Q))
-        {
-            ClearArrPattern();
+            Number();
+            //    Debug.Log("----");
+            //    Debug.Log(sum);
         }
     }
 
     //보스 이후 초기화 필요
-    public void ChooseRandomNumber()
+    private void ChooseRandomNumber()
     {
         //쓸데없이 계속 호출되어 돌아가는 함수는 효율이 거지라 개선필요한데 
         //이건 패턴 중 총4 번 호출되며 이외의 추가호출은 없다. 개선 보류
@@ -56,6 +69,7 @@ public class RandomPattern : MonoBehaviour
         }
         else
         {
+            ClearArrPattern();
             Debug.Log("모든 패턴이 다 나왔다");
             sum = -1;
         }
@@ -80,8 +94,4 @@ public class RandomPattern : MonoBehaviour
         }
     }
 
-    public void ClearArrPattern()
-    {
-        Array.Clear(arr, 0, arr.Length);
-    }
 }
