@@ -21,6 +21,10 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     public List<Upgrade> actionsList = new List<Upgrade>();
     public List<Upgrade> upList = new List<Upgrade>();
 
+    //데이터
+    public string fileName = "Upgrade";
+    List<Dictionary<string, object>> dicList = new List<Dictionary<string, object>>();
+
     public bool isFirst = false; //처음 선택?
     private void Start()
     {
@@ -29,22 +33,35 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
 
         //타입에 따라 따로 저장(data : 타입 / state / 설명 / 이미지?
         //특수 액션
-        for(int i = 0; i < 3; ++i)
-        {
-            Upgrade up = new Upgrade(i);
-            up.upType = UpType.action;
+        //for(int i = 0; i < 3; ++i)
+        //{
+        //    Upgrade up = new Upgrade(i);
+        //    up.upType = UpType.action;
 
-            actionsList.Add(up);
-        }
+        //    actionsList.Add(up);
+        //}
 
-        //일반
-        for(int i = 0; i < count; ++i)
+        ////일반
+        //for(int i = 0; i < count; ++i)
+        //{
+        //    Upgrade up = new Upgrade(i + 1);
+        //    upList.Add(up);
+        //}
+
+        LoadCSVFile();
+        SetData();
+    }
+
+    public void LoadCSVFile()
+    {
+        dicList.Clear();
+        dicList = CSVReader.Read(fileName);
+
+        for(int i = 0; i < dicList.Count; ++i)
         {
-            Upgrade up = new Upgrade(i + 1);
+            Upgrade up = new Upgrade(int.Parse(dicList[i]["State"].ToString()));
             upList.Add(up);
         }
-
-        SetData();
     }
 
     //업그레이드 데이터 세팅

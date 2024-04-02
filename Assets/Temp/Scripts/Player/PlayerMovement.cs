@@ -8,7 +8,7 @@ public class PlayerMovement : MonoBehaviour
     private MeshRenderer mesh;
 
     private TurnManager manager_Turn;
-    private EnergySysteam energySysteam;
+    private EnergySystem energySysteam;
 
     private bool isControl = true;
     private bool canMove = true;
@@ -20,7 +20,7 @@ public class PlayerMovement : MonoBehaviour
     private void Awake()
     {
         manager_Turn = GetComponent<TurnManager>();
-        energySysteam = GetComponent<EnergySysteam>();
+        energySysteam = GetComponent<EnergySystem>();
 
         rigid = GetComponent<Rigidbody>();
         mesh = GetComponent<MeshRenderer>();

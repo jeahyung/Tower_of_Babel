@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class EnergySysteam : MonoBehaviour
+public class EnergySystem : MonoBehaviour
 {
     [SerializeField]
     private int maxEnergy;
