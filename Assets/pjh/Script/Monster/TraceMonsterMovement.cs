@@ -15,8 +15,8 @@ public class TraceMonsterMovement : MonoBehaviour
   
 
     [Header("몬스터 시작점")] //이건 추후 데이터 받아오는 형식으로 수정
-    [SerializeField] private int startX;
-    [SerializeField] private int startY;
+    [SerializeField] private int startX =3;
+    [SerializeField] private int startY = 3;
     
     public List<Tile> allTiles = new List<Tile>();
     [SerializeField] private Tile tile = null;
@@ -36,9 +36,7 @@ public class TraceMonsterMovement : MonoBehaviour
     {   
        
      //  player = GameObject.FindWithTag("Player");
-     
-      
-       
+   
         tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
         allTiles.AddRange(tiles);
@@ -54,6 +52,7 @@ public class TraceMonsterMovement : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Think();
+    
         }
         pos = tile.coord;
     }
