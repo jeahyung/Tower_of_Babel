@@ -8,7 +8,7 @@ using UnityEngine.UIElements;
 
 public class TraceMonsterMovement : MonoBehaviour
 {
-    [SerializeField] private GameObject monster;
+  //  [SerializeField] private GameObject monster;
    // [SerializeField]private GameObject player;
 
     [SerializeField] private Map map;
