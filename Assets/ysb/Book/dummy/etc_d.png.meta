@@ -55,10 +55,14 @@ TextureImporter:
   alphaIsTransparency: 0
   spriteTessellationDetail: -1
 <<<<<<< Updated upstream:Assets/ysb/Book/dummy/etc_d.png.meta
+<<<<<<< Updated upstream:Assets/ysb/Book/dummy/etc_d.png.meta
   textureType: 8
 =======
   textureType: 1
 >>>>>>> Stashed changes:Assets/ysb/Old/Book/dummy/NormalMap/testNormal.png.meta
+=======
+  textureType: 1
+>>>>>>> Stashed changes:Assets/Resources/Texture_Dummy/box_low_1001_Normal.png.meta
   textureShape: 1
   singleChannelComponent: 0
   flipbookRows: 1
