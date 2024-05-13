@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class TraceMonsterMovement : MonoBehaviour
 {
+    private ChaseMobManager mgr_Chase;
     [SerializeField] private GameObject monster;
    // [SerializeField]private GameObject player;
 
@@ -33,18 +34,20 @@ public class TraceMonsterMovement : MonoBehaviour
 
 
     private void Awake()
-    {   
-       
-     //  player = GameObject.FindWithTag("Player");
-     
-      
-       
-        tile = GetComponent<Tile>();
+    {
+
+        //  player = GameObject.FindWithTag("Player");
+
+        mgr_Chase = GetComponentInParent<ChaseMobManager>();
+        //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
         allTiles.AddRange(tiles);
     }
     private void Start()
     {
+        Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
+        tile = curTile;
+
         FindTileWithCoords(startX, startY);
         MonsterSetting(nextPos);
     }
@@ -154,9 +157,10 @@ public class TraceMonsterMovement : MonoBehaviour
         }
         
         transform.position = target;
+        CheckTile();
+        mgr_Chase.CheckMobAction();
 
-      
-       // manager_Turn.EndEnemyTurn();
+        // manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
     }
 
@@ -165,6 +169,24 @@ public class TraceMonsterMovement : MonoBehaviour
         if (other.CompareTag("Tile"))
         {
             tile = other.GetComponent<Tile>();
+        }
+    }
+
+    public void Act()
+    {
+        tile.tileType = TileType.possible;
+        Think();
+    }
+    private void CheckTile()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 50f, 1 << LayerMask.NameToLayer("Tile")))
+        {
+            if (hit.collider.TryGetComponent(out Tile t))
+            {
+                tile = t;
+                tile.tileType = TileType.impossible;
+            }
         }
     }
 }

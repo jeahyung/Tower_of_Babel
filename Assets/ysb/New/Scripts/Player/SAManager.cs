@@ -87,10 +87,10 @@ public class SAManager : MonoBehaviour
     #region UI
     public void SetActCountUI(int c)
     {
-        float degree = Mathf.PI * c * 0.1f;
+        float degree = Mathf.PI * c * 0.2f;
         for (int i = 0; i < c; i++)
         {
-            float angle = Mathf.PI * 0.3f - i * degree;
+            float angle = Mathf.PI * 0.3f - i * (degree / c);
 
             Vector3 pos = UI_actCount[i].GetComponent<RectTransform>().anchoredPosition;
             UI_actCount[i].GetComponent<RectTransform>().anchoredPosition

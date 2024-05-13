@@ -31,6 +31,11 @@ public class PatrolMobManager : MonoBehaviour
     }
     public void StartActMob()
     {
+        if(mCount == 0)
+        {
+            transform.parent.SendMessage("EndPatrol");
+            return;
+        }
         mi = 0;
         bishopList[mi].Act();
     }    
