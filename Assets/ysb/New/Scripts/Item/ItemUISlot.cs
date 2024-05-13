@@ -15,7 +15,10 @@ public class ItemUISlot : MonoBehaviour
         img = GetComponent<Image>();
         btn = GetComponent<Button>();
 
-        if(addItem == null) { img.sprite = null; }
+        if(addItem == null) {             
+            img.sprite = null;
+            img.enabled = false;
+        }
     }
 
     public void SetSlot(Item item)
@@ -23,6 +26,7 @@ public class ItemUISlot : MonoBehaviour
         //if(item == null) { return; }
         if(addItem != null) { return; }
         addItem = item;
+        img.enabled = true;
         img.sprite = addItem.itemImg;
 
         btn.onClick.AddListener(() => addItem.SelectItem());
@@ -35,6 +39,7 @@ public class ItemUISlot : MonoBehaviour
         if(addItem == null) { return; }
         addItem = null;
         img.sprite = null;
+        img.enabled = false;
 
         btn.onClick.RemoveAllListeners();
         //img.enabled = false;

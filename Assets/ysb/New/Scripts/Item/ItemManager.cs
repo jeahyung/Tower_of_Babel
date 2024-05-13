@@ -36,17 +36,23 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem()
     {
+        if (selectedItem.UseItem() == false)
+        {
+            CancelItem();
+            return;
+        }
         ScoreManager.instance.Score_ItemUse();
-        selectedItem.UseItem();
         energy.UseEnergy();
         ItemInventory.instance.RemoveItem(selectedItem);
+        selectedItem = null;
     }
 
     //아이템 사용 취소
     public void CancelItem()
     {
-        energy.UseEnergy(-energy.useEnergy);
+        //energy.UseEnergy(-energy.useEnergy);
         map.CancelItem();
+        selectedItem = null;
     }
 
     public void CreateObject(GameObject obj)

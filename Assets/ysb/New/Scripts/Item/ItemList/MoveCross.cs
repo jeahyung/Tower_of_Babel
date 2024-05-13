@@ -8,12 +8,12 @@ public class MoveCross : Item
     {
         range = 1;
     }
-    public override void SelectItem()
-    {
-        manager_Item.SeletItem_Eight(this, range);
-    }
-    public override void UseItem()
-    {
-        manager_Item.MovePlayer(this);
-    }
+    //public override void SelectItem()
+    //{
+    //    manager_Item.SeletItem_Eight(this, range);
+    //}
+    //public override void UseItem()
+    //{
+    //    manager_Item.MovePlayer(this);
+    //}
 }

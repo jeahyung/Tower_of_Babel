@@ -17,5 +17,5 @@ public class Item : MonoBehaviour
     {
         manager_Item.SeletItem_Four(this, range);
     }
-    public virtual void UseItem() { }
+    public virtual bool UseItem() { return true; }
 }

@@ -12,11 +12,12 @@ public class BackStartPoint : Item
     {
         UseItem();
     }
-    public override void UseItem()
+    public override bool UseItem()
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
 
         range = 2;
         manager_Item.SetPlayerPos(this);
+        return true;
     }
 }

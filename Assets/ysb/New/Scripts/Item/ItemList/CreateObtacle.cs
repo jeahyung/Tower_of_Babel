@@ -17,8 +17,9 @@ public class CreateObtacle : Item
         range = 2;
         manager_Item.SeletItem_Eight(this, range);
     }
-    public override void UseItem()
+    public override bool UseItem()
     {
         manager_Item.CreateObject(itemPrefab);
+        return true;
     }
 }

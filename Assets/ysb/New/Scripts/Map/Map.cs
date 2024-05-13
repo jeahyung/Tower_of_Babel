@@ -100,6 +100,13 @@ public class Map : MonoBehaviour
             {
                 CheckClickTileInArea();
             }
+            else
+            {
+                if(useItem == true)
+                {
+                    CancelItem();
+                }
+            }
         }
     }
 
@@ -332,7 +339,7 @@ public class Map : MonoBehaviour
     {
         useItem = false;
         HideArea();
-        FindTileInRange_Eight(nowTile, player.moveRange);
+        FindTileInRange_Four(nowTile, player.moveRange);
     }
 
 

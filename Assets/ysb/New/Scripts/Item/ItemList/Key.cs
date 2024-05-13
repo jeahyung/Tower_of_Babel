@@ -15,13 +15,13 @@ public class Key : Item
         range = 10;
         manager_Item.SeletItem_Eight(this, range);
     }
-    public override void UseItem()
+    public override bool UseItem()
     {
         //manager_Item.CreateObject(itemPrefab);
-        CheckMob();
+        return CheckMob();
     }
 
-    public void CheckMob()
+    public bool CheckMob()
     {
         if (Input.GetMouseButtonDown(0))
         {
@@ -35,11 +35,10 @@ public class Key : Item
                     hit.collider.GetComponent<Rook>().OpenRook();
                     ScoreManager.instance.KillMob();    //½ºÄÚ¾î
                     manager_Item.NextTurn();
-                    return;
+                    return true;
                 }
-                
             }
         }
-        manager_Item.CancelItem();
+        return false;
     }
 }

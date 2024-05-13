@@ -59,7 +59,12 @@ public class SAManager : MonoBehaviour
 
     #region UI
     private Button actionBtn;
-    private TMP_Text countText;
+    public float radius = 130f;
+
+    public List<UI_ActCount> UI_actCount = new List<UI_ActCount>(); //사용횟수 ui
+
+
+    //private TMP_Text countText;
     [SerializeField]
     private GameObject cancelBtn;
     #endregion
@@ -69,10 +74,33 @@ public class SAManager : MonoBehaviour
         es = FindObjectOfType<EnergySystem>();
 
         actionBtn = GetComponent<Button>();
-        countText = actionBtn.transform.Find("count").GetComponent<TMP_Text>();
+        UI_actCount.AddRange(GetComponentsInChildren<UI_ActCount>());
+        for(int i = 0; i < UI_actCount.Count; ++i)
+        {
+            UI_actCount[i].gameObject.SetActive(false);
+        }
+        //countText = actionBtn.transform.Find("count").GetComponent<TMP_Text>();
 
         ActActionBtn(false);
     }
+
+    #region UI
+    public void SetActCountUI(int c)
+    {
+        float degree = Mathf.PI * c * 0.1f;
+        for (int i = 0; i < c; i++)
+        {
+            float angle = Mathf.PI * 0.3f - i * degree;
+
+            Vector3 pos = UI_actCount[i].GetComponent<RectTransform>().anchoredPosition;
+            UI_actCount[i].GetComponent<RectTransform>().anchoredPosition
+                = pos + new Vector3(Mathf.Cos(angle), Mathf.Sin(angle), 0) * radius;
+
+            UI_actCount[i].gameObject.SetActive(true);
+            UI_actCount[i].OffSprite(false);
+        }
+    }
+    #endregion
 
     public void SetAct()
     {
@@ -106,7 +134,10 @@ public class SAManager : MonoBehaviour
         //업그레이드 효과
         actCount = action.count;
         actCount = actCount + UpgradeManager.instance.getBonusCount();
-        countText.text = "(" + actCount.ToString() + ")";
+
+        //UI - act count
+        SetActCountUI(actCount);
+        //countText.text = "(" + actCount.ToString() + ")";
 
         actionBtn.onClick.AddListener(() => action.Action());
         actionBtn.onClick.AddListener(() => UseAction());
@@ -129,9 +160,11 @@ public class SAManager : MonoBehaviour
             UpgradeManager.instance.getBonusTurn(1);
             isKing = true;
         }
+        UI_actCount[actCount - 1].OffSprite(true);  //기회 감소
         actCount--;
-        countText.text = "(" + actCount.ToString() + ")";
-        if(actCount <= 0)
+
+        //countText.text = "(" + actCount.ToString() + ")";
+        if (actCount <= 0)
         {
             actionBtn.onClick.RemoveAllListeners();
             //actionBtn.enabled = false;
@@ -147,7 +180,8 @@ public class SAManager : MonoBehaviour
     public void ActCancel()
     {
         actCount++;
-        countText.text = "(" + actCount.ToString() + ")";
+        UI_actCount[actCount - 1].OffSprite(false);
+        //countText.text = "(" + actCount.ToString() + ")";
 
         ActDone();
     }
