@@ -14,6 +14,6 @@ public class MoveCross : Item
     }
     public override void UseItem()
     {
-        manager_Item.MovePlayer();
+        manager_Item.MovePlayer(this);
     }
 }

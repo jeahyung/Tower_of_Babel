@@ -20,7 +20,7 @@ public class EndPoint : MonoBehaviour
     }
     private void EndGame()
     {
-        turn.StartPlayerTurn();
+        //turn.StartPlayerTurn();
     }
 
     private void OnTriggerStay(Collider other)
@@ -34,8 +34,11 @@ public class EndPoint : MonoBehaviour
             if (Vector3.Distance(target, my) <= 0.05f)
             {
                 other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
-                EndGame();
-                up.SetSelectList();
+
+
+                ScoreManager.instance.CalculateScore();
+                //업그레이드
+                //up.SetSelectList();
 
                 isEnd = true;
             }

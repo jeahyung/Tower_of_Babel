@@ -14,6 +14,9 @@ public class BackStartPoint : Item
     }
     public override void UseItem()
     {
-        manager_Item.SetPlayerPos();
+        if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
+
+        range = 2;
+        manager_Item.SetPlayerPos(this);
     }
 }

@@ -20,12 +20,12 @@ public class ItemUISlot : MonoBehaviour
 
     public void SetSlot(Item item)
     {
-        if(item == null) { return; }
+        //if(item == null) { return; }
         if(addItem != null) { return; }
         addItem = item;
         img.sprite = addItem.itemImg;
 
-        btn.onClick.AddListener(() => item.SelectItem());
+        btn.onClick.AddListener(() => addItem.SelectItem());
 
         //img.enabled = true;
     }

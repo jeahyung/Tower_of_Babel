@@ -67,7 +67,7 @@ public class Tile : MonoBehaviour
             {
                 if(h.collider != null)
                 {
-                    Debug.Log(h.collider.name);
+                    //Debug.Log(h.collider.name);
                     return;
                 }
             }

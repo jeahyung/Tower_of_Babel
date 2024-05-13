@@ -36,6 +36,8 @@ public class UpgradeController : MonoBehaviour
     {
         upgrades.Clear();
         upgrades = up;
+
+        Debug.Log("set" + upgrades.Count);
     }
     public void SetUpgrade(List<Upgrade> up)
     {
@@ -52,10 +54,10 @@ public class UpgradeController : MonoBehaviour
     {
         selectedUp.Clear();
 
-        for(int i = 0; i < upgrades.Count; ++i)
-        {
-            Debug.Log(upgrades[i].state + "/" + upgrades[i].upType);
-        }
+        //for(int i = 0; i < upgrades.Count; ++i)
+        //{
+        //    Debug.Log(upgrades[i].state + "/" + upgrades[i].upType);
+        //}
 
         for(int i = 0; i < selectCount; ++i)
         {
@@ -75,7 +77,6 @@ public class UpgradeController : MonoBehaviour
     {
         //¼±ÅÃ
         Upgrade up = selectedUp[i];
-        UpgradeManager.instance.AddUpgrade(up);
 
         //remove
         selectedUp.Remove(up);
@@ -83,5 +84,9 @@ public class UpgradeController : MonoBehaviour
 
         //ui
         paenl.localScale = new Vector3(0, 1, 1);
+
+        UpgradeManager.instance.AddUpgrade(up);
+
+        StageManager.instance.EndGame();
     }
 }

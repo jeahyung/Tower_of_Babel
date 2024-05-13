@@ -10,7 +10,7 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
-        manager_Item = GameObject.FindWithTag("Player").GetComponent<ItemManager>();
+        manager_Item =FindObjectOfType<ItemManager>();
     }
 
     public virtual void SelectItem()

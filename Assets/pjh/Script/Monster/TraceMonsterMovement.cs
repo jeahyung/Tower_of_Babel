@@ -55,7 +55,7 @@ public class TraceMonsterMovement : MonoBehaviour
         {
             Think();
         }
-        pos = tile.coord;
+        //pos = tile.coord;
     }
 
     public void MonsterSetting(Vector3 target)
@@ -74,18 +74,19 @@ public class TraceMonsterMovement : MonoBehaviour
         //SetPosition(tiles.coord.GetPosition());
         int i = tile.coord.x;
         int j = tile.coord.y;
-        
-        
+
+
         //좌우가 x -> 같은 라인 coor y변화
         //상하가 z ->라인 변화 coor x변화
 
+        Tile nowTile = map.playerTile;
 
         //타일 라인 변화는 coor x 변화
         //같은 라인 좌우는 coor y 변화
-        int a = Mathf.Abs(map.nowTile.coord.x - tile.coord.x);
-        int b = Mathf.Abs(map.nowTile.coord.y - tile.coord.y);
-        bool minA = map.nowTile.coord.x - tile.coord.x < 0;
-        bool minB = map.nowTile.coord.y - tile.coord.y < 0;
+        int a = Mathf.Abs(nowTile.coord.x - tile.coord.x);
+        int b = Mathf.Abs(nowTile.coord.y - tile.coord.y);
+        bool minA = nowTile.coord.x - tile.coord.x < 0;
+        bool minB = nowTile.coord.y - tile.coord.y < 0;
 
         if(a > b)
         {

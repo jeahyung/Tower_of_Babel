@@ -1,49 +1,74 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.UI;
 
 public class ItemInventory : Singleton<ItemInventory>
 {
-    public List<ItemUISlot> slots = new List<ItemUISlot>();
+    //public static ItemInventory instance;
 
-    void OnEnable()
-    {
-        SceneManager.sceneLoaded += OnSceneLoaded;
-    }
-    void OnDisable()
-    {
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
+    //public List<ItemUISlot> slots = new List<ItemUISlot>();
+    //public List<Item> items = new List<Item>();
 
-    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        slots.Clear();
-        slots.AddRange(GetComponentsInChildren<ItemUISlot>());
-    }
+    //아이템 데이터
+    private List<Item> datas = new List<Item>();
+    public string path = "Prefabs/Item/";
 
-    public void PickUpItem(Item i)
+    public ItemUI itemUI;
+    private void Start()
     {
-        foreach (ItemUISlot slot in slots)
+        itemUI = FindObjectOfType<ItemUI>();
+
+        datas.Clear();
+        datas.AddRange(Resources.LoadAll<Item>(path));
+
+        int bc = UpgradeManager.instance.getBonusItem();
+        for (int i = 0; i < bc; ++i)
         {
-            if (slot.addItem == null)
-            {
-                slot.SetSlot(i);
-                break;
-            }
+            AddBonusItem();
         }
+        UpgradeManager.instance.getBonusItem(-bc);
+    }
+
+    //private void Awake()
+    //{
+    //    if (instance == null)
+    //    {
+    //        instance = this;
+    //        DontDestroyOnLoad(this.gameObject);
+    //    }
+    //    else
+    //    {
+    //        Destroy(this.gameObject);
+    //    }
+    //    //slots.Clear();
+
+    //    //아이템 데이터 로드
+    //    datas.Clear();
+    //    datas.AddRange(Resources.LoadAll<Item>(path));
+
+    //    //slots.Clear();
+    //    //slots.AddRange(GetComponentsInChildren<ItemUISlot>());
+    //}
+
+    public void AddBonusItem()
+    {
+        int rand = Random.Range(0, datas.Count);
+        PickUpItem(datas[rand]);
+    }
+    public bool PickUpItem(Item i)
+    {
+        if(itemUI.PickUpItem(i) == true)
+        {
+            //items.Add(i);
+            return true;
+        }
+        return false;
     }
     public void RemoveItem(Item i)
     {
-        foreach (ItemUISlot slot in slots)
+        if(itemUI.RemoveItem(i) == true)
         {
-            if (slot.addItem != null && slot.addItem == i)
-            {
-                slot.RemoveItem();
-                
-                break;
-            }
+            //items.Remove(i);
         }
     }
 }
