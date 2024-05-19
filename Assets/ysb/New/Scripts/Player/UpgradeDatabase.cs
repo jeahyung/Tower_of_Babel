@@ -2,15 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UpType { self = 0, score = 1, action = 5, }
+public enum UpType { 
+    turn = 0,
+    getItem = 1,
+    changeItem = 2,
+    energy = 3,
+
+    selectAction = 5,
+    countAction = 6,
+    changeAction = 7,
+
+    itemScore = 10,
+    noneItemScore = 11,
+    turnScore = 12,
+    breakScore = 13,
+    }
 public class Upgrade
 {
+    public int id;
+
+    public string name;
     public int state;
-    public UpType upType;
-    public Upgrade(int i)
+    public int upType;
+    public string explain;
+    public Upgrade(int ID, string n, int i, int t, string e)
     {
+        id = ID;
+
+        name = n;
         state = i;
-        upType = UpType.self;
+        upType = t;
+        explain = e;
     }
 }
 
@@ -30,26 +52,15 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     {
         upController = FindObjectOfType<UpgradeController>();
         count = 10;
-
-        //타입에 따라 따로 저장(data : 타입 / state / 설명 / 이미지?
-        //특수 액션
-        //for(int i = 0; i < 3; ++i)
-        //{
-        //    Upgrade up = new Upgrade(i);
-        //    up.upType = UpType.action;
-
-        //    actionsList.Add(up);
-        //}
-
-        ////일반
-        //for(int i = 0; i < count; ++i)
-        //{
-        //    Upgrade up = new Upgrade(i + 1);
-        //    upList.Add(up);
-        //}
-
         LoadCSVFile();
-        SetData();
+
+        if (StageManager.instance.CheckStage() == true)
+            SetActionData();
+        else//테스트용
+        {
+            SetData();
+            upController.OpenUpgradePanel();
+        }
     }
 
     public void LoadCSVFile()
@@ -59,20 +70,42 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
 
         for(int i = 0; i < dicList.Count; ++i)
         {
-            Upgrade up = new Upgrade(int.Parse(dicList[i]["State"].ToString()));
+            int id = int.Parse(dicList[i]["Id"].ToString());
+            string n = dicList[i]["Name"].ToString();
+            int s = int.Parse(dicList[i]["State"].ToString());
+            int t = int.Parse(dicList[i]["Type"].ToString());
+            string e = dicList[i]["Explain"].ToString();
+
+            Upgrade up = new Upgrade(id, n, s, t, e);
+
+            //이 업그레이드 1번만 등장하는 업그레이든가? 이미 가지고 있는가?
+            bool canAdd = UpgradeManager.instance.CheckUpgrade(up);
+            if(canAdd == false) { continue; }
+
             upList.Add(up);
         }
+    }
+
+    //액션 선택
+    public void SetActionData()
+    {
+        upController.OpenActionPanel();
+        //actionsList.Clear();
+        //Upgrade up1 = new Upgrade(991, "룩", 0, 5, "가로 & 세로");
+        //Upgrade up2 = new Upgrade(992, "비숍", 1, 5, "대각선");
+        //Upgrade up3 = new Upgrade(993, "킹", 2, 5, "8방향 & 보너스 행동 1회");
+
+        //actionsList.Add(up1);
+        //actionsList.Add(up2);
+        //actionsList.Add(up3);
+
+        //upController.SetActionUpgrade(actionsList);
+        //upController.SetSelectList();   //업그레이드 보여주기
     }
 
     //업그레이드 데이터 세팅
     public void SetData()
     {
-        if (isFirst == true)
-        {
-            upController.SetActionUpgrade(actionsList);
-            isFirst = false;
-            return;
-        }
         upController.SetUpgrade(upList);
     }
 }

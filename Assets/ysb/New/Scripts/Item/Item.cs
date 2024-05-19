@@ -10,12 +10,12 @@ public class Item : MonoBehaviour
 
     private void Awake()
     {
-        manager_Item = GameObject.FindWithTag("Player").GetComponent<ItemManager>();
+        manager_Item =FindObjectOfType<ItemManager>();
     }
 
     public virtual void SelectItem()
     {
         manager_Item.SeletItem_Four(this, range);
     }
-    public virtual void UseItem() { }
+    public virtual bool UseItem() { return true; }
 }

@@ -19,10 +19,12 @@ public class ItemObject : MonoBehaviour
     {
         if(other.CompareTag("Player"))
         {
-            //other.GetComponent<ItemManager>().GetItem(item);
-            inven.PickUpItem(item);
-            this.gameObject.SetActive(false);
-
+            bool canGet = inven.PickUpItem(item);
+            if(canGet == true)
+            {
+                ScoreManager.instance.Score_ItemGet();
+                this.gameObject.SetActive(false);
+            }
         }
     }
 }

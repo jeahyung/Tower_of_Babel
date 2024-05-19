@@ -1,12 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class Map : MonoBehaviour
 {
     private PlayerMovement player;
     private TurnManager manager_Turn;
-    private SpecialActionManager manager_Action;
+    private SAManager manager_Action;
 
     public int LineCount;
     public Transform[] tileLines;
@@ -15,7 +16,10 @@ public class Map : MonoBehaviour
     public List<Tile> moveArea = new List<Tile>();
 
     private Tile clickTile = null;
+
+    private Tile previousTile = null;   //넉백을 위한
     public Tile nowTile;
+
     public Vector2Int startCoord;   //시작점
     public Vector2Int[] distance;
 
@@ -25,12 +29,14 @@ public class Map : MonoBehaviour
 
     public bool canControl = true;
 
+    public Tile playerTile = null;
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Turn = player.GetComponent<TurnManager>();
         manager_Item = FindObjectOfType<ItemManager>();
-        manager_Action = FindObjectOfType<SpecialActionManager>();
+        manager_Action = FindObjectOfType<SAManager>();
 
         tiles = new Tile[LineCount + 2, LineCount];
         for(int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
@@ -61,6 +67,8 @@ public class Map : MonoBehaviour
 
     private void Update()
     {
+        if(StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+
         if(manager_Turn.IsMyTurn != true || manager_Turn.isDone != true)
         {
             canControl = false;
@@ -71,8 +79,12 @@ public class Map : MonoBehaviour
         }
         if(canControl == false) { return; }
 
+        //UI상에 있을 때는 클릭 못 하도록
+        if (EventSystem.current.IsPointerOverGameObject() == true) { return; }
+
         if (Input.GetMouseButtonDown(0))
         {
+            clickTile = null;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
             foreach (var hit in hits)
@@ -87,6 +99,13 @@ public class Map : MonoBehaviour
             if (clickTile != null)
             {
                 CheckClickTileInArea();
+            }
+            else
+            {
+                if(useItem == true)
+                {
+                    CancelItem();
+                }
             }
         }
     }
@@ -269,14 +288,6 @@ public class Map : MonoBehaviour
         }
         if(useAction)   //액션 사용 
         {
-            //if (moveArea.Contains(clickTile) == false)
-            //{
-            //    HideArea();
-            //    FindTileInRange_Four(nowTile, player.moveRange);
-            //    manager_Action.ActDone();
-            //    useAction = false;
-            //    return;
-            //}
             if (moveArea.Contains(clickTile) == false) { return; }
             manager_Action.ActDone();
             useAction = false;
@@ -285,8 +296,19 @@ public class Map : MonoBehaviour
         {
             if(useItem == true) { useItem = false; }
             HideArea();
-            MovePlayerPosition();            
+            previousTile = nowTile; //이전 타일 갱신
+            MovePlayerPosition();
+            manager_Action.SetActionBtn(false);
         }
+    }
+
+    //플레이어 이동
+    public void MovePlayerPosition()
+    {
+        player.SetPosition(clickTile.GetPosition());
+        nowTile = clickTile;    //현재 타일 갱신
+        playerTile = nowTile;
+        //에너지 사용 -> 플레이어쪽에서
     }
 
     public void SelectItem(Item item)
@@ -312,26 +334,28 @@ public class Map : MonoBehaviour
         FindTileInRange_Eight(nowTile, r);
     }
 
+    //아이템 사용이 취소됐을때
+    public void CancelItem()
+    {
+        useItem = false;
+        HideArea();
+        FindTileInRange_Four(nowTile, player.moveRange);
+    }
+
 
     public void SetObjectPosition(GameObject obj)
     {
         //GameObject newObejct = Instantiate(obj);
         Vector3 pos = clickTile.GetPosition();
-        float yPos = obj.transform.localScale.y + clickTile.transform.localScale.y;
+        float yPos = obj.transform.localScale.y / 2 + clickTile.transform.localScale.y;
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
-        clickTile.ChangeTileState(TileType.impossible);
+        playerTile = clickTile;
+
+        //clickTile.ChangeTileState(TileType.impossible);
         player.UseEnergy(); //에너지 사용
 
         manager_Turn.EndPlayerTurn();
-    }
-
-    //플레이어 이동
-    public void MovePlayerPosition()
-    {
-        player.SetPosition(clickTile.GetPosition());
-        nowTile = clickTile;
-        //에너지 사용 -> 플레이어쪽에서
     }
 
     //플레이어 순간이동
@@ -340,8 +364,15 @@ public class Map : MonoBehaviour
         HideArea();
         player.TeleportPlayer(tiles[0, 0].GetPosition());
         nowTile = tiles[0, 0];
+        playerTile = nowTile;
         //에너지 사용 -> 플레이어쪽에서
         useItem = false;
+    }
+
+    //추적 변경
+    public void ChangePlayerTile(Tile t)
+    {
+        playerTile = t;
     }
     #endregion
 
@@ -349,7 +380,48 @@ public class Map : MonoBehaviour
     {
         HideArea();
         FindTileInRange_Four(nowTile, player.moveRange);
-        manager_Action.ActDone();
+        manager_Action.ActCancel();
         useAction = false;
+    }
+
+    public void BonusActOfKing()
+    {
+        manager_Action.UseAction_Bonus();
+    }
+
+
+    //피격
+    public Tile CheckNearTile(Tile tile = null)
+    {
+        if(tile == null) { tile = nowTile; }
+
+        if(previousTile != null && GetTile(previousTile.coord) != null)
+        {
+            return previousTile;    //이전 타일로 갈 수 있으면 이전 타일로 ㄱㄱ
+        }
+
+        //탐색 순서(아래-위-좌-우)
+        for (int i = 3; i > 0; --i)
+        {
+            Vector2Int nowCoord = tile.coord + distance[i];
+            Tile findTile = GetTile(nowCoord);
+
+            if (findTile != null)
+            {
+                return findTile;
+            }
+        }
+        //없으면 2범위 내에서 탐색
+        for (int i = 3; i > 0; --i)
+        {
+            Vector2Int nowCoord = tile.coord + distance[i] * 2;
+            Tile findTile = GetTile(nowCoord);
+
+            if (findTile != null)
+            {
+                return findTile;
+            }
+        }
+        return nowTile;
     }
 }

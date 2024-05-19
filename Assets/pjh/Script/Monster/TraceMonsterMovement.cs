@@ -8,6 +8,7 @@ using UnityEngine.UIElements;
 
 public class TraceMonsterMovement : MonoBehaviour
 {
+    private ChaseMobManager mgr_Chase;
     [SerializeField] private GameObject monster;
    // [SerializeField]private GameObject player;
 
@@ -33,18 +34,20 @@ public class TraceMonsterMovement : MonoBehaviour
 
 
     private void Awake()
-    {   
-       
-     //  player = GameObject.FindWithTag("Player");
-     
-      
-       
-        tile = GetComponent<Tile>();
+    {
+
+        //  player = GameObject.FindWithTag("Player");
+
+        mgr_Chase = GetComponentInParent<ChaseMobManager>();
+        //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
         allTiles.AddRange(tiles);
     }
     private void Start()
     {
+        Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
+        tile = curTile;
+
         FindTileWithCoords(startX, startY);
         MonsterSetting(nextPos);
     }
@@ -55,7 +58,7 @@ public class TraceMonsterMovement : MonoBehaviour
         {
             Think();
         }
-        pos = tile.coord;
+        //pos = tile.coord;
     }
 
     public void MonsterSetting(Vector3 target)
@@ -74,18 +77,19 @@ public class TraceMonsterMovement : MonoBehaviour
         //SetPosition(tiles.coord.GetPosition());
         int i = tile.coord.x;
         int j = tile.coord.y;
-        
-        
+
+
         //좌우가 x -> 같은 라인 coor y변화
         //상하가 z ->라인 변화 coor x변화
 
+        Tile nowTile = map.playerTile;
 
         //타일 라인 변화는 coor x 변화
         //같은 라인 좌우는 coor y 변화
-        int a = Mathf.Abs(map.nowTile.coord.x - tile.coord.x);
-        int b = Mathf.Abs(map.nowTile.coord.y - tile.coord.y);
-        bool minA = map.nowTile.coord.x - tile.coord.x < 0;
-        bool minB = map.nowTile.coord.y - tile.coord.y < 0;
+        int a = Mathf.Abs(nowTile.coord.x - tile.coord.x);
+        int b = Mathf.Abs(nowTile.coord.y - tile.coord.y);
+        bool minA = nowTile.coord.x - tile.coord.x < 0;
+        bool minB = nowTile.coord.y - tile.coord.y < 0;
 
         if(a > b)
         {
@@ -153,9 +157,10 @@ public class TraceMonsterMovement : MonoBehaviour
         }
         
         transform.position = target;
+        CheckTile();
+        mgr_Chase.CheckMobAction();
 
-      
-       // manager_Turn.EndEnemyTurn();
+        // manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
     }
 
@@ -164,6 +169,24 @@ public class TraceMonsterMovement : MonoBehaviour
         if (other.CompareTag("Tile"))
         {
             tile = other.GetComponent<Tile>();
+        }
+    }
+
+    public void Act()
+    {
+        tile.tileType = TileType.possible;
+        Think();
+    }
+    private void CheckTile()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position, Vector3.down, out hit, 50f, 1 << LayerMask.NameToLayer("Tile")))
+        {
+            if (hit.collider.TryGetComponent(out Tile t))
+            {
+                tile = t;
+                tile.tileType = TileType.impossible;
+            }
         }
     }
 }

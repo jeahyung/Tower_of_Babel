@@ -5,17 +5,20 @@ using UnityEngine;
 public class StartPoint : MonoBehaviour
 {
     [SerializeField]
-    private SpecialActionManager action;
+    private SAManager action;
     [SerializeField]
     private TurnManager turn;
 
+    [SerializeField]
+    private Collider col;
     private bool isStart = false;
 
     private void Awake()
     {
+        col.enabled = true;
         //테스트 용도
         if (action == null)
-            action = FindObjectOfType<SpecialActionManager>();
+            action = FindObjectOfType<SAManager>();
         if (turn == null)
             turn = FindObjectOfType<TurnManager>();
     }
@@ -29,23 +32,38 @@ public class StartPoint : MonoBehaviour
         turn.StartGame();
     }
 
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if(isStart == true) { return; }
         if(other.CompareTag("Player"))
         {
-            Vector3 target = new Vector3(other.transform.position.x, 0, other.transform.position.z);
-            Vector3 my = new Vector3(transform.position.x, 0, transform.position.z);
+            Vector3 target = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
+            Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
 
-            if(Vector3.Distance(target, my) <= 0.05f)
-            {
-                SetAction();
-                StartGame();
+            other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
 
-                other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
-                isStart = true;
-            }
+            //if(Vector3.Distance(target, my) <= 0.05f)
+            //{
+            //    SetAction();
+            //    StartGame();
+            //    col.enabled = false;
+            //    //other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
+            //    isStart = true;
+            //}
+        }
+    }
 
+    private void OnTriggerStay(Collider other)
+    {
+        Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
+        if (Vector3.Distance(other.transform.position, my) <= 0.05f)
+        {
+            SetAction();
+            //StartGame();
+            StageManager.instance.StartGame();
+            col.enabled = false;
+            //other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
+            isStart = true;
         }
     }
 }

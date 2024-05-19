@@ -13,18 +13,36 @@ public class EnergySystem : MonoBehaviour
     [SerializeField]
     private Slider slider;
 
-    private void Awake()
-    {
-        maxEnergy = 20;
-        curEnergy = maxEnergy;
+    public int useEnergy = 1;
 
+    private void Start()
+    {
+        maxEnergy = 50;
+
+        int energy = UpgradeManager.instance.getEnergy();
+        if (energy != 0)
+        {
+            curEnergy = energy < maxEnergy ? energy : maxEnergy;
+        }
+        else
+        {
+            curEnergy = maxEnergy;
+        }
         slider.value = (float)curEnergy / maxEnergy;
 
     }
 
-    public void UseEnergy(int i)
+    public void UseEnergy(int i = 0)
     {
-        curEnergy = curEnergy - i > 0 ? curEnergy - i : 0;
+        if (i == 0)
+        {
+            curEnergy = curEnergy - useEnergy > 0 ? curEnergy - useEnergy : 0;
+        }
+        else
+        {
+            curEnergy = curEnergy - i > 0 ? curEnergy - i : 0;
+        }
+        UpgradeManager.instance.getEnergy(curEnergy);
         slider.value = (float)curEnergy / maxEnergy;
         if(curEnergy <= 0)
         {
