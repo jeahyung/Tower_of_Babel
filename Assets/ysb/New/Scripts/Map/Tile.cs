@@ -50,7 +50,7 @@ public class Tile : MonoBehaviour
         //{
         //    return Vector3.zero;
         //}
-        return new Vector3(transform.position.x, 0, transform.position.z);
+        return new Vector3(transform.position.x, transform.position.y, transform.position.z);
     }
 
     public void ChangeTileState(TileType tp)

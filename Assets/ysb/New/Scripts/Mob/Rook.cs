@@ -18,18 +18,9 @@ public class Rook : MonoBehaviour
         curTile = map.GetTile(map.tiles[startX, startY].coord);
         curTile.tileType = TileType.impossible;
 
-        Vector3 pos = new Vector3(curTile.GetPosition().x, transform.position.y, curTile.GetPosition().z);
+        Vector3 pos = new Vector3(curTile.GetPosition().x, 
+            curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
-
-        //RaycastHit hit;
-        //if (Physics.Raycast(transform.position, Vector3.down, out hit, 50f, 1 << LayerMask.NameToLayer("Tile")))
-        //{
-        //    if (hit.collider.TryGetComponent(out Tile tile))
-        //    {
-        //        curTile = tile;
-        //        tile.tileType = TileType.impossible;
-        //    }
-        //}
     }
 
     public void OpenRook()

@@ -70,7 +70,7 @@ public class ScoreManager : Singleton<ScoreManager>
         if (scoreUI == null)
             scoreUI = FindObjectOfType<ScoreUI>();
 
-        int bonus = UpgradeManager.instance.getBonusCount();//UpgradeManager.instance.bonusScore;
+        int bonus = UpgradeManager.instance.GetScore_Item();//UpgradeManager.instance.getBonusCount();//UpgradeManager.instance.bonusScore;
         int score = (SearchScore("Get") + bonus);
         scoreSum += score;
         //UpgradeManager.instance.SumScore = scoreSum;
@@ -84,7 +84,7 @@ public class ScoreManager : Singleton<ScoreManager>
         if (scoreUI == null)
             scoreUI = FindObjectOfType<ScoreUI>();
 
-        int bonus = UpgradeManager.instance.getBonusScore();//.bonusScore;
+        int bonus = UpgradeManager.instance.GetScore_Item();//.bonusScore;
         int score = (SearchScore("Use") + bonus);
         scoreSum += score;
         //UpgradeManager.instance.SumScore = scoreSum;
@@ -96,7 +96,7 @@ public class ScoreManager : Singleton<ScoreManager>
         if (scoreUI == null)
             scoreUI = FindObjectOfType<ScoreUI>();
 
-        int bonus = UpgradeManager.instance.getBonusScore();//bonusScore;
+        int bonus = UpgradeManager.instance.GetScore_KillMob();//bonusScore;
         int score = (SearchScore("Mob") + bonus);
         scoreSum += score;
         //UpgradeManager.instance.SumScore = scoreSum;
@@ -111,13 +111,9 @@ public class ScoreManager : Singleton<ScoreManager>
 
         stageClearScore = 0;
 
-        int bonus = UpgradeManager.instance.getBonusScore();//.bonusScore;
+        int bonus = 0;//UpgradeManager.instance.getBonusScore();//.bonusScore;
         int score = (SearchScore("Stage") + bonus);
         stageClearScore = score;
-        //scoreSum += score;
-        //UpgradeManager.instance.SumScore = scoreSum;
-        //scoreUI.StageClear(score);
-        //scoreUI.SetSumSocre(scoreSum);
     }
     public void Score_SACount()//int rc)
     {
@@ -127,14 +123,10 @@ public class ScoreManager : Singleton<ScoreManager>
 
         int rc = FindObjectOfType<SAManager>().getActCount;
 
-        int bonus = UpgradeManager.instance.getBonusScore();//.bonusScore;
+        int bonus = 0;//UpgradeManager.instance.getBonusScore();//.bonusScore;
         int score = (SearchScore("Action") * rc + bonus);
 
         actScore = score;
-        //scoreSum += score;
-        //UpgradeManager.instance.SumScore = scoreSum;
-        //scoreUI.ActionCount(score);
-        //scoreUI.SetSumSocre(scoreSum);
     }
 
     public void Score_ClearTurn()//int turn)

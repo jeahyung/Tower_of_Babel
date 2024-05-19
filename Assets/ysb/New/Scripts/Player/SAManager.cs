@@ -135,6 +135,8 @@ public class SAManager : MonoBehaviour
         actCount = action.count;
         actCount = actCount + UpgradeManager.instance.getBonusCount();
 
+
+
         //UI - act count
         SetActCountUI(actCount);
         //countText.text = "(" + actCount.ToString() + ")";
@@ -163,11 +165,9 @@ public class SAManager : MonoBehaviour
         UI_actCount[actCount - 1].OffSprite(true);  //기회 감소
         actCount--;
 
-        //countText.text = "(" + actCount.ToString() + ")";
         if (actCount <= 0)
         {
             actionBtn.onClick.RemoveAllListeners();
-            //actionBtn.enabled = false;
         }
         cancelBtn.SetActive(true);
     }
@@ -181,7 +181,6 @@ public class SAManager : MonoBehaviour
     {
         actCount++;
         UI_actCount[actCount - 1].OffSprite(false);
-        //countText.text = "(" + actCount.ToString() + ")";
 
         ActDone();
     }
