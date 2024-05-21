@@ -2,7 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum UpType { self = 0, score = 1, turn = 2, item = 3, action = 5, actionCount = 6, actionSelect = 7, }
+public enum UpType { 
+    turn = 0,
+    getItem = 1,
+    changeItem = 2,
+    energy = 3,
+
+    selectAction = 5,
+    countAction = 6,
+    changeAction = 7,
+
+    itemScore = 10,
+    noneItemScore = 11,
+    turnScore = 12,
+    breakScore = 13,
+    }
 public class Upgrade
 {
     public int id;
@@ -11,8 +25,6 @@ public class Upgrade
     public int state;
     public int upType;
     public string explain;
-
-    //public UpType upType;
     public Upgrade(int ID, string n, int i, int t, string e)
     {
         id = ID;
@@ -21,7 +33,6 @@ public class Upgrade
         state = i;
         upType = t;
         explain = e;
-        //upType = UpType.self;
     }
 }
 
@@ -45,7 +56,11 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
 
         if (StageManager.instance.CheckStage() == true)
             SetActionData();
-        //SetData();
+        else//테스트용
+        {
+            SetData();
+            upController.OpenUpgradePanel();
+        }
     }
 
     public void LoadCSVFile()
@@ -62,25 +77,30 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
             string e = dicList[i]["Explain"].ToString();
 
             Upgrade up = new Upgrade(id, n, s, t, e);
-            
+
+            //이 업그레이드 1번만 등장하는 업그레이든가? 이미 가지고 있는가?
+            bool canAdd = UpgradeManager.instance.CheckUpgrade(up);
+            if(canAdd == false) { continue; }
+
             upList.Add(up);
         }
     }
 
+    //액션 선택
     public void SetActionData()
     {
+        upController.OpenActionPanel();
+        //actionsList.Clear();
+        //Upgrade up1 = new Upgrade(991, "룩", 0, 5, "가로 & 세로");
+        //Upgrade up2 = new Upgrade(992, "비숍", 1, 5, "대각선");
+        //Upgrade up3 = new Upgrade(993, "킹", 2, 5, "8방향 & 보너스 행동 1회");
 
-        actionsList.Clear();
-        Upgrade up1 = new Upgrade(991, "룩", 0, 5, "가로 & 세로");
-        Upgrade up2 = new Upgrade(992, "비숍", 1, 5, "대각선");
-        Upgrade up3 = new Upgrade(993, "킹", 2, 5, "8방향 & 보너스 행동 1회");
+        //actionsList.Add(up1);
+        //actionsList.Add(up2);
+        //actionsList.Add(up3);
 
-        actionsList.Add(up1);
-        actionsList.Add(up2);
-        actionsList.Add(up3);
-
-        upController.SetActionUpgrade(actionsList);
-        upController.SetSelectList();   //업그레이드 보여주기
+        //upController.SetActionUpgrade(actionsList);
+        //upController.SetSelectList();   //업그레이드 보여주기
     }
 
     //업그레이드 데이터 세팅

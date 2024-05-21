@@ -49,10 +49,6 @@ public class TurnManager : MonoBehaviour
         player.SetControl(true);
     }
 
-    //public void TurnScore()
-    //{
-    //    ScoreManager.instance.Score_ClearTurn(turnCount);
-    //}
     public void StartPlayerTurn()
     {
         if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부

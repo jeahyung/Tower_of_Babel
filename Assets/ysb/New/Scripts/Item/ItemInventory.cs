@@ -26,7 +26,7 @@ public class ItemInventory : Singleton<ItemInventory>
         {
             AddBonusItem();
         }
-        UpgradeManager.instance.getBonusItem(-bc);
+        //UpgradeManager.instance.getBonusItem(-bc);
     }
 
     //private void Awake()

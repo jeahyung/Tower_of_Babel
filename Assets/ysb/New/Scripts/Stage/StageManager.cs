@@ -42,16 +42,18 @@ public class StageManager : Singleton<StageManager>
 
     public bool CheckStage()
     {
-        if (SceneManager.GetActiveScene().name == stageName)
-        {
-            return true;
-        }
+        if(chapterCount == 1 && stageCount == 1) { return true; }
+        //if (SceneManager.GetActiveScene().name == stageName)
+        //{
+        //    return true;
+        //}
         return false;
     }
 
     public void NextStage()
     {
         stageCount++;
-        SceneManager.LoadScene("Prototype " + (stageCount - 1).ToString());
+        SceneManager.LoadScene("Prototype"); //체크를 위해
+        //SceneManager.LoadScene("Prototype " + (stageCount - 1).ToString());
     }
 }
