@@ -80,7 +80,11 @@ public class SAManager : MonoBehaviour
             UI_actCount[i].gameObject.SetActive(false);
         }
         //countText = actionBtn.transform.Find("count").GetComponent<TMP_Text>();
+    }
 
+    private void Start()
+    {
+        //플레이 전까진 액션 버튼은 비활성화합니다.
         ActActionBtn(false);
     }
 

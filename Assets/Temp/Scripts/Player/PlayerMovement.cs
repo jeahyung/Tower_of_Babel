@@ -1,6 +1,8 @@
-    using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
+using System;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -100,6 +102,12 @@ public class PlayerMovement : MonoBehaviour
         Vector3 direction = (target - transform.position).normalized;
         body.transform.forward = direction;
 
+        rigid.useGravity = false;
+        startPos = transform.position;
+        endX = target.x - transform.position.x;
+        endZ = target.z - transform.position.z;
+        endPos = startPos + new Vector3(endX, 0, endZ);
+        
         anim.SetTrigger("isJump");
 
         //StartCoroutine(PlayerMove(pos));
@@ -107,17 +115,62 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartMove()
     {
-        StartCoroutine(PlayerMove(movePos));
+
+        //endPos = startPos + new Vector3(5, 0, 0);
+
+        StartCoroutine(MoveToEnd());
+        //StartCoroutine(PlayerMove(movePos));
     }
+
+
+    public Vector3 startPos, endPos;
+    //땅에 닫기까지 걸리는 시간
+    public float timer;
+    public float timeToFloor;
+
+    public float endZ;
+    public float endX;
+
+    public float h;
+    protected static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
+    {
+        Func<float, float> f = x => -4 * height * x * x + 4 * height * x;
+
+        var mid = Vector3.Lerp(start, end, t);
+
+        return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
+    }
+
+    protected IEnumerator MoveToEnd()
+    {
+        timer = 0;
+        while (transform.position.y >= startPos.y)
+        {
+            timer += Time.deltaTime;
+            Vector3 tempPos = Parabola(startPos, endPos, h, timer);
+            transform.position = tempPos;
+            yield return new WaitForEndOfFrame();
+        }
+
+        canMove = true;
+        transform.position = endPos;
+        rigid.useGravity = true;
+
+        manager_Turn.EndPlayerTurn();
+    }
+
+
     private IEnumerator PlayerMove(Vector3 target)
     {
         canMove = false;
         Vector3 direction = (target - transform.position).normalized;
         Vector3 speed = direction * moveSpeed;
+        rigid.AddForce(Vector3.up * 10, ForceMode.Impulse);
 
         while (Vector3.Distance(transform.position, target) >= 0.05f)
         {
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref speed, smoothTime);
+            transform.position = Vector3.Slerp(transform.position, target, 0.1f);
+            //transform.position = Vector3.SmoothDamp(transform.position, target, ref speed, smoothTime);
             yield return null;
         }
         canMove = true;
@@ -135,7 +188,7 @@ public class PlayerMovement : MonoBehaviour
 
     IEnumerator MoveToPoint(Vector3 point)
     {
-        while (Vector3.Distance(transform.position, point) >= 0.1f)
+        while (Vector3.Distance(transform.position, point) >= 0.5f)
         {
             Vector3 direction = point - transform.position;
             transform.position = Vector3.SmoothDamp(transform.position, point, ref direction, smoothTime);
