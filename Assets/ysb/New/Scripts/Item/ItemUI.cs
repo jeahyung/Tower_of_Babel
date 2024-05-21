@@ -9,17 +9,42 @@ public class ItemUI : MonoBehaviour
     private void Awake()
     {
         slots.AddRange(GetComponentsInChildren<ItemUISlot>());
-    }
 
-    public void PickUpItem(Item i)
+        //SortItem(ItemInventory.instance.items);
+    }
+    public void SortItem(List<Item> items)
     {
-        foreach(ItemUISlot slot in slots)
+        if(items == null) { return; }
+        int i = 0;
+        foreach (ItemUISlot slot in slots)
         {
-            if(slot.addItem == null)
+            slot.SetSlot(items[i]);
+            i++;
+        }
+    }
+    public bool PickUpItem(Item i)
+    {
+        foreach (ItemUISlot slot in slots)
+        {
+            if (slot.addItem == null)
             {
                 slot.SetSlot(i);
-                break;
+
+                return true;
             }
         }
+        return false;
+    }
+    public bool RemoveItem(Item i)
+    {
+        foreach (ItemUISlot slot in slots)
+        {
+            if (slot.addItem != null && slot.addItem == i)
+            {
+                slot.RemoveItem();
+                return true;
+            }
+        }
+        return false;
     }
 }

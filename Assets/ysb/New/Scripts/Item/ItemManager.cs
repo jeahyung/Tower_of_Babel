@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    private EnergySystem energy;
+    private TurnManager manager_Turn;
     private Map map;
-    private ItemInventory inven;
+    //private ItemInventory inven;
     private Item selectedItem;
 
     private List<CreatedObject> objs = new List<CreatedObject>();
@@ -13,7 +15,8 @@ public class ItemManager : MonoBehaviour
     private void Awake()
     {
         map = FindObjectOfType<Map>();
-        inven = FindObjectOfType<ItemInventory>();
+        manager_Turn = GetComponent<TurnManager>();
+        energy = GetComponent<EnergySystem>();
     }
     public void SeletItem_Four(Item item, int range)
     {
@@ -33,8 +36,23 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem()
     {
-        selectedItem.UseItem();
-        inven.RemoveItem(selectedItem);
+        if (selectedItem.UseItem() == false)
+        {
+            CancelItem();
+            return;
+        }
+        ScoreManager.instance.Score_ItemUse();
+        energy.UseEnergy();
+        ItemInventory.instance.RemoveItem(selectedItem);
+        selectedItem = null;
+    }
+
+    //아이템 사용 취소
+    public void CancelItem()
+    {
+        //energy.UseEnergy(-energy.useEnergy);
+        map.CancelItem();
+        selectedItem = null;
     }
 
     public void CreateObject(GameObject obj)
@@ -44,14 +62,18 @@ public class ItemManager : MonoBehaviour
 
         objs.Add(newObejct.GetComponent<CreatedObject>());
     }
-    public void MovePlayer()
+    public void MovePlayer(Item item)
     {
         map.MovePlayerPosition();
+        selectedItem = item;
+        ItemInventory.instance.RemoveItem(selectedItem);
     }
 
-    public void SetPlayerPos()
+    public void SetPlayerPos(Item item)
     {
         map.SetPlayerPosition();
+        selectedItem = item;
+        ItemInventory.instance.RemoveItem(selectedItem);
     }
 
     //설치물 제거
@@ -72,5 +94,16 @@ public class ItemManager : MonoBehaviour
     public void RemoveList(CreatedObject i)
     {
         objs.Remove(i);
+    }
+
+    //열기
+    public void Open()
+    {
+
+    }
+
+    public void NextTurn()
+    {
+        manager_Turn.EndPlayerTurn();
     }
 }

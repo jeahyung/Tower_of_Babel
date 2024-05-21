@@ -7,19 +7,36 @@ public class TurnManager : MonoBehaviour
     private Map manager_map;
     private PlayerMovement player;
     private ItemManager manager_Item;
+    private SAManager manager_Action;
+
+    
+    [SerializeField]private UI_Turn ui_turn;
+
+    public MobManager manager_Mob;
 
     public bool isPlayerTurn = false;
     public bool isEnemyTurn = true;
 
     public bool isDone = true;
 
+    int turnCount = 0;
+
+    public int TurnCount => turnCount;
     public bool IsMyTurn => isPlayerTurn;
 
-    private void Start()
+    private void Awake()
     {
         manager_map = FindObjectOfType<Map>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Item = player.GetComponent<ItemManager>();
+
+        manager_Mob = FindObjectOfType<MobManager>();
+        manager_Action = FindObjectOfType<SAManager>();
+
+        if(ui_turn == null)
+        {
+            ui_turn = FindObjectOfType<UI_Turn>();
+        }
     }
 
     public void StartGame()
@@ -31,40 +48,76 @@ public class TurnManager : MonoBehaviour
     {
         player.SetControl(true);
     }
+
+    //public void TurnScore()
+    //{
+    //    ScoreManager.instance.Score_ClearTurn(turnCount);
+    //}
     public void StartPlayerTurn()
     {
-        if(isEnemyTurn == true) { return; }
+        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+
+        if (isEnemyTurn == true || player.TurnEnd() == false) { return; }
         isPlayerTurn = true;
         isDone = true;
-        manager_map.StartPlayerTurn(player.moveRange);
 
-        //Debug.Log("player turn");
+        player.SetUseEnergy();
+        if (manager_Action.usedKing == true)
+        {
+            manager_Action.BonusUse();
+        }
+        else
+        {
+            manager_Action.SetActionBtn(true);  //액션 버튼 활성화
+            manager_map.StartPlayerTurn(player.moveRange);
+        }
+        Debug.Log("player turn");
     }
 
     public void EndPlayerTurn()
     {
-       // Debug.Log("player turn end");
+        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+
+        Debug.Log("player turn end");
         isPlayerTurn = false;
         isDone = true;
 
+        if(UpgradeManager.instance.getBonusTurn() > 0)
+        {
+            UpgradeManager.instance.getBonusTurn(-1);
+            StartPlayerTurn();
+
+            return;
+        }
+        manager_Action.SetActionBtn(false);
+        ui_turn.RotateObj(turnCount + 1);    //턴 ui
         StartEnemyTurn();
     }
 
     public void StartEnemyTurn()
     {
-        if(isPlayerTurn == true) { return; }
-        isEnemyTurn = true;
-        //Debug.Log("몬스터 턴");
+        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
 
-        EndEnemyTurn();
+        if (isPlayerTurn == true || isEnemyTurn == true) { return; }
+        isEnemyTurn = true;
+
+        manager_Mob.ActMob();
+        Debug.Log("몬스터 턴");
     }
 
     public void EndEnemyTurn()
     {
+        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+
+        if (isEnemyTurn == false) { return; }
         isEnemyTurn = false;
-        //Debug.Log("몬스터 턴 end");
+        Debug.Log("몬스터 턴 end");
 
         manager_Item.RemoveObj();
+
+        turnCount++;
+
+        ui_turn.RotateObj(turnCount + 1);    //턴 ui
         StartPlayerTurn();
     }
 }
