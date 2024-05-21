@@ -15,19 +15,11 @@ public class EnergySystem : MonoBehaviour
 
     public int useEnergy = 1;
 
-    private void Start()
+    private void Awake()
     {
         maxEnergy = 50;
+        curEnergy = maxEnergy;
 
-        int energy = UpgradeManager.instance.getEnergy();
-        if (energy != 0)
-        {
-            curEnergy = energy < maxEnergy ? energy : maxEnergy;
-        }
-        else
-        {
-            curEnergy = maxEnergy;
-        }
         slider.value = (float)curEnergy / maxEnergy;
 
     }
@@ -42,7 +34,7 @@ public class EnergySystem : MonoBehaviour
         {
             curEnergy = curEnergy - i > 0 ? curEnergy - i : 0;
         }
-        UpgradeManager.instance.getEnergy(curEnergy);
+
         slider.value = (float)curEnergy / maxEnergy;
         if(curEnergy <= 0)
         {

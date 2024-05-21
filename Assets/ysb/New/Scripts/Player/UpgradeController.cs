@@ -7,6 +7,8 @@ using UnityEngine.UI;
 
 public class UpgradeController : MonoBehaviour
 {
+    //private UpgradeManager manager_Up;
+
     private Transform paenl;
     private UpgradeSelector[] selectors = new UpgradeSelector[3];   //선택버튼
 
@@ -16,11 +18,11 @@ public class UpgradeController : MonoBehaviour
 
     public int selectCount = 3;
 
-    [SerializeField] private Transform panel_action;    //액션 선택창
-
     private void Awake()
     {
-        paenl = transform.Find("Panel").transform;        
+        //manager_Up = FindObjectOfType<UpgradeManager>();
+        paenl = transform.Find("Panel").transform;
+        
 
         //버튼 세팅
         selectors = GetComponentsInChildren<UpgradeSelector>();
@@ -34,21 +36,9 @@ public class UpgradeController : MonoBehaviour
     {
         upgrades.Clear();
         upgrades = up;
-    }   //구
 
-    //액션 선택 - 신
-    public void OpenActionPanel()
-    {
-        panel_action.localScale = new Vector3(1, 1, 1);
+        Debug.Log("set" + upgrades.Count);
     }
-    public void SelectAction(int i)
-    {
-        UpgradeManager.instance.SetAction(i);
-        panel_action.localScale = new Vector3(0, 1, 1);
-    }
-
-
-    //증강체
     public void SetUpgrade(List<Upgrade> up)
     {
         upgrades.Clear();
@@ -56,15 +46,19 @@ public class UpgradeController : MonoBehaviour
         Debug.Log("set" + upgrades.Count);
     }
 
-    //증강체 오픈
-    public void OpenUpgradePanel()
+    public void ShowUpgrade()
     {
         SetSelectList();
     }
-
-    private void SetSelectList()
+    public void SetSelectList()
     {
         selectedUp.Clear();
+
+        //for(int i = 0; i < upgrades.Count; ++i)
+        //{
+        //    Debug.Log(upgrades[i].state + "/" + upgrades[i].upType);
+        //}
+
         for(int i = 0; i < selectCount; ++i)
         {
             int rand = Random.Range(0, upgrades.Count);
