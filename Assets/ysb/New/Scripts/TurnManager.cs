@@ -58,6 +58,7 @@ public class TurnManager : MonoBehaviour
         isDone = true;
 
         player.SetUseEnergy();
+        if(manager_Action == null) { manager_Action = FindObjectOfType<SAManager>(); }
         if (manager_Action.usedKing == true)
         {
             manager_Action.BonusUse();
