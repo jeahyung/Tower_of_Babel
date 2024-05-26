@@ -19,6 +19,7 @@ public class TurnManager : MonoBehaviour
 
     public bool isDone = true;
 
+    int bounusTurn = 0; //보너스 턴
     int turnCount = 0;
 
     public int TurnCount => turnCount;
@@ -30,7 +31,7 @@ public class TurnManager : MonoBehaviour
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Item = player.GetComponent<ItemManager>();
 
-        manager_Mob = FindObjectOfType<MobManager>();
+        //manager_Mob = FindObjectOfType<MobManager>();
         manager_Action = FindObjectOfType<SAManager>();
 
         if(ui_turn == null)
@@ -39,13 +40,26 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    public void SetMobManager(MobManager mob)
+    {
+        manager_Mob = mob;
+    }
+
     public void StartGame()
     {
+        manager_Mob = StageManager.instance.mob;
         player.SetControl(false);
         StartPlayerTurn();
     }
     public void EndGame()
     {
+        //manager_map.ResetTile();
+        isPlayerTurn = false;
+        isEnemyTurn = false;
+        isDone = false;
+        ui_turn.ResetUI();
+
+        turnCount = 0;
         player.SetControl(true);
     }
 
@@ -86,6 +100,9 @@ public class TurnManager : MonoBehaviour
 
             return;
         }
+
+        ItemInventory.instance.ChangeItem();    //아이템 체인지
+
         manager_Action.SetActionBtn(false);
         ui_turn.RotateObj(turnCount + 1);    //턴 ui
         StartEnemyTurn();

@@ -14,19 +14,26 @@ public class ItemInventory : Singleton<ItemInventory>
     public string path = "Prefabs/Item/";
 
     public ItemUI itemUI;
+
+    private int count_useItem = 0;  //사용한 아이템 갯수
     private void Start()
     {
         itemUI = FindObjectOfType<ItemUI>();
 
         datas.Clear();
         datas.AddRange(Resources.LoadAll<Item>(path));
+        //UpgradeManager.instance.getBonusItem(-bc);
+    }
 
+    //게임 시작시 세팅돼야 하는 것들
+    public void StartGame()
+    {
         int bc = UpgradeManager.instance.getBonusItem();
         for (int i = 0; i < bc; ++i)
         {
             AddBonusItem();
         }
-        //UpgradeManager.instance.getBonusItem(-bc);
+        count_useItem = 0;
     }
 
     //private void Awake()
@@ -68,7 +75,19 @@ public class ItemInventory : Singleton<ItemInventory>
     {
         if(itemUI.RemoveItem(i) == true)
         {
+            count_useItem++;
             //items.Remove(i);
         }
+    }
+
+    //매턴 마다
+    public void ChangeItem()
+    {
+        bool bi = UpgradeManager.instance.getItemChange();
+        if (bi == true)
+        {
+            itemUI.ChangeItem(datas);
+        }
+
     }
 }

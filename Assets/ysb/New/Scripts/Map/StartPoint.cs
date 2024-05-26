@@ -23,13 +23,20 @@ public class StartPoint : MonoBehaviour
             turn = FindObjectOfType<TurnManager>();
     }
 
-    private void SetAction()
+    private void OnEnable()
     {
-        action.SetAct();
+        isStart = false;
+        col.enabled = true;
     }
+
     private void StartGame()
     {
-        turn.StartGame();
+        StageManager.instance.StartGame();
+        UpgradeManager.instance.StartGame();    //보너스 턴 세팅
+        ItemInventory.instance.StartGame();     //아이템 세팅
+
+        action.SetAct();    //액션 세팅
+        turn.StartGame();   //게임 시작
     }
 
     private void OnTriggerEnter(Collider other)
@@ -41,15 +48,6 @@ public class StartPoint : MonoBehaviour
             Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
 
             other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
-
-            //if(Vector3.Distance(target, my) <= 0.05f)
-            //{
-            //    SetAction();
-            //    StartGame();
-            //    col.enabled = false;
-            //    //other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
-            //    isStart = true;
-            //}
         }
     }
 
@@ -58,12 +56,10 @@ public class StartPoint : MonoBehaviour
         Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
         if (Vector3.Distance(other.transform.position, my) <= 0.05f)
         {
-            SetAction();
-            //StartGame();
-            StageManager.instance.StartGame();
             col.enabled = false;
-            //other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
             isStart = true;
+
+            StartGame();
         }
     }
 }

@@ -11,8 +11,6 @@ public class MobManager : MonoBehaviour
     //¼øÂûÇü
     private PatrolMobManager manager_Patrol;
 
-
-
     private void Awake()
     {
         manager_Turn = FindObjectOfType<TurnManager>();

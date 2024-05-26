@@ -303,9 +303,59 @@ public class Map : MonoBehaviour
     }
 
     //플레이어 이동
+
+    public int HowRotate(Tile t)    //얼마나 회전해야 하는가?
+    {
+        int nextX = t.coord.y;
+        int nextZ = t.coord.x;
+
+        int curX = nowTile.coord.y;
+        int curZ = nowTile.coord.x;
+
+        int difX = nextX - curX;
+        int difZ = nextZ - curZ;
+
+        //left
+        if(difX < 0)    //되돌아오는 거 고려해서
+        {
+            if(difZ > 0)            //45
+            {
+                return 2;
+            }
+            else if(difZ == 0)            //90
+            {
+                return 3;
+            }
+            else            //135
+            {
+                return 4;
+            }
+        }
+        else if(difX > 0)//right
+        {
+            if (difZ > 0)            //45
+            {
+                return 7;
+            }
+            else if (difZ == 0)            //90
+            {
+                return 6;
+            }
+            else            //135
+            {
+                return 5;
+            }
+        }
+        else//정면 or 후면
+        {
+            if(difZ > 0) { return 1; }
+            else { return 8; }
+        }
+    }
+
     public void MovePlayerPosition()
     {
-        player.SetPosition(clickTile.GetPosition());
+        player.SetPosition(clickTile.GetPosition(), HowRotate(clickTile));
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
         //에너지 사용 -> 플레이어쪽에서
@@ -395,11 +445,6 @@ public class Map : MonoBehaviour
     {
         if(tile == null) { tile = nowTile; }
 
-        if(previousTile != null && GetTile(previousTile.coord) != null)
-        {
-            return previousTile;    //이전 타일로 갈 수 있으면 이전 타일로 ㄱㄱ
-        }
-
         //탐색 순서(아래-위-좌-우)
         for (int i = 3; i > 0; --i)
         {
@@ -408,6 +453,7 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                nowTile = findTile;
                 return findTile;
             }
         }
@@ -419,9 +465,45 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                nowTile = findTile;
                 return findTile;
             }
         }
+        if (previousTile != null && GetTile(previousTile.coord) != null)
+        {
+            nowTile = previousTile;
+            return previousTile;    //이전 타일로 갈 수 있으면 이전 타일로 ㄱㄱ
+        }
         return nowTile;
+    }
+
+
+    //타일 상태 초기화
+    public void ResetTile()
+    {
+        for(int i = 1; i < LineCount + 1; ++i)
+        {
+            for(int j = 0; j < LineCount; ++j)
+            {
+                tiles[i, j].tileType = TileType.possible;
+            }
+        }
+        GameObject startPoint = tiles[0, 0].gameObject;
+        startPoint.SetActive(false);
+        startPoint.SetActive(true);
+
+        GameObject endPoint = tiles[LineCount + 1, LineCount - 1].gameObject;
+        endPoint.SetActive(false);
+        endPoint.SetActive(true);
+
+        nowTile = tiles[0, 0];
+
+        for (int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
+        {
+            for (int j = 0; j < LineCount; ++j)
+            {
+                tiles[i, j].HideArea();
+            }
+        }
     }
 }
