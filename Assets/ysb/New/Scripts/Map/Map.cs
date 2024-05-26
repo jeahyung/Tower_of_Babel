@@ -445,11 +445,6 @@ public class Map : MonoBehaviour
     {
         if(tile == null) { tile = nowTile; }
 
-        if(previousTile != null && GetTile(previousTile.coord) != null)
-        {
-            return previousTile;    //이전 타일로 갈 수 있으면 이전 타일로 ㄱㄱ
-        }
-
         //탐색 순서(아래-위-좌-우)
         for (int i = 3; i > 0; --i)
         {
@@ -458,6 +453,7 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                nowTile = findTile;
                 return findTile;
             }
         }
@@ -469,8 +465,14 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                nowTile = findTile;
                 return findTile;
             }
+        }
+        if (previousTile != null && GetTile(previousTile.coord) != null)
+        {
+            nowTile = previousTile;
+            return previousTile;    //이전 타일로 갈 수 있으면 이전 타일로 ㄱㄱ
         }
         return nowTile;
     }

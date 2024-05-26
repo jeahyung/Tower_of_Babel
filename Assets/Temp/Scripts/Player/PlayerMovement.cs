@@ -272,11 +272,14 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isDamaged == true) { return; }
         isDamaged = true;
+
         int per = 0;
         if(UpgradeManager.instance.GetSANum() == 0) { per = 2; }
         else if(UpgradeManager.instance.GetSANum() == 1) { per = 3; }
         else { per = 1; }
+
         int dmg = 3 * per;
+
         energySysteam.UseEnergy(dmg);
         DamagedMove(map.CheckNearTile());
     }
@@ -321,7 +324,6 @@ public class PlayerMovement : MonoBehaviour
 
         isDamaged = false;
         canMove = true;
-        EndPlayerTurn();
     }
     private IEnumerator MoveBack(Vector3 target, Tile tile)
     {
