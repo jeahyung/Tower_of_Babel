@@ -60,4 +60,11 @@ public class UI_Turn : MonoBehaviour
         stage.text = c.ToString() + " - " + s.ToString();
     }
 
+    public void ResetUI()
+    {
+        imgIndex = 0;
+        turnImg.sprite = img[imgIndex];
+        turn.text = "0";
+    }
+
 }

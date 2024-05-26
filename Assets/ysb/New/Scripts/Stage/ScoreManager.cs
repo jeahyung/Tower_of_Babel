@@ -148,11 +148,19 @@ public class ScoreManager : Singleton<ScoreManager>
         }
         if(part <= 1)
         {
+            //제한턴 증가
+            turn -= UpgradeManager.instance.GetScore_Turn();
+            if(turn < 0) { turn = 0; }
+
             score = turnScore[part] - 500 * turn;
             if (score < 0) { score = 0; return; }
         }
         else
         {
+            //제한턴 증가
+            turn -= UpgradeManager.instance.GetScore_Turn();
+            if (turn < 0) { turn = 0; }
+
             score = turnScore[part] - 1000 * turn;
             if (score < 0) { score = 0; return; }
         }

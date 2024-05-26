@@ -6,6 +6,7 @@ public class ItemUI : MonoBehaviour
 {
     public List<ItemUISlot> slots = new List<ItemUISlot>();
 
+
     private void Awake()
     {
         slots.AddRange(GetComponentsInChildren<ItemUISlot>());
@@ -46,5 +47,17 @@ public class ItemUI : MonoBehaviour
             }
         }
         return false;
+    }
+
+    public void ChangeItem(List<Item> items)
+    {
+        foreach (ItemUISlot slot in slots)
+        {
+            int i = Random.Range(0, items.Count);
+            if(slot.addItem != null)
+            {
+                slot.SetSlot(items[i]);
+            }
+        }
     }
 }

@@ -10,13 +10,23 @@ public class ClearScore : MonoBehaviour
 
     private void Awake()
     {
+        rectT = GetComponent<RectTransform>();
         score = GetComponent<TMP_Text>();
         score.enabled = false;
+    }
+
+    public void HideText()
+    {
+        score.text = "";
+        score.enabled = false;
+        rectT.anchoredPosition = new Vector3(0, 0, 0);
+        transform.DOKill();
     }
 
     public void SetText(string t)
     {
         if(score == null) { score = GetComponent<TMP_Text>(); }
+        score.text = "";
         score.enabled = true;
         score.text = t;
     }

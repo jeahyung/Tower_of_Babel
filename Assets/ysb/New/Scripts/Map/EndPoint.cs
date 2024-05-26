@@ -18,9 +18,14 @@ public class EndPoint : MonoBehaviour
         if (up == null)
             up = FindObjectOfType<UpgradeController>();
     }
+    private void OnEnable()
+    {
+        isEnd = false;
+    }
     private void EndGame()
     {
-        //turn.StartPlayerTurn();
+        ScoreManager.instance.CalculateScore();
+        Camera.main.SendMessage("BackMainCam");
     }
 
     private void OnTriggerStay(Collider other)
@@ -35,8 +40,7 @@ public class EndPoint : MonoBehaviour
             {
                 other.transform.position = new Vector3(my.x, other.transform.position.y, my.z);
 
-
-                ScoreManager.instance.CalculateScore();
+                EndGame();
                 //업그레이드
                 //up.SetSelectList();
 

@@ -94,6 +94,9 @@ public class SAManager : MonoBehaviour
         float degree = Mathf.PI * c * 0.2f;
         for (int i = 0; i < c; i++)
         {
+            UI_actCount[i].GetComponent<RectTransform>().anchoredPosition
+                = new Vector3(0, 0, 0);
+
             float angle = Mathf.PI * 0.3f - i * (degree / c);
 
             Vector3 pos = UI_actCount[i].GetComponent<RectTransform>().anchoredPosition;
@@ -139,8 +142,6 @@ public class SAManager : MonoBehaviour
         actCount = action.count;
         actCount = actCount + UpgradeManager.instance.getBonusCount();
 
-
-
         //UI - act count
         SetActCountUI(actCount);
         //countText.text = "(" + actCount.ToString() + ")";
@@ -156,6 +157,7 @@ public class SAManager : MonoBehaviour
     }
     public void UseAction()
     {
+        if(actionBtn.enabled == false) { return; }
         map.useAction = true;
         actionBtn.enabled = false;
 
