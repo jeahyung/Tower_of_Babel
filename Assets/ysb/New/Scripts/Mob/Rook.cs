@@ -26,6 +26,7 @@ public class Rook : MonoBehaviour
     public void OpenRook()
     {
         curTile.tileType = TileType.possible;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Destroy);
         gameObject.SetActive(false);
     }
 }
