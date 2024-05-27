@@ -7,9 +7,14 @@ public class SpawnPoint : MonoBehaviour
 
     [SerializeField] private Transform player;
 
-    private void Start()
+    private void OnEnable()
     {
         if (player == null) { player = GameObject.FindGameObjectWithTag("Player").transform; }
         player.position = transform.position;
+    }
+
+    private void Start()
+    {
+        
     }
 }

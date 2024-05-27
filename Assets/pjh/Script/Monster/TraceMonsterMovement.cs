@@ -64,10 +64,10 @@ public class TraceMonsterMovement : MonoBehaviour
     public void MonsterSetting(Vector3 target)
     {
         if (target == Vector3.zero) { return; }
+       
 
-
-        transform.position = new Vector3(target.x, transform.position.y, target.z);
-
+        transform.position = target;
+   
     }
   
 
@@ -118,7 +118,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
         SetPosition(nextPos);
 
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+      
 
     }
 
@@ -158,7 +158,7 @@ public class TraceMonsterMovement : MonoBehaviour
         
         transform.position = target;
         CheckTile();
-      //  mgr_Chase.CheckMobAction();
+        mgr_Chase.CheckMobAction();
 
         // manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");

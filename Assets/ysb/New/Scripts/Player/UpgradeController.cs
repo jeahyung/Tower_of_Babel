@@ -20,6 +20,7 @@ public class UpgradeController : MonoBehaviour
 
     private void Awake()
     {
+        upgrades.Clear();
         paenl = transform.Find("Panel").transform;        
 
         //버튼 세팅
@@ -51,7 +52,6 @@ public class UpgradeController : MonoBehaviour
     //증강체
     public void SetUpgrade(List<Upgrade> up)
     {
-        upgrades.Clear();
         upgrades = up;
         Debug.Log("set" + upgrades.Count);
     }
@@ -92,7 +92,8 @@ public class UpgradeController : MonoBehaviour
         paenl.localScale = new Vector3(0, 1, 1);
 
         UpgradeManager.instance.AddUpgrade(up);
+        UpgradeDatabase.instance.RemoveData(up);
 
-        StageManager.instance.EndGame();
+        //StageManager.instance.EndGame();
     }
 }
