@@ -56,7 +56,7 @@ public class ItemUI : MonoBehaviour
             int i = Random.Range(0, items.Count);
             if(slot.addItem != null)
             {
-                slot.ChangeItem(items[i]);
+                slot.SetSlot(items[i]);
             }
         }
     }

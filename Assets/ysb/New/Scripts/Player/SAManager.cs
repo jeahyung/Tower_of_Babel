@@ -111,8 +111,6 @@ public class SAManager : MonoBehaviour
 
     public void SetAct()
     {
-        actionBtn.onClick.RemoveAllListeners();
-
         ActActionBtn(true);
         int num = UpgradeManager.instance.GetSANum();
 
@@ -157,14 +155,6 @@ public class SAManager : MonoBehaviour
         action.Action();
         isKing = false;
     }
-
-    public void CheckActionCount()
-    {
-        if (actCount <= 0)
-        {
-            actionBtn.onClick.RemoveAllListeners();
-        }
-    }
     public void UseAction()
     {
         if(actionBtn.enabled == false) { return; }
@@ -180,6 +170,11 @@ public class SAManager : MonoBehaviour
         }
         UI_actCount[actCount - 1].OffSprite(true);  //기회 감소
         actCount--;
+
+        if (actCount <= 0)
+        {
+            actionBtn.onClick.RemoveAllListeners();
+        }
         cancelBtn.SetActive(true);
     }
 
@@ -214,8 +209,7 @@ public class SAManager : MonoBehaviour
     //액션 버튼 활성화 여부
     public void ActActionBtn(bool b)
     {
-        //actionBtn.gameObject.SetActive(b);
-        actionBtn.enabled = b;
+        actionBtn.gameObject.SetActive(b);
         cancelBtn.SetActive(false);
     }
 

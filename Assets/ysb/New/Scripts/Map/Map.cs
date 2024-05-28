@@ -299,7 +299,6 @@ public class Map : MonoBehaviour
             previousTile = nowTile; //이전 타일 갱신
             MovePlayerPosition();
             manager_Action.SetActionBtn(false);
-            manager_Action.CheckActionCount();
         }
     }
 
@@ -442,13 +441,6 @@ public class Map : MonoBehaviour
 
 
     //피격
-    public void TakeDamage(Tile mTile)
-    {
-        if(nowTile == mTile)
-        {
-            player.TakeDamage();
-        }
-    }
     public Tile CheckNearTile(Tile tile = null)
     {
         if(tile == null) { tile = nowTile; }

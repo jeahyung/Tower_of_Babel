@@ -21,16 +21,6 @@ public class ItemUISlot : MonoBehaviour
         }
     }
 
-    public void ChangeItem(Item item)
-    {
-        if (addItem == null) { return; }
-        addItem = item;
-        img.enabled = true;
-        img.sprite = addItem.itemImg;
-
-        btn.onClick.AddListener(() => addItem.SelectItem());
-    }
-
     public void SetSlot(Item item)
     {
         //if(item == null) { return; }
