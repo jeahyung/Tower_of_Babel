@@ -11,6 +11,7 @@ public class UI_Result : MonoBehaviour
     public GameObject back;
     public GameObject panel;
 
+    public TMP_Text text_Stage; //몇 챕터, 몇 스테이지?
     List<string> textContent = new List<string>();
     List<int> score = new List<int>();
 
@@ -34,6 +35,8 @@ public class UI_Result : MonoBehaviour
 
         back.SetActive(false);
         panel.SetActive(false);
+
+        text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
     }
 
     private void SetText()
@@ -65,6 +68,9 @@ public class UI_Result : MonoBehaviour
 
     private IEnumerator Result()
     {
+        text_Stage.text = StageManager.instance.GetChapterCount.ToString() + " - "
+            + StageManager.instance.GetStageCount.ToString() + " Stage Clear";
+
         yield return new WaitForSeconds(0.2f);
         panel.SetActive(true);
 
