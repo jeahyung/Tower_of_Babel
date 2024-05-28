@@ -324,6 +324,8 @@ public class PlayerMovement : MonoBehaviour
 
         isDamaged = false;
         canMove = true;
+
+        manager_Turn.StartPlayerTurn();
     }
     private IEnumerator MoveBack(Vector3 target, Tile tile)
     {
