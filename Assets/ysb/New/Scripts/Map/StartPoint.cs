@@ -12,7 +12,11 @@ public class StartPoint : MonoBehaviour
     [SerializeField]
     private Collider col;
     private bool isStart = false;
+    private bool isPlayerEnter = false; //플레이어 들어옴?
 
+    private GameObject interactMessage;
+    [SerializeField]
+    private BoxCollider wall;   //진입 막는 벽
     private void Awake()
     {
         col.enabled = true;
@@ -21,14 +25,36 @@ public class StartPoint : MonoBehaviour
             action = FindObjectOfType<SAManager>();
         if (turn == null)
             turn = FindObjectOfType<TurnManager>();
+
+        interactMessage = GameObject.Find("Interact");
+        interactMessage.SetActive(false);
     }
 
     private void OnEnable()
     {
         isStart = false;
         col.enabled = true;
+        wall.enabled = true;
     }
 
+    private void Update()
+    {
+        if(isPlayerEnter == false) { return; }
+
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            wall.enabled = false;
+
+            isPlayerEnter = false;
+            isStart = true;
+
+            Transform other = turn.transform;
+
+            Vector3 target = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
+            Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
+            other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
+        }
+    }
     private void StartGame()
     {
         StageManager.instance.StartGame();
@@ -37,6 +63,8 @@ public class StartPoint : MonoBehaviour
 
         action.SetAct();    //액션 세팅
         turn.StartGame();   //게임 시작
+
+        interactMessage.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -44,10 +72,8 @@ public class StartPoint : MonoBehaviour
         if(isStart == true) { return; }
         if(other.CompareTag("Player"))
         {
-            Vector3 target = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
-            Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
-
-            other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
+            isPlayerEnter = true;
+            interactMessage.SetActive(true);
         }
     }
 
@@ -61,5 +87,10 @@ public class StartPoint : MonoBehaviour
 
             StartGame();
         }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        isPlayerEnter = false;
+        interactMessage.SetActive(false);
     }
 }
