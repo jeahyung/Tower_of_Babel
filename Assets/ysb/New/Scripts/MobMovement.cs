@@ -121,6 +121,8 @@ public class MobMovement : MonoBehaviour
         transform.position = nextPos;
         nextTile.tileType = TileType.impossible;
 
+        map.TakeDamage(nextTile);
+
         yield return new WaitForSeconds(0.5f);
 
         if(--count > 0)
