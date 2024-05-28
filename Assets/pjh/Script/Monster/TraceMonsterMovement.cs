@@ -118,7 +118,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
         SetPosition(nextPos);
 
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+      //  AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
     }
 
