@@ -246,6 +246,7 @@ public class PlayerMovement : MonoBehaviour
         //if (degree_back == 1) { RotatePlayer_Anim(1); }
         //else if (degree_back != 8) { RotatePlayer_Anim(degree_back);  }  //정면 외의 방향으로 뛰었을 때
         //else { EndPlayerTurn(); }   //정면으로 뛰었을 때는 바로 턴 종료
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
     }
 
     public void MoveToStartPoint(Vector3 target)

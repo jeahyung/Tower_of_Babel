@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33023176, g: 0.29404122, b: 0.32682568, a: 1}
+  m_IndirectSpecularColor: {r: 0.33044672, g: 0.2941223, b: 0.326964, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -881,6 +881,68 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isFind: 0
   objs: []
+--- !u!1 &346649064
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 346649066}
+  - component: {fileID: 346649065}
+  m_Layer: 0
+  m_Name: Audio
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &346649065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346649064}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c0f328538cce21d4dafb2ee1469f3d38, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bgmClip: {fileID: 0}
+  bgmVolume: 2
+  sfxClips:
+  - {fileID: 8300000, guid: 61b26df7b070a6649879956e1dc8f822, type: 3}
+  - {fileID: 8300000, guid: dcc2d5fceccaa384db5647761b0dfdb2, type: 3}
+  - {fileID: 8300000, guid: 3c81d2ecba42f134f8e53c210e4a7a7f, type: 3}
+  - {fileID: 8300000, guid: de850d1ef8c837746ab7f4582ca02f66, type: 3}
+  - {fileID: 8300000, guid: d2b6014c4de916940b37cec5b96dd476, type: 3}
+  - {fileID: 8300000, guid: 2fa7d45b9dff21c47b094806fda967f1, type: 3}
+  - {fileID: 8300000, guid: 891c4dc372278d84681757d78401ba71, type: 3}
+  - {fileID: 8300000, guid: be65b453b197bd7429aab1c3158f8b55, type: 3}
+  - {fileID: 8300000, guid: 97f89dce5ad9d9a4384d6e2e77326cf0, type: 3}
+  - {fileID: 8300000, guid: 62a61a79974dcee4fb656c7d08571221, type: 3}
+  - {fileID: 8300000, guid: 4c207d52b819adb4f8d9909f68084cc1, type: 3}
+  - {fileID: 8300000, guid: efc5b994045ff524f87040c405e8a8cf, type: 3}
+  - {fileID: 8300000, guid: 94703ba93121f3b4eaa9036aea64dbdf, type: 3}
+  sfxVolume: 2
+  channels: 15
+--- !u!4 &346649066
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 346649064}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -11.3313675, y: 2.81, z: -111.431}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &383085519 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1683901259165830527, guid: 1db1726cc0a3ee34cb72076da4210152, type: 3}

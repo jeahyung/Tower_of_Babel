@@ -40,6 +40,7 @@ public class ItemObject : MonoBehaviour
                 ScoreManager.instance.Score_ItemGet();
                 this.gameObject.SetActive(false);
             }
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Itemget);
         }
     }
 }
