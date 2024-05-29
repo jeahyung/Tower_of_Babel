@@ -112,10 +112,11 @@ public class MobMovement : MonoBehaviour
 
         float ypos = transform.position.y;
         Vector3 nextPos = new Vector3(nextTile.transform.position.x, ypos, nextTile.transform.position.z);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, 0.2f);
+            transform.position = Vector3.Lerp(transform.position, nextPos, 0.01f);
             yield return null;
         }
         transform.position = nextPos;
@@ -138,11 +139,11 @@ public class MobMovement : MonoBehaviour
         manager_Mob.CheckMobAction();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            other.SendMessage("TakeDamage");
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.CompareTag("Player"))
+    //    {
+    //        other.SendMessage("TakeDamage");
+    //    }
+    //}
 }
