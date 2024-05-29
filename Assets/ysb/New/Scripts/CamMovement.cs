@@ -15,9 +15,9 @@ public class CamMovement : MonoBehaviour
         player = GameObject.FindWithTag("Player").transform;
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         targetPos = player.position + offset;
-        transform.position = Vector3.Lerp(transform.position, targetPos, speed);
+        transform.position = targetPos;//Vector3.Lerp(transform.position, targetPos, speed);
     }
 }
