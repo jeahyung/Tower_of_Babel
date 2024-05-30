@@ -37,8 +37,9 @@ public class TraceMonsterMovement : MonoBehaviour
     {
 
         //  player = GameObject.FindWithTag("Player");
-
+        manager_Turn = FindObjectOfType<TurnManager>();
         mgr_Chase = GetComponentInParent<ChaseMobManager>();
+       // mgr_Chase = FindObjectOfType<ChaseMobManager>();
         //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
         allTiles.AddRange(tiles);
@@ -118,7 +119,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
         SetPosition(nextPos);
 
-      //  AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
     }
 
@@ -142,7 +143,7 @@ public class TraceMonsterMovement : MonoBehaviour
         if (target == Vector3.zero) { return; }
 
         Vector3 pos1 = new Vector3(target.x, this.transform.position.y, target.z);
-        //manager_Turn.isDone = false;
+        manager_Turn.isDone = false;
         StartCoroutine(MonsterMove(pos1));
     }
 
@@ -158,9 +159,16 @@ public class TraceMonsterMovement : MonoBehaviour
         
         transform.position = target;
         CheckTile();
-      //  mgr_Chase.CheckMobAction();
+        if(mgr_Chase != null)
+        {
+            mgr_Chase.CheckMobAction();
+        }
+        else
+        {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }
 
-        // manager_Turn.EndEnemyTurn();
+     //   manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
     }
 
