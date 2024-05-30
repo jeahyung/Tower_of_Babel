@@ -62,7 +62,11 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
             upController.OpenUpgradePanel();
         }
     }
-
+    public void ResetUpgradeData()
+    {
+        upList.Clear();
+        LoadCSVFile();
+    }
     public void LoadCSVFile()
     {
         dicList.Clear();

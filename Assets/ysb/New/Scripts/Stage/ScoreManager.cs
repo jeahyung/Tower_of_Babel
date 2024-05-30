@@ -39,6 +39,11 @@ public class ScoreManager : Singleton<ScoreManager>
         }
     }
 
+    public void ResetScore()
+    {
+        scoreSum = 0;
+    }
+
     private void Start()
     {
         scoreUI = FindObjectOfType<ScoreUI>();

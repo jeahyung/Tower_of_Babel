@@ -55,6 +55,7 @@ public class EnergySystem : MonoBehaviour
         eText.text = curEnergy.ToString() + " / " + maxEnergy.ToString();
         if (curEnergy <= 0)
         {
+            StageManager.instance.GameOver();
             Debug.Log("gameOver");
         }
     }
