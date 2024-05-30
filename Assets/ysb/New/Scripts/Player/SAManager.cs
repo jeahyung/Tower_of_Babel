@@ -54,6 +54,8 @@ public class SAManager : MonoBehaviour
     private EnergySystem es;
     private int actCount = 3;
     private bool isKing = false;
+
+    public float offset = 0.2f;
     public bool usedKing => isKing;
     public int getActCount => actCount;
 
@@ -91,13 +93,13 @@ public class SAManager : MonoBehaviour
     #region UI
     public void SetActCountUI(int c)
     {
-        float degree = Mathf.PI * c * 0.2f;
+        float degree = Mathf.PI * c * offset;
         for (int i = 0; i < c; i++)
         {
             UI_actCount[i].GetComponent<RectTransform>().anchoredPosition
                 = new Vector3(0, 0, 0);
 
-            float angle = Mathf.PI * 0.3f - i * (degree / c);
+            float angle = Mathf.PI * 0.3f - (i - 1) * (degree / c);
 
             Vector3 pos = UI_actCount[i].GetComponent<RectTransform>().anchoredPosition;
             UI_actCount[i].GetComponent<RectTransform>().anchoredPosition

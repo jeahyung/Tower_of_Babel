@@ -15,7 +15,7 @@ public class TraceMonsterMovement : MonoBehaviour
     [SerializeField] private Map map;
   
 
-    [Header("¸ó½ºÅÍ ½ÃÀÛÁ¡")] //ÀÌ°Ç ÃßÈÄ µ¥ÀÌÅÍ ¹Ş¾Æ¿À´Â Çü½ÄÀ¸·Î ¼öÁ¤
+    [Header("ëª¬ìŠ¤í„° ì‹œì‘ì ")] //ì´ê±´ ì¶”í›„ ë°ì´í„° ë°›ì•„ì˜¤ëŠ” í˜•ì‹ìœ¼ë¡œ ìˆ˜ì •
     [SerializeField] private int startX;
     [SerializeField] private int startY;
     
@@ -26,7 +26,7 @@ public class TraceMonsterMovement : MonoBehaviour
     public TurnManager manager_Turn;
 
   
-    public Vector2Int pos; //ÇöÀç À§Ä¡ º¸±â¿ëÀÌ¶ó Áö¿öµµ µÊ
+    public Vector2Int pos; //í˜„ì¬ ìœ„ì¹˜ ë³´ê¸°ìš©ì´ë¼ ì§€ì›Œë„ ë¨
     
     public float smoothTime = 0.2f;
 
@@ -80,13 +80,13 @@ public class TraceMonsterMovement : MonoBehaviour
         int j = tile.coord.y;
 
 
-        //ÁÂ¿ì°¡ x -> °°Àº ¶óÀÎ coor yº¯È­
-        //»óÇÏ°¡ z ->¶óÀÎ º¯È­ coor xº¯È­
+        //ì¢Œìš°ê°€ x -> ê°™ì€ ë¼ì¸ coor yë³€í™”
+        //ìƒí•˜ê°€ z ->ë¼ì¸ ë³€í™” coor xë³€í™”
 
         Tile nowTile = map.playerTile;
 
-        //Å¸ÀÏ ¶óÀÎ º¯È­´Â coor x º¯È­
-        //°°Àº ¶óÀÎ ÁÂ¿ì´Â coor y º¯È­
+        //íƒ€ì¼ ë¼ì¸ ë³€í™”ëŠ” coor x ë³€í™”
+        //ê°™ì€ ë¼ì¸ ì¢Œìš°ëŠ” coor y ë³€í™”
         int a = Mathf.Abs(nowTile.coord.x - tile.coord.x);
         int b = Mathf.Abs(nowTile.coord.y - tile.coord.y);
         bool minA = nowTile.coord.x - tile.coord.x < 0;
@@ -125,7 +125,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
     private void FindTileWithCoords(int targetX, int targetY)
     {
-        // Á¶°ÇÀ» ¸¸Á·ÇÏ´Â Å¸ÀÏÀ» Ã£½À´Ï´Ù.
+        // ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ” íƒ€ì¼ì„ ì°¾ìŠµë‹ˆë‹¤.
         foreach (Tile tile in allTiles)
         {
             if (tile.coord.x == targetX && tile.coord.y == targetY)
@@ -137,7 +137,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
    
 
-    //ÀÌµ¿
+    //ì´ë™
     public void SetPosition(Vector3 target)
     {
         if (target == Vector3.zero) { return; }
