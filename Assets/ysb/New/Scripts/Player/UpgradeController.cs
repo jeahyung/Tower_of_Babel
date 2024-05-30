@@ -46,6 +46,7 @@ public class UpgradeController : MonoBehaviour
     {
         UpgradeManager.instance.SetAction(i);
         panel_action.localScale = new Vector3(0, 1, 1);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.UI_Click);
     }
 
 
