@@ -26,6 +26,7 @@ public class EndPoint : MonoBehaviour
     {
         ScoreManager.instance.CalculateScore();
         Camera.main.SendMessage("BackMainCam");
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Clear);
     }
 
     private void OnTriggerStay(Collider other)
