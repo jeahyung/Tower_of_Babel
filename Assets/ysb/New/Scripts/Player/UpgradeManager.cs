@@ -94,7 +94,8 @@ public class UpgradeManager : Singleton<UpgradeManager>
                 break;
 
             case 3: //Energy
-                energy += up.state;
+                FindObjectOfType<EnergySystem>().SetEnergy(up.state);
+                //energy += up.state;
                 break;
 
             case 6: //add Action Count

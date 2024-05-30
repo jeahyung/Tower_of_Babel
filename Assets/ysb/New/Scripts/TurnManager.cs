@@ -40,11 +40,18 @@ public class TurnManager : MonoBehaviour
         }
     }
 
+    //몬스터 관련
     public void SetMobManager(MobManager mob)
     {
         manager_Mob = mob;
     }
 
+    public List<Tile> ShowMobTile()
+    {
+        return manager_Mob.ShowRook();
+    }
+
+    //게임 관련
     public void StartGame()
     {
         manager_Mob = StageManager.instance.mob;
@@ -62,7 +69,10 @@ public class TurnManager : MonoBehaviour
         turnCount = 0;
         player.SetControl(true);
     }
-
+    public bool IsLastTile()
+    {
+        return manager_map.IsLastTile();
+    }
     public void StartPlayerTurn()
     {
         if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부

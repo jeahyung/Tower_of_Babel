@@ -6,7 +6,7 @@ public enum UpType {
     turn = 0,   //ok
     getItem = 1,//ok
     changeItem = 2,//ok
-    energy = 3,
+    energy = 3, //ok
 
     selectAction = 5,   //ok
     countAction = 6,    //ok
@@ -79,8 +79,8 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
             Upgrade up = new Upgrade(id, n, s, t, e);
 
             //이 업그레이드 1번만 등장하는 업그레이든가? 이미 가지고 있는가?
-            bool canAdd = UpgradeManager.instance.CheckUpgrade(up);
-            if(canAdd == false) { continue; }
+            //bool canAdd = UpgradeManager.instance.CheckUpgrade(up);
+            //if(canAdd == false) { continue; }
 
             upList.Add(up);
         }
@@ -116,6 +116,7 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
         if(upList.Contains(up) && up.upType < 10)
         {
             upList.Remove(up);
+            Debug.Log("delete : " + up.name);
         }
     }
 

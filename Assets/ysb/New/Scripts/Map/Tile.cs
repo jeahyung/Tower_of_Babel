@@ -13,7 +13,7 @@ public class Tile : MonoBehaviour
 
     //public Map map;
 
-
+    public Rook rook;   //해체를 위한
 
     private void Start()
     {
@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        if(tileType != TileType.possible) { return; }
+        //if(tileType != TileType.possible) { return; }
         rend.enabled = true;
     }
     public void HideArea()

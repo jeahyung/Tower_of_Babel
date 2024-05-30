@@ -16,6 +16,7 @@ public class ItemInventory : Singleton<ItemInventory>
     public ItemUI itemUI;
 
     private int count_useItem = 0;  //사용한 아이템 갯수
+    public int Count_ItemUse => count_useItem;
     private void Start()
     {
         itemUI = FindObjectOfType<ItemUI>();

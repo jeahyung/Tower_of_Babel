@@ -158,7 +158,7 @@ public class TraceMonsterMovement : MonoBehaviour
         
         transform.position = target;
         CheckTile();
-      //  mgr_Chase.CheckMobAction();
+        mgr_Chase.CheckMobAction();
 
         // manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
