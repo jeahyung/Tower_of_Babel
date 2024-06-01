@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float h;
 
-    private bool isControl = true;
+    public bool isControl = true;
     private bool canMove = true;
     private bool isDamaged = false;
     public float smoothTime = 0.2f;
@@ -60,10 +60,10 @@ public class PlayerMovement : MonoBehaviour
     }
     void Update()
     {
-        if(isControl == false) { return; }
-        float x = Input.GetAxisRaw("Horizontal");
-        float z = Input.GetAxisRaw("Vertical");
-        rigid.velocity = new Vector3(x * 5, rigid.velocity.y, z * 5);
+        //if(isControl == false) { return; }
+        //float x = Input.GetAxisRaw("Horizontal");
+        //float z = Input.GetAxisRaw("Vertical");
+        //rigid.velocity = new Vector3(x * 5, rigid.velocity.y, z * 5);
 
     }
 

@@ -11,6 +11,8 @@ public class Tile : MonoBehaviour
 
     public SpriteRenderer rend;
 
+    public GameObject effectPrefab;
+
     //public Map map;
 
 
@@ -37,11 +39,14 @@ public class Tile : MonoBehaviour
     public void ShowArea()
     {
         if(tileType != TileType.possible) { return; }
-        rend.enabled = true;
+        Debug.Log("에어리어@@@@@@@@@@@@");
+        ShowEffect();
+        rend.enabled = false;
     }
     public void HideArea()
     {
         rend.enabled = false;
+        HideEffect();
     }
 
     public Vector3 GetPosition()
@@ -73,6 +78,22 @@ public class Tile : MonoBehaviour
             }
 
             tileType = TileType.possible;
+        }
+    }
+    private void ShowEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(true);
+        }
+    }
+
+
+    private void HideEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(false);
         }
     }
 }

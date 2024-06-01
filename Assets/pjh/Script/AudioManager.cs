@@ -45,6 +45,18 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    public bool CheckAudio(Sfx sfx)
+    {
+        if (sfxPlayers[(int)sfx].isPlaying)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }     
+    }
+
     public void StopSfx(Sfx sfx)
     {        
         if (sfxPlayers[(int)sfx].isPlaying)

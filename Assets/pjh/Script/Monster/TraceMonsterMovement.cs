@@ -31,7 +31,7 @@ public class TraceMonsterMovement : MonoBehaviour
     public float smoothTime = 0.2f;
 
     public int moveRange = 1;
-
+    public GameObject effectPrefab;
 
     private void Awake()
     {
@@ -48,7 +48,7 @@ public class TraceMonsterMovement : MonoBehaviour
     {
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
         tile = curTile;
-
+        HideEffect();
         FindTileWithCoords(startX, startY);
         MonsterSetting(nextPos);
     }
@@ -118,7 +118,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
 
         SetPosition(nextPos);
-
+        ShowEffect();
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
     }
@@ -167,7 +167,7 @@ public class TraceMonsterMovement : MonoBehaviour
         {
             Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         }
-
+       
      //   manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
     }
@@ -183,7 +183,7 @@ public class TraceMonsterMovement : MonoBehaviour
     public void Act()
     {
         tile.tileType = TileType.possible;
-        Think();
+        Think();     
     }
     private void CheckTile()
     {
@@ -195,6 +195,25 @@ public class TraceMonsterMovement : MonoBehaviour
                 tile = t;
                 tile.tileType = TileType.impossible;
             }
+        }
+
+        HideEffect();
+    }
+
+    private void ShowEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(true);
+        }
+    }
+
+
+    private void HideEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(false);
         }
     }
 }
