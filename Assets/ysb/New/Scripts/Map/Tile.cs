@@ -38,7 +38,7 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        if(tileType != TileType.possible) { return; }        
+        //if(tileType != TileType.possible) { return; }        
         ShowEffect();
         rend.enabled = false;
     }

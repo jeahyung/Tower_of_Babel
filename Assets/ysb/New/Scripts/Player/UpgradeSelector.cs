@@ -44,10 +44,10 @@ public class UpgradeSelector : MonoBehaviour
         explain.text = up.explain;
 
         //아이콘 불러오기
-        string path = "Data/Icon/";
-        Sprite img = Resources.Load<Sprite>(path + up.id.ToString());
+        //string path = "Data/Icon/";
+        //Sprite img = Resources.Load<Sprite>("Data/Icon/" + up.id.ToString());
 
-        icon.sprite = img;
+        icon.sprite = upController.img[up.id];//img;
         //state.text = up.state.ToString();
     }
 

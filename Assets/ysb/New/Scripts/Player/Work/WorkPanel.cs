@@ -14,7 +14,7 @@ public class WorkPanel : MonoBehaviour
     private UpgradeController mgr_up;
 
     private List<Work> works = new List<Work>();
-    private List<Sprite> imgdata = new List<Sprite>();
+    [SerializeField]private List<Sprite> imgdata = new List<Sprite>();
 
     private List<WorkButton> wBtn = new List<WorkButton>();
 
@@ -28,27 +28,15 @@ public class WorkPanel : MonoBehaviour
     private void Awake()
     {
         mgr_up = GetComponentInParent<UpgradeController>();
-
-        //nText = GameObject.Find("Name").GetComponent<TMP_Text>();
-        //exText = GameObject.Find("Explain").GetComponent<TMP_Text>();
-        //workImg = GameObject.Find("Img_Work").GetComponent<Image>();
-
         SetData();
-
-        string path = "Data/Icon/Work/";
-        for(int i = 0; i < works.Count; ++i)
-        {
-            Sprite img = Resources.Load<Sprite>(path + i.ToString());
-            imgdata.Add(img);
-        }
 
         wBtn.AddRange(GetComponentsInChildren<WorkButton>());
         for(int i = 0; i < wBtn.Count;++i)
         {
             wBtn[i].SetData(i, works[i].name);
         }
+
         wBtn[0].SelectWork();
-        //SetInfo(0);
     }
     public void ResetPanel()
     {
@@ -79,12 +67,14 @@ public class WorkPanel : MonoBehaviour
         w3.explain = "8방향 이동. 1회 재행동.";
 
         works.Add(w3);
+
+        //Sprite img = Resources.Load<Sprite>("Data/Icon/Work/0");
+        //imgdata.Add(img);
     }
 
     public void SetInfo(int i)
     {
         selNum = i;
-
         workImg.sprite = imgdata[i];
 
         nText.text = works[i].name;
