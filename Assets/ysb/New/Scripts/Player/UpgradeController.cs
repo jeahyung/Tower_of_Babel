@@ -53,8 +53,9 @@ public class UpgradeController : MonoBehaviour
     //증강체
     public void SetUpgrade(List<Upgrade> up)
     {
-        upgrades = up;
-        Debug.Log("set" + upgrades.Count);
+        upgrades.Clear();
+        upgrades.AddRange(up);
+        Debug.Log("set upgrade : " + upgrades.Count);
     }
 
     //증강체 오픈
@@ -69,7 +70,7 @@ public class UpgradeController : MonoBehaviour
         for(int i = 0; i < selectCount; ++i)
         {
             int rand = Random.Range(0, upgrades.Count);
-
+            Debug.Log("set upgrade : " + upgrades.Count + "/ " + rand);
             Upgrade up = upgrades[rand];
             selectedUp.Add(up);
             upgrades.Remove(up);

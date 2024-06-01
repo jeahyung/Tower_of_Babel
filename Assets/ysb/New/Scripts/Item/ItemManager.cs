@@ -34,6 +34,14 @@ public class ItemManager : MonoBehaviour
         map.UseItem_Eight(range);
     }
 
+    public void SelectItem_Key(Item item)
+    {
+        if (map.canControl == false) { return; }
+        selectedItem = item;
+        map.SelectItem(item);
+        map.UseItem_Key();
+    }
+
     public void UseItem()
     {
         if (selectedItem.UseItem() == false)
@@ -74,6 +82,11 @@ public class ItemManager : MonoBehaviour
         map.SetPlayerPosition();
         selectedItem = item;
         ItemInventory.instance.RemoveItem(selectedItem);
+    }
+
+    public Rook FindRook()
+    {
+        return map.UseKey();
     }
 
     //설치물 제거

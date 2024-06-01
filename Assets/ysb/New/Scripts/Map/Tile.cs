@@ -15,7 +15,7 @@ public class Tile : MonoBehaviour
 
     //public Map map;
 
-
+    public Rook rook;   //ÇØÃ¼¸¦ À§ÇÑ
 
     private void Start()
     {
@@ -38,8 +38,7 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        if(tileType != TileType.possible) { return; }
-        Debug.Log("�����@@@@@@@@@@@@");
+        if(tileType != TileType.possible) { return; }        
         ShowEffect();
         rend.enabled = false;
     }

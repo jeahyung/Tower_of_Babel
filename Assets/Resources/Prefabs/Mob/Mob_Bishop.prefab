@@ -215,12 +215,16 @@ MonoBehaviour:
   map: {fileID: 0}
   curTile: {fileID: 0}
   moveDir: {x: -1, y: 0}
+  startX: 0
+  startY: 0
   moveCount: 2
   isEnd: 1
   isDone: 0
   range: []
   leftRagne: 1
   rightRange: 1
+  moveSpeed: 1
+  canAct: 1
 --- !u!1001 &3235873801192179398
 PrefabInstance:
   m_ObjectHideFlags: 0

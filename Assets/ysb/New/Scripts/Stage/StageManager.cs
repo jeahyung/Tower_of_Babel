@@ -94,6 +94,8 @@ public class StageManager : Singleton<StageManager>
         ShowUpgrade();
     }
 
+
+
     public bool CheckStage()
     {
         if(chapterCount == 1 && stageCount == 1) { return true; }
@@ -139,5 +141,13 @@ public class StageManager : Singleton<StageManager>
 
         //로딩창 아웃
         Img_loading.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        //아이템 리셋
+        UpgradeDatabase.instance.ResetUpgradeData();
+        UpgradeManager.instance.ResetUpgrade();//강화 리셋
+        ScoreManager.instance.ResetScore();//스코어 리셋
     }
 }

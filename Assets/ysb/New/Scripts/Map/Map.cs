@@ -252,6 +252,13 @@ public class Map : MonoBehaviour
         return tiles[coord.x, coord.y];
     }
 
+    //이거 끝지점?
+    public bool IsLastTile()
+    {
+        if(nowTile == tiles[LineCount - 1, LineCount - 1]) { return true; }
+        return false;
+    }
+
     public void HideArea()
     {
         foreach (var t in moveArea)
@@ -383,6 +390,21 @@ public class Map : MonoBehaviour
         useItem = true;
         HideArea();
         FindTileInRange_Eight(nowTile, r);
+    }
+
+    public void UseItem_Key()
+    {
+        useItem = true;
+        HideArea();
+
+        moveArea.Clear();
+        moveArea.AddRange(manager_Turn.ShowMobTile());
+        ShowArea(moveArea);
+    }
+
+    public Rook UseKey()
+    {
+        return clickTile.rook;
     }
 
     //아이템 사용이 취소됐을때

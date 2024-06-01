@@ -242,7 +242,13 @@ public class PlayerMovement : MonoBehaviour
 
 
         if(degree_back != 8) { RotateBack_Anim(degree_back); }
-        else{ EndPlayerTurn(); }
+        else
+        { 
+            if(manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+            {
+                EndPlayerTurn();
+            }
+        }
 
         //if (degree_back == 1) { RotatePlayer_Anim(1); }
         //else if (degree_back != 8) { RotatePlayer_Anim(degree_back);  }  //정면 외의 방향으로 뛰었을 때
@@ -327,7 +333,10 @@ public class PlayerMovement : MonoBehaviour
         isDamaged = false;
         canMove = true;
 
-        manager_Turn.StartPlayerTurn();
+        if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+        {
+            manager_Turn.StartPlayerTurn();
+        }
     }
     private IEnumerator MoveBack(Vector3 target, Tile tile)
     {
