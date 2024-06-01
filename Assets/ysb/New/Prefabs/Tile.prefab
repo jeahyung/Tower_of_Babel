@@ -39,7 +39,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1000448462776723440}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -118,7 +118,7 @@ Transform:
   m_Children:
   - {fileID: 8745930895668517426}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &5521110809499265585
 MeshFilter:
@@ -185,7 +185,6 @@ MonoBehaviour:
   tileType: 0
   coord: {x: 0, y: 0}
   rend: {fileID: 6153820598768891265}
-  map: {fileID: 0}
 --- !u!65 &5487813399360517373
 BoxCollider:
   m_ObjectHideFlags: 0
