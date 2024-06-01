@@ -39,6 +39,7 @@ public class ItemSlotScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     {
         //Debug.Log("마우스 들어옴");
         this.uiElement.DOSizeDelta(originalScale * scaleMultiplier*(-1), 0.3f);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.UI_Hover);
 
         enter = true; 
 

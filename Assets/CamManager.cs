@@ -5,10 +5,12 @@ using Cinemachine;
 
 public class CamManager : MonoBehaviour
 {
+    //[SerializeField]
+    //private CinemachineVirtualCamera mainCam;
     [SerializeField]
-    private CinemachineVirtualCamera mainCam;
-    [SerializeField]
-    private List<CinemachineVirtualCamera> subCams;
+    private List<CinemachineVirtualCamera> cams;
+    private int camIndex = 0;
+    private int maxIndex;
 
     ICinemachineCamera currentCam;
     Vector3 camPos;
@@ -18,17 +20,30 @@ public class CamManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        mainCam.MoveToTopOfPrioritySubqueue();  //메인 캠, 우선순위 최고로
+        BackMainCam();  //0번이 메인 캠
+        //mainCam.MoveToTopOfPrioritySubqueue();  //메인 캠, 우선순위 최고로
+        maxIndex = cams.Count - 1;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Tab))
+        {
+            camIndex++;
+            if(camIndex > maxIndex) { camIndex = 0; }
+            MoveCam(camIndex);
+        }
     }
 
     //카메라 이동
     public void MoveCam(int id)
     {
-        subCams[id].MoveToTopOfPrioritySubqueue();
+        cams[id].MoveToTopOfPrioritySubqueue();
     }
     public void BackMainCam()
     {
-        mainCam.MoveToTopOfPrioritySubqueue();
+        camIndex = 0;
+        cams[0].MoveToTopOfPrioritySubqueue();
     }
 
     public void CamShake()

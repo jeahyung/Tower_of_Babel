@@ -16,6 +16,8 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
     public static int bonusTurn = 0;       //보너스 턴(2)
     public static int bonusItem = 0;       //보너스 아이템(3)
+
+    public static bool changeItem = false;  //아이템 셔플 가능?
       
     public static int bonusRange = 0;      //보너스 범위(4)
     public static int bonusScore_item = 0;      //보너스 스코어(5)-아이템 획득
@@ -40,6 +42,32 @@ public class UpgradeManager : Singleton<UpgradeManager>
     {
         turn_bonus = bonusTurn;
         //ScoreManager.instance.SetSumSocre(SumScore);
+    }
+
+    public void ResetUpgrade()
+    {
+        selectedUp.Clear();
+        saNum = 0;               //선택한 행동 번호(0)    
+        bonusCount = 0;      //특수행동 보너스(1)    
+        energy = 0;
+    
+        bonusTurn = 0;       //보너스 턴(2)    
+        bonusItem = 0;       //보너스 아이템(3)
+    
+        changeItem = false;  //아이템 셔플 가능?
+    
+        bonusRange = 0;      //보너스 범위(4)    
+        bonusScore_item = 0;      //보너스 스코어(5)-아이템 획득    
+        bonusScore_noneItem = 0;  //보너스 스코어-아이템 미사용    
+        bonusScore_turn = 0;      //보너스 스코어-제한 턴 수   
+        bonusScore_killmob = 0;   //보너스 스코어-몬스터 파괴
+}
+
+    //게임 시작 시 세팅돼야 하는 것들
+    public void StartGame()
+    {
+        turn_bonus = bonusTurn;
+        UpgradeDatabase.instance.SetData();
     }
 
     //이 업그레이드 추가 가능?
@@ -79,12 +107,13 @@ public class UpgradeManager : Singleton<UpgradeManager>
                 bonusItem += up.state;
                 break;
                 
-            case 2: //ChangeItem    ?   
-                bonusItem += up.state;
+            case 2: //ChangeItem    ?
+                changeItem = true;
                 break;
 
             case 3: //Energy
-                energy += up.state;
+                FindObjectOfType<EnergySystem>().SetEnergy(up.state);
+                //energy += up.state;
                 break;
 
             case 6: //add Action Count
@@ -133,6 +162,11 @@ public class UpgradeManager : Singleton<UpgradeManager>
     {
         bonusItem -= i;
         return bonusItem;
+    }
+
+    public bool getItemChange() //아이템 셔플 가능?
+    {
+        return changeItem;
     }
     
     public int getBonusRange()

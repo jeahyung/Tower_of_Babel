@@ -18,8 +18,11 @@ public class UpgradeController : MonoBehaviour
 
     [SerializeField] private Transform panel_action;    //액션 선택창
 
+    [SerializeField] public List<Sprite> img = new List<Sprite>();
+
     private void Awake()
     {
+        upgrades.Clear();
         paenl = transform.Find("Panel").transform;        
 
         //버튼 세팅
@@ -45,6 +48,9 @@ public class UpgradeController : MonoBehaviour
     {
         UpgradeManager.instance.SetAction(i);
         panel_action.localScale = new Vector3(0, 1, 1);
+        panel_action.SendMessage("ResetPanel");
+
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.UI_Click);
     }
 
 
@@ -52,8 +58,8 @@ public class UpgradeController : MonoBehaviour
     public void SetUpgrade(List<Upgrade> up)
     {
         upgrades.Clear();
-        upgrades = up;
-        Debug.Log("set" + upgrades.Count);
+        upgrades.AddRange(up);
+        Debug.Log("set upgrade : " + upgrades.Count);
     }
 
     //증강체 오픈
@@ -68,7 +74,7 @@ public class UpgradeController : MonoBehaviour
         for(int i = 0; i < selectCount; ++i)
         {
             int rand = Random.Range(0, upgrades.Count);
-
+            Debug.Log("set upgrade : " + upgrades.Count + "/ " + rand);
             Upgrade up = upgrades[rand];
             selectedUp.Add(up);
             upgrades.Remove(up);
@@ -92,7 +98,8 @@ public class UpgradeController : MonoBehaviour
         paenl.localScale = new Vector3(0, 1, 1);
 
         UpgradeManager.instance.AddUpgrade(up);
+        UpgradeDatabase.instance.RemoveData(up);
 
-        StageManager.instance.EndGame();
+        //StageManager.instance.EndGame();
     }
 }

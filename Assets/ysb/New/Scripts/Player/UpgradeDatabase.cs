@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public enum UpType { 
-    turn = 0,
-    getItem = 1,
-    changeItem = 2,
-    energy = 3,
+    turn = 0,   //ok
+    getItem = 1,//ok
+    changeItem = 2,//ok
+    energy = 3, //ok
 
-    selectAction = 5,
-    countAction = 6,
-    changeAction = 7,
+    selectAction = 5,   //ok
+    countAction = 6,    //ok
+    changeAction = 7,   //ok
 
-    itemScore = 10,
+    itemScore = 10, //ok
     noneItemScore = 11,
-    turnScore = 12,
-    breakScore = 13,
+    turnScore = 12, //ok
+    breakScore = 13,    //ok
     }
 public class Upgrade
 {
@@ -62,7 +62,11 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
             upController.OpenUpgradePanel();
         }
     }
-
+    public void ResetUpgradeData()
+    {
+        upList.Clear();
+        LoadCSVFile();
+    }
     public void LoadCSVFile()
     {
         dicList.Clear();
@@ -79,11 +83,12 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
             Upgrade up = new Upgrade(id, n, s, t, e);
 
             //이 업그레이드 1번만 등장하는 업그레이든가? 이미 가지고 있는가?
-            bool canAdd = UpgradeManager.instance.CheckUpgrade(up);
-            if(canAdd == false) { continue; }
+            //bool canAdd = UpgradeManager.instance.CheckUpgrade(up);
+            //if(canAdd == false) { continue; }
 
             upList.Add(up);
         }
+        SetData();
     }
 
     //액션 선택
@@ -107,5 +112,21 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     public void SetData()
     {
         upController.SetUpgrade(upList);
+    }
+
+    //일부 증강체는 선택 시 삭제 - 영구 능력들
+    public void RemoveData(Upgrade up)
+    {
+        if(upList.Contains(up) && up.upType < 10)
+        {
+            upList.Remove(up);
+            Debug.Log("delete : " + up.name);
+        }
+    }
+
+    public void OpenUpgrade()
+    {
+        SetData();
+        upController.OpenUpgradePanel();
     }
 }

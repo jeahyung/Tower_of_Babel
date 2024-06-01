@@ -11,6 +11,7 @@ public class UI_Result : MonoBehaviour
     public GameObject back;
     public GameObject panel;
 
+    public TMP_Text text_Stage; //몇 챕터, 몇 스테이지?
     List<string> textContent = new List<string>();
     List<int> score = new List<int>();
 
@@ -34,22 +35,46 @@ public class UI_Result : MonoBehaviour
 
         back.SetActive(false);
         panel.SetActive(false);
+
+        text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
     }
 
     private void SetText()
     {
-        textContent.Add("스테이지 클리어 : ");
-        textContent.Add("제한 턴 수 내로 클리어 : ");
-        textContent.Add("잔여 특수 행동 횟수 : ");
+        textContent.Clear();
 
-        for(int i = 0; i < score.Count; ++i)
+        if (score[0] != 0)
         {
-            textContent[i] += score[i].ToString();
+            textContent.Add("스테이지 클리어 : " + score[0].ToString());
         }
+        if (score[1] != 0)
+        {
+            textContent.Add("제한 턴 수 내로 클리어 : " + score[1].ToString());
+        }
+        if (score[2] != 0)
+        {
+            textContent.Add("잔여 특수 행동 횟수 : " + score[2].ToString());
+        }
+        if (score[3] != 0)
+        {
+            textContent.Add("아이템 미사용 클리어 : " + score[3].ToString());
+        }
+
+
+        //textContent.Add("스테이지 클리어 : ");
+        //textContent.Add("제한 턴 수 내로 클리어 : ");
+        //textContent.Add("잔여 특수 행동 횟수 : ");
+
+        //for(int i = 0; i < score.Count; ++i)
+        //{
+        //    textContent[i] += score[i].ToString();
+        //}
     }
     public void ShowResult(int sc, int cur, int target, List<int> scoreList)
     {
-        score = scoreList;
+        score.Clear();
+
+        score.AddRange(scoreList);
         SetText();  //문구 설정
 
         sCount = sc;
@@ -64,6 +89,9 @@ public class UI_Result : MonoBehaviour
 
     private IEnumerator Result()
     {
+        text_Stage.text = StageManager.instance.GetChapterCount.ToString() + " - "
+            + StageManager.instance.GetStageCount.ToString() + " Stage Clear";
+
         yield return new WaitForSeconds(0.2f);
         panel.SetActive(true);
 
@@ -87,9 +115,11 @@ public class UI_Result : MonoBehaviour
             sText[sIndex].SetTarget(h);
             sIndex++;
             yield return new WaitForSeconds(0.5f);
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Score);
+
         }
         yield return new WaitForSeconds(0.6f);
-
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Final);
         StartCoroutine(Count(totalScore, curScore));
     }
 
@@ -118,6 +148,11 @@ public class UI_Result : MonoBehaviour
         if(isClickOk == false) { return; }
         back.SetActive(false);
         panel.SetActive(false);
+
+        for(int i = 0; i < sCount; ++i)
+        {
+            sText[i].HideText();
+        }
 
         StageManager.instance.EndGame();
     }

@@ -13,6 +13,7 @@ public class ScoreManager : Singleton<ScoreManager>
     int clearTurnScore = 0; //클리어 턴에 따른 스코어
     int actScore = 0;       //남은 특수행동 횟수
     int stageClearScore = 0;
+    int noneItemSocre = 0;
 
     private void OnEnable()
     {
@@ -36,6 +37,11 @@ public class ScoreManager : Singleton<ScoreManager>
             if (i == 3) { turnScore[i] = 3000; return; }
             turnScore[i] = 1000 + 500 * i;
         }
+    }
+
+    public void ResetScore()
+    {
+        scoreSum = 0;
     }
 
     private void Start()
@@ -140,27 +146,38 @@ public class ScoreManager : Singleton<ScoreManager>
         {
             score = turnScore[part];
             clearTurnScore = score;
-            //scoreSum += score;
-            //UpgradeManager.instance.SumScore = scoreSum;
-            //scoreUI.TurnScore(score);
-            //scoreUI.SetSumSocre(scoreSum);
             return;
         }
         if(part <= 1)
         {
+            //제한턴 증가
+            turn -= UpgradeManager.instance.GetScore_Turn();
+            if(turn < 0) { turn = 0; }
+
             score = turnScore[part] - 500 * turn;
             if (score < 0) { score = 0; return; }
         }
         else
         {
+            //제한턴 증가
+            turn -= UpgradeManager.instance.GetScore_Turn();
+            if (turn < 0) { turn = 0; }
+
             score = turnScore[part] - 1000 * turn;
             if (score < 0) { score = 0; return; }
         }
         clearTurnScore = score;
-        //scoreSum += score;
-        //UpgradeManager.instance.SumScore = scoreSum;
-        //scoreUI.TurnScore(score);
-        //scoreUI.SetSumSocre(scoreSum);
+    }
+
+    //아이템 미사용 점수
+    public void Score_NoneItem()
+    {
+        if(ItemInventory.instance.Count_ItemUse > 0) { 
+            noneItemSocre = 0;
+            return;
+        }
+
+        noneItemSocre = UpgradeManager.instance.GetScore_ItemNone();
     }
 
     public void CalculateScore()
@@ -168,16 +185,19 @@ public class ScoreManager : Singleton<ScoreManager>
         StageClear();
         Score_ClearTurn();
         Score_SACount();
+        Score_NoneItem();
 
         int sc = 0;
         if(stageClearScore != 0) { sc++; }
         if(clearTurnScore != 0) { sc++; }
         if(actScore != 0) { sc++; }
+        if(noneItemSocre != 0) { sc++; }
 
         List<int> scoreList = new List<int>();
         scoreList.Add(stageClearScore);
         scoreList.Add(clearTurnScore);
         scoreList.Add(actScore);
+        scoreList.Add(noneItemSocre);
 
         int totalScore = scoreSum + stageClearScore + clearTurnScore + actScore;
         resultUI.ShowResult(sc, scoreSum, totalScore, scoreList);

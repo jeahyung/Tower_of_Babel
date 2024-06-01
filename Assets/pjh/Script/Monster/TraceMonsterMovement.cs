@@ -15,7 +15,7 @@ public class TraceMonsterMovement : MonoBehaviour
     [SerializeField] private Map map;
   
 
-    [Header("¸ó½ºÅÍ ½ÃÀÛÁ¡")] //ÀÌ°Ç ÃßÈÄ µ¥ÀÌÅÍ ¹Ş¾Æ¿À´Â Çü½ÄÀ¸·Î ¼öÁ¤
+    [Header("ëª¬ìŠ¤í„° ì‹œì‘ì ")] //ì´ê±´ ì¶”í›„ ë°ì´í„° ë°›ì•„ì˜¤ëŠ” í˜•ì‹ìœ¼ë¡œ ìˆ˜ì •
     [SerializeField] private int startX;
     [SerializeField] private int startY;
     
@@ -26,19 +26,20 @@ public class TraceMonsterMovement : MonoBehaviour
     public TurnManager manager_Turn;
 
   
-    public Vector2Int pos; //ÇöÀç À§Ä¡ º¸±â¿ëÀÌ¶ó Áö¿öµµ µÊ
+    public Vector2Int pos; //í˜„ì¬ ìœ„ì¹˜ ë³´ê¸°ìš©ì´ë¼ ì§€ì›Œë„ ë¨
     
     public float smoothTime = 0.2f;
 
     public int moveRange = 1;
-
+    public GameObject effectPrefab;
 
     private void Awake()
     {
 
         //  player = GameObject.FindWithTag("Player");
-
+        manager_Turn = FindObjectOfType<TurnManager>();
         mgr_Chase = GetComponentInParent<ChaseMobManager>();
+       // mgr_Chase = FindObjectOfType<ChaseMobManager>();
         //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
         allTiles.AddRange(tiles);
@@ -47,7 +48,7 @@ public class TraceMonsterMovement : MonoBehaviour
     {
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
         tile = curTile;
-
+        HideEffect();
         FindTileWithCoords(startX, startY);
         MonsterSetting(nextPos);
     }
@@ -64,10 +65,10 @@ public class TraceMonsterMovement : MonoBehaviour
     public void MonsterSetting(Vector3 target)
     {
         if (target == Vector3.zero) { return; }
-       
 
-        transform.position = target;
-   
+
+        transform.position = new Vector3(target.x, transform.position.y, target.z);
+
     }
   
 
@@ -79,13 +80,13 @@ public class TraceMonsterMovement : MonoBehaviour
         int j = tile.coord.y;
 
 
-        //ÁÂ¿ì°¡ x -> °°Àº ¶óÀÎ coor yº¯È­
-        //»óÇÏ°¡ z ->¶óÀÎ º¯È­ coor xº¯È­
+        //ì¢Œìš°ê°€ x -> ê°™ì€ ë¼ì¸ coor yë³€í™”
+        //ìƒí•˜ê°€ z ->ë¼ì¸ ë³€í™” coor xë³€í™”
 
         Tile nowTile = map.playerTile;
 
-        //Å¸ÀÏ ¶óÀÎ º¯È­´Â coor x º¯È­
-        //°°Àº ¶óÀÎ ÁÂ¿ì´Â coor y º¯È­
+        //íƒ€ì¼ ë¼ì¸ ë³€í™”ëŠ” coor x ë³€í™”
+        //ê°™ì€ ë¼ì¸ ì¢Œìš°ëŠ” coor y ë³€í™”
         int a = Mathf.Abs(nowTile.coord.x - tile.coord.x);
         int b = Mathf.Abs(nowTile.coord.y - tile.coord.y);
         bool minA = nowTile.coord.x - tile.coord.x < 0;
@@ -117,14 +118,14 @@ public class TraceMonsterMovement : MonoBehaviour
 
 
         SetPosition(nextPos);
-
-      
+        ShowEffect();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
     }
 
     private void FindTileWithCoords(int targetX, int targetY)
     {
-        // Á¶°ÇÀ» ¸¸Á·ÇÏ´Â Å¸ÀÏÀ» Ã£½À´Ï´Ù.
+        // ì¡°ê±´ì„ ë§Œì¡±í•˜ëŠ” íƒ€ì¼ì„ ì°¾ìŠµë‹ˆë‹¤.
         foreach (Tile tile in allTiles)
         {
             if (tile.coord.x == targetX && tile.coord.y == targetY)
@@ -136,13 +137,13 @@ public class TraceMonsterMovement : MonoBehaviour
 
    
 
-    //ÀÌµ¿
+    //ì´ë™
     public void SetPosition(Vector3 target)
     {
         if (target == Vector3.zero) { return; }
 
         Vector3 pos1 = new Vector3(target.x, this.transform.position.y, target.z);
-        //manager_Turn.isDone = false;
+        manager_Turn.isDone = false;
         StartCoroutine(MonsterMove(pos1));
     }
 
@@ -158,9 +159,16 @@ public class TraceMonsterMovement : MonoBehaviour
         
         transform.position = target;
         CheckTile();
-        mgr_Chase.CheckMobAction();
-
-        // manager_Turn.EndEnemyTurn();
+        if(mgr_Chase != null)
+        {
+            mgr_Chase.CheckMobAction();
+        }
+        else
+        {
+            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }
+       
+     //   manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
     }
 
@@ -175,7 +183,7 @@ public class TraceMonsterMovement : MonoBehaviour
     public void Act()
     {
         tile.tileType = TileType.possible;
-        Think();
+        Think();     
     }
     private void CheckTile()
     {
@@ -187,6 +195,25 @@ public class TraceMonsterMovement : MonoBehaviour
                 tile = t;
                 tile.tileType = TileType.impossible;
             }
+        }
+
+        HideEffect();
+    }
+
+    private void ShowEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(true);
+        }
+    }
+
+
+    private void HideEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(false);
         }
     }
 }

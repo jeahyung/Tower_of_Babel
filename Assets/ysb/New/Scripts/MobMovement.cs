@@ -24,6 +24,8 @@ public class MobMovement : MonoBehaviour
     public int leftRagne = 1;   //왼쪽으로 몇 칸까지?(아래)
     public int rightRange = 1;  //오른쪽으로 몇 칸까지?(위)
 
+    [SerializeField] private float moveSpeed;
+
     public bool canAct = true;   //움직일 수 있는가?
 
     private void Awake()
@@ -112,10 +114,13 @@ public class MobMovement : MonoBehaviour
 
         float ypos = transform.position.y;
         Vector3 nextPos = new Vector3(nextTile.transform.position.x, ypos, nextTile.transform.position.z);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+
+        map.TakeDamage(nextTile);
 
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, 0.2f);
+            transform.position = Vector3.Lerp(transform.position, nextPos, moveSpeed * Time.deltaTime);
             yield return null;
         }
         transform.position = nextPos;
@@ -136,11 +141,11 @@ public class MobMovement : MonoBehaviour
         manager_Mob.CheckMobAction();
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Player"))
-        {
-            other.SendMessage("TakeDamage");
-        }
-    }
+    //private void OnTriggerEnter(Collider other)
+    //{
+    //    if(other.CompareTag("Player"))
+    //    {
+    //        other.SendMessage("TakeDamage");
+    //    }
+    //}
 }

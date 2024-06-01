@@ -6,15 +6,21 @@ using UnityEngine.SceneManagement;
 public class StageManager : Singleton<StageManager>
 {
     private TurnManager manager_turn;
+    [SerializeField] private Map map;
     [SerializeField] private UI_Turn ui_turn;
     public bool isPlaying = false;
 
     public static int chapterCount = 1;
     public static int stageCount = 1;
-    //public string stageName;    //첫번째 스테이지 이름
+    public int index_Upgrade = 5;   //업그레이드 등장하는 층
 
     [SerializeField] private List<GameObject> stages = new List<GameObject>(); //1챕터 스테이지들
     private GameObject curStage = null;
+    public GameObject spawnPoint;
+    public MobManager mob;
+
+    public GameObject Img_loading;
+    public float waitTime = 1f;
 
     private void Start()
     {
@@ -22,7 +28,10 @@ public class StageManager : Singleton<StageManager>
         for(int i = 0; i < transform.childCount; ++i)
         {
             stages.Add(transform.GetChild(i).gameObject);
+            stages[i].SetActive(false);
         }
+        //첫 번째 스테이지 활성화
+        SelectStage();
     }
     void OnEnable()
     {
@@ -39,6 +48,10 @@ public class StageManager : Singleton<StageManager>
         SelectStage();
         ui_turn.SetStageInfo(chapterCount, stageCount);
 
+        //턴매니저에 현재 스테이지 몹 매니저 할당
+        manager_turn.SetMobManager(curStage.GetComponentInChildren<MobManager>());
+        spawnPoint.SetActive(false);
+        spawnPoint.SetActive(true);
         //로딩 종료
     }
 
@@ -49,9 +62,11 @@ public class StageManager : Singleton<StageManager>
         if(curStage != null) { curStage.SetActive(false); }
 
         //새 스테이지
-        int si = Random.Range(0, stages.Count);
+        //int si = Random.Range(0, stages.Count);    
+        int si = 9;
         curStage = stages[si];
         curStage.SetActive(true);
+        mob = curStage.GetComponentInChildren<MobManager>();
 
         stages.Remove(stages[si]);
     }
@@ -74,7 +89,12 @@ public class StageManager : Singleton<StageManager>
     {
         isPlaying = false;
         manager_turn.EndGame();
+
+        //증강체 주는 스테이지 클리어함?
+        ShowUpgrade();
     }
+
+
 
     public bool CheckStage()
     {
@@ -86,11 +106,48 @@ public class StageManager : Singleton<StageManager>
         return false;
     }
 
+    public void ShowUpgrade()
+    {
+        //5스테이지 마다
+        if(stageCount % index_Upgrade == 0)
+        {
+            UpgradeDatabase.instance.OpenUpgrade();
+        }
+    }
+
     public void NextStage()
     {
         //로딩 시작
+        StartCoroutine(Loading());
+    }
+    IEnumerator Loading()
+    {
+        Img_loading.SetActive(true);
+        UI_Loading_Slider slider = Img_loading.GetComponent<UI_Loading_Slider>();
         stageCount++;
-        //SceneManager.LoadScene("Prototype"); //체크를 위해
-        //SceneManager.LoadScene("Prototype " + (stageCount - 1).ToString());
+        SettingStage();
+
+        map.ResetTile();
+
+        float timer = 0f;
+        while(timer < waitTime)
+        {
+            timer += Time.deltaTime;
+            slider.SetSliderValue(timer);
+            yield return null;
+        }
+        slider.SetSliderValue(1f);
+        yield return new WaitForSecondsRealtime(0.2f);
+
+        //로딩창 아웃
+        Img_loading.SetActive(false);
+    }
+
+    public void GameOver()
+    {
+        //아이템 리셋
+        UpgradeDatabase.instance.ResetUpgradeData();
+        UpgradeManager.instance.ResetUpgrade();//강화 리셋
+        ScoreManager.instance.ResetScore();//스코어 리셋
     }
 }

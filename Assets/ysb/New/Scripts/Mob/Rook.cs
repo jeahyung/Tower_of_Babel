@@ -17,15 +17,21 @@ public class Rook : MonoBehaviour
 
         curTile = map.GetTile(map.tiles[startX, startY].coord);
         curTile.tileType = TileType.impossible;
+        curTile.rook = this;
 
         Vector3 pos = new Vector3(curTile.GetPosition().x, 
             curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
     }
 
+    public Tile ShowRookTile()
+    {
+        return curTile;
+    }
     public void OpenRook()
     {
         curTile.tileType = TileType.possible;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Destroy);
         gameObject.SetActive(false);
     }
 }

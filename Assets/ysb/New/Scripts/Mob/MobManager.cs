@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,16 +9,18 @@ public class MobManager : MonoBehaviour
     //돌격형 매니저
     private ChaseMobManager manager_Chase;
 
+    private List<Rook> rooks = new List<Rook>();   //룩들
+
     //순찰형
     private PatrolMobManager manager_Patrol;
-
-
 
     private void Awake()
     {
         manager_Turn = FindObjectOfType<TurnManager>();
         manager_Patrol = GetComponentInChildren<PatrolMobManager>();
         manager_Chase = GetComponentInChildren<ChaseMobManager>();
+
+        rooks.AddRange(GetComponentsInChildren<Rook>());
     }
 
     public void ActMob()
@@ -40,5 +43,17 @@ public class MobManager : MonoBehaviour
     public void EndPatrol()
     {
         manager_Turn.EndEnemyTurn();
+    }
+
+
+    //룩 보여주기
+    public List<Tile> ShowRook()
+    {
+        List<Tile> tiles = new List<Tile>();
+        for(int i = 0; i < rooks.Count; ++i)
+        {
+            tiles.Add(rooks[i].ShowRookTile());
+        }
+        return tiles;
     }
 }

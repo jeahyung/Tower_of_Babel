@@ -54,6 +54,8 @@ public class SAManager : MonoBehaviour
     private EnergySystem es;
     private int actCount = 3;
     private bool isKing = false;
+
+    public float offset = 0.2f;
     public bool usedKing => isKing;
     public int getActCount => actCount;
 
@@ -91,10 +93,13 @@ public class SAManager : MonoBehaviour
     #region UI
     public void SetActCountUI(int c)
     {
-        float degree = Mathf.PI * c * 0.2f;
+        float degree = Mathf.PI * c * offset;
         for (int i = 0; i < c; i++)
         {
-            float angle = Mathf.PI * 0.3f - i * (degree / c);
+            UI_actCount[i].GetComponent<RectTransform>().anchoredPosition
+                = new Vector3(0, 0, 0);
+
+            float angle = Mathf.PI * 0.3f - (i - 1) * (degree / c);
 
             Vector3 pos = UI_actCount[i].GetComponent<RectTransform>().anchoredPosition;
             UI_actCount[i].GetComponent<RectTransform>().anchoredPosition
@@ -108,6 +113,8 @@ public class SAManager : MonoBehaviour
 
     public void SetAct()
     {
+        actionBtn.onClick.RemoveAllListeners();
+
         ActActionBtn(true);
         int num = UpgradeManager.instance.GetSANum();
 
@@ -139,8 +146,6 @@ public class SAManager : MonoBehaviour
         actCount = action.count;
         actCount = actCount + UpgradeManager.instance.getBonusCount();
 
-
-
         //UI - act count
         SetActCountUI(actCount);
         //countText.text = "(" + actCount.ToString() + ")";
@@ -154,8 +159,17 @@ public class SAManager : MonoBehaviour
         action.Action();
         isKing = false;
     }
+
+    public void CheckActionCount()
+    {
+        if (actCount <= 0)
+        {
+            actionBtn.onClick.RemoveAllListeners();
+        }
+    }
     public void UseAction()
     {
+        if(actionBtn.enabled == false) { return; }
         map.useAction = true;
         actionBtn.enabled = false;
 
@@ -168,11 +182,6 @@ public class SAManager : MonoBehaviour
         }
         UI_actCount[actCount - 1].OffSprite(true);  //기회 감소
         actCount--;
-
-        if (actCount <= 0)
-        {
-            actionBtn.onClick.RemoveAllListeners();
-        }
         cancelBtn.SetActive(true);
     }
 
@@ -207,7 +216,8 @@ public class SAManager : MonoBehaviour
     //액션 버튼 활성화 여부
     public void ActActionBtn(bool b)
     {
-        actionBtn.gameObject.SetActive(b);
+        //actionBtn.gameObject.SetActive(b);
+        actionBtn.enabled = b;
         cancelBtn.SetActive(false);
     }
 
