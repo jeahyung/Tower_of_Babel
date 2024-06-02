@@ -223,7 +223,6 @@ MonoBehaviour:
   range: []
   leftRagne: 1
   rightRange: 1
-  moveSpeed: 1
   canAct: 1
 --- !u!1001 &3235873801192179398
 PrefabInstance:
@@ -251,7 +250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: -0.000000015454315
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_LocalRotation.x
@@ -259,15 +258,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000015454313
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0.7071067
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -277,6 +276,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: e79c48883c2e3be4d803897d80971d73, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: b2e13a8de91e07c4d8baea0b3fed2dac, type: 2}
+    - target: {fileID: -7511558181221131132, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: e79c48883c2e3be4d803897d80971d73, type: 2}
+    - target: {fileID: -5754084199372789682, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 6829523962544995513, guid: 22baf4ecf54218a44a8e4ee1d570d4bd, type: 3}
     - target: {fileID: 919132149155446097, guid: 66537acf852f0df4b9849000d7ce9ca3, type: 3}
       propertyPath: m_Name
       value: Bishop (1)

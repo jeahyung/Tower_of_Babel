@@ -38,20 +38,10 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        // if(tileType != TileType.possible) { return; }        
-        if (effectPrefab != null)
-        {
-            effectPrefab.SetActive(true);
-        }
-        //else if (effectPrefab == null)
-        //{
-        //    Debug.Log("null effect");
-        //}
-        //else
-        //{
-        //    Debug.Log("no effect");
-        //}
-        rend.enabled = true;
+        //if(tileType != TileType.possible) { return; }        
+        ShowEffect();
+        rend.enabled = false;
+
     }
     public void HideArea()
     {

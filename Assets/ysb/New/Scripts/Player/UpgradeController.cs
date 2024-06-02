@@ -18,6 +18,8 @@ public class UpgradeController : MonoBehaviour
 
     [SerializeField] private Transform panel_action;    //액션 선택창
 
+    [SerializeField] public List<Sprite> img = new List<Sprite>();
+
     private void Awake()
     {
         upgrades.Clear();
