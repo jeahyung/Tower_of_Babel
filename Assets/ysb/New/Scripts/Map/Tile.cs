@@ -52,6 +52,8 @@ public class Tile : MonoBehaviour
         }
         else if(effectPrefab == null)
         {
+            effectPrefab = transform.GetChild(2).gameObject;
+            effectPrefab.SetActive(false);
             Debug.Log("null effect");
         }
         else

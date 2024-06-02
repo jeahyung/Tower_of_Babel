@@ -37,6 +37,8 @@ public class PlayerMovement : MonoBehaviour
 
     PlayerAnim body;
     Vector3 movePos;
+
+    public int jumpCount = 0;
     public bool TurnEnd()
     {
         if(isDamaged == true) { return false; }
@@ -203,6 +205,67 @@ public class PlayerMovement : MonoBehaviour
         RotatePlayer_Anim(rot); //회전 모션
     }
 
+    //여러 번 점프
+    public Vector3 tg;
+    public int rt;
+    public int footCount = 0;
+    public void SetPosition_Continue(int count, Vector3 target, int rot)
+    {
+        jumpCount = count;
+        if (jumpCount <= 0) {
+            jumpCount = 0;
+            footCount = 0;
+            if (degree_back != 8) { RotateBack_Anim(degree_back); }
+            else
+            {
+                if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+                {
+                    EndPlayerTurn();
+                }
+            }
+            Debug.Log("점프 종료");
+            return;
+        }
+        tg = target;
+        rt = rot;
+
+        anim.SetBool("isEnd", false);
+
+        manager_Turn.isDone = false;
+
+        rigid.useGravity = false;   //중력을 끈다.
+
+        //시작점
+        startPos = transform.position;
+        //끝점
+        endX = (target.x - transform.position.x) / jumpCount;
+        endZ = (target.z - transform.position.z) / jumpCount;
+        endPos = startPos + new Vector3(endX, 0, endZ);
+
+        if (canMove == true)
+        {
+            if (UpgradeManager.instance.getNoneEnergy() == false)
+            {
+                UseEnergy();    //에너지 사용  
+            }
+            RotatePlayer_Anim(rot); //회전 모션
+
+            canMove = false;
+        }
+        else
+        {
+            anim.SetBool("isJump", true);
+            //if(footCount % 2 == 1)
+            //{
+            //    anim.SetTrigger("isJump_left");
+            //}
+            //else
+            //{
+            //    anim.SetBool("isJump", true);
+            //}
+        }
+    }
+
     public void StartJump()
     {
         //if(body.CanJump == false) { return; }
@@ -242,16 +305,25 @@ public class PlayerMovement : MonoBehaviour
         transform.position = endPos;
         rigid.useGravity = true;
         //canMove = true;
-
-
-        if(degree_back != 8) { RotateBack_Anim(degree_back); }
+        jumpCount--;
+        footCount++;
+        if (jumpCount > 0)
+        {
+            SetPosition_Continue(jumpCount, tg, rt);
+        }
         else
-        { 
-            if(manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+        {
+            if (degree_back != 8) { RotateBack_Anim(degree_back); }
+            else
             {
-                EndPlayerTurn();
+                if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+                {
+                    EndPlayerTurn();
+                }
             }
         }
+
+
 
         //if (degree_back == 1) { RotatePlayer_Anim(1); }
         //else if (degree_back != 8) { RotatePlayer_Anim(degree_back);  }  //정면 외의 방향으로 뛰었을 때

@@ -63,7 +63,7 @@ public class StageManager : Singleton<StageManager>
 
         //새 스테이지
         //int si = Random.Range(0, stages.Count);    
-        int si = 9;
+        int si = 0;
         curStage = stages[si];
         curStage.SetActive(true);
         mob = curStage.GetComponentInChildren<MobManager>();

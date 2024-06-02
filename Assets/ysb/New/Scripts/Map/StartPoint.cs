@@ -29,12 +29,18 @@ public class StartPoint : MonoBehaviour
         interactMessage = GameObject.Find("Interact");
         interactMessage.SetActive(false);
     }
+    private void Start()
+    {
+        GetComponent<Tile>().ShowArea();
+    }
 
     private void OnEnable()
     {
         isStart = false;
         col.enabled = true;
         wall.enabled = true;
+
+        GetComponent<Tile>().ShowArea();
     }
 
     private void Update()
@@ -57,6 +63,8 @@ public class StartPoint : MonoBehaviour
     }
     private void StartGame()
     {
+        GetComponent<Tile>().HideArea();
+
         StageManager.instance.StartGame();
         UpgradeManager.instance.StartGame();    //보너스 턴 세팅
         ItemInventory.instance.StartGame();     //아이템 세팅

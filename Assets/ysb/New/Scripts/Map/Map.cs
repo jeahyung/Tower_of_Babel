@@ -30,6 +30,7 @@ public class Map : MonoBehaviour
     public bool canControl = true;
 
     public Tile playerTile = null;
+    //public Tile endtile;
 
     private void Awake()
     {
@@ -37,6 +38,7 @@ public class Map : MonoBehaviour
         manager_Turn = player.GetComponent<TurnManager>();
         manager_Item = FindObjectOfType<ItemManager>();
         manager_Action = FindObjectOfType<SAManager>();
+
 
         tiles = new Tile[LineCount + 2, LineCount];
         for(int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
@@ -48,7 +50,8 @@ public class Map : MonoBehaviour
                 tiles[i, j].SetTileCoord(i, j);
             }
         }
-
+        //endtile = tiles[LineCount + 1, LineCount - 1];
+        //endtile.HideArea();
         nowTile = tiles[0, 0];
 
         distance = new Vector2Int[8];   //방향
@@ -303,6 +306,13 @@ public class Map : MonoBehaviour
             if (moveArea.Contains(clickTile) == false) { return; }
             manager_Action.ActDone();
             useAction = false;
+            HideArea();
+            previousTile = nowTile; //이전 타일 갱신
+            MovePlayerPosition_Continue();
+            manager_Action.SetActionBtn(false);
+            manager_Action.CheckActionCount();
+            return;
+
         }
         if(moveArea.Contains(clickTile) == true)
         {
@@ -314,6 +324,16 @@ public class Map : MonoBehaviour
             manager_Action.CheckActionCount();
         }
     }
+
+    private int CalculateJumpCount()
+    {
+        int xCount = Mathf.Abs(clickTile.coord.y - nowTile.coord.y);
+        int yCount = Mathf.Abs(clickTile.coord.x - nowTile.coord.x);
+
+        int count = xCount > 0 ? xCount : yCount;
+        return count;
+    }
+
 
     //플레이어 이동
 
@@ -372,6 +392,13 @@ public class Map : MonoBehaviour
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
         //에너지 사용 -> 플레이어쪽에서
+    }
+
+    public void MovePlayerPosition_Continue()
+    {
+        player.SetPosition_Continue(CalculateJumpCount(), clickTile.GetPosition(), HowRotate(clickTile));
+        nowTile = clickTile;    //현재 타일 갱신
+        playerTile = nowTile;
     }
 
     public void SelectItem(Item item)
