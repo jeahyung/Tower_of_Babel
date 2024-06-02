@@ -11,9 +11,11 @@ public class Tile : MonoBehaviour
 
     public SpriteRenderer rend;
 
+    public GameObject effectPrefab;
+
     //public Map map;
 
-    public Rook rook;   //ÇØÃ¼¸¦ À§ÇÑ
+    public Rook rook;   //Ã‡Ã˜ÃƒÂ¼Â¸Â¦ Ã€Â§Ã‡Ã‘
 
     private void Start()
     {
@@ -36,12 +38,36 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        //if(tileType != TileType.possible) { return; }
+        // if(tileType != TileType.possible) { return; }        
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(true);
+        }
+        //else if (effectPrefab == null)
+        //{
+        //    Debug.Log("null effect");
+        //}
+        //else
+        //{
+        //    Debug.Log("no effect");
+        //}
         rend.enabled = true;
     }
     public void HideArea()
     {
         rend.enabled = false;
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(false);
+        }
+        else if(effectPrefab == null)
+        {
+            Debug.Log("null effect");
+        }
+        else
+        {
+            Debug.Log("no effect");
+        }
     }
 
     public Vector3 GetPosition()
@@ -73,6 +99,22 @@ public class Tile : MonoBehaviour
             }
 
             tileType = TileType.possible;
+        }
+    }
+    private void ShowEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(true);
+        }
+    }
+
+
+    private void HideEffect()
+    {
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(false);
         }
     }
 }
