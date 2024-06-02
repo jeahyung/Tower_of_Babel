@@ -41,11 +41,23 @@ public class Tile : MonoBehaviour
         //if(tileType != TileType.possible) { return; }        
         ShowEffect();
         rend.enabled = false;
+
     }
     public void HideArea()
     {
         rend.enabled = false;
-        HideEffect();
+        if (effectPrefab != null)
+        {
+            effectPrefab.SetActive(false);
+        }
+        else if(effectPrefab == null)
+        {
+            Debug.Log("null effect");
+        }
+        else
+        {
+            Debug.Log("no effect");
+        }
     }
 
     public Vector3 GetPosition()

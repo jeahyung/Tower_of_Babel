@@ -8,7 +8,7 @@ public class Player_Move : MonoBehaviour
 
     private PlayerMovement player;
     private bool control = true;
-    AudioSource audio;
+    private AudioSource audio;
 
     void Awake()
     {
