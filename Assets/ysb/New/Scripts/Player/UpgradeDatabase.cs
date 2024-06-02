@@ -16,6 +16,8 @@ public enum UpType {
     noneItemScore = 11,
     turnScore = 12, //ok
     breakScore = 13,    //ok
+
+    noneEnergy = 20,
     }
 public class Upgrade
 {
@@ -117,7 +119,7 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     //일부 증강체는 선택 시 삭제 - 영구 능력들
     public void RemoveData(Upgrade up)
     {
-        if(upList.Contains(up) && up.upType < 10)
+        if(upList.Contains(up) && up.upType < 10 || up.upType >= 20)
         {
             upList.Remove(up);
             Debug.Log("delete : " + up.name);

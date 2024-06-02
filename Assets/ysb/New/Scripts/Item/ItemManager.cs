@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ItemManager : MonoBehaviour
 {
+    private PlayerMovement player;
     private EnergySystem energy;
     private TurnManager manager_Turn;
     private Map map;
@@ -17,6 +18,7 @@ public class ItemManager : MonoBehaviour
         map = FindObjectOfType<Map>();
         manager_Turn = GetComponent<TurnManager>();
         energy = GetComponent<EnergySystem>();
+        player = GetComponent<PlayerMovement>();
     }
     public void SeletItem_Four(Item item, int range)
     {
@@ -49,6 +51,7 @@ public class ItemManager : MonoBehaviour
             CancelItem();
             return;
         }
+        player.UseItem();   //¾Ö´Ï
         ScoreManager.instance.Score_ItemUse();
         energy.UseEnergy();
         ItemInventory.instance.RemoveItem(selectedItem);

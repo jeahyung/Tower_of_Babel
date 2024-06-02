@@ -196,7 +196,10 @@ public class PlayerMovement : MonoBehaviour
         endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        UseEnergy();    //에너지 사용    
+        if(UpgradeManager.instance.getNoneEnergy() == false)
+        {
+            UseEnergy();    //에너지 사용  
+        }  
         RotatePlayer_Anim(rot); //회전 모션
     }
 
@@ -288,6 +291,7 @@ public class PlayerMovement : MonoBehaviour
 
         int dmg = 3 * per;
 
+        anim.SetTrigger("isDamaged");
         energySysteam.UseEnergy(dmg);
         DamagedMove(map.CheckNearTile());
     }
@@ -354,4 +358,9 @@ public class PlayerMovement : MonoBehaviour
         manager_Turn.StartPlayerTurn();
     }
     #endregion
+
+    public void UseItem()
+    {
+        anim.SetTrigger("isUse");
+    }
 }

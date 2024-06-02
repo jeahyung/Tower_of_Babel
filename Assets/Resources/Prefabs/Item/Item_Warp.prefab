@@ -60,7 +60,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e45444be45fc774d88a01f201b9d901, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  map: {fileID: 0}
   item: {fileID: 294107503572539260}
+  startX: 0
+  startY: 0
 --- !u!114 &294107503572539260
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -73,7 +76,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 64007eede7409d74aa107b3ba34d0e0a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImg: {fileID: 21300000, guid: 57f8befb92b364ca1bcae0f34c27e2d3, type: 3}
+  itemImg: {fileID: 21300000, guid: a602df6c5a034fd4f915aef7bfde5e19, type: 3}
 --- !u!1001 &294107503314197984
 PrefabInstance:
   m_ObjectHideFlags: 0
