@@ -20,6 +20,7 @@ public class UI_Turn : MonoBehaviour
 
     public GameObject[] TurnShowImg = new GameObject[2];
 
+    int r = 1;
     private void Awake()
     {
         if (turnObj == null)
@@ -31,12 +32,14 @@ public class UI_Turn : MonoBehaviour
 
     public void ResetObj()
     {
-        //turnObj.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        turnObj.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         turn.text = "1";
     }
     public void RotateObj(int i)
     {
         turn.text = "";
+
+        r = r + 1 > 1 ? 0 : 1;
 
         //이미지 교체
         imgIndex++;
@@ -49,17 +52,32 @@ public class UI_Turn : MonoBehaviour
 
     IEnumerator StartRotate(int i)
     {
-        Vector3 cur = transform.forward;
-        Vector3 target = Quaternion.Euler(new Vector3(0, 180, 0)) * transform.forward;
-        Debug.Log(cur + "/" + target);
+        //Vector3 cur = transform.forward;
+        //Vector3 target = Quaternion.Euler(new Vector3(0, 180, 0)) * transform.forward;
+        //Debug.Log(cur + "/" + target);
+        Quaternion cur;
+        Quaternion target;
+
+        if (r == 0)
+        {
+            cur = Quaternion.Euler(new Vector3(0, 0, 0));
+            target = Quaternion.Euler(new Vector3(0, 180, 0));
+        }
+        else
+        {
+            cur = Quaternion.Euler(new Vector3(0, 180, 0));
+            target = Quaternion.Euler(new Vector3(0, 360, 0));
+        }
+        
         float t = 0;
         while (t < 1)
         {
-            turnObj.forward = Vector3.Slerp(cur, target, t);
+            turnObj.rotation = Quaternion.Slerp(cur, target, t);
+            //turnObj.forward = Vector3.Slerp(cur, target, t);
             yield return null;
             t += Time.deltaTime * moveSpeed;
         }
-        turnObj.forward = target;
+        turnObj.rotation = target;
         turn.text = i.ToString();
     }
 

@@ -65,6 +65,11 @@ public class Map : MonoBehaviour
         distance[7] = new Vector2Int(-1, -1); //하좌
     }
 
+    private void Start()
+    {
+        ResetTile();
+    }
+
     private void Update()
     {
         if(StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
@@ -519,6 +524,7 @@ public class Map : MonoBehaviour
                 tiles[i, j].tileType = TileType.possible;
             }
         }
+
         GameObject startPoint = tiles[0, 0].gameObject;
         startPoint.SetActive(false);
         startPoint.SetActive(true);

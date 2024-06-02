@@ -18,9 +18,14 @@ public class EndPoint : MonoBehaviour
         if (up == null)
             up = FindObjectOfType<UpgradeController>();
     }
+    private void Start()
+    {
+        
+    }
     private void OnEnable()
     {
         isEnd = false;
+        GetComponent<Tile>().effectPrefab.SetActive(false);
     }
     private void EndGame()
     {
