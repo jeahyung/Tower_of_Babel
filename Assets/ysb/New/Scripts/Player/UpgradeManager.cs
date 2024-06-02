@@ -18,6 +18,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public static int bonusItem = 0;       //보너스 아이템(3)
 
     public static bool changeItem = false;  //아이템 셔플 가능?
+    public static bool noneEnergy = false;  //기본 이동시 에너지 소모 없음
       
     public static int bonusRange = 0;      //보너스 범위(4)
     public static int bonusScore_item = 0;      //보너스 스코어(5)-아이템 획득
@@ -55,6 +56,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
         bonusItem = 0;       //보너스 아이템(3)
     
         changeItem = false;  //아이템 셔플 가능?
+        noneEnergy = false;
     
         bonusRange = 0;      //보너스 범위(4)    
         bonusScore_item = 0;      //보너스 스코어(5)-아이템 획득    
@@ -136,13 +138,17 @@ public class UpgradeManager : Singleton<UpgradeManager>
             case 13: //scorekill mob
                 bonusScore_killmob += up.state;
                 break;
+
+            case 20:
+                noneEnergy = true;
+                break;
         }
 
         if(up.upType == 5 || up.upType == 7) { return; }
         selectedUp.Add(up);
     }
 
-
+    #region bonus
     public int GetSANum()
     {
         return saNum;
@@ -185,7 +191,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
         energy = i;
         return energy;
     }
-
+    #endregion
 
     #region Score
     public int GetScore_Item()
@@ -203,6 +209,10 @@ public class UpgradeManager : Singleton<UpgradeManager>
     }
     #endregion
 
+    public bool getNoneEnergy()
+    {
+        return noneEnergy;
+    }
 
     //public void SetData()
     //{

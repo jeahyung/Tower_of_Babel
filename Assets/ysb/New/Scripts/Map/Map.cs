@@ -255,7 +255,7 @@ public class Map : MonoBehaviour
     //이거 끝지점?
     public bool IsLastTile()
     {
-        if(nowTile == tiles[LineCount - 1, LineCount - 1]) { return true; }
+        if(nowTile == tiles[LineCount + 1, LineCount - 1]) { return true; }
         return false;
     }
 
