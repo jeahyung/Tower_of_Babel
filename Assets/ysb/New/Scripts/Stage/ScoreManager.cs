@@ -237,13 +237,32 @@ public class ScoreManager : Singleton<ScoreManager>
 
         scoreSum = totalScore;
         scoreUI.SetSumSocre(scoreSum);
+
+        //스코어 초기화
+        stageClearScore = 0;
+        clearTurnScore = 0; //클리어 턴에 따른 스코어
+        actScore = 0;       //남은 특수행동 횟수
+        //두 개 묶엇 계산
+        itemScore = 0;      //아이템 스코어
+        noneItemSocre = 0;  //아이템 스코어 - 사용 없음
+        getSocre = 0;
+        killSocre = 0;      //몬스터 파괴 스코어
     }
     
     public List<int> CalculateScore_GameOver()
     {
-        StageClear();
-        Score_ClearTurn();
-        Score_SACount();
+        if(StageManager.instance.isPlaying == true)
+        {
+            StageClear();
+            Score_ClearTurn();
+            Score_SACount();
+        }
+        else
+        {
+            stageClearScore = 0;
+            clearTurnScore = 0;
+            actScore = 0;
+        }
         Score_NoneItem();
 
         List<int> scoreList = new List<int>();

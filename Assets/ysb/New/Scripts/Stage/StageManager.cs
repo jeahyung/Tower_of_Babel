@@ -33,6 +33,7 @@ public class StageManager : Singleton<StageManager>
             stages.Add(transform.GetChild(i).gameObject);
             stages[i].SetActive(false);
         }
+        StartCoroutine(Loading());
         //첫 번째 스테이지 활성화
         SelectStage();
     }
@@ -121,17 +122,18 @@ public class StageManager : Singleton<StageManager>
 
     public void NextStage()
     {
+        Img_loading.SetActive(true);
+        stageCount++;
+        SettingStage();
+
+        map.ResetTile();
+
         //로딩 시작
         StartCoroutine(Loading());
     }
     IEnumerator Loading()
     {
-        Img_loading.SetActive(true);
         UI_Loading_Slider slider = Img_loading.GetComponent<UI_Loading_Slider>();
-        stageCount++;
-        SettingStage();
-
-        map.ResetTile();
 
         float timer = 0f;
         while(timer < waitTime)
