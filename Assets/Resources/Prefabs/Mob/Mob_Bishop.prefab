@@ -223,7 +223,7 @@ MonoBehaviour:
   range: []
   leftRagne: 1
   rightRange: 1
-  moveSpeed: 1
+  moveSpeed: 3
   canAct: 1
 --- !u!1001 &3235873801192179398
 PrefabInstance:

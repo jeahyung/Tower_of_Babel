@@ -132,7 +132,7 @@ MonoBehaviour:
   manager_Turn: {fileID: 0}
   pos: {x: 0, y: 0}
   smoothTime: 0.2
-  moveRange: 1
+  moveRange: 3
   effectPrefab: {fileID: 0}
 --- !u!1001 &2456817344266989665
 PrefabInstance:
