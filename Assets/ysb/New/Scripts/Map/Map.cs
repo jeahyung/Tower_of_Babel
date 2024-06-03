@@ -321,12 +321,12 @@ public class Map : MonoBehaviour
         {
             if (moveArea.Contains(clickTile) == false) { return; }
             manager_Action.ActDone();
-            useAction = false;
             HideArea();
-            previousTile = nowTile; //이전 타일 갱신
             MovePlayerPosition_Continue();
             manager_Action.SetActionBtn(false);
             manager_Action.CheckActionCount();
+            previousTile = nowTile; //이전 타일 갱신
+            useAction = false;
             return;
 
         }
@@ -334,10 +334,10 @@ public class Map : MonoBehaviour
         {
             if(useItem == true) { useItem = false; }
             HideArea();
-            previousTile = nowTile; //이전 타일 갱신
             MovePlayerPosition();
             manager_Action.SetActionBtn(false);
             manager_Action.CheckActionCount();
+            previousTile = nowTile; //이전 타일 갱신
         }
     }
 
@@ -408,6 +408,7 @@ public class Map : MonoBehaviour
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
         //에너지 사용 -> 플레이어쪽에서
+        Debug.Log("player move");
     }
 
     public void MovePlayerPosition_Continue()
@@ -415,6 +416,8 @@ public class Map : MonoBehaviour
         player.SetPosition_Continue(CalculateJumpCount(), clickTile.GetPosition(), HowRotate(clickTile));
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
+
+        Debug.Log("player move_continue");
     }
 
     public void SelectItem(Item item)
@@ -565,7 +568,15 @@ public class Map : MonoBehaviour
     //타일 상태 초기화
     public void ResetTile()
     {
-        for(int i = 1; i < LineCount + 1; ++i)
+        canControl = true;
+        useItem = false;
+        useAction = false;
+
+        clickTile = null;
+        previousTile = null;
+        moveArea.Clear();
+
+        for (int i = 1; i < LineCount + 1; ++i)
         {
             for(int j = 0; j < LineCount; ++j)
             {
@@ -581,8 +592,6 @@ public class Map : MonoBehaviour
         endPoint.SetActive(false);
         endPoint.SetActive(true);
 
-        nowTile = tiles[0, 0];
-
         for (int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
         {
             for (int j = 0; j < LineCount; ++j)
@@ -590,6 +599,8 @@ public class Map : MonoBehaviour
                 tiles[i, j].HideArea();
             }
         }
+
+        nowTile = tiles[0, 0];
     }
 
 

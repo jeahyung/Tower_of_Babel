@@ -194,6 +194,12 @@ public class SAManager : MonoBehaviour
     {
         actCount++;
         UI_actCount[actCount - 1].OffSprite(false);
+        if (UpgradeManager.instance.GetSANum() == 2)    //ŷ
+        {
+            UpgradeManager.instance.getBonusTurn(-1);
+            isKing = false;
+        }
+
 
         ActDone();
     }
