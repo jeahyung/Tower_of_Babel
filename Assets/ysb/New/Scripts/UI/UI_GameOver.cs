@@ -62,6 +62,7 @@ public class UI_GameOver : MonoBehaviour
     {
         int sIndex = 0;
         int height = -50;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over);
         while (sIndex < 5)
         {
             float h = height * (sIndex - 2);//(sCount - sIndex - 2);

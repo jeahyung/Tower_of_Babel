@@ -10,6 +10,7 @@ public class EndPoint : MonoBehaviour
     private UpgradeController up;
 
     private bool isEnd = false;
+    private Player_Move player;
 
     private void Awake()
     {
@@ -17,6 +18,7 @@ public class EndPoint : MonoBehaviour
             turn = FindObjectOfType<TurnManager>();
         if (up == null)
             up = FindObjectOfType<UpgradeController>();
+        player = FindObjectOfType<Player_Move>();
     }
     private void Start()
     {
@@ -36,7 +38,8 @@ public class EndPoint : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-        if(isEnd == true) { return; }
+        player.StartAni();
+        if (isEnd == true) { return; }
         if (other.CompareTag("Player"))
         {
             Vector3 target = new Vector3(other.transform.position.x, 0, other.transform.position.z);

@@ -606,6 +606,7 @@ public class Map : MonoBehaviour
 
     public void DropAllTile()
     {
+        
         for (int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
         {
             for (int j = 0; j < LineCount; ++j)
@@ -613,5 +614,6 @@ public class Map : MonoBehaviour
                 tiles[i, j].DropTile();
             }
         }
+       
     }
 }
