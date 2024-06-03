@@ -23,6 +23,7 @@ public class TraceMonsterMovement : MonoBehaviour
     
     public List<Tile> allTiles = new List<Tile>();
     [SerializeField] private Tile tile = null;
+   // private Tile tile1 = null;
     public Vector3 nextPos;
 
     public TurnManager manager_Turn;
@@ -45,6 +46,7 @@ public class TraceMonsterMovement : MonoBehaviour
        // mgr_Chase = FindObjectOfType<ChaseMobManager>();
         //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
+        //tile1 = FindObjectOfType<Tile>();
         allTiles.AddRange(tiles);
     }
     private void Start()
@@ -143,6 +145,7 @@ public class TraceMonsterMovement : MonoBehaviour
                 else
                 {
                     nextPos = tile.GetPosition();
+                   // tile1 = tile;
                 }
                    
             }
@@ -172,6 +175,7 @@ public class TraceMonsterMovement : MonoBehaviour
                 }
                 else
                 {
+                    map.TakeDamage(tile);
                     nextPos = tile.GetPosition();
                 }
 
@@ -200,6 +204,7 @@ public class TraceMonsterMovement : MonoBehaviour
                 }
                 else
                 {
+                    map.TakeDamage(tile);
                     nextPos = tile.GetPosition();
                 }
 
@@ -226,7 +231,7 @@ public class TraceMonsterMovement : MonoBehaviour
             transform.position = Vector3.SmoothDamp(transform.position, target, ref direction, smoothTime);
             yield return null;
         }
-        
+       
         transform.position = target;
         CheckTile();
         if (ch)

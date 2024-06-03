@@ -68,7 +68,7 @@ public class StageManager : Singleton<StageManager>
 
         //새 스테이지
         int si = Random.Range(0, stages.Count);    
-        //int si = 8;
+       // int si = 8;
         curStage = stages[si];
         curStage.SetActive(true);
         mob = curStage.GetComponentInChildren<MobManager>();
@@ -158,6 +158,10 @@ public class StageManager : Singleton<StageManager>
         isGameOver = true;
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
+        for(int i = 0; i<4; i++)
+        {
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over_Broken);
+        }
     }
 
     public void ShowResult()

@@ -113,7 +113,8 @@ public class Tile : MonoBehaviour
     }
 
     public void DropTile()
-    {
+    {        
+        //AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over_Broken);
         GetComponent<Collider>().enabled = false;
         transform.DOMoveY(-10, dropSpeed);
     }

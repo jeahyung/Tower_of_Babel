@@ -87,7 +87,7 @@ public class Player_Move : MonoBehaviour
     }
     public void StartAni()
     {
-
+        move = true;      
     }
     public void RotateObject()
     {
