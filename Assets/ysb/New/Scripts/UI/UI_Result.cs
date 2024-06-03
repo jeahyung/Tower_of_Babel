@@ -145,11 +145,12 @@ public class UI_Result : MonoBehaviour
             sText[sIndex].SetTarget(h);
             sIndex++;
             yield return new WaitForSeconds(0.5f);
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Score);
+           // AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Score);
 
         }
+       // AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Score);
         yield return new WaitForSeconds(0.6f);
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Final);
+        
         StartCoroutine(Count(totalScore, curScore));
     }
 

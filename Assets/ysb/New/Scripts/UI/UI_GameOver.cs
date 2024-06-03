@@ -70,11 +70,10 @@ public class UI_GameOver : MonoBehaviour
             sText[sIndex].SetTarget(h);
             sIndex++;
             yield return new WaitForSeconds(0.5f);
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Score);
 
         }
         yield return new WaitForSeconds(0.6f);
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Final);
+        
         StartCoroutine(Count(score[score.Count - 1], score[score.Count - 2]));
     }
 
