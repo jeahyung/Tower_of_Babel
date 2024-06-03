@@ -25,6 +25,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+
         PlayBgm(true);
     }
     void Init()
@@ -89,6 +90,7 @@ public class AudioManager : MonoBehaviour
     {
         if(isPlay)
         {
+            bgmPlayer.loop = true;
             bgmPlayer.Play();
         }
         else

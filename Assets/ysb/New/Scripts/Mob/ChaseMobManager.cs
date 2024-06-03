@@ -22,6 +22,7 @@ public class ChaseMobManager : MonoBehaviour
         if (++mi >= mCount)
         {
             mi = 0;
+            
             transform.parent.SendMessage("EndChase");
         }
         else
