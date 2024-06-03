@@ -4613,8 +4613,6 @@ MonoBehaviour:
   - {fileID: 8300000, guid: 43c4dda5d519ea84096d8840ac31e9a8, type: 3}
   - {fileID: 8300000, guid: be65b453b197bd7429aab1c3158f8b55, type: 3}
   - {fileID: 8300000, guid: 577aea5fca1316c4cbc80a61c2375881, type: 3}
-  - {fileID: 8300000, guid: 62a61a79974dcee4fb656c7d08571221, type: 3}
-  - {fileID: 8300000, guid: 4c207d52b819adb4f8d9909f68084cc1, type: 3}
   - {fileID: 8300000, guid: efc5b994045ff524f87040c405e8a8cf, type: 3}
   - {fileID: 8300000, guid: 94703ba93121f3b4eaa9036aea64dbdf, type: 3}
   sfxVolume: 2
@@ -7155,6 +7153,10 @@ PrefabInstance:
       propertyPath: action
       value: 
       objectReference: {fileID: 1855113134}
+    - target: {fileID: 1294518301302995093, guid: 6a42dbadfe13ea646a04b5b2123769e5, type: 3}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 1022878749}
     - target: {fileID: 5971983802725709856, guid: 6a42dbadfe13ea646a04b5b2123769e5, type: 3}
       propertyPath: turn
       value: 

@@ -18,7 +18,7 @@ public class StartPoint : MonoBehaviour
     [SerializeField]
     private BoxCollider wall;   //진입 막는 벽
 
-    public Player_Move player;
+    private Player_Move player;
 
     private void Awake()
     {
@@ -31,6 +31,7 @@ public class StartPoint : MonoBehaviour
 
         interactMessage = GameObject.Find("Interact");
         interactMessage.SetActive(false);
+        player = FindObjectOfType<Player_Move>();
     }
     private void Start()
     {
