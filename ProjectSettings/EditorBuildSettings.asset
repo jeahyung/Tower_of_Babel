@@ -8,6 +8,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ysb/New/Scenes/Proto_4X4.unity
     guid: 9b566c9ee64b7b14c84a75e7b8cf7472
+
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+
   - enabled: 1
     path: Assets/jcg/jcg rooftop.unity
     guid: cc51485439208e34f8aa3dc72f6fb834
