@@ -5,18 +5,21 @@ using DG.Tweening;
 
 public class ScoreHistroy : MonoBehaviour
 {
+    RectTransform rect;
     ScoreUI scoreUI;
     float hideTime = 2f;
     float xPos = 0;
     private void Awake()
     {
-        xPos = transform.position.x;
+        rect = GetComponent<RectTransform>();
+        xPos = -50;//transform.position.x;
     }
     public void Move()
     {
         if (scoreUI == null) scoreUI = GetComponentInParent<ScoreUI>();
 
-        transform.DOMoveX(xPos, 1f).OnComplete(() => StartCoroutine(HideHistory()));
+        rect.DOAnchorPosX(xPos, 1f).OnComplete(() => StartCoroutine(HideHistory()));
+        //transform.DOMoveX(xPos, 1f).OnComplete(() => StartCoroutine(HideHistory()));
     }
     private void OnDisable()
     {

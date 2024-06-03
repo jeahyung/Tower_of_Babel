@@ -29,9 +29,9 @@ public class UI_Result : MonoBehaviour
         sText.AddRange(GetComponentsInChildren<ClearScore>());
         foreach(var t in sText)
         {
-            t.enabled = false;
+            t.gameObject.SetActive(false);
         }
-        height = 50;
+        height = -50;
 
         back.SetActive(false);
         panel.SetActive(false);
@@ -39,45 +39,74 @@ public class UI_Result : MonoBehaviour
         text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
     }
 
+    //private void SetText()
+    //{
+    //    textContent.Clear();
+
+    //    if (score[0] != 0)
+    //    {
+    //        textContent.Add("스테이지 클리어 : " + score[0].ToString());
+    //    }
+    //    if (score[1] != 0)
+    //    {
+    //        textContent.Add("제한 턴 수 내로 클리어 : " + score[1].ToString());
+    //    }
+    //    if (score[2] != 0)
+    //    {
+    //        textContent.Add("잔여 특수 행동 횟수 : " + score[2].ToString());
+    //    }
+    //    if (score[3] != 0)
+    //    {
+    //        textContent.Add("아이템 미사용 클리어 : " + score[3].ToString());
+    //    }
+
+
+    //    //textContent.Add("스테이지 클리어 : ");
+    //    //textContent.Add("제한 턴 수 내로 클리어 : ");
+    //    //textContent.Add("잔여 특수 행동 횟수 : ");
+
+    //    //for(int i = 0; i < score.Count; ++i)
+    //    //{
+    //    //    textContent[i] += score[i].ToString();
+    //    //}
+    //}
+
+
+    //public void ShowResult(int sc, int cur, int target, List<int> scoreList)
+    //{
+    //    score.Clear();
+
+    //    score.AddRange(scoreList);
+    //    SetText();  //문구 설정
+
+    //    sCount = sc;
+    //    sIndex = 0;
+
+    //    curScore = cur;
+    //    totalScore = target;
+
+    //    back.SetActive(true);
+    //    StartCoroutine(Result());
+    //}
+
+
     private void SetText()
     {
         textContent.Clear();
-
-        if (score[0] != 0)
-        {
-            textContent.Add("스테이지 클리어 : " + score[0].ToString());
-        }
-        if (score[1] != 0)
-        {
-            textContent.Add("제한 턴 수 내로 클리어 : " + score[1].ToString());
-        }
-        if (score[2] != 0)
-        {
-            textContent.Add("잔여 특수 행동 횟수 : " + score[2].ToString());
-        }
-        if (score[3] != 0)
-        {
-            textContent.Add("아이템 미사용 클리어 : " + score[3].ToString());
-        }
-
-
-        //textContent.Add("스테이지 클리어 : ");
-        //textContent.Add("제한 턴 수 내로 클리어 : ");
-        //textContent.Add("잔여 특수 행동 횟수 : ");
-
-        //for(int i = 0; i < score.Count; ++i)
-        //{
-        //    textContent[i] += score[i].ToString();
-        //}
+        textContent.Add("스테이지 클리어 : " + score[0].ToString());
+        textContent.Add("남은 특수이동 횟수 : " + score[1].ToString());
+        textContent.Add("아이템 획득 : " + score[2].ToString());
+        textContent.Add("아이템 사용 : " + score[3].ToString());
+        textContent.Add("몬스터 파괴 : " + score[4].ToString());
     }
-    public void ShowResult(int sc, int cur, int target, List<int> scoreList)
+    public void ShowResult(int cur, int target, List<int> scoreList)
     {
         score.Clear();
 
         score.AddRange(scoreList);
         SetText();  //문구 설정
 
-        sCount = sc;
+        sCount = 5;
         sIndex = 0;
 
         curScore = cur;
@@ -110,7 +139,8 @@ public class UI_Result : MonoBehaviour
     {
         while(sIndex < sCount)
         {
-            float h = height * (sCount - sIndex - 2);
+            float h = height * (sIndex - 2);//(sCount - sIndex - 2);
+            sText[sIndex].gameObject.SetActive(true);
             sText[sIndex].SetText(textContent[sIndex]);
             sText[sIndex].SetTarget(h);
             sIndex++;

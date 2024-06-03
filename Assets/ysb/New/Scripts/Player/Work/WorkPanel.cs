@@ -8,6 +8,10 @@ public class Work
     public int id;
     public string name;
     public string explain;
+    public string word;
+
+    public int score;
+    public int move;
 }
 public class WorkPanel : MonoBehaviour
 {
@@ -22,7 +26,11 @@ public class WorkPanel : MonoBehaviour
 
     [SerializeField] private TMP_Text nText;    //name
     [SerializeField] private TMP_Text exText;   //설명
-    
+    [SerializeField] private TMP_Text wText;    //한마디
+
+    [SerializeField] private GameObject[] sImg;
+    [SerializeField] private GameObject[] mImg;
+
     private int selNum = 0; //선택한 번호
 
     private void Awake()
@@ -49,23 +57,33 @@ public class WorkPanel : MonoBehaviour
 
         Work w = new Work();
         w.id = 0;
-        w.name = "룩";
-        w.explain = "4방향 이동";
+        w.name = "안  |  An";
+        w.explain = "초반에 다양한 행동을 통해 점수를 획득하라.";
+        w.word = "힘 앞에서는 그 어떤 것도 의미 없다";
+
+        w.score = 5;
+        w.move = 2;
 
         works.Add(w);
 
         Work w2 = new Work();
         w2.id = 1;
-        w2.name = "비숍";
-        w2.explain = "대각선 4방향 이동";
+        w2.name = "엔키  |  Enki";
+        w2.explain = "뛰어난 이동 능력을 통해 후반을 도모하라.";
+        w2.word = "살고자 하는 의지가 가장 중요한 법";
+
+        w2.score = 2;
+        w2.move = 5;
 
         works.Add(w2);
 
         Work w3 = new Work();
         w3.id = 2;
-        w3.name = "킹";
-        w3.explain = "8방향 이동. 1회 재행동.";
-
+        w3.name = "아다드  |  Adad";
+        w3.explain = "다재다능하다.  다양한 시도를 하는 것이 중요하다.";
+        w3.word = "무엇이든 후회하지 않는 강인한 마음가짐";
+        w3.score = 3;
+        w3.move = 4;
         works.Add(w3);
 
         //Sprite img = Resources.Load<Sprite>("Data/Icon/Work/0");
@@ -79,6 +97,21 @@ public class WorkPanel : MonoBehaviour
 
         nText.text = works[i].name;
         exText.text = works[i].explain;
+        wText.text = works[i].word;
+
+        for (int j = 0; j < 5; ++j)
+        {
+            sImg[j].SetActive(false);
+            mImg[j].SetActive(false);
+        }
+        for (int j = 0; j < works[i].score; ++j)
+        {
+            sImg[j].SetActive(true);
+        }
+        for(int j = 0; j < works[i].move; ++j)
+        {
+            mImg[j].SetActive(true);
+        }
 
         for (int j = 0; j < wBtn.Count; ++j)
         {

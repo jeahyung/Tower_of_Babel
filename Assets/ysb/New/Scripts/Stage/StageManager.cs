@@ -8,6 +8,7 @@ public class StageManager : Singleton<StageManager>
     private TurnManager manager_turn;
     [SerializeField] private Map map;
     [SerializeField] private UI_Turn ui_turn;
+    [SerializeField] private UI_GameOver ui_gameover;
     public bool isPlaying = false;
 
     public static int chapterCount = 1;
@@ -21,6 +22,8 @@ public class StageManager : Singleton<StageManager>
 
     public GameObject Img_loading;
     public float waitTime = 1f;
+
+    private bool isGameOver = false;
 
     private void Start()
     {
@@ -40,6 +43,7 @@ public class StageManager : Singleton<StageManager>
         {
             ui_turn = FindObjectOfType<UI_Turn>();
         }
+        if(ui_gameover == null) { ui_gameover = FindObjectOfType<UI_GameOver>(); }
         ui_turn.SetStageInfo(chapterCount, stageCount);
     }
     //스테이지를 세팅합니다.
@@ -62,8 +66,8 @@ public class StageManager : Singleton<StageManager>
         if(curStage != null) { curStage.SetActive(false); }
 
         //새 스테이지
-        //int si = Random.Range(0, stages.Count);    
-        int si = 0;
+        int si = Random.Range(0, stages.Count);    
+        //int si = 0;
         curStage = stages[si];
         curStage.SetActive(true);
         mob = curStage.GetComponentInChildren<MobManager>();
@@ -145,9 +149,24 @@ public class StageManager : Singleton<StageManager>
 
     public void GameOver()
     {
+        if(isGameOver == true) { return; }
+        isGameOver = true;
+        manager_turn.GetComponent<PlayerMovement>().SetControl(false);
+        map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
+    }
+
+    public void ShowResult()
+    {
+        ui_gameover.ShowResult();
+    }
+    public void ResetData()
+    {
+        isGameOver = false;
         //아이템 리셋
         UpgradeDatabase.instance.ResetUpgradeData();
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
         ScoreManager.instance.ResetScore();//스코어 리셋
+
+        SceneManager.LoadScene(1);
     }
 }

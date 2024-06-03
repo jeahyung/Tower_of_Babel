@@ -12,14 +12,24 @@ public class CamMovement : MonoBehaviour
 
     public Vector3Int minRange;
     public Vector3Int maxRange;
+
+    private bool canMove = true;
     private void Start()
     {
         player = GameObject.FindWithTag("Player").transform;
     }
 
+    public void SetMove(bool m)
+    {
+        canMove = m;
+    }
+
     private void Update()
     {
+        if(canMove == false) { return; }
         targetPos = player.position + offset;
+        if(targetPos.y < 6) { targetPos.y = 6; }
+
         if (targetPos.z < minRange.z) { targetPos.z = minRange.z; }
         else if(targetPos.z > maxRange.z) { targetPos.z = maxRange.z; }
 
