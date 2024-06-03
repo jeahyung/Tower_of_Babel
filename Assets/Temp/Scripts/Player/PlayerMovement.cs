@@ -25,7 +25,7 @@ public class PlayerMovement : MonoBehaviour
 
     public float h;
 
-    public bool isControl = true;
+    public bool isControl = false;
     private bool canMove = true;
     private bool isDamaged = false;
     public float smoothTime = 0.2f;
@@ -55,6 +55,7 @@ public class PlayerMovement : MonoBehaviour
 
         anim.SetInteger("isTurn", degree_back);
         body = GetComponentInChildren<PlayerAnim>();
+
     }
     private void Start()
     {

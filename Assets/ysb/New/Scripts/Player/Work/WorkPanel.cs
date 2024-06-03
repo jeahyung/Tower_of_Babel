@@ -45,6 +45,12 @@ public class WorkPanel : MonoBehaviour
         }
 
         wBtn[0].SelectWork();
+
+
+    }
+    private void Start()
+    {
+        StageManager.instance.PlayerMoving(false);
     }
     public void ResetPanel()
     {

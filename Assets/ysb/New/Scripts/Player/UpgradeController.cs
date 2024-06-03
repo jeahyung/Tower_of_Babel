@@ -50,6 +50,8 @@ public class UpgradeController : MonoBehaviour
         panel_action.localScale = new Vector3(0, 1, 1);
         panel_action.SendMessage("ResetPanel");
 
+        StageManager.instance.PlayerMoving(true);
+
         AudioManager.instance.PlaySfx(AudioManager.Sfx.UI_Click);
     }
 

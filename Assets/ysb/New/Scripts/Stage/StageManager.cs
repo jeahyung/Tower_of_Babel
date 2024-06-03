@@ -81,7 +81,10 @@ public class StageManager : Singleton<StageManager>
     public int GetStageCount => stageCount;
     public int GetChapterCount => chapterCount;
 
-
+    public void PlayerMoving(bool b)
+    {
+        manager_turn.GetComponent<PlayerMovement>().SetControl(b);
+    }
     public void StartGame()
     {
         UpgradeDatabase.instance.SetData();
