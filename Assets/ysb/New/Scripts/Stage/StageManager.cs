@@ -147,6 +147,7 @@ public class StageManager : Singleton<StageManager>
 
     public void GameOver()
     {
+        manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         map.GetComponent<DestoryTile>().DropTile(); //≈∏¿œ ∂≥±∏±‚
     }
 

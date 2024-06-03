@@ -28,6 +28,8 @@ public class CamMovement : MonoBehaviour
     {
         if(canMove == false) { return; }
         targetPos = player.position + offset;
+        if(targetPos.y < 6) { targetPos.y = 6; }
+
         if (targetPos.z < minRange.z) { targetPos.z = minRange.z; }
         else if(targetPos.z > maxRange.z) { targetPos.z = maxRange.z; }
 
