@@ -17,6 +17,9 @@ public class StartPoint : MonoBehaviour
     private GameObject interactMessage;
     [SerializeField]
     private BoxCollider wall;   //진입 막는 벽
+
+    public Player_Move player;
+
     private void Awake()
     {
         col.enabled = true;
@@ -59,6 +62,10 @@ public class StartPoint : MonoBehaviour
             Vector3 target = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
             Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
             other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
+
+            player.StopAni();
+            player.RotateObject();
+           
         }
     }
     private void StartGame()
