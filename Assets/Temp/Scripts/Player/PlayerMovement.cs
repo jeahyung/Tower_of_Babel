@@ -351,9 +351,11 @@ public class PlayerMovement : MonoBehaviour
         {
             Vector3 direction = point - transform.position;
             transform.position = Vector3.SmoothDamp(transform.position, point, ref direction, smoothTime);
+            anim.SetBool("isRun", true);
             yield return null;
         }
         transform.position = new Vector3(point.x, transform.position.y, point.z);
+        anim.SetBool("isRun", false);
     }
 
 
