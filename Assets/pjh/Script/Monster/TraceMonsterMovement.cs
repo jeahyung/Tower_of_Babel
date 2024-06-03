@@ -9,6 +9,8 @@ using UnityEngine.UIElements;
 public class TraceMonsterMovement : MonoBehaviour
 {
     private ChaseMobManager mgr_Chase;
+    private bool ch = true;
+
     [SerializeField] private GameObject monster;
    // [SerializeField]private GameObject player;
 
@@ -24,7 +26,8 @@ public class TraceMonsterMovement : MonoBehaviour
     public Vector3 nextPos;
 
     public TurnManager manager_Turn;
-
+    public bool minA;
+    public bool minB;
   
     public Vector2Int pos; //현재 위치 보기용이라 지워도 됨
     
@@ -53,8 +56,7 @@ public class TraceMonsterMovement : MonoBehaviour
         MonsterSetting(nextPos);
     }
     void Update()
-    {
-       
+    {       
         if (Input.GetKeyDown(KeyCode.Z))
         {
             Think();
@@ -74,6 +76,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
     private void Think()
     {
+        tile.tileType = TileType.possible;
         //tiles.coord = new Vector2Int(tiles.coord.x + 1, tiles.coord.y);
         //SetPosition(tiles.coord.GetPosition());
         int i = tile.coord.x;
@@ -89,30 +92,30 @@ public class TraceMonsterMovement : MonoBehaviour
         //같은 라인 좌우는 coor y 변화
         int a = Mathf.Abs(nowTile.coord.x - tile.coord.x);
         int b = Mathf.Abs(nowTile.coord.y - tile.coord.y);
-        bool minA = nowTile.coord.x - tile.coord.x < 0;
-        bool minB = nowTile.coord.y - tile.coord.y < 0;
-
+        minA = nowTile.coord.x - tile.coord.x < 0;
+        minB = nowTile.coord.y - tile.coord.y < 0;
+        //x축 접근
         if(a > b)
         {
-            if(minA)
+            if (minA)
             {
-                FindTileWithCoords(i - 1, j);
+                FindTileWithCoordsX(i, j);
             }
             else
             {
-                FindTileWithCoords(i+1, j);
+                FindTileWithCoordsX(i, j);
             }
 
         }
         else
         {
-            if(minB)
+            if(minB) //y축 접근
             {
-                FindTileWithCoords(i, j - 1);
+                FindTileWithCoordsY(i, j);
             }
             else
             {
-               FindTileWithCoords(i, j + 1);
+               FindTileWithCoordsY(i, j);
             }
         }
 
@@ -122,20 +125,87 @@ public class TraceMonsterMovement : MonoBehaviour
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
     }
+    
 
     private void FindTileWithCoords(int targetX, int targetY)
     {
+       
         // 조건을 만족하는 타일을 찾습니다.
         foreach (Tile tile in allTiles)
         {
             if (tile.coord.x == targetX && tile.coord.y == targetY)
             {
-                nextPos = tile.GetPosition();
+                //nextPos = tile.GetPosition();
+                if(tile.tileType == TileType.impossible)
+                {
+                   // FindTileWithCoords(targetX, targetY, !root);
+                }
+                else
+                {
+                    nextPos = tile.GetPosition();
+                }
+                   
             }
         }
     }
 
-   
+    private void FindTileWithCoordsX(int targetX, int targetY)
+    {
+        int a = 0;
+        if (minA)
+        {
+            a = targetX - 1;
+        }
+        else
+        {
+            a = targetX + 1;
+        }
+        // 조건을 만족하는 타일을 찾습니다.
+        foreach (Tile tile in allTiles)
+        {
+            if (tile.coord.x == a && tile.coord.y == targetY)
+            {
+
+                if (tile.tileType == TileType.impossible)
+                {
+                    FindTileWithCoordsY(targetX, targetY);
+                }
+                else
+                {
+                    nextPos = tile.GetPosition();
+                }
+
+            }
+        }
+    }
+    private void FindTileWithCoordsY(int targetX, int targetY)
+    {
+        int a = 0;
+        if (minB)
+        {
+            a = targetY- 1;
+        }
+        else
+        {
+            a = targetY + 1;
+        }
+        // 조건을 만족하는 타일을 찾습니다.
+        foreach (Tile tile in allTiles)
+        {
+            if (tile.coord.x == targetX && tile.coord.y == a)
+            {
+                if (tile.tileType == TileType.impossible)
+                {
+                    FindTileWithCoordsX(targetX, targetY);
+                }
+                else
+                {
+                    nextPos = tile.GetPosition();
+                }
+
+            }
+        }
+    }
 
     //이동
     public void SetPosition(Vector3 target)
@@ -159,15 +229,11 @@ public class TraceMonsterMovement : MonoBehaviour
         
         transform.position = target;
         CheckTile();
-        if(mgr_Chase != null)
+        if (ch)
         {
-            mgr_Chase.CheckMobAction();
-        }
-        else
-        {
-            Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        }
-       
+            Think();
+            ch = false;
+        }       
      //   manager_Turn.EndEnemyTurn();
         Debug.Log("Dddddd");
     }
@@ -182,7 +248,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
     public void Act()
     {
-        tile.tileType = TileType.possible;
+        ch = true;
         Think();     
     }
     private void CheckTile()
@@ -194,6 +260,18 @@ public class TraceMonsterMovement : MonoBehaviour
             {
                 tile = t;
                 tile.tileType = TileType.impossible;
+            }
+        }
+        if (!ch)
+        {
+
+            if (mgr_Chase != null)
+            {
+                mgr_Chase.CheckMobAction();
+            }
+            else
+            {
+                Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             }
         }
 
