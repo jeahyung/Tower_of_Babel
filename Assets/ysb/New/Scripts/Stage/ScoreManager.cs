@@ -238,4 +238,24 @@ public class ScoreManager : Singleton<ScoreManager>
         scoreSum = totalScore;
         scoreUI.SetSumSocre(scoreSum);
     }
+    
+    public List<int> CalculateScore_GameOver()
+    {
+        StageClear();
+        Score_ClearTurn();
+        Score_SACount();
+        Score_NoneItem();
+
+        List<int> scoreList = new List<int>();
+        scoreList.Add(stageClearScore + clearTurnScore);
+        scoreList.Add(actScore);
+        scoreList.Add(getSocre);
+        scoreList.Add(itemScore + noneItemSocre);
+        scoreList.Add(killSocre);
+
+        int totalScore = scoreSum + stageClearScore + clearTurnScore + actScore + noneItemSocre;
+        scoreList.Add(scoreSum);
+        scoreList.Add(totalScore);
+        return scoreList;
+    }
 }

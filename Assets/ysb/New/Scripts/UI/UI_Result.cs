@@ -29,7 +29,7 @@ public class UI_Result : MonoBehaviour
         sText.AddRange(GetComponentsInChildren<ClearScore>());
         foreach(var t in sText)
         {
-            t.enabled = false;
+            t.gameObject.SetActive(false);
         }
         height = -50;
 
@@ -140,6 +140,7 @@ public class UI_Result : MonoBehaviour
         while(sIndex < sCount)
         {
             float h = height * (sIndex - 2);//(sCount - sIndex - 2);
+            sText[sIndex].gameObject.SetActive(true);
             sText[sIndex].SetText(textContent[sIndex]);
             sText[sIndex].SetTarget(h);
             sIndex++;

@@ -23,6 +23,8 @@ public class StageManager : Singleton<StageManager>
     public GameObject Img_loading;
     public float waitTime = 1f;
 
+    private bool isGameOver = false;
+
     private void Start()
     {
         //스테이지 추가
@@ -147,6 +149,8 @@ public class StageManager : Singleton<StageManager>
 
     public void GameOver()
     {
+        if(isGameOver == true) { return; }
+        isGameOver = true;
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
     }
@@ -157,6 +161,7 @@ public class StageManager : Singleton<StageManager>
     }
     public void ResetData()
     {
+        isGameOver = false;
         //아이템 리셋
         UpgradeDatabase.instance.ResetUpgradeData();
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
