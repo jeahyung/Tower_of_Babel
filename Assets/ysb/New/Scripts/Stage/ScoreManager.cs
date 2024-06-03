@@ -10,11 +10,21 @@ public class ScoreManager : Singleton<ScoreManager>
     public UI_Result resultUI;
     public int[] turnScore = new int[4];
 
-    int clearTurnScore = 0; //클리어 턴에 따른 스코어
-    int actScore = 0;       //남은 특수행동 횟수
+    //두 개 묶어서 계산
     int stageClearScore = 0;
-    int noneItemSocre = 0;
+    int clearTurnScore = 0; //클리어 턴에 따른 스코어
 
+    int actScore = 0;       //남은 특수행동 횟수
+
+    //두 개 묶엇 계산
+    int itemScore = 0;      //아이템 스코어
+    int noneItemSocre = 0;  //아이템 스코어 - 사용 없음
+
+    int getSocre = 0;
+
+    int killSocre = 0;      //몬스터 파괴 스코어
+
+    public int TotalScore => scoreSum;
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -37,6 +47,19 @@ public class ScoreManager : Singleton<ScoreManager>
             if (i == 3) { turnScore[i] = 3000; return; }
             turnScore[i] = 1000 + 500 * i;
         }
+
+        stageClearScore = 0;
+        clearTurnScore = 0; //클리어 턴에 따른 스코어
+
+        actScore = 0;       //남은 특수행동 횟수
+
+        //두 개 묶엇 계산
+        itemScore = 0;      //아이템 스코어
+        noneItemSocre = 0;  //아이템 스코어 - 사용 없음
+
+        getSocre = 0;
+
+        killSocre = 0;      //몬스터 파괴 스코어
     }
 
     public void ResetScore()
@@ -80,6 +103,7 @@ public class ScoreManager : Singleton<ScoreManager>
         int score = (SearchScore("Get") + bonus);
         scoreSum += score;
         //UpgradeManager.instance.SumScore = scoreSum;
+        getSocre += score;  //result
 
         scoreUI.GetItem(score);
         scoreUI.SetSumSocre(scoreSum);
@@ -93,6 +117,8 @@ public class ScoreManager : Singleton<ScoreManager>
         int bonus = UpgradeManager.instance.GetScore_Item();//.bonusScore;
         int score = (SearchScore("Use") + bonus);
         scoreSum += score;
+
+        itemScore += score; //결과창 용
         //UpgradeManager.instance.SumScore = scoreSum;
         scoreUI.UseItem(score);
         scoreUI.SetSumSocre(scoreSum);
@@ -105,6 +131,9 @@ public class ScoreManager : Singleton<ScoreManager>
         int bonus = UpgradeManager.instance.GetScore_KillMob();//bonusScore;
         int score = (SearchScore("Mob") + bonus);
         scoreSum += score;
+            
+        killSocre += score; //결과창 용
+
         //UpgradeManager.instance.SumScore = scoreSum;
         scoreUI.KillMob(score);
         scoreUI.SetSumSocre(scoreSum);
@@ -187,20 +216,24 @@ public class ScoreManager : Singleton<ScoreManager>
         Score_SACount();
         Score_NoneItem();
 
-        int sc = 0;
-        if(stageClearScore != 0) { sc++; }
-        if(clearTurnScore != 0) { sc++; }
-        if(actScore != 0) { sc++; }
-        if(noneItemSocre != 0) { sc++; }
+        //int sc = 0;
+        //if(stageClearScore != 0) { sc++; }
+        //if(clearTurnScore != 0) { sc++; }
+        //if(actScore != 0) { sc++; }
+        //if(noneItemSocre != 0) { sc++; }
 
         List<int> scoreList = new List<int>();
-        scoreList.Add(stageClearScore);
-        scoreList.Add(clearTurnScore);
+        scoreList.Add(stageClearScore + clearTurnScore);
+        //scoreList.Add(clearTurnScore);
         scoreList.Add(actScore);
-        scoreList.Add(noneItemSocre);
+        scoreList.Add(getSocre);
+        scoreList.Add(itemScore + noneItemSocre);
+        scoreList.Add(killSocre);
 
-        int totalScore = scoreSum + stageClearScore + clearTurnScore + actScore;
-        resultUI.ShowResult(sc, scoreSum, totalScore, scoreList);
+        int totalScore = scoreSum + stageClearScore + clearTurnScore + actScore + noneItemSocre;
+        resultUI.ShowResult(scoreSum, totalScore, scoreList);
+
+        //resultUI.ShowResult(sc, scoreSum, totalScore, scoreList);
 
         scoreSum = totalScore;
         scoreUI.SetSumSocre(scoreSum);

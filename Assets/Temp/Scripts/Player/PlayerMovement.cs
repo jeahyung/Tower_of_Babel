@@ -82,9 +82,9 @@ public class PlayerMovement : MonoBehaviour
         energySysteam.useEnergy = 1;
     }
     //에너지 사용
-    public void UseEnergy()
+    public bool UseEnergy()
     {
-        energySysteam.UseEnergy();
+        return energySysteam.UseEnergy();
     }
     #endregion
 
@@ -200,7 +200,10 @@ public class PlayerMovement : MonoBehaviour
 
         if(UpgradeManager.instance.getNoneEnergy() == false)
         {
-            UseEnergy();    //에너지 사용  
+            if(UseEnergy() == false)    //에너지 사용  
+            {
+                return;
+            }
         }  
         RotatePlayer_Anim(rot); //회전 모션
     }
@@ -246,7 +249,10 @@ public class PlayerMovement : MonoBehaviour
         {
             if (UpgradeManager.instance.getNoneEnergy() == false)
             {
-                UseEnergy();    //에너지 사용  
+                if (UseEnergy() == false)    //에너지 사용  
+                {
+                    return;
+                }
             }
             RotatePlayer_Anim(rot); //회전 모션
 

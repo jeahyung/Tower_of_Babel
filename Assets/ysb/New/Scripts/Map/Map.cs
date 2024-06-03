@@ -260,6 +260,22 @@ public class Map : MonoBehaviour
         return tiles[coord.x, coord.y];
     }
 
+    public Tile GetTile_NonePlayerTile(Vector2Int coord)
+    {
+        if (coord.x < 0 || coord.x >= LineCount + 2 || coord.y < 0 || coord.y >= LineCount) { return null; } //범위 밖
+        if (tiles[coord.x, coord.y].gameObject.activeSelf == false) { return null; }
+
+        if (tiles[coord.x, coord.y] == nowTile)
+        {
+            for(int i = 0; i < 4; ++i)
+            {
+                Tile tile = GetTile_NonePlayerTile(nowTile.coord + distance[i]);
+                if(tile != null) { return tile; }
+            }
+        }
+        return tiles[coord.x, coord.y];
+    }
+
     //이거 끝지점?
     public bool IsLastTile()
     {
@@ -450,6 +466,11 @@ public class Map : MonoBehaviour
 
     public void SetObjectPosition(GameObject obj)
     {
+        if (player.UseEnergy() == false)    //에너지 사용  
+        {
+            return;
+        }
+
         //GameObject newObejct = Instantiate(obj);
         Vector3 pos = clickTile.GetPosition();
         float yPos = obj.transform.localScale.y / 2 + clickTile.transform.localScale.y;
@@ -458,7 +479,7 @@ public class Map : MonoBehaviour
         playerTile = clickTile;
 
         //clickTile.ChangeTileState(TileType.impossible);
-        player.UseEnergy(); //에너지 사용
+        //player.UseEnergy(); //에너지 사용
 
         manager_Turn.EndPlayerTurn();
     }
@@ -567,6 +588,18 @@ public class Map : MonoBehaviour
             for (int j = 0; j < LineCount; ++j)
             {
                 tiles[i, j].HideArea();
+            }
+        }
+    }
+
+
+    public void DropAllTile()
+    {
+        for (int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
+        {
+            for (int j = 0; j < LineCount; ++j)
+            {
+                tiles[i, j].DropTile();
             }
         }
     }

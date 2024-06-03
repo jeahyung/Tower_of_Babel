@@ -40,7 +40,7 @@ public class EnergySystem : MonoBehaviour
         slider.value = (float)curEnergy / maxEnergy;
         eText.text = curEnergy.ToString() + " / " + maxEnergy.ToString();
     }
-    public void UseEnergy(int i = 0)
+    public bool UseEnergy(int i = 0)
     {
         if (i == 0)
         {
@@ -57,6 +57,9 @@ public class EnergySystem : MonoBehaviour
         {
             StageManager.instance.GameOver();
             Debug.Log("gameOver");
+            return false;
         }
+
+        return true;
     }
 }

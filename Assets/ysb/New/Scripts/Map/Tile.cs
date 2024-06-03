@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using DG.Tweening;
 
 public enum TileType { none = -1, possible = 0, impossible = 1, }
 public class Tile : MonoBehaviour
@@ -16,6 +17,7 @@ public class Tile : MonoBehaviour
     //public Map map;
 
     public Rook rook;   //ÇØÃ¼¸¦ À§ÇÑ
+    [SerializeField] private float dropSpeed = 0.5f;
 
     private void Start()
     {
@@ -108,5 +110,11 @@ public class Tile : MonoBehaviour
         {
             effectPrefab.SetActive(false);
         }
+    }
+
+    public void DropTile()
+    {
+        GetComponent<Collider>().enabled = false;
+        transform.DOMoveY(-10, dropSpeed);
     }
 }

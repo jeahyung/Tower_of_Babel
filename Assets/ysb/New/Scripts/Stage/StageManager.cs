@@ -8,6 +8,7 @@ public class StageManager : Singleton<StageManager>
     private TurnManager manager_turn;
     [SerializeField] private Map map;
     [SerializeField] private UI_Turn ui_turn;
+    [SerializeField] private UI_GameOver ui_gameover;
     public bool isPlaying = false;
 
     public static int chapterCount = 1;
@@ -40,6 +41,7 @@ public class StageManager : Singleton<StageManager>
         {
             ui_turn = FindObjectOfType<UI_Turn>();
         }
+        if(ui_gameover == null) { ui_gameover = FindObjectOfType<UI_GameOver>(); }
         ui_turn.SetStageInfo(chapterCount, stageCount);
     }
     //스테이지를 세팅합니다.
@@ -145,9 +147,20 @@ public class StageManager : Singleton<StageManager>
 
     public void GameOver()
     {
+        map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
+    }
+
+    public void ShowResult()
+    {
+        ui_gameover.ShowResult();
+    }
+    public void ResetData()
+    {
         //아이템 리셋
         UpgradeDatabase.instance.ResetUpgradeData();
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
         ScoreManager.instance.ResetScore();//스코어 리셋
+
+        SceneManager.LoadScene(1);
     }
 }
