@@ -23,6 +23,10 @@ public class AudioManager : MonoBehaviour
         Init();
     }
 
+    private void Start()
+    {
+        PlayBgm(true);
+    }
     void Init()
     {
         GameObject bgmObgect = new GameObject("BgmObgect");
@@ -78,6 +82,18 @@ public class AudioManager : MonoBehaviour
             sfxPlayers[loopIndex].clip = sfxClips[(int)sfx];
             sfxPlayers[loopIndex].Play();
             break;
+        }
+    }
+
+    public void PlayBgm(bool isPlay)
+    {
+        if(isPlay)
+        {
+            bgmPlayer.Play();
+        }
+        else
+        {
+            bgmPlayer.Stop();
         }
     }
 }
