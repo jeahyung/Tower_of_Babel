@@ -1,10 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 
 public class ItemUI : MonoBehaviour
 {
     public List<ItemUISlot> slots = new List<ItemUISlot>();
+
+    public GameObject itemExplain;
+    public TMP_Text itemText;
 
 
     private void Awake()
@@ -12,6 +17,10 @@ public class ItemUI : MonoBehaviour
         slots.AddRange(GetComponentsInChildren<ItemUISlot>());
 
         //SortItem(ItemInventory.instance.items);
+    }
+    private void Start()
+    {
+        HideExplain();
     }
     public void SortItem(List<Item> items)
     {
@@ -59,5 +68,18 @@ public class ItemUI : MonoBehaviour
                 slot.ChangeItem(items[i]);
             }
         }
+    }
+
+    public void SetText(string t)
+    {
+        itemText.text = t;
+    }
+    public void ShowExplain()
+    {
+        itemExplain.SetActive(true);
+    }
+    public void HideExplain()
+    {
+        itemExplain.SetActive(false);
     }
 }

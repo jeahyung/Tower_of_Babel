@@ -5,6 +5,7 @@ public class Item : MonoBehaviour
 {
     protected ItemManager manager_Item;
     public Sprite itemImg;
+    public string ex;
 
     protected int range = 1;
 

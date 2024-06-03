@@ -54,4 +54,20 @@ public class ItemUISlot : MonoBehaviour
         btn.onClick.RemoveAllListeners();
         //img.enabled = false;
     }
+
+    public void Show()
+    {
+        if(addItem == null) { return; }
+        GetComponentInParent<ItemUI>().SetText(addItem.ex);
+        GetComponentInParent<ItemUI>().ShowExplain();
+
+    }
+    
+    public void Hide()
+    {
+        if(addItem == null) { return; }
+        GetComponentInParent<ItemUI>().SetText("");
+        GetComponentInParent<ItemUI>().HideExplain();
+
+    }
 }
