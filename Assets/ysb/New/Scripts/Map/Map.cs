@@ -295,6 +295,7 @@ public class Map : MonoBehaviour
     {
         foreach (var tile in tileInArea)
         {
+            Debug.Log("asdf");
             tile.ShowArea();
         }
     }
@@ -600,6 +601,7 @@ public class Map : MonoBehaviour
             }
         }
 
+        HideArea();
         nowTile = tiles[0, 0];
     }
 

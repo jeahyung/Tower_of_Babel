@@ -20,6 +20,8 @@ public class StartPoint : MonoBehaviour
 
     private Player_Move player;
 
+    private HideTile hide;
+
     private void Awake()
     {
         col.enabled = true;
@@ -32,6 +34,7 @@ public class StartPoint : MonoBehaviour
         interactMessage = GameObject.Find("Interact");
         interactMessage.SetActive(false);
         player = FindObjectOfType<Player_Move>();
+        hide = FindObjectOfType<HideTile>();
     }
     private void Start()
     {
@@ -66,7 +69,9 @@ public class StartPoint : MonoBehaviour
 
             player.StopAni();
             player.RotateObject();
-           
+            hide.RemoveTile();
+
+
         }
     }
     private void StartGame()
