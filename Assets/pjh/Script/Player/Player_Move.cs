@@ -74,7 +74,7 @@ public class Player_Move : MonoBehaviour
     //}
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("start"))
+        if (other.CompareTag("Start"))
         {
             move = true;
 
