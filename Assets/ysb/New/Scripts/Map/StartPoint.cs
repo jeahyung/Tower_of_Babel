@@ -78,7 +78,7 @@ public class StartPoint : MonoBehaviour
         ItemInventory.instance.StartGame();     //아이템 세팅
 
         action.SetAct();    //액션 세팅
-        turn.StartGame();   //게임 시작
+        //turn.StartGame();   //게임 시작
 
         interactMessage.SetActive(false);
     }

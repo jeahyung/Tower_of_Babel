@@ -97,6 +97,7 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     public void SetActionData()
     {
         upController.OpenActionPanel();
+        StageManager.instance.PlayerMoving(false);
         //actionsList.Clear();
         //Upgrade up1 = new Upgrade(991, "·è", 0, 5, "°¡·Î & ¼¼·Î");
         //Upgrade up2 = new Upgrade(992, "ºñ¼ó", 1, 5, "´ë°¢¼±");

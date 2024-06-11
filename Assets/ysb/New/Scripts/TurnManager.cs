@@ -66,7 +66,7 @@ public class TurnManager : MonoBehaviour
         //manager_map.ResetTile();
         isPlayerTurn = false;
         isEnemyTurn = false;
-        isDone = false;
+        isDone = true;
         ui_turn.ResetUI();
 
         turnCount = 0;

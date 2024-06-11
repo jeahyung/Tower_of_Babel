@@ -651,11 +651,11 @@ RectTransform:
   m_Father: {fileID: 1528677973580308907}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 536, y: -882}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 325, y: 200}
   m_SizeDelta: {x: 425, y: 115}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!1 &1675367586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,7 +1251,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8115046463644997260}
+        - m_Target: {fileID: 4568154346630459914}
           m_TargetAssemblyTypeName: ItemUISlot, Assembly-CSharp
           m_MethodName: Show
           m_Mode: 1
@@ -1267,7 +1267,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8115046463644997260}
+        - m_Target: {fileID: 4568154346630459914}
           m_TargetAssemblyTypeName: ItemUISlot, Assembly-CSharp
           m_MethodName: Hide
           m_Mode: 1
@@ -2108,7 +2108,7 @@ RectTransform:
   m_GameObject: {fileID: 1528677973702507964}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6131620351985197072}
@@ -6381,7 +6381,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8115046463644997260}
+        - m_Target: {fileID: 8662026152807878019}
           m_TargetAssemblyTypeName: ItemUISlot, Assembly-CSharp
           m_MethodName: Show
           m_Mode: 1
@@ -6397,7 +6397,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8115046463644997260}
+        - m_Target: {fileID: 8662026152807878019}
           m_TargetAssemblyTypeName: ItemUISlot, Assembly-CSharp
           m_MethodName: Hide
           m_Mode: 1
@@ -8944,7 +8944,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8115046463644997260}
+        - m_Target: {fileID: 6978404146307957676}
           m_TargetAssemblyTypeName: ItemUISlot, Assembly-CSharp
           m_MethodName: Show
           m_Mode: 1
@@ -8960,7 +8960,7 @@ MonoBehaviour:
     callback:
       m_PersistentCalls:
         m_Calls:
-        - m_Target: {fileID: 8115046463644997260}
+        - m_Target: {fileID: 6978404146307957676}
           m_TargetAssemblyTypeName: ItemUISlot, Assembly-CSharp
           m_MethodName: Hide
           m_Mode: 1

@@ -58,9 +58,9 @@ public class ItemUISlot : MonoBehaviour
     public void Show()
     {
         if(addItem == null) { return; }
-        GetComponentInParent<ItemUI>().SetText(addItem.ex);
         GetComponentInParent<ItemUI>().ShowExplain();
-
+        GetComponentInParent<ItemUI>().SetText(addItem.ex);
+        //Debug.Log(addItem.ex);
     }
     
     public void Hide()

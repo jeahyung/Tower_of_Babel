@@ -67,6 +67,7 @@ public class UpgradeController : MonoBehaviour
     //Áõ°­Ã¼ ¿ÀÇÂ
     public void OpenUpgradePanel()
     {
+        StageManager.instance.PlayerMoving(false);
         SetSelectList();
     }
 
@@ -102,6 +103,7 @@ public class UpgradeController : MonoBehaviour
         UpgradeManager.instance.AddUpgrade(up);
         UpgradeDatabase.instance.RemoveData(up);
 
+        StageManager.instance.PlayerMoving(true);
         //StageManager.instance.EndGame();
     }
 }

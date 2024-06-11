@@ -27,26 +27,41 @@ public class StageManager : Singleton<StageManager>
 
     private void Start()
     {
-        //스테이지 추가
-        for(int i = 0; i < transform.childCount; ++i)
-        {
-            stages.Add(transform.GetChild(i).gameObject);
-            stages[i].SetActive(false);
-        }
-        StartCoroutine(Loading());
-        //첫 번째 스테이지 활성화
-        SelectStage();
+        ////스테이지 추가
+        //for(int i = 0; i < transform.childCount; ++i)
+        //{
+        //    stages.Add(transform.GetChild(i).gameObject);
+        //    stages[i].SetActive(false);
+        //}
+        //StartCoroutine(Loading());
+        ////첫 번째 스테이지 활성화
+        //SelectStage();
     }
     void OnEnable()
     {
+        SceneManager.sceneLoaded += OnSceneLoaded;
+    }
+    private void OnDisable()
+    {
+        SceneManager.sceneLoaded -= OnSceneLoaded;
+    }
+    void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
         manager_turn = FindObjectOfType<TurnManager>();
-        if(ui_turn == null)
+        if (ui_turn == null)
         {
             ui_turn = FindObjectOfType<UI_Turn>();
         }
-        if(ui_gameover == null) { ui_gameover = FindObjectOfType<UI_GameOver>(); }
-        ui_turn.SetStageInfo(chapterCount, stageCount);
+        if (ui_gameover == null) { ui_gameover = FindObjectOfType<UI_GameOver>(); }
+
+        StartCoroutine(Loading());
+
+        ResetStage();   //스테이지 데이터 리셋
+        SettingStage();
+        //ui_turn.SetStageInfo(chapterCount, stageCount);
     }
+
+
     //스테이지를 세팅합니다.
     public void SettingStage()
     {
@@ -125,6 +140,7 @@ public class StageManager : Singleton<StageManager>
 
     public void NextStage()
     {
+        manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         Img_loading.SetActive(true);
         stageCount++;
         SettingStage();
@@ -150,6 +166,7 @@ public class StageManager : Singleton<StageManager>
 
         //로딩창 아웃
         Img_loading.SetActive(false);
+        manager_turn.GetComponent<PlayerMovement>().SetControl(true);
     }
 
     public void GameOver()
@@ -167,6 +184,19 @@ public class StageManager : Singleton<StageManager>
     public void ShowResult()
     {
         ui_gameover.ShowResult();
+    }
+
+    public void ResetStage()
+    {
+        chapterCount = 1;
+        stageCount = 1;
+
+        stages.Clear();
+        for (int i = 0; i < transform.childCount; ++i)
+        {
+            stages.Add(transform.GetChild(i).gameObject);
+            stages[i].SetActive(false);
+        }
     }
     public void ResetData()
     {
