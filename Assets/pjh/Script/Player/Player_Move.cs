@@ -74,11 +74,11 @@ public class Player_Move : MonoBehaviour
     //}
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Start"))
-        {
-            move = true;
+        //if (other.CompareTag("Start"))
+        //{
+        //    move = true;
 
-        }
+        //}
     }
     public void StopAni()
     {
