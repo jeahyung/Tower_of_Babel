@@ -9,6 +9,7 @@ public class UpgradeController : MonoBehaviour
 {
     private Transform paenl;
     private UpgradeSelector[] selectors = new UpgradeSelector[3];   //선택버튼
+    private SAManager sa;
 
     [SerializeField]
     private List<Upgrade> upgrades = new List<Upgrade>();   //업그레이드 목록
@@ -23,6 +24,8 @@ public class UpgradeController : MonoBehaviour
     private void Awake()
     {
         upgrades.Clear();
+
+        sa = FindObjectOfType<SAManager>();
         paenl = transform.Find("Panel").transform;        
 
         //버튼 세팅
@@ -47,6 +50,8 @@ public class UpgradeController : MonoBehaviour
     public void SelectAction(int i)
     {
         UpgradeManager.instance.SetAction(i);
+
+        sa.SetAct();
         panel_action.localScale = new Vector3(0, 1, 1);
         panel_action.SendMessage("ResetPanel");
 

@@ -345,7 +345,7 @@ public class Map : MonoBehaviour
         {
             if(useItem == true) { useItem = false; }
             HideArea();
-
+            MovePlayerPosition();
             manager_Action.SetActionBtn(false);
             manager_Action.CheckActionCount();
             previousTile = nowTile; //이전 타일 갱신

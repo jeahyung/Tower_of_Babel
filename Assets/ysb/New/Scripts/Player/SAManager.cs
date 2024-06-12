@@ -55,6 +55,9 @@ public class SAManager : MonoBehaviour
     private int actCount = 3;
     private bool isKing = false;
 
+    public Sprite[] workIcons;
+    public Image icon;
+
     public float offset = 0.2f;
     public bool usedKing
     {
@@ -128,6 +131,8 @@ public class SAManager : MonoBehaviour
             action = ac;
             action.count = 2;
             action.energy = 3;
+
+            icon.sprite = workIcons[0];
         }
 
         //비숍(대각선)
@@ -136,6 +141,8 @@ public class SAManager : MonoBehaviour
             action = ac;
             action.count = 2;
             action.energy = 4;
+
+            icon.sprite = workIcons[1];
         }
 
         //킹(2번
@@ -144,6 +151,8 @@ public class SAManager : MonoBehaviour
             action = ac;
             action.count = 4;
             action.energy = 1;
+
+            icon.sprite = workIcons[2];
         }
 
         //업그레이드 효과
