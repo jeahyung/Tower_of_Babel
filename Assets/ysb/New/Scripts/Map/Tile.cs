@@ -48,20 +48,7 @@ public class Tile : MonoBehaviour
     public void HideArea()
     {
         rend.enabled = false;
-        if (effectPrefab != null)
-        {
-            effectPrefab.SetActive(false);
-        }
-        else if(effectPrefab == null)
-        {
-            effectPrefab = transform.GetChild(2).gameObject;
-            effectPrefab.SetActive(false);
-            Debug.Log("null effect");
-        }
-        else
-        {
-            Debug.Log("no effect");
-        }
+        HideEffect();
     }
 
     public Vector3 GetPosition()
@@ -105,10 +92,16 @@ public class Tile : MonoBehaviour
 
 
     private void HideEffect()
-    {
+    {   
         if (effectPrefab != null)
         {
             effectPrefab.SetActive(false);
+        }
+        else if (effectPrefab == null)
+        {
+            effectPrefab = transform.GetChild(2).gameObject;
+            effectPrefab.SetActive(false);
+            Debug.Log("null effect");
         }
     }
 

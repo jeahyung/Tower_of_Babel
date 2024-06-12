@@ -56,7 +56,11 @@ public class SAManager : MonoBehaviour
     private bool isKing = false;
 
     public float offset = 0.2f;
-    public bool usedKing => isKing;
+    public bool usedKing
+    {
+        get => isKing;
+        set => isKing = value;
+    } 
     public int getActCount => actCount;
 
     #region UI

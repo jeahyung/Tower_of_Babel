@@ -20,6 +20,8 @@ public class StartPoint : MonoBehaviour
 
     private Player_Move player;
 
+   // private HideTile hide;
+
     private void Awake()
     {
         col.enabled = true;
@@ -32,10 +34,11 @@ public class StartPoint : MonoBehaviour
         interactMessage = GameObject.Find("Interact");
         interactMessage.SetActive(false);
         player = FindObjectOfType<Player_Move>();
+       // hide = FindObjectOfType<HideTile>();
     }
     private void Start()
     {
-        GetComponent<Tile>().ShowArea();
+      //  GetComponent<Tile>().ShowArea();
     }
 
     private void OnEnable()
@@ -44,30 +47,32 @@ public class StartPoint : MonoBehaviour
         col.enabled = true;
         wall.enabled = true;
 
-        GetComponent<Tile>().ShowArea();
+        //GetComponent<Tile>().ShowArea();
     }
 
     private void Update()
     {
         if(isPlayerEnter == false) { return; }
 
-        if(Input.GetKeyDown(KeyCode.F))
-        {
-            wall.enabled = false;
+        //if(Input.GetKeyDown(KeyCode.F))
+        //{
+        //    wall.enabled = false;
 
-            isPlayerEnter = false;
-            isStart = true;
+        //    isPlayerEnter = false;
+        //    isStart = true;
 
-            Transform other = turn.transform;
+        //    Transform other = turn.transform;
 
-            Vector3 target = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
-            Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
-            other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
+        //    Vector3 target = new Vector3(other.transform.position.x, other.transform.position.y, other.transform.position.z);
+        //    Vector3 my = new Vector3(transform.position.x, other.transform.position.y, transform.position.z);
+        //    other.GetComponent<PlayerMovement>().MoveToStartPoint(my);
 
-            player.StopAni();
-            player.RotateObject();
+        //    player.StopAni();
+        //    player.RotateObject();
            
-        }
+
+
+        //}
     }
     private void StartGame()
     {
@@ -89,7 +94,24 @@ public class StartPoint : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             isPlayerEnter = true;
-            interactMessage.SetActive(true);
+        //    interactMessage.SetActive(true);
+
+  
+                wall.enabled = false;
+
+                isPlayerEnter = false;
+                isStart = true;
+
+                Transform another = turn.transform;
+
+                Vector3 target = new Vector3(another.transform.position.x, another.transform.position.y, another.transform.position.z);
+                Vector3 my = new Vector3(transform.position.x, another.transform.position.y, transform.position.z);
+            another.GetComponent<PlayerMovement>().MoveToStartPoint(my);
+
+                player.StopAni();
+                player.RotateObject();
+
+            
         }
     }
 

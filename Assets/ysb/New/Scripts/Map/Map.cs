@@ -31,7 +31,7 @@ public class Map : MonoBehaviour
 
     public Tile playerTile = null;
     //public Tile endtile;
-
+    private int mapCount = 0;
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
@@ -295,6 +295,9 @@ public class Map : MonoBehaviour
     {
         foreach (var tile in tileInArea)
         {
+            Debug.Log("mapShow@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
+            Debug.Log(mapCount);
+            mapCount++;
             tile.ShowArea();
         }
     }
@@ -620,6 +623,7 @@ public class Map : MonoBehaviour
             }
         }
 
+        HideArea();
         nowTile = tiles[0, 0];
     }
 

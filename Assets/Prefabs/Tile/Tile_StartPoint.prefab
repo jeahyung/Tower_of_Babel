@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6590680097269752343
 Transform:
   m_ObjectHideFlags: 0
@@ -119,7 +119,7 @@ Transform:
   - {fileID: 6590680097269752343}
   - {fileID: 7615510930105269642}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &6754688894498595367
 BoxCollider:
@@ -151,6 +151,7 @@ MonoBehaviour:
   rend: {fileID: 2624536765379879924}
   effectPrefab: {fileID: 4299597505913084127}
   rook: {fileID: 0}
+  dropSpeed: 0.5
 --- !u!114 &6290893912271106618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -189,23 +190,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7727648504145736301, guid: ceb71a86c049d044bbe6f61f9770abf1, type: 3}
       propertyPath: m_LocalScale.x
-      value: 2.475
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7727648504145736301, guid: ceb71a86c049d044bbe6f61f9770abf1, type: 3}
       propertyPath: m_LocalScale.y
-      value: 2.475
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7727648504145736301, guid: ceb71a86c049d044bbe6f61f9770abf1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.979
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7727648504145736301, guid: ceb71a86c049d044bbe6f61f9770abf1, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5700002
+      value: 1.66
       objectReference: {fileID: 0}
     - target: {fileID: 7727648504145736301, guid: ceb71a86c049d044bbe6f61f9770abf1, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.58
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7727648504145736301, guid: ceb71a86c049d044bbe6f61f9770abf1, type: 3}
       propertyPath: m_LocalRotation.w

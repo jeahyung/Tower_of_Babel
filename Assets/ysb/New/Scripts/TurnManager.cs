@@ -191,4 +191,10 @@ public class TurnManager : MonoBehaviour
         StartPlayerTurn();
     }
     #endregion
+
+    public void KingReset()
+    {
+        Debug.Log("KingReset!@@!@!@!@!@!@12");
+        manager_Action.usedKing = false;
+    }
 }

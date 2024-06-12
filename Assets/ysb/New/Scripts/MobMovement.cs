@@ -24,7 +24,7 @@ public class MobMovement : MonoBehaviour
     public int leftRagne = 1;   //왼쪽으로 몇 칸까지?(아래)
     public int rightRange = 1;  //오른쪽으로 몇 칸까지?(위)
 
-    [SerializeField] private float moveSpeed;
+    //[SerializeField] private float moveSpeed;
 
     public bool canAct = true;   //움직일 수 있는가?
 
@@ -120,7 +120,7 @@ public class MobMovement : MonoBehaviour
 
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, moveSpeed * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, nextPos, 30f * Time.deltaTime);
             yield return null;
         }
         transform.position = nextPos;
