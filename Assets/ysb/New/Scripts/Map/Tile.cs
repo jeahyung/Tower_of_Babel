@@ -42,7 +42,7 @@ public class Tile : MonoBehaviour
     {
         //if(tileType != TileType.possible) { return; }        
         ShowEffect();
-        rend.enabled = true;
+        rend.enabled = false;
 
     }
     public void HideArea()

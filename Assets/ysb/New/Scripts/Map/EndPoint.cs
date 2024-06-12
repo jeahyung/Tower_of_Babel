@@ -27,7 +27,7 @@ public class EndPoint : MonoBehaviour
     private void OnEnable()
     {
         isEnd = false;
-        GetComponent<Tile>().effectPrefab.SetActive(false);
+       // GetComponent<Tile>().effectPrefab.SetActive(false);
     }
     private void EndGame()
     {

@@ -4386,7 +4386,6 @@ MonoBehaviour:
   range: []
   leftRagne: 1
   rightRange: 1
-  moveSpeed: 0
   canAct: 1
 --- !u!54 &1358439415
 Rigidbody:

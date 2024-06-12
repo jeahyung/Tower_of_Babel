@@ -65,7 +65,7 @@ public class StageManager : Singleton<StageManager>
     {
         //현재 스테이지 비활성화
         if(curStage != null) { curStage.SetActive(false); }
-
+        manager_turn.KingReset();
         //새 스테이지
         int si = Random.Range(0, stages.Count);    
         //int si = 8;

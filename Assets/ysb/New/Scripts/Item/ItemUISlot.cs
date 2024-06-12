@@ -28,17 +28,19 @@ public class ItemUISlot : MonoBehaviour
         img.enabled = true;
         img.sprite = addItem.itemImg;
 
+        btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => addItem.SelectItem());
     }
 
     public void SetSlot(Item item)
     {
         //if(item == null) { return; }
-        if(addItem != null) { return; }
+        if (addItem != null) { return; }
         addItem = item;
         img.enabled = true;
         img.sprite = addItem.itemImg;
 
+        btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => addItem.SelectItem());
 
         //img.enabled = true;
