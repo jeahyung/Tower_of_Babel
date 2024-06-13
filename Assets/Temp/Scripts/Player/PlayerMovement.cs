@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using System.Drawing;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -342,7 +343,21 @@ public class PlayerMovement : MonoBehaviour
     {
         if(isControl == false) { return; }
         SetControl(false);
-        StartCoroutine(MoveToPoint(target));
+        StartCoroutine(StartMoveToPoint(target));
+    }
+
+    IEnumerator StartMoveToPoint(Vector3 point)
+    {
+       
+        while (Vector3.Distance(transform.position, point) >= 0.05f)
+        {
+            transform.position = Vector3.MoveTowards(transform.position, point, moveSpeed * Time.deltaTime);
+            anim.SetBool("isRun", true);
+            yield return null;
+        }
+        transform.position = new Vector3(point.x, transform.position.y, point.z);
+        anim.SetBool("isRun", false);
+
     }
 
     IEnumerator MoveToPoint(Vector3 point)
@@ -350,7 +365,7 @@ public class PlayerMovement : MonoBehaviour
         while (Vector3.Distance(transform.position, point) >= 0.5f)
         {
             Vector3 direction = point - transform.position;
-            transform.position = Vector3.SmoothDamp(transform.position, point, ref direction, smoothTime);
+            transform.position = Vector3.SmoothDamp(transform.position, point, ref direction, 0.3f*smoothTime);
             anim.SetBool("isRun", true);
             yield return null;
         }
