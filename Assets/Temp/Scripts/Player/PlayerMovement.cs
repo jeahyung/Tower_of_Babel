@@ -26,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     public float h;
 
     public bool isControl = false;
-    private bool canMove = true;
+    [SerializeField]private bool canMove = true;
     private bool isDamaged = false;
     public float smoothTime = 0.2f;
 
@@ -330,7 +330,7 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-
+        canMove = true;
 
         //if (degree_back == 1) { RotatePlayer_Anim(1); }
         //else if (degree_back != 8) { RotatePlayer_Anim(degree_back);  }  //정면 외의 방향으로 뛰었을 때

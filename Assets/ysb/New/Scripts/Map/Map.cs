@@ -338,14 +338,16 @@ public class Map : MonoBehaviour
         else
         {
             if (moveArea.Contains(clickTile) == false) { return; }
-            Debug.Log("ddddd");
+            
             MovePlayerPosition();
+            Debug.Log("ddd^^^^^^^^^^^^^^^dd");
         }
         if(moveArea.Contains(clickTile) == true)
         {
             if(useItem == true) { useItem = false; }
             HideArea();
-
+            //MovePlayerPosition();
+            Debug.Log("ddd^^^^^^^^^^^^^^^");
             manager_Action.SetActionBtn(false);
             manager_Action.CheckActionCount();
             previousTile = nowTile; //이전 타일 갱신
