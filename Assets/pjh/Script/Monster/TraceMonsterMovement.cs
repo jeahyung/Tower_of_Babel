@@ -59,10 +59,7 @@ public class TraceMonsterMovement : MonoBehaviour
     }
     void Update()
     {       
-        if (Input.GetKeyDown(KeyCode.Z))
-        {
-            Think();
-        }
+     
         //pos = tile.coord;
     }
 
@@ -228,7 +225,7 @@ public class TraceMonsterMovement : MonoBehaviour
         while (Vector3.Distance(transform.position, target) >= 0.05f)
         {
             Vector3 direction = target - transform.position;
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref direction, smoothTime);
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref direction, 0.3f*smoothTime);
             yield return null;
         }
        
@@ -240,7 +237,7 @@ public class TraceMonsterMovement : MonoBehaviour
             ch = false;
         }       
      //   manager_Turn.EndEnemyTurn();
-        Debug.Log("Dddddd");
+      //  Debug.Log("Dddddd");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -258,6 +255,7 @@ public class TraceMonsterMovement : MonoBehaviour
     }
     private void CheckTile()
     {
+
         RaycastHit hit;
         if (Physics.Raycast(transform.position, Vector3.down, out hit, 50f, 1 << LayerMask.NameToLayer("Tile")))
         {
@@ -274,10 +272,7 @@ public class TraceMonsterMovement : MonoBehaviour
             {
                 mgr_Chase.CheckMobAction();
             }
-            else
-            {
-                Debug.Log("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-            }
+
         }
 
         HideEffect();
