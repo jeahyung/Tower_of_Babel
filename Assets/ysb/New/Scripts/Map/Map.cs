@@ -327,7 +327,7 @@ public class Map : MonoBehaviour
             manager_Action.ActDone();
             //HideArea();
 
-            if(manager_Action.usedKing == true) { MovePlayerPosition(); }
+            if (manager_Action.usedKing == true) { MovePlayerPosition(); }
             else { MovePlayerPosition_Continue(); }
 
             //manager_Action.SetActionBtn(false);

@@ -181,6 +181,7 @@ public class PlayerMovement : MonoBehaviour
     {
         if(target == Vector3.zero || canMove == false) { return; }
         canMove = false;
+        h = 0f;
 
         manager_Turn.isDone = false;
         rigid.useGravity = false;   //Áß·ÂÀ» ²ö´Ù.
