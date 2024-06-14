@@ -83,6 +83,7 @@ public class StartPoint : MonoBehaviour
         ItemInventory.instance.StartGame();     //아이템 세팅
 
         action.SetAct();    //액션 세팅
+        action.ActActionBtn(true);
         //turn.StartGame();   //게임 시작
 
         interactMessage.SetActive(false);
@@ -94,13 +95,12 @@ public class StartPoint : MonoBehaviour
         if(other.CompareTag("Player"))
         {
             isPlayerEnter = true;
-        //    interactMessage.SetActive(true);
+            //    interactMessage.SetActive(true);
 
-  
-                wall.enabled = false;
+            wall.enabled = false;
 
                 isPlayerEnter = false;
-                isStart = true;
+                //isStart = true;
 
                 Transform another = turn.transform;
 
@@ -121,9 +121,12 @@ public class StartPoint : MonoBehaviour
         if (Vector3.Distance(other.transform.position, my) <= 0.05f)
         {
             col.enabled = false;
-            isStart = true;
 
-            StartGame();
+            if (!isStart)
+            {
+                StartGame();
+                isStart = true;
+            }
         }
     }
     private void OnTriggerExit(Collider other)

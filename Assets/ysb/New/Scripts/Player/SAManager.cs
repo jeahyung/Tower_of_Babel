@@ -121,8 +121,6 @@ public class SAManager : MonoBehaviour
     public void SetAct()
     {
         actionBtn.onClick.RemoveAllListeners();
-
-        ActActionBtn(true);
         int num = UpgradeManager.instance.GetSANum();
 
         //룩(직진)
@@ -235,7 +233,6 @@ public class SAManager : MonoBehaviour
     //액션 버튼 활성화 여부
     public void ActActionBtn(bool b)
     {
-        //actionBtn.gameObject.SetActive(b);
         actionBtn.enabled = b;
         cancelBtn.SetActive(false);
     }

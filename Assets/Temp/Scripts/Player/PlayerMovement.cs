@@ -15,15 +15,19 @@ public class PlayerMovement : MonoBehaviour
     private EnergySystem energySysteam;
     #endregion
 
-    public Vector3 startPos, endPos;
+    //Move
+    Vector3 startPos, endPos;
+    float endZ, endX;    //z, x, height
+    public float h = 1f;
+    
+    int jumpCount = 0;  //점프 횟수
+
+    //Roate
+    Vector3 to, from;
 
     public float timer;
     public float timeToFloor;    //땅에 닫기까지 걸리는 시간
 
-    public float endZ;
-    public float endX;
-
-    public float h;
 
     public bool isControl = false;
     private bool canMove = true;
@@ -35,10 +39,6 @@ public class PlayerMovement : MonoBehaviour
 
     public int degree_back = 0;   //되돌올 때 회전할 각
 
-    PlayerAnim body;
-    Vector3 movePos;
-
-    public int jumpCount = 0;
     public bool TurnEnd()
     {
         if(isDamaged == true) { return false; }
@@ -52,22 +52,10 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-
-        anim.SetInteger("isTurn", degree_back);
-        body = GetComponentInChildren<PlayerAnim>();
-
     }
     private void Start()
     {
         moveRange += UpgradeManager.instance.getBonusRange();
-    }
-    void Update()
-    {
-        //if(isControl == false) { return; }
-        //float x = Input.GetAxisRaw("Horizontal");
-        //float z = Input.GetAxisRaw("Vertical");
-        //rigid.velocity = new Vector3(x * 5, rigid.velocity.y, z * 5);
-
     }
 
     public void SetControl(bool b)
@@ -115,81 +103,86 @@ public class PlayerMovement : MonoBehaviour
     //플레이어 턴 종료
     public void EndPlayerTurn()
     {
-        //anim.applyRootMotion = false;
-        anim.SetInteger("isTurn", 10);
         degree_back = 0;
-
-        //body.CanJump = true; //점프 가능하도록
         canMove = true;
-
-        transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));    //정면 보기
-
-        anim.SetBool("isEnd", true);
+        anim.SetInteger("isRotate", 0);
         manager_Turn.EndPlayerTurn();
+
+        rt = -1;
     }
+
+
+
+    #region Rotate
 
     //회전
-    public void RotatePlayer_Anim(int i)
+    private void RotatePlayer(int rot)
     {
-        degree_back = Mathf.Abs(i - 9);   //다시 되돌아올 때 회전할 각
-        //정면인 경우
-        if (i == 1)
-        {
-            StartJump();    //정면이라면 바로 점프한다.
-            return;
-        }
-        //점프할 방향으로 회전한다.
-        anim.SetInteger("isTurn", i);
-        anim.SetTrigger("isRotate");
-    }
-    public void RotateBack_Anim(int i)
-    {
-        degree_back = Mathf.Abs(i - 9);   //다시 되돌아올 때 회전할 각
-        //점프할 방향으로 회전한다.
-        anim.SetInteger("isTurn", i);
-        anim.SetTrigger("isRotate");
-    }
-    public void RotatePlayer_Pos()
-    {
-        int rot = Mathf.Abs(degree_back - 9);
-        switch(rot)
+        degree_back = Mathf.Abs(rot - 9);
+        to = new Vector3(0, 0, 0);
+        switch (rot)
         {
             case 1:
-                transform.rotation = Quaternion.Euler(new Vector3(0, 0, 0));    //정면 보기
-                break;
+                StartJump();
+                return;
             case 2:
-                transform.rotation = Quaternion.Euler(new Vector3(0,-45, 0));    //left 45
+                from = new Vector3(0, -45, 0);    //left 45
                 break;
             case 3:
-                transform.rotation = Quaternion.Euler(new Vector3(0,-90, 0));    //left 90
+                from = new Vector3(0, -90, 0);    //left 90
                 break;
             case 4:
-                transform.rotation = Quaternion.Euler(new Vector3(0,-135, 0));    //left 135
+                from = new Vector3(0, -135, 0);    //left 135
                 break;
             case 5:
-                transform.rotation = Quaternion.Euler(new Vector3(0,135, 0));    //right 135
+                from = new Vector3(0, 135, 0);    //right 135
                 break;
             case 6:
-                transform.rotation = Quaternion.Euler(new Vector3(0, 90 ,0));    //right 90
+                from = new Vector3(0, 90, 0);    //right 90
                 break;
             case 7:
-                transform.rotation = Quaternion.Euler(new Vector3(0, 45, 0));    //right 45
+                from = new Vector3(0, 45, 0);    //right 45
                 break;
             case 8:
-                transform.rotation = Quaternion.Euler(new Vector3(0, 179, 0));    //후면
+                from = new Vector3(0, 180, 0);    //후면
                 break;
+            default:
+                from = new Vector3(0, transform.rotation.y, 0);
+                return;
         }
+        anim.SetInteger("isRotate", rot);
+        anim.SetTrigger("StartRotate");
+        float speed = from.y == 0 ? 0.5f : 0.5f * Mathf.Abs(from.y / 45);
+        transform.DORotate(from, speed).OnComplete(() => EndRotate());
+
     }
 
-    //이동
+    private void RotateBack()
+    {
+        from = new Vector3(0, 0, 0);
+        anim.SetInteger("isRotate", degree_back);
+
+        anim.SetTrigger("StartRotate");
+        transform.DORotate(from, 1f).OnComplete(() => EndPlayerTurn());
+    }
+    public void EndRotate()
+    {
+        transform.DOKill();
+        anim.SetInteger("isRotate", 0);
+        anim.SetTrigger("EndRotate");
+        StartJump();
+
+    }
+    #endregion
+
+    #region Move
+    #region SetTarget
     public void SetPosition(Vector3 target, int rot)
     {
         if(target == Vector3.zero || canMove == false) { return; }
         canMove = false;
-        anim.SetBool("isEnd", false);
 
         manager_Turn.isDone = false;
-
         rigid.useGravity = false;   //중력을 끈다.
 
         //시작점
@@ -199,44 +192,36 @@ public class PlayerMovement : MonoBehaviour
         endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        if(UpgradeManager.instance.getNoneEnergy() == false)
-        {
-            if(UseEnergy() == false)    //에너지 사용  
-            {
-                return;
-            }
-        }  
-        RotatePlayer_Anim(rot); //회전 모션
+        //에너지 사용
+        if(UpgradeManager.instance.getNoneEnergy() == false) { if(UseEnergy() == false) { return; } }
+        //회전
+        RotatePlayer(rot);
     }
 
     //여러 번 점프
-    public Vector3 tg;
-    public int rt;
-    public int footCount = 0;
+    Vector3 tg;
+    int rt;
     public void SetPosition_Continue(int count, Vector3 target, int rot)
     {
         jumpCount = count;
-        if (jumpCount <= 0) {
+        if (jumpCount <= 0) 
+        {
             jumpCount = 0;
-            footCount = 0;
-            if (degree_back != 8) { RotateBack_Anim(degree_back); }
+            if (degree_back != 8) { RotateBack(); }
             else
             {
                 if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
                 {
+                    anim.SetTrigger("EndRotate");
                     EndPlayerTurn();
                 }
             }
-            Debug.Log("점프 종료");
             return;
         }
         tg = target;
-        rt = rot;
-
-        anim.SetBool("isEnd", false);
+        rt = rt == rot ? 0 : rot;   //방향이 같다면 회전X
 
         manager_Turn.isDone = false;
-
         rigid.useGravity = false;   //중력을 끈다.
 
         //시작점
@@ -246,43 +231,25 @@ public class PlayerMovement : MonoBehaviour
         endZ = (target.z - transform.position.z) / jumpCount;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
+        Debug.Log("1111111");
+
         if (canMove == true)
         {
-            if (UpgradeManager.instance.getNoneEnergy() == false)
-            {
-                if (UseEnergy() == false)    //에너지 사용  
-                {
-                    return;
-                }
-            }
-            RotatePlayer_Anim(rot); //회전 모션
-
+            if (UpgradeManager.instance.getNoneEnergy() == false) { if (UseEnergy() == false) { return; } }
+            RotatePlayer(rot);
             canMove = false;
         }
-        else
+        if(rt == 0)
         {
-            anim.SetBool("isJump", true);
-            //if(footCount % 2 == 1)
-            //{
-            //    anim.SetTrigger("isJump_left");
-            //}
-            //else
-            //{
-            //    anim.SetBool("isJump", true);
-            //}
+            StartJump();
         }
     }
+    #endregion
 
     public void StartJump()
     {
-        //if(body.CanJump == false) { return; }
-        //회전 - 이동 방향으로
-        RotatePlayer_Pos();
-
-        //점프 모션 재생
-        anim.SetBool("isJump", true);
-        //anim.SetTrigger("isJump");
-        //body.CanJump = false;
+        anim.SetTrigger("StartJump");
+        //anim.SetBool("isJump", true);
     }
 
     public void StartMove()
@@ -300,7 +267,7 @@ public class PlayerMovement : MonoBehaviour
     protected IEnumerator MoveToEnd()
     {
         timer = 0;
-        anim.SetBool("isJump", false);
+        //anim.SetBool("isJump", false);
         while (transform.position.y >= startPos.y)
         {
             timer += Time.deltaTime;
@@ -308,19 +275,19 @@ public class PlayerMovement : MonoBehaviour
             transform.position = tempPos;
             yield return new WaitForEndOfFrame();
         }
-
         transform.position = endPos;
         rigid.useGravity = true;
-        //canMove = true;
-        jumpCount--;
-        footCount++;
         if (jumpCount > 0)
         {
-            SetPosition_Continue(jumpCount, tg, rt);
+            jumpCount--;
+            SetPosition_Continue(jumpCount, tg, rt); //다시 점프(회전 갱신)
         }
         else
         {
-            if (degree_back != 8) { RotateBack_Anim(degree_back); }
+            if (degree_back != 8)
+            {
+                RotateBack();
+            }
             else
             {
                 if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
@@ -329,14 +296,10 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
-
-
-        //if (degree_back == 1) { RotatePlayer_Anim(1); }
-        //else if (degree_back != 8) { RotatePlayer_Anim(degree_back);  }  //정면 외의 방향으로 뛰었을 때
-        //else { EndPlayerTurn(); }   //정면으로 뛰었을 때는 바로 턴 종료
+        canMove = true;
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
     }
+    #endregion
 
     public void MoveToStartPoint(Vector3 target)
     {

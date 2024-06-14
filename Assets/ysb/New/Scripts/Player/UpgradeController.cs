@@ -108,6 +108,8 @@ public class UpgradeController : MonoBehaviour
         UpgradeManager.instance.AddUpgrade(up);
         UpgradeDatabase.instance.RemoveData(up);
 
+        sa.SetAct();
+
         StageManager.instance.PlayerMoving(true);
         //StageManager.instance.EndGame();
     }

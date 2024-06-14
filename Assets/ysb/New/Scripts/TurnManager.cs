@@ -19,7 +19,6 @@ public class TurnManager : MonoBehaviour
 
     public bool isDone = true;
 
-    int bounusTurn = 0; //보너스 턴
     [SerializeField]int turnCount = 0;
 
     public int TurnCount => turnCount;
@@ -63,7 +62,6 @@ public class TurnManager : MonoBehaviour
     public void EndGame()
     {
         StopAllCoroutines();
-        //manager_map.ResetTile();
         isPlayerTurn = false;
         isEnemyTurn = false;
         isDone = true;
@@ -90,7 +88,7 @@ public class TurnManager : MonoBehaviour
         isPlayerTurn = true;
         isDone = true;
 
-        ui_turn.ShowImg(0);
+        if (!manager_Action.usedKing) { ui_turn.ShowImg(0); }
         yield return new WaitForSeconds(delayTime);
         ui_turn.HideImg(0);
 
