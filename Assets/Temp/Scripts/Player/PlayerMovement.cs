@@ -231,7 +231,7 @@ public class PlayerMovement : MonoBehaviour
         endZ = (target.z - transform.position.z) / jumpCount;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        Debug.Log("1111111");
+        //Debug.Log("1111111");
 
         if (canMove == true)
         {
