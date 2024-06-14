@@ -398,6 +398,7 @@ public class PlayerMovement : MonoBehaviour
         if(tile == null) { return; }
         if(canMove == false) { return; }
         canMove = false;
+        h = 1.5f;
 
         Vector3 target = tile.transform.position;
         Vector3 pos = new Vector3(target.x, transform.position.y, target.z);
@@ -422,7 +423,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator MoveBack()
     {
         timer = 0;
-        while (transform.position.y >= startPos.y)
+        while (Vector3.Distance(transform.position, endPos) >= 0.2f)
         {
             timer += Time.deltaTime;
             Vector3 tempPos = Parabola(startPos, endPos, h, timer);
