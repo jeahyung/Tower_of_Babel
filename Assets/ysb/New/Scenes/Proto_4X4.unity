@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33044672, g: 0.2941223, b: 0.326964, a: 1}
+  m_IndirectSpecularColor: {r: 0.33023176, g: 0.29404122, b: 0.32682568, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -3626,23 +3626,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73a9570a8b103054686aa4d86f983509, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPos: {x: 0, y: 0, z: 0}
-  endPos: {x: 0, y: 0, z: 0}
+  h: 1.5
   timer: 0
   timeToFloor: 1
-  endZ: 0
-  endX: 0
-  h: 1.5
   isControl: 1
-  canMove: 1
   smoothTime: 0.3
   moveSpeed: 3
   moveRange: 1
   degree_back: 0
-  jumpCount: 0
-  tg: {x: 0, y: 0, z: 0}
-  rt: 0
-  footCount: 0
 --- !u!136 &1022878740
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -6766,7 +6757,7 @@ Animator:
   m_GameObject: {fileID: 1605256121}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 881d8963be99a0044ae90cee2152aacb, type: 3}
-  m_Controller: {fileID: 9100000, guid: f33250af9ab371f429480f85208ade9a, type: 2}
+  m_Controller: {fileID: 9100000, guid: 3a26042141b002e4d9e85d84109be544, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
