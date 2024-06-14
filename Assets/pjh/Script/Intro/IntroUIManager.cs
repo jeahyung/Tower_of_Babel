@@ -35,7 +35,7 @@ public class IntroUIManager : MonoBehaviour
             {
                 // 페이드 인이 시작될 때 상호작용 불가능하도록 설정
              //   uiCanvasGroup.interactable = false;
-                uiCanvasGroup.blocksRaycasts = false;
+              //  uiCanvasGroup.blocksRaycasts = false;
             })
             .OnComplete(() =>
             {
@@ -52,7 +52,7 @@ public class IntroUIManager : MonoBehaviour
     {
         // 페이드 아웃이 시작될 때 상호작용 불가능하도록 설정
         //uiCanvasGroup.interactable = true;
-        uiCanvasGroup.blocksRaycasts = false;
+        //uiCanvasGroup.blocksRaycasts = false;
     });
     }
 
@@ -60,7 +60,7 @@ public class IntroUIManager : MonoBehaviour
     {
         uiCanvasGroup.alpha = 0f;
       //  uiCanvasGroup.interactable = false;
-        uiCanvasGroup.blocksRaycasts = false;
+       // uiCanvasGroup.blocksRaycasts = false;
         // 싱글톤 인스턴스 설정
         if (instance != null && instance != this)
         {
