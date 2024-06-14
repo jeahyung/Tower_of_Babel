@@ -30,9 +30,17 @@ public class IntroCam : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Tab))
         {
             camIndex++;
-            if (camIndex > maxIndex) { camIndex = 0; }
-            MoveCam(camIndex);
+            if (camIndex < maxIndex)
+            {
+                MoveCam(camIndex); 
+            }
+            else
+            {
+                return;
+            }
+           
         }
+        
     }
 
     //카메라 이동
@@ -41,9 +49,18 @@ public class IntroCam : MonoBehaviour
         cams[id].MoveToTopOfPrioritySubqueue();
     }
     public void BackMainCam()
-    {
+    {      
+        
         camIndex = 0;
         cams[0].MoveToTopOfPrioritySubqueue();
+
+        Invoke("WaitForCameraMoveAndShowUI", 1f);
+
+    }
+    private void WaitForCameraMoveAndShowUI()
+    {
+        IntroUIManager ui = IntroUIManager.Instance;
+        ui.ShowUI();
     }
 
     public void CamShake()
@@ -66,4 +83,6 @@ public class IntroCam : MonoBehaviour
         }
         currentCam.VirtualCameraGameObject.transform.position = camPos;
     }
+
+
 }
