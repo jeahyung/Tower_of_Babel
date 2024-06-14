@@ -201,25 +201,12 @@ public class PlayerMovement : MonoBehaviour
     //여러 번 점프
     Vector3 tg;
     int rt;
+
     public void SetPosition_Continue(int count, Vector3 target, int rot)
     {
-        jumpCount = count;
-        if (jumpCount <= 0) 
-        {
-            jumpCount = 0;
-            if (degree_back != 8) { RotateBack(); }
-            else
-            {
-                if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
-                {
-                    anim.SetTrigger("EndRotate");
-                    EndPlayerTurn();
-                }
-            }
-            return;
-        }
-        tg = target;
-        rt = rt == rot ? 0 : rot;   //방향이 같다면 회전X
+        if (target == Vector3.zero || canMove == false) { return; }
+        canMove = false;
+        h = 2f;
 
         manager_Turn.isDone = false;
         rigid.useGravity = false;   //중력을 끈다.
@@ -227,23 +214,58 @@ public class PlayerMovement : MonoBehaviour
         //시작점
         startPos = transform.position;
         //끝점
-        endX = (target.x - transform.position.x) / jumpCount;
-        endZ = (target.z - transform.position.z) / jumpCount;
+        endX = target.x - transform.position.x;
+        endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        //Debug.Log("1111111");
-
-        if (canMove == true)
-        {
-            if (UpgradeManager.instance.getNoneEnergy() == false) { if (UseEnergy() == false) { return; } }
-            RotatePlayer(rot);
-            canMove = false;
-        }
-        if(rt == 0)
-        {
-            StartJump();
-        }
+        //에너지 사용
+        if (UpgradeManager.instance.getNoneEnergy() == false) { if (UseEnergy() == false) { return; } }
+        //회전
+        RotatePlayer(rot);
     }
+    //public void SetPosition_Continue(int count, Vector3 target, int rot)
+    //{
+    //    jumpCount = count;
+    //    if (jumpCount <= 0) 
+    //    {
+    //        jumpCount = 0;
+    //        if (degree_back != 8) { RotateBack(); }
+    //        else
+    //        {
+    //            if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+    //            {
+    //                anim.SetTrigger("EndRotate");
+    //                EndPlayerTurn();
+    //            }
+    //        }
+    //        return;
+    //    }
+    //    tg = target;
+    //    rt = rt == rot ? 0 : rot;   //방향이 같다면 회전X
+
+    //    manager_Turn.isDone = false;
+    //    rigid.useGravity = false;   //중력을 끈다.
+
+    //    //시작점
+    //    startPos = transform.position;
+    //    //끝점
+    //    endX = (target.x - transform.position.x) / jumpCount;
+    //    endZ = (target.z - transform.position.z) / jumpCount;
+    //    endPos = startPos + new Vector3(endX, 0, endZ);
+
+    //    //Debug.Log("1111111");
+
+    //    if (canMove == true)
+    //    {
+    //        if (UpgradeManager.instance.getNoneEnergy() == false) { if (UseEnergy() == false) { return; } }
+    //        RotatePlayer(rot);
+    //        canMove = false;
+    //    }
+    //    if(rt == 0)
+    //    {
+    //        StartJump();
+    //    }
+    //}
     #endregion
 
     public void StartJump()
@@ -254,7 +276,8 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartMove()
     {
-        StartCoroutine(MoveToEnd());
+        if (h > 0) { StartCoroutine(MoveToEnd_Long()); Debug.Log("jjjjjjump"); }
+        else { StartCoroutine(MoveToEnd()); Debug.Log("nnnnnnnnonjump"); }
     }
 
     protected static Vector3 Parabola(Vector3 start, Vector3 end, float height, float t)
@@ -263,18 +286,48 @@ public class PlayerMovement : MonoBehaviour
         var mid = Vector3.Lerp(start, end, t);
         return new Vector3(mid.x, f(t) + Mathf.Lerp(start.y, end.y, t), mid.z);
     }
+    protected IEnumerator MoveToEnd_Long()
+    {
+        timer = 0;
+        while (Vector3.Distance(transform.position, endPos) >= 0.2f)//transform.position.y >= startPos.y)
+        {
+            timer += Time.deltaTime;
+            Vector3 tempPos = Parabola(startPos, endPos, h, timer);
+            transform.position = tempPos;
+            yield return null;//new WaitForEndOfFrame();
+        }
+        transform.position = endPos;
+        rigid.useGravity = true;
+
+        if (degree_back != 8)
+        {
+            RotateBack();
+        }
+        else
+        {
+            if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+            {
+                EndPlayerTurn();
+            }
+        }
+        canMove = true;
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
+    }
 
     protected IEnumerator MoveToEnd()
     {
         timer = 0;
         //anim.SetBool("isJump", false);
-        while (transform.position.y >= startPos.y)
+        while(Vector3.Distance(transform.position, endPos) >= 0.2f) //(transform.position.y >= startPos.y)
         {
             timer += Time.deltaTime;
-            Vector3 tempPos = Parabola(startPos, endPos, h, timer);
-            transform.position = tempPos;
+            //Vector3 tempPos = Parabola(startPos, endPos, h, timer);
+            //transform.position = tempPos;
+            Vector3 pos = Vector3.Lerp(startPos, endPos, timer);
+            transform.position = pos;
             yield return new WaitForEndOfFrame();
         }
+
         transform.position = endPos;
         rigid.useGravity = true;
         if (jumpCount > 0)

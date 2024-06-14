@@ -326,7 +326,10 @@ public class Map : MonoBehaviour
             if (moveArea.Contains(clickTile) == false) { return; }
             manager_Action.ActDone();
             //HideArea();
-            MovePlayerPosition_Continue();
+
+            if(manager_Action.usedKing == true) { MovePlayerPosition(); }
+            else { MovePlayerPosition_Continue(); }
+
             //manager_Action.SetActionBtn(false);
             //manager_Action.CheckActionCount();
             //previousTile = nowTile; //이전 타일 갱신
