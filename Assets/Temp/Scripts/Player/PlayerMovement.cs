@@ -38,6 +38,8 @@ public class PlayerMovement : MonoBehaviour
     public int moveRange = 1;
 
     public int degree_back = 0;   //되돌올 때 회전할 각
+    public GameObject[] effect;
+   
 
     public bool TurnEnd()
     {
@@ -52,10 +54,12 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
+
     }
     private void Start()
     {
         moveRange += UpgradeManager.instance.getBonusRange();
+        AllHideEffect();
     }
 
     public void SetControl(bool b)
@@ -378,6 +382,7 @@ public class PlayerMovement : MonoBehaviour
     #region 피격
     public void TakeDamage()
     {
+        ShowEffect(0);
         if(isDamaged == true) { return; }
         isDamaged = true;
 
@@ -433,7 +438,7 @@ public class PlayerMovement : MonoBehaviour
 
         isDamaged = false;
         canMove = true;
-
+        HideEffect(0);
         if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
         {
             manager_Turn.StartPlayerTurn();
@@ -459,5 +464,30 @@ public class PlayerMovement : MonoBehaviour
     public void UseItem()
     {
         anim.SetTrigger("isUse");
+    }
+
+    public void ShowEffect(int num)
+    {
+        if (effect != null)
+        {
+            effect[num].SetActive(true);
+        }
+    }
+
+
+    public void HideEffect(int num)
+    {
+        if (effect != null)
+        {
+            effect[num].SetActive(false);
+        }
+    }
+
+    private void AllHideEffect()
+    {
+        for(int i = 0; i < effect.Length; i++)
+        {
+            effect[i].SetActive(false);
+        }
     }
 }

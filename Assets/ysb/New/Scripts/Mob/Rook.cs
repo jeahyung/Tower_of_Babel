@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rook : MonoBehaviour
 {
     public Map map;
-
+    public GameObject effect;
     [Header("몬스터 시작점")] //이건 추후 데이터 받아오는 형식으로 수정
     [SerializeField] private int startX;
     [SerializeField] private int startY;
@@ -22,6 +22,7 @@ public class Rook : MonoBehaviour
         Vector3 pos = new Vector3(curTile.GetPosition().x, 
             curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
+        HideEffect();
     }
 
     public Tile ShowRookTile()
@@ -31,7 +32,30 @@ public class Rook : MonoBehaviour
     public void OpenRook()
     {
         curTile.tileType = TileType.possible;
+        ShowEffect();
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Destroy);
+        Invoke("HideObject",1f);
+    }
+
+    private void HideObject()
+    {
         gameObject.SetActive(false);
+    }
+
+    private void ShowEffect()
+    {
+        if (effect != null)
+        {
+            effect.SetActive(true);
+        }       
+    }
+
+
+    private void HideEffect()
+    {
+        if (effect != null)
+        {
+            effect.SetActive(false);
+        }
     }
 }
