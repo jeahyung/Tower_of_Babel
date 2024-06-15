@@ -547,7 +547,7 @@ public class Map : MonoBehaviour
         {
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Hit);      
             player.TakeDamage();
-            playerTile = nowTile;
+            //playerTile = nowTile;
         }
     }
     public Tile CheckNearTile(Tile tile = null)

@@ -379,7 +379,7 @@ public class PlayerMovement : MonoBehaviour
     #region ÇÇ°Ý
     public void TakeDamage()
     {
-        if(isDamaged == true) { return; }
+        //if(isDamaged == true) { return; }
         isDamaged = true;
 
         int per = 0;
@@ -396,7 +396,7 @@ public class PlayerMovement : MonoBehaviour
     public void DamagedMove(Tile tile)
     {
         if(tile == null) { return; }
-        if(canMove == false) { return; }
+        //if(canMove == false) { return; }
         canMove = false;
         h = 1.5f;
 
