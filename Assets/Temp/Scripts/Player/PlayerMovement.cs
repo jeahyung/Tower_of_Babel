@@ -409,6 +409,7 @@ public class PlayerMovement : MonoBehaviour
         //RotatePlayer_Pos();
 
         map.nowTile = tile;
+        map.playerTile = tile;
 
         rigid.useGravity = false;
         startPos = transform.position;
@@ -436,10 +437,10 @@ public class PlayerMovement : MonoBehaviour
         isDamaged = false;
         canMove = true;
 
-        if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
-        {
-            manager_Turn.StartPlayerTurn();
-        }
+        //if (manager_Turn.IsLastTile() == false)  //마지막 타일이 아닐때만 턴 넘김
+        //{
+        //    manager_Turn.StartPlayerTurn();
+        //}
     }
     private IEnumerator MoveBack(Vector3 target, Tile tile)
     {

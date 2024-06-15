@@ -93,6 +93,12 @@ public class ItemManager : MonoBehaviour
     }
 
     //설치물 제거
+    public void CheckObj()
+    {
+        //설치물이 있다면
+        if(objs.Count > 0) { map.SetPlayerTile(); }
+    }
+
     public void RemoveObj()
     {
         List<CreatedObject> tempList = new List<CreatedObject>();

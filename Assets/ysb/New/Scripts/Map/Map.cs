@@ -29,6 +29,7 @@ public class Map : MonoBehaviour
 
     public bool canControl = true;
 
+    public Tile TempTile = null;
     public Tile playerTile = null;
     //public Tile endtile;
     private int mapCount = 0;
@@ -327,8 +328,10 @@ public class Map : MonoBehaviour
             manager_Action.ActDone();
             //HideArea();
 
-            if (manager_Action.usedKing == true) { MovePlayerPosition(); }
-            else { MovePlayerPosition_Continue(); }
+            //if (manager_Action.usedKing == true) { MovePlayerPosition(); }
+            //else { MovePlayerPosition_Continue(); }
+            if(manager_Action.getActState == 0 || manager_Action.getActState == 1) { MovePlayerPosition_Continue(); }
+            else { MovePlayerPosition(); }
 
             //manager_Action.SetActionBtn(false);
             //manager_Action.CheckActionCount();
@@ -498,7 +501,7 @@ public class Map : MonoBehaviour
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
         playerTile = clickTile;
-
+        TempTile = playerTile;
         //clickTile.ChangeTileState(TileType.impossible);
         //player.UseEnergy(); //에너지 사용
 
@@ -647,5 +650,10 @@ public class Map : MonoBehaviour
             }
         }
        
+    }
+
+    public void SetPlayerTile()
+    {
+        playerTile = TempTile;
     }
 }

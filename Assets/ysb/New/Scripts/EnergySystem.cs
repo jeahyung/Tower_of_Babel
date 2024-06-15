@@ -9,7 +9,7 @@ public class EnergySystem : MonoBehaviour
     [SerializeField]
     private int maxEnergy;
     [SerializeField]
-    private int curEnergy;
+    private static int curEnergy = 0;
 
     [SerializeField]
     private Slider slider;
@@ -23,19 +23,16 @@ public class EnergySystem : MonoBehaviour
         eText = slider.GetComponentInChildren<TMP_Text>();
         maxEnergy = 50;
 
-        SetEnergy();
+        if(curEnergy <= 0) { curEnergy = maxEnergy; }
+        slider.value = (float)curEnergy / maxEnergy;
+        eText.text = curEnergy.ToString() + " / " + maxEnergy.ToString();
+        //SetEnergy();
     }
+
+
+
     public void SetEnergy(int e = 0)
     {
-        int energy = UpgradeManager.instance.getEnergy();
-        if (energy != 0)
-        {
-            curEnergy = energy < maxEnergy ? energy : maxEnergy;
-        }
-        else
-        {
-            curEnergy = maxEnergy;
-        }
         curEnergy = curEnergy + e > maxEnergy ? maxEnergy : curEnergy + e;
         slider.value = (float)curEnergy / maxEnergy;
         eText.text = curEnergy.ToString() + " / " + maxEnergy.ToString();
@@ -50,7 +47,7 @@ public class EnergySystem : MonoBehaviour
         {
             curEnergy = curEnergy - i > 0 ? curEnergy - i : 0;
         }
-        UpgradeManager.instance.getEnergy(curEnergy);
+        //UpgradeManager.instance.getEnergy(curEnergy);
         slider.value = (float)curEnergy / maxEnergy;
         eText.text = curEnergy.ToString() + " / " + maxEnergy.ToString();
         if (curEnergy <= 0)

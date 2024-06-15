@@ -31,7 +31,7 @@ public class WorkPanel : MonoBehaviour
     [SerializeField] private GameObject[] sImg;
     [SerializeField] private GameObject[] mImg;
 
-    private int selNum = 0; //선택한 번호
+    private int selNum = 2; //선택한 번호
 
     private void Awake()
     {
@@ -61,17 +61,17 @@ public class WorkPanel : MonoBehaviour
     {
         works.Clear();
 
-        Work w = new Work();
-        w.id = 0;
-        w.name = "안  |  An";
-        w.explain = "초반에 다양한 행동을 통해 점수를 획득하라.";
-        w.word = "힘 앞에서는 그 어떤 것도 의미 없다";
+        //킹
+        Work w3 = new Work();
+        w3.id = 0;
+        w3.name = "안  |  An";
+        w3.explain = "다재다능하다.  다양한 시도를 하는 것이 중요하다.";
+        w3.word = "무엇이든 후회하지 않는 강인한 마음가짐";
+        w3.score = 3;
+        w3.move = 4;
+        works.Add(w3);
 
-        w.score = 5;
-        w.move = 2;
-
-        works.Add(w);
-
+        //비숍
         Work w2 = new Work();
         w2.id = 1;
         w2.name = "엔키  |  Enki";
@@ -83,14 +83,17 @@ public class WorkPanel : MonoBehaviour
 
         works.Add(w2);
 
-        Work w3 = new Work();
-        w3.id = 2;
-        w3.name = "아다드  |  Adad";
-        w3.explain = "다재다능하다.  다양한 시도를 하는 것이 중요하다.";
-        w3.word = "무엇이든 후회하지 않는 강인한 마음가짐";
-        w3.score = 3;
-        w3.move = 4;
-        works.Add(w3);
+        //룩
+        Work w = new Work();
+        w.id = 2;
+        w.name =  "아다드  |  Adad";
+        w.explain = "초반에 다양한 행동을 통해 점수를 획득하라.";
+        w.word = "힘 앞에서는 그 어떤 것도 의미 없다";
+
+        w.score = 5;
+        w.move = 2;
+
+        works.Add(w);
 
         //Sprite img = Resources.Load<Sprite>("Data/Icon/Work/0");
         //imgdata.Add(img);

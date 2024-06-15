@@ -152,6 +152,7 @@ public class TurnManager : MonoBehaviour
     private IEnumerator EnemyTurn()
     {
         isEnemyTurn = true;
+        manager_Item.CheckObj();
 
         ui_turn.ShowImg(1);
         yield return new WaitForSeconds(delayTime);
