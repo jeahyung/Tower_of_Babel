@@ -23,6 +23,10 @@ public class Rook : MonoBehaviour
             curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
     }
+    public void ResetMob()
+    {
+        curTile.tileType = TileType.impossible;
+    }
 
     public Tile ShowRookTile()
     {

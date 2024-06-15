@@ -23,6 +23,13 @@ public class MobManager : MonoBehaviour
         rooks.AddRange(GetComponentsInChildren<Rook>());
     }
 
+    public void StartGame()
+    {
+        for(int i = 0; i < rooks.Count; ++i)
+        {
+            rooks[i].ResetMob();
+        }
+    }
     public void ActMob()
     {
         if(manager_Chase == null) {
