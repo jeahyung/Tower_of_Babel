@@ -6,7 +6,7 @@ using System;
 
 public class PlayerMovement : MonoBehaviour
 {
-    #region ê¸°ë³¸ í´ë˜ìŠ¤
+    #region ±âº» Å¬·¡½º
     private Map map;
     private Rigidbody rigid;
     private Animator anim;
@@ -20,13 +20,13 @@ public class PlayerMovement : MonoBehaviour
     float endZ, endX;    //z, x, height
     public float h = 1f;
     
-    int jumpCount = 0;  //ì í”„ íšŸìˆ˜
+    int jumpCount = 0;  //Á¡ÇÁ È½¼ö
 
     //Roate
     Vector3 to, from;
 
     public float timer;
-    public float timeToFloor;    //ë•…ì— ë‹«ê¸°ê¹Œì§€ ê±¸ë¦¬ëŠ” ì‹œê°„
+    public float timeToFloor;    //¶¥¿¡ ´İ±â±îÁö °É¸®´Â ½Ã°£
 
 
     public bool isControl = false;
@@ -37,9 +37,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 3f;
     public int moveRange = 1;
 
-    public int degree_back = 0;   //ë˜ëŒì˜¬ ë•Œ íšŒì „í•  ê°
-    public GameObject[] effect;
-   
+    public int degree_back = 0;   //µÇµ¹¿Ã ¶§ È¸ÀüÇÒ °¢
 
     public bool TurnEnd()
     {
@@ -54,12 +52,10 @@ public class PlayerMovement : MonoBehaviour
 
         rigid = GetComponent<Rigidbody>();
         anim = GetComponentInChildren<Animator>();
-
     }
     private void Start()
     {
         moveRange += UpgradeManager.instance.getBonusRange();
-        AllHideEffect();
     }
 
     public void SetControl(bool b)
@@ -68,20 +64,20 @@ public class PlayerMovement : MonoBehaviour
         rigid.velocity = Vector3.zero;
     }
 
-    #region ì—ë„ˆì§€ ì‚¬ìš©
-    //ì—ë„ˆì§€ ì†Œëª¨ëŸ‰ ì„¤ì •
+    #region ¿¡³ÊÁö »ç¿ë
+    //¿¡³ÊÁö ¼Ò¸ğ·® ¼³Á¤
     public void SetUseEnergy()
     {
         energySysteam.useEnergy = 1;
     }
-    //ì—ë„ˆì§€ ì‚¬ìš©
+    //¿¡³ÊÁö »ç¿ë
     public bool UseEnergy()
     {
         return energySysteam.UseEnergy();
     }
     #endregion
 
-    #region ìˆœê°„ì´ë™
+    #region ¼ø°£ÀÌµ¿
     public void TeleportPlayer(Vector3 target)
     {
         if (target == Vector3.zero || canMove == false) { return; }
@@ -93,7 +89,7 @@ public class PlayerMovement : MonoBehaviour
     private IEnumerator Teleport(Vector3 target)
     {
         canMove = false;
-        //ì• ë‹ˆë©”ì´ì…˜ or ì´í™íŠ¸ ì¬ìƒ
+        //¾Ö´Ï¸ŞÀÌ¼Ç or ÀÌÆåÆ® Àç»ı
         yield return new WaitForSeconds(0.5f);
 
         transform.position = target;
@@ -104,7 +100,7 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
 
-    //í”Œë ˆì´ì–´ í„´ ì¢…ë£Œ
+    //ÇÃ·¹ÀÌ¾î ÅÏ Á¾·á
     public void EndPlayerTurn()
     {
         degree_back = 0;
@@ -119,7 +115,7 @@ public class PlayerMovement : MonoBehaviour
 
     #region Rotate
 
-    //íšŒì „
+    //È¸Àü
     private void RotatePlayer(int rot)
     {
         degree_back = Mathf.Abs(rot - 9);
@@ -148,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
                 from = new Vector3(0, 45, 0);    //right 45
                 break;
             case 8:
-                from = new Vector3(0, 180, 0);    //í›„ë©´
+                from = new Vector3(0, 180, 0);    //ÈÄ¸é
                 break;
             default:
                 from = new Vector3(0, transform.rotation.y, 0);
@@ -188,22 +184,22 @@ public class PlayerMovement : MonoBehaviour
         h = 0f;
 
         manager_Turn.isDone = false;
-        rigid.useGravity = false;   //ì¤‘ë ¥ì„ ëˆë‹¤.
+        rigid.useGravity = false;   //Áß·ÂÀ» ²ö´Ù.
 
-        //ì‹œì‘ì 
+        //½ÃÀÛÁ¡
         startPos = transform.position;
-        //ëì 
+        //³¡Á¡
         endX = target.x - transform.position.x;
         endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        //ì—ë„ˆì§€ ì‚¬ìš©
+        //¿¡³ÊÁö »ç¿ë
         if(UpgradeManager.instance.getNoneEnergy() == false) { if(UseEnergy() == false) { return; } }
-        //íšŒì „
+        //È¸Àü
         RotatePlayer(rot);
     }
 
-    //ì—¬ëŸ¬ ë²ˆ ì í”„
+    //¿©·¯ ¹ø Á¡ÇÁ
     Vector3 tg;
     int rt;
 
@@ -214,18 +210,18 @@ public class PlayerMovement : MonoBehaviour
         h = 2f;
 
         manager_Turn.isDone = false;
-        rigid.useGravity = false;   //ì¤‘ë ¥ì„ ëˆë‹¤.
+        rigid.useGravity = false;   //Áß·ÂÀ» ²ö´Ù.
 
-        //ì‹œì‘ì 
+        //½ÃÀÛÁ¡
         startPos = transform.position;
-        //ëì 
+        //³¡Á¡
         endX = target.x - transform.position.x;
         endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        //ì—ë„ˆì§€ ì‚¬ìš©
+        //¿¡³ÊÁö »ç¿ë
         if (UpgradeManager.instance.getNoneEnergy() == false) { if (UseEnergy() == false) { return; } }
-        //íšŒì „
+        //È¸Àü
         RotatePlayer(rot);
     }
     //public void SetPosition_Continue(int count, Vector3 target, int rot)
@@ -237,7 +233,7 @@ public class PlayerMovement : MonoBehaviour
     //        if (degree_back != 8) { RotateBack(); }
     //        else
     //        {
-    //            if (manager_Turn.IsLastTile() == false)  //ë§ˆì§€ë§‰ íƒ€ì¼ì´ ì•„ë‹ë•Œë§Œ í„´ ë„˜ê¹€
+    //            if (manager_Turn.IsLastTile() == false)  //¸¶Áö¸· Å¸ÀÏÀÌ ¾Æ´Ò¶§¸¸ ÅÏ ³Ñ±è
     //            {
     //                anim.SetTrigger("EndRotate");
     //                EndPlayerTurn();
@@ -246,14 +242,14 @@ public class PlayerMovement : MonoBehaviour
     //        return;
     //    }
     //    tg = target;
-    //    rt = rt == rot ? 0 : rot;   //ë°©í–¥ì´ ê°™ë‹¤ë©´ íšŒì „X
+    //    rt = rt == rot ? 0 : rot;   //¹æÇâÀÌ °°´Ù¸é È¸ÀüX
 
     //    manager_Turn.isDone = false;
-    //    rigid.useGravity = false;   //ì¤‘ë ¥ì„ ëˆë‹¤.
+    //    rigid.useGravity = false;   //Áß·ÂÀ» ²ö´Ù.
 
-    //    //ì‹œì‘ì 
+    //    //½ÃÀÛÁ¡
     //    startPos = transform.position;
-    //    //ëì 
+    //    //³¡Á¡
     //    endX = (target.x - transform.position.x) / jumpCount;
     //    endZ = (target.z - transform.position.z) / jumpCount;
     //    endPos = startPos + new Vector3(endX, 0, endZ);
@@ -310,7 +306,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            if (manager_Turn.IsLastTile() == false)  //ë§ˆì§€ë§‰ íƒ€ì¼ì´ ì•„ë‹ë•Œë§Œ í„´ ë„˜ê¹€
+            if (manager_Turn.IsLastTile() == false)  //¸¶Áö¸· Å¸ÀÏÀÌ ¾Æ´Ò¶§¸¸ ÅÏ ³Ñ±è
             {
                 EndPlayerTurn();
             }
@@ -338,7 +334,7 @@ public class PlayerMovement : MonoBehaviour
         if (jumpCount > 0)
         {
             jumpCount--;
-            SetPosition_Continue(jumpCount, tg, rt); //ë‹¤ì‹œ ì í”„(íšŒì „ ê°±ì‹ )
+            SetPosition_Continue(jumpCount, tg, rt); //´Ù½Ã Á¡ÇÁ(È¸Àü °»½Å)
         }
         else
         {
@@ -348,7 +344,7 @@ public class PlayerMovement : MonoBehaviour
             }
             else
             {
-                if (manager_Turn.IsLastTile() == false)  //ë§ˆì§€ë§‰ íƒ€ì¼ì´ ì•„ë‹ë•Œë§Œ í„´ ë„˜ê¹€
+                if (manager_Turn.IsLastTile() == false)  //¸¶Áö¸· Å¸ÀÏÀÌ ¾Æ´Ò¶§¸¸ ÅÏ ³Ñ±è
                 {
                     EndPlayerTurn();
                 }
@@ -380,13 +376,10 @@ public class PlayerMovement : MonoBehaviour
     }
 
 
-    #region í”¼ê²©
+    #region ÇÇ°İ
     public void TakeDamage()
     {
-
-        ShowEffect(0);
-        if(isDamaged == true) { return; }
-
+        //if(isDamaged == true) { return; }
         isDamaged = true;
 
         int per = 0;
@@ -411,7 +404,7 @@ public class PlayerMovement : MonoBehaviour
         Vector3 pos = new Vector3(target.x, transform.position.y, target.z);
         manager_Turn.isDone = false;
 
-        //íšŒì „
+        //È¸Àü
         degree_back = map.HowRotate(tile);
         //RotatePlayer_Pos();
 
@@ -424,7 +417,7 @@ public class PlayerMovement : MonoBehaviour
         endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
-        //ë„‰ë°±
+        //³Ë¹é
         StartCoroutine(MoveBack());
         //StartCoroutine(MoveBack(pos, tile));
     }
@@ -444,12 +437,10 @@ public class PlayerMovement : MonoBehaviour
         isDamaged = false;
         canMove = true;
 
-        HideEffect(0);
-        if (manager_Turn.IsLastTile() == false)  //ë§ˆì§€ë§‰ íƒ€ì¼ì´ ì•„ë‹ë•Œë§Œ í„´ ë„˜ê¹€
-        {
-            manager_Turn.StartPlayerTurn();
-        }
-
+        //if (manager_Turn.IsLastTile() == false)  //¸¶Áö¸· Å¸ÀÏÀÌ ¾Æ´Ò¶§¸¸ ÅÏ ³Ñ±è
+        //{
+        //    manager_Turn.StartPlayerTurn();
+        //}
     }
     private IEnumerator MoveBack(Vector3 target, Tile tile)
     {
@@ -471,30 +462,5 @@ public class PlayerMovement : MonoBehaviour
     public void UseItem()
     {
         anim.SetTrigger("isUse");
-    }
-
-    public void ShowEffect(int num)
-    {
-        if (effect != null)
-        {
-            effect[num].SetActive(true);
-        }
-    }
-
-
-    public void HideEffect(int num)
-    {
-        if (effect != null)
-        {
-            effect[num].SetActive(false);
-        }
-    }
-
-    private void AllHideEffect()
-    {
-        for(int i = 0; i < effect.Length; i++)
-        {
-            effect[i].SetActive(false);
-        }
     }
 }

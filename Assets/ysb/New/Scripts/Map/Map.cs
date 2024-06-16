@@ -338,7 +338,7 @@ public class Map : MonoBehaviour
             //previousTile = nowTile; //이전 타일 갱신
             useAction = false;
             //return;
-          
+            Debug.Log("aaaaaaa");
 
         }
         else
@@ -346,7 +346,7 @@ public class Map : MonoBehaviour
             if (moveArea.Contains(clickTile) == false) { return; }
             
             MovePlayerPosition();
-            
+            Debug.Log("ddd^^^^^^^^^^^^^^^dd");
         }
         if(moveArea.Contains(clickTile) == true)
         {
@@ -354,7 +354,7 @@ public class Map : MonoBehaviour
             HideArea();
 
             //MovePlayerPosition();
-           
+            Debug.Log("ddd^^^^^^^^^^^^^^^");
 
             manager_Action.SetActionBtn(false);
             manager_Action.CheckActionCount();

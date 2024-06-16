@@ -16,7 +16,6 @@ public class Work
 public class WorkPanel : MonoBehaviour
 {
     private UpgradeController mgr_up;
-    private Player_Move playerMove;
 
     private List<Work> works = new List<Work>();
     [SerializeField]private List<Sprite> imgdata = new List<Sprite>();
@@ -37,7 +36,6 @@ public class WorkPanel : MonoBehaviour
     private void Awake()
     {
         mgr_up = GetComponentInParent<UpgradeController>();
-        playerMove = FindObjectOfType<Player_Move>();
         SetData();
 
         wBtn.AddRange(GetComponentsInChildren<WorkButton>());
@@ -136,6 +134,5 @@ public class WorkPanel : MonoBehaviour
     public void SelectWork()
     {
         mgr_up.SelectAction(selNum);
-        playerMove.CheckAndMoving();
     }
 }
