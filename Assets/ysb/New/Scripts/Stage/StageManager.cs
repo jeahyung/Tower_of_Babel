@@ -188,10 +188,16 @@ public class StageManager : Singleton<StageManager>
         //·ÎµùÃ¢ ¾Æ¿ô
         Img_loading.SetActive(false);
         manager_turn.GetComponent<PlayerMovement>().SetControl(true);
-
-        if (uiElement.localScale.x == 0)
+        if(uiElement == null)
         {
             playerMover.CheckAndMoving();
+        }
+        else
+        {
+            if (uiElement.localScale.x == 0)
+            {
+                playerMover.CheckAndMoving();
+            }
         }
     }
 
