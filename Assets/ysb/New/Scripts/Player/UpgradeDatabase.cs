@@ -61,7 +61,7 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
         else//테스트용
         {
             SetData();
-            upController.OpenUpgradePanel();
+            //upController.OpenUpgradePanel();
         }
     }
     public void ResetUpgradeData()
