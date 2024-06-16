@@ -24,7 +24,9 @@ public class StageManager : Singleton<StageManager>
     public float waitTime = 1f;
 
     private bool isGameOver = false;
+    private Player_Move playerMover;
 
+    public RectTransform uiElement;
     public string[] sName;
 
     private void Start()
@@ -38,6 +40,7 @@ public class StageManager : Singleton<StageManager>
         //StartCoroutine(Loading());
         ////첫 번째 스테이지 활성화
         //SelectStage();
+        playerMover = FindObjectOfType<Player_Move>();
     }
     void OnEnable()
     {
@@ -185,6 +188,11 @@ public class StageManager : Singleton<StageManager>
         //로딩창 아웃
         Img_loading.SetActive(false);
         manager_turn.GetComponent<PlayerMovement>().SetControl(true);
+
+        if (uiElement.localScale.x == 0)
+        {
+            playerMover.CheckAndMoving();
+        }
     }
 
     public void GameOver()
