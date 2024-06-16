@@ -14,7 +14,7 @@ public class Player_Move : MonoBehaviour
     public bool move = true;
     private AudioSource audio;
     private float duration = 2f;
-    public Transform target;
+    //public Transform target;
     private bool isMoving = true;
     Vector3 targetPosition;
     void Awake()
@@ -24,7 +24,7 @@ public class Player_Move : MonoBehaviour
         audio = GetComponent<AudioSource>();
         ani = GetComponentInChildren<Animator>();
         move = true;
-        targetPosition = new Vector3(transform.position.x, transform.position.y, target.position.z);
+        targetPosition = new Vector3(transform.position.x, transform.position.y, -14f);
         control = player.isControl;
     }
 
