@@ -231,11 +231,12 @@ public class StageManager : Singleton<StageManager>
 
     public void ReStart()
     {
-        SceneManager.LoadScene(2);  //1스테이지로
+        SceneManager.LoadScene(1);  //1스테이지로
     }
 
     public void BackTile()
     {
-        SceneManager.LoadScene(1);
+        ResetData();
+        SceneManager.LoadScene(0);
     }
 }

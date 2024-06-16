@@ -7,6 +7,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
 {
     //public static UpgradeManager instance = null;
 
+    public UI_Setting ui_Setting;
     private static List<Upgrade> selectedUp = new List<Upgrade>();
 
     public static int saNum;               //선택한 행동 번호(0)
@@ -42,6 +43,8 @@ public class UpgradeManager : Singleton<UpgradeManager>
     void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
         turn_bonus = bonusTurn;
+        if(selectedUp.Count > 0) { ui_Setting.AddUpgradeAll(selectedUp); }
+
         //ScoreManager.instance.SetSumSocre(SumScore);
     }
 
@@ -146,6 +149,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
         if(up.upType == 5 || up.upType == 7) { return; }
         selectedUp.Add(up);
+        ui_Setting.AddUpgrade(up);
     }
 
     #region bonus

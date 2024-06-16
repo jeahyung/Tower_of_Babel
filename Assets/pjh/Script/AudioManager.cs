@@ -98,4 +98,18 @@ public class AudioManager : MonoBehaviour
             bgmPlayer.Stop();
         }
     }
+
+    public void SetBgmVolume(float v)
+    {
+        bgmVolume = v * 2;  //offset = 2
+        bgmPlayer.volume = bgmVolume;
+    }
+    public void SetSfxVolume(float v)
+    {
+        sfxVolume = v * 2;
+        for (int i = 0; i < sfxPlayers.Length; i++)
+        {
+            sfxPlayers[i].volume = sfxVolume;
+        }
+    }
 }
