@@ -14,7 +14,7 @@ public class StartPoint : MonoBehaviour
     private bool isStart = false;
     private bool isPlayerEnter = false; //플레이어 들어옴?
 
-    private GameObject interactMessage;
+    //private GameObject interactMessage;
     [SerializeField]
     private BoxCollider wall;   //진입 막는 벽
 
@@ -31,8 +31,8 @@ public class StartPoint : MonoBehaviour
         if (turn == null)
             turn = FindObjectOfType<TurnManager>();
 
-        interactMessage = GameObject.Find("Interact");
-        interactMessage.SetActive(false);
+       // interactMessage = GameObject.Find("Interact");
+       //interactMessage.SetActive(false);
         player = FindObjectOfType<Player_Move>();
        // hide = FindObjectOfType<HideTile>();
     }
@@ -86,7 +86,7 @@ public class StartPoint : MonoBehaviour
         action.ActActionBtn(true);
         //turn.StartGame();   //게임 시작
 
-        interactMessage.SetActive(false);
+        //interactMessage.SetActive(false);
     }
 
     private void OnTriggerEnter(Collider other)
@@ -132,6 +132,6 @@ public class StartPoint : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isPlayerEnter = false;
-        interactMessage.SetActive(false);
+        //interactMessage.SetActive(false);
     }
 }

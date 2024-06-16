@@ -28,6 +28,8 @@ public class StageManager : Singleton<StageManager>
 
     public RectTransform uiElement;
 
+    public string[] sName;
+
     private void Start()
     {
         ////스테이지 추가
@@ -109,6 +111,7 @@ public class StageManager : Singleton<StageManager>
         UpgradeDatabase.instance.SetData();
 
         isPlaying = true;
+        if(mob != null) { mob.StartGame(); }
         manager_turn.StartGame();
     }
 
@@ -141,9 +144,24 @@ public class StageManager : Singleton<StageManager>
             UpgradeDatabase.instance.OpenUpgrade();
         }
     }
+    void NextChapter()
+    {
+        if(chapterCount > sName.Length)
+        {
+            GameOver(); //임시
+            return;
+        }
+        SceneManager.LoadScene(sName[chapterCount-1]);
+    }
 
     public void NextStage()
     {
+        if(stageCount >= index_Upgrade)
+        {
+            chapterCount += 1;
+            NextChapter();
+            return;
+        }
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         Img_loading.SetActive(true);
         stageCount++;
@@ -197,7 +215,6 @@ public class StageManager : Singleton<StageManager>
 
     public void ResetStage()
     {
-        chapterCount = 1;
         stageCount = 1;
 
         stages.Clear();
@@ -209,12 +226,26 @@ public class StageManager : Singleton<StageManager>
     }
     public void ResetData()
     {
+        chapterCount = 1;
+        stageCount = 1;
+
         isGameOver = false;
         //아이템 리셋
         UpgradeDatabase.instance.ResetUpgradeData();
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
         ScoreManager.instance.ResetScore();//스코어 리셋
 
-        SceneManager.LoadScene(1);
+        //SceneManager.LoadScene(1);
+    }
+
+    public void ReStart()
+    {
+        SceneManager.LoadScene(1);  //1스테이지로
+    }
+
+    public void BackTile()
+    {
+        ResetData();
+        SceneManager.LoadScene(0);
     }
 }

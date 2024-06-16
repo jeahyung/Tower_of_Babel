@@ -17,9 +17,12 @@ public class CamManager : MonoBehaviour
     public float shakeAmount = 1.0f;
     public float shakeTime = 1.0f;
 
+    [SerializeField]UI_Cam ui_cam = null;
+
     // Start is called before the first frame update
     void Start()
     {
+        if(ui_cam == null) { FindObjectOfType<UI_Cam>(); }
         BackMainCam();  //0번이 메인 캠
         //mainCam.MoveToTopOfPrioritySubqueue();  //메인 캠, 우선순위 최고로
         maxIndex = cams.Count - 1;
@@ -39,11 +42,13 @@ public class CamManager : MonoBehaviour
     public void MoveCam(int id)
     {
         cams[id].MoveToTopOfPrioritySubqueue();
+        ui_cam.ChangeCam();
     }
     public void BackMainCam()
     {
         camIndex = 0;
         cams[0].MoveToTopOfPrioritySubqueue();
+        ui_cam.BackMainCam();
     }
 
     public void CamShake()

@@ -37,6 +37,11 @@ public class UI_Result : MonoBehaviour
         panel.SetActive(false);
 
         text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
+
+        for(int i = 0; i< sText.Count; ++i)
+        {
+            sText[i].HideText();
+        }
     }
 
     //private void SetText()
@@ -93,11 +98,11 @@ public class UI_Result : MonoBehaviour
     private void SetText()
     {
         textContent.Clear();
-        textContent.Add("스테이지 클리어  :  " + score[0].ToString());
-        textContent.Add("남은 특수이동 횟수  :  " + score[1].ToString());
-        textContent.Add("아이템 획득  :  " + score[2].ToString());
-        textContent.Add("아이템 사용  :  " + score[3].ToString());
-        textContent.Add("몬스터 파괴  :  " + score[4].ToString());
+        textContent.Add(score[0].ToString());
+        textContent.Add(score[1].ToString());
+        textContent.Add(score[2].ToString());
+        textContent.Add(score[3].ToString());
+        textContent.Add(score[4].ToString());
     }
     public void ShowResult(int cur, int target, List<int> scoreList)
     {
@@ -162,12 +167,12 @@ public class UI_Result : MonoBehaviour
         while (current < target)
         {
             current += offset * Time.deltaTime;
-            total.text = "ToTal : " + ((int)current).ToString();
+            total.text = ((int)current).ToString();
             yield return null;
         }
 
         current = target;
-        total.text = "ToTal : " + ((int)current).ToString();
+        total.text = ((int)current).ToString();
 
         StageManager.instance.isPlaying = false;
         isClickOk = true;

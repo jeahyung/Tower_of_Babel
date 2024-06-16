@@ -6,7 +6,7 @@ using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class TraceMonsterMovement : MonoBehaviour
+public class TraceMonsterMovement : MonoBehaviour, Mob
 {
     private ChaseMobManager mgr_Chase;
     private bool ch = true;
@@ -37,6 +37,8 @@ public class TraceMonsterMovement : MonoBehaviour
     public int moveRange = 1;
     public GameObject effectPrefab;
 
+    public bool isRope = false; //로프에 걸렸는가?
+
     private void Awake()
     {
 
@@ -53,6 +55,7 @@ public class TraceMonsterMovement : MonoBehaviour
     {
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
         tile = curTile;
+        tile.mob = this.GetComponent<Mob>();
         HideEffect();
         FindTileWithCoords(startX, startY);
         MonsterSetting(nextPos);
@@ -76,6 +79,7 @@ public class TraceMonsterMovement : MonoBehaviour
     private void Think()
     {
         tile.tileType = TileType.possible;
+        tile.mob = null;
         //tiles.coord = new Vector2Int(tiles.coord.x + 1, tiles.coord.y);
         //SetPosition(tiles.coord.GetPosition());
         int i = tile.coord.x;
@@ -142,7 +146,7 @@ public class TraceMonsterMovement : MonoBehaviour
                 else
                 {
                     nextPos = tile.GetPosition();
-                   // tile1 = tile;
+                    // tile1 = tile;
                 }
                    
             }
@@ -250,6 +254,13 @@ public class TraceMonsterMovement : MonoBehaviour
 
     public void Act()
     {
+        if (isRope)
+        {
+            mgr_Chase.CheckMobAction();
+            isRope = false;
+            return;
+        }
+
         ch = true;
         Think();     
     }
@@ -263,6 +274,7 @@ public class TraceMonsterMovement : MonoBehaviour
             {
                 tile = t;
                 tile.tileType = TileType.impossible;
+                tile.mob = this.GetComponent<Mob>();
             }
         }
         if (!ch)
@@ -293,5 +305,14 @@ public class TraceMonsterMovement : MonoBehaviour
         {
             effectPrefab.SetActive(false);
         }
+    }
+
+    public void DontMove()
+    {
+        isRope = true;
+    }
+    public Tile ShowTile()
+    {
+        return tile;
     }
 }

@@ -24,6 +24,10 @@ public class Rook : MonoBehaviour
         transform.position = pos;
         HideEffect();
     }
+    public void ResetMob()
+    {
+        curTile.tileType = TileType.impossible;
+    }
 
     public Tile ShowRookTile()
     {

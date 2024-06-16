@@ -66,6 +66,9 @@ public class SAManager : MonoBehaviour
     } 
     public int getActCount => actCount;
 
+    private int act;
+    public int getActState => act;
+
     #region UI
     private Button actionBtn;
     public float radius = 130f;
@@ -100,6 +103,13 @@ public class SAManager : MonoBehaviour
     #region UI
     public void SetActCountUI(int c)
     {
+        for(int i = 0; i < UI_actCount.Count; ++i)
+        {
+            UI_actCount[i].GetComponent<RectTransform>().anchoredPosition
+               = new Vector3(0, 0, 0);
+            UI_actCount[i].gameObject.SetActive(false);
+        }
+
         float degree = Mathf.PI * c * offset;
         for (int i = 0; i < c; i++)
         {
@@ -122,6 +132,7 @@ public class SAManager : MonoBehaviour
     {
         actionBtn.onClick.RemoveAllListeners();
         int num = UpgradeManager.instance.GetSANum();
+        act = num; 
 
         //·è(Á÷Áø)
         if (num == 0) { 

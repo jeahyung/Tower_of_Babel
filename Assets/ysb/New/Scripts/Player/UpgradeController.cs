@@ -36,6 +36,14 @@ public class UpgradeController : MonoBehaviour
         }
         paenl.localScale = new Vector3(0, 1, 1);
     }
+
+    private void Update()
+    {
+        if(panel_action.localScale.x > 0)
+        {
+            StageManager.instance.PlayerMoving(false);
+        }
+    }
     public void SetActionUpgrade(List<Upgrade> up)
     {
         upgrades.Clear();
@@ -45,6 +53,7 @@ public class UpgradeController : MonoBehaviour
     //액션 선택 - 신
     public void OpenActionPanel()
     {
+        StageManager.instance.PlayerMoving(false);
         panel_action.localScale = new Vector3(1, 1, 1);
     }
     public void SelectAction(int i)

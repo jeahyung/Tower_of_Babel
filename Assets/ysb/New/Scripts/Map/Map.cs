@@ -29,6 +29,7 @@ public class Map : MonoBehaviour
 
     public bool canControl = true;
 
+    public Tile TempTile = null;
     public Tile playerTile = null;
     //public Tile endtile;
     private int mapCount = 0;
@@ -327,8 +328,10 @@ public class Map : MonoBehaviour
             manager_Action.ActDone();
             //HideArea();
 
-            if(manager_Action.usedKing == true) { MovePlayerPosition(); }
-            else { MovePlayerPosition_Continue(); }
+            //if (manager_Action.usedKing == true) { MovePlayerPosition(); }
+            //else { MovePlayerPosition_Continue(); }
+            if(manager_Action.getActState == 0 || manager_Action.getActState == 1) { MovePlayerPosition_Continue(); }
+            else { MovePlayerPosition(); }
 
             //manager_Action.SetActionBtn(false);
             //manager_Action.CheckActionCount();
@@ -467,6 +470,16 @@ public class Map : MonoBehaviour
         HideArea();
 
         moveArea.Clear();
+        moveArea.AddRange(manager_Turn.ShowRookTile());
+        ShowArea(moveArea);
+    }
+
+    public void UseItem_Rope()
+    {
+        useItem = true;
+        HideArea();
+
+        moveArea.Clear();
         moveArea.AddRange(manager_Turn.ShowMobTile());
         ShowArea(moveArea);
     }
@@ -474,6 +487,11 @@ public class Map : MonoBehaviour
     public Rook UseKey()
     {
         return clickTile.rook;
+    }
+
+    public Mob UseRope()
+    {
+        return clickTile.mob;
     }
 
     //아이템 사용이 취소됐을때
@@ -498,7 +516,7 @@ public class Map : MonoBehaviour
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
         playerTile = clickTile;
-
+        TempTile = playerTile;
         //clickTile.ChangeTileState(TileType.impossible);
         //player.UseEnergy(); //에너지 사용
 
@@ -544,7 +562,7 @@ public class Map : MonoBehaviour
         {
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Hit);      
             player.TakeDamage();
-            playerTile = nowTile;
+            //playerTile = nowTile;
         }
     }
     public Tile CheckNearTile(Tile tile = null)
@@ -647,5 +665,10 @@ public class Map : MonoBehaviour
             }
         }
        
+    }
+
+    public void SetPlayerTile()
+    {
+        playerTile = TempTile;
     }
 }

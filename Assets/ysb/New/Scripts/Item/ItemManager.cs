@@ -44,6 +44,14 @@ public class ItemManager : MonoBehaviour
         map.UseItem_Key();
     }
 
+    public void SelectItem_Rope(Item item)
+    {
+        if (map.canControl == false) { return; }
+        selectedItem = item;
+        map.SelectItem(item);
+        map.UseItem_Rope();
+    }
+
     public void UseItem()
     {
         if (selectedItem.UseItem() == false)
@@ -92,7 +100,19 @@ public class ItemManager : MonoBehaviour
         return map.UseKey();
     }
 
+    //로프 전용 - 츠적형, 순찰형
+    public Mob FindMob()
+    {
+        return map.UseRope();
+    }
+
     //설치물 제거
+    public void CheckObj()
+    {
+        //설치물이 있다면
+        if(objs.Count > 0) { map.SetPlayerTile(); }
+    }
+
     public void RemoveObj()
     {
         List<CreatedObject> tempList = new List<CreatedObject>();
