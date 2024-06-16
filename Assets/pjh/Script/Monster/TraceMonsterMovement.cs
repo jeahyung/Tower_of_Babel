@@ -61,8 +61,8 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         MonsterSetting(nextPos);
     }
     void Update()
-    {       
-     
+    {
+     //   effectPrefab.transform.position = transform.position;
         //pos = tile.coord;
     }
 
@@ -229,7 +229,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         while (Vector3.Distance(transform.position, target) >= 0.05f)
         {
             Vector3 direction = target - transform.position;
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref direction, 0.3f*smoothTime);
+            transform.position = Vector3.SmoothDamp(transform.position, target, ref direction, smoothTime);
             yield return null;
         }
        

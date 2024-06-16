@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class UpgradeController : MonoBehaviour
 {
-    private Transform paenl;
+    public Transform paenl;
     private UpgradeSelector[] selectors = new UpgradeSelector[3];   //선택버튼
     private SAManager sa;
 
