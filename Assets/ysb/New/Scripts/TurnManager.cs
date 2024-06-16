@@ -45,9 +45,14 @@ public class TurnManager : MonoBehaviour
         manager_Mob = mob;
     }
 
-    public List<Tile> ShowMobTile()
+    public List<Tile> ShowRookTile()
     {
         return manager_Mob.ShowRook();
+    }
+
+    public List<Tile>ShowMobTile()
+    {
+        return manager_Mob.ShowMob();
     }
     #endregion
 

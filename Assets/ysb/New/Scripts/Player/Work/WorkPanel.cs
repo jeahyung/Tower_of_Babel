@@ -52,6 +52,8 @@ public class WorkPanel : MonoBehaviour
     {
         StageManager.instance.PlayerMoving(false);
     }
+
+
     public void ResetPanel()
     {
         wBtn[0].SelectWork();

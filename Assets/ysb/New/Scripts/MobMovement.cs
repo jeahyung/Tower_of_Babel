@@ -2,7 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MobMovement : MonoBehaviour
+
+public interface Mob
+{
+    public void DontMove();
+    public Tile ShowTile();
+}
+
+public class MobMovement : MonoBehaviour, Mob
 {
     //x, y과 바꼈다. x = y축 / y = x축 / 1 = 오른쪽,위 / -1 = 왼쪽, 아래
     PatrolMobManager manager_Mob;
@@ -27,6 +34,7 @@ public class MobMovement : MonoBehaviour
     //[SerializeField] private float moveSpeed;
 
     public bool canAct = true;   //움직일 수 있는가?
+    public bool isRope = false; //로프에 걸렸는가?
 
     private void Awake()
     {
@@ -39,6 +47,7 @@ public class MobMovement : MonoBehaviour
     {
         curTile = map.GetTile(map.tiles[startX, startY].coord);
         curTile.tileType = TileType.impossible;
+        curTile.mob = this.GetComponent<Mob>();
 
         Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
@@ -62,8 +71,20 @@ public class MobMovement : MonoBehaviour
         }
     }
 
+
+    public void DontMove()
+    {
+        isRope = true;
+    }
     public void Act()
     {
+        if(isRope)
+        {
+            manager_Mob.CheckMobAction();
+            isRope = false;
+            return;
+        }
+
         if(isEnd == false) { return; }
         isEnd = false;
 
@@ -94,6 +115,7 @@ public class MobMovement : MonoBehaviour
                 }
                 transform.forward = new Vector3(moveDir.y, 0, moveDir.x);
                 tile.tileType = TileType.possible;
+                tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
             }
         }
@@ -125,6 +147,7 @@ public class MobMovement : MonoBehaviour
         }
         transform.position = nextPos;
         nextTile.tileType = TileType.impossible;
+        nextTile.mob = this.GetComponent<Mob>();
 
         yield return new WaitForSeconds(0.5f);
 
@@ -139,6 +162,11 @@ public class MobMovement : MonoBehaviour
         isDone = true;
 
         manager_Mob.CheckMobAction();
+    }
+
+    public Tile ShowTile()
+    {
+        return curTile;
     }
 
     //private void OnTriggerEnter(Collider other)

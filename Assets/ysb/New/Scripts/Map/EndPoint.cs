@@ -13,6 +13,7 @@ public class EndPoint : MonoBehaviour
     private Player_Move player;
 
     public GameObject wall = null;
+    public GameObject wall2 = null;
     private void Awake()
     {
         if (turn == null)
@@ -22,6 +23,7 @@ public class EndPoint : MonoBehaviour
         player = FindObjectOfType<Player_Move>();
 
         if(wall == null) { wall = GameObject.Find("wall_end"); }
+        if(wall2 == null) { wall2 = GameObject.Find("wall_end (1)"); }
     }
     private void Start()
     {
@@ -31,6 +33,7 @@ public class EndPoint : MonoBehaviour
     {
         isEnd = false;
         wall.SetActive(false);
+        wall2.SetActive(false);
         // GetComponent<Tile>().effectPrefab.SetActive(false);
     }
     private void EndGame()
@@ -58,6 +61,7 @@ public class EndPoint : MonoBehaviour
                 //up.SetSelectList();
 
                 isEnd = true;
+                wall2.SetActive(true);
             }
 
         }

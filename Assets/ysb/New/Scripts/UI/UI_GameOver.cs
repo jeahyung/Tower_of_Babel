@@ -111,4 +111,14 @@ public class UI_GameOver : MonoBehaviour
         //æ¿ ¿Ãµø
         StageManager.instance.ResetData();
     }
+
+    public void Restart()
+    {
+        StageManager.instance.ReStart();
+    }
+    
+    public void BackTitle()
+    {
+        StageManager.instance.BackTile();
+    }
 }

@@ -226,6 +226,16 @@ public class StageManager : Singleton<StageManager>
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
         ScoreManager.instance.ResetScore();//스코어 리셋
 
+        //SceneManager.LoadScene(1);
+    }
+
+    public void ReStart()
+    {
+        SceneManager.LoadScene(2);  //1스테이지로
+    }
+
+    public void BackTile()
+    {
         SceneManager.LoadScene(1);
     }
 }

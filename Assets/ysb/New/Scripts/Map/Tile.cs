@@ -17,6 +17,7 @@ public class Tile : MonoBehaviour
     //public Map map;
 
     public Rook rook;   //ÇØÃ¼¸¦ À§ÇÑ
+    public Mob mob; //로프
     [SerializeField] private float dropSpeed = 0.5f;
 
     private void Start()

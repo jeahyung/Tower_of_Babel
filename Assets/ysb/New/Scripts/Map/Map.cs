@@ -470,6 +470,16 @@ public class Map : MonoBehaviour
         HideArea();
 
         moveArea.Clear();
+        moveArea.AddRange(manager_Turn.ShowRookTile());
+        ShowArea(moveArea);
+    }
+
+    public void UseItem_Rope()
+    {
+        useItem = true;
+        HideArea();
+
+        moveArea.Clear();
         moveArea.AddRange(manager_Turn.ShowMobTile());
         ShowArea(moveArea);
     }
@@ -477,6 +487,11 @@ public class Map : MonoBehaviour
     public Rook UseKey()
     {
         return clickTile.rook;
+    }
+
+    public Mob UseRope()
+    {
+        return clickTile.mob;
     }
 
     //아이템 사용이 취소됐을때
