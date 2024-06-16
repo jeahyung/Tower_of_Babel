@@ -32,9 +32,11 @@ public class WorkPanel : MonoBehaviour
     [SerializeField] private GameObject[] mImg;
 
     private int selNum = 2; //선택한 번호
+    private Player_Move playerMove;
 
     private void Awake()
-    {
+    {   
+        playerMove = FindObjectOfType<Player_Move>();
         mgr_up = GetComponentInParent<UpgradeController>();
         SetData();
 
@@ -134,5 +136,6 @@ public class WorkPanel : MonoBehaviour
     public void SelectWork()
     {
         mgr_up.SelectAction(selNum);
+        playerMove.CheckAndMoving();
     }
 }
