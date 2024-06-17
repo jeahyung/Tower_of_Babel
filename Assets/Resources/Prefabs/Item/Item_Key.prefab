@@ -66,6 +66,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemImg: {fileID: 21300000, guid: 286000bfeb46e3e4492e43b9894bbda2, type: 3}
   ex: "\uACE0\uC815\uD615 \uBAAC\uC2A4\uD130\uB97C \uD30C\uAD34\uD558\uB294 \uC544\uC774\uD15C"
+  id: 1
 --- !u!65 &2818731384003476045
 BoxCollider:
   m_ObjectHideFlags: 0

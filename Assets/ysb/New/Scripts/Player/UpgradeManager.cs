@@ -44,6 +44,12 @@ public class UpgradeManager : Singleton<UpgradeManager>
     {
         turn_bonus = bonusTurn;
         if(selectedUp.Count > 0) { ui_Setting.AddUpgradeAll(selectedUp); }
+        for (int i = 0; i < selectedUp.Count; ++i)
+        {
+            UpgradeDatabase.instance.RemoveData(selectedUp[i]);
+            Debug.Log("delete : " + selectedUp[i].name);
+        }
+        //UpgradeDatabase.instance.SetData();
 
         //ScoreManager.instance.SetSumSocre(SumScore);
     }
@@ -72,6 +78,11 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public void StartGame()
     {
         turn_bonus = bonusTurn;
+
+        for(int i = 0; i < selectedUp.Count;++i)
+        {
+            UpgradeDatabase.instance.RemoveData(selectedUp[i]);
+        }
         UpgradeDatabase.instance.SetData();
     }
 

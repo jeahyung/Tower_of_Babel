@@ -91,7 +91,7 @@ public class UpgradeController : MonoBehaviour
         for(int i = 0; i < selectCount; ++i)
         {
             int rand = Random.Range(0, upgrades.Count);
-            Debug.Log("set upgrade : " + upgrades.Count + "/ " + rand);
+            //Debug.Log("set upgrade : " + upgrades.Count + "/ " + rand);
             Upgrade up = upgrades[rand];
             selectedUp.Add(up);
             upgrades.Remove(up);

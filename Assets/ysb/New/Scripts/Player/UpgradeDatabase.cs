@@ -49,7 +49,6 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     public string fileName = "Upgrade";
     List<Dictionary<string, object>> dicList = new List<Dictionary<string, object>>();
 
-    public bool isFirst = false; //처음 선택?
     private void Start()
     {
         upController = FindObjectOfType<UpgradeController>();
@@ -92,7 +91,7 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
 
             upList.Add(up);
         }
-        SetData();
+        //SetData();
     }
 
     //액션 선택
@@ -116,17 +115,30 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     //업그레이드 데이터 세팅
     public void SetData()
     {
+        Debug.Log(upList.Count);
         upController.SetUpgrade(upList);
     }
 
     //일부 증강체는 선택 시 삭제 - 영구 능력들
     public void RemoveData(Upgrade up)
     {
-        if(upList.Contains(up) && up.upType < 10 || up.upType >= 20)
+        //if(up.upType < 10 || up.upType >= 20) { return; }
+        for(int i = 0; i < upList.Count; ++i)
         {
-            upList.Remove(up);
-            Debug.Log("delete : " + up.name);
+            if (up.id == upList[i].id)
+            {
+                upList.Remove(upList[i]);
+                break;
+
+            }
         }
+        Debug.Log("delete : " + up.name);
+
+        //if (upList.Contains(up) && up.upType < 10 || up.upType >= 20)
+        //{
+        //    upList.Remove(up);
+        //    Debug.Log("delete : " + up.name);
+        //}
     }
 
     public void OpenUpgrade()

@@ -140,6 +140,7 @@ public class ItemManager : MonoBehaviour
 
     public void NextTurn()
     {
+        ItemInventory.instance.RemoveItem(selectedItem);
         manager_Turn.EndPlayerTurn();
     }
 }

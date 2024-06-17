@@ -1192,7 +1192,7 @@ MonoBehaviour:
   ui_turn: {fileID: 0}
   ui_gameover: {fileID: 0}
   isPlaying: 0
-  index_Upgrade: 4
+  index_Upgrade: 1
   stages: []
   spawnPoint: {fileID: 2081708706}
   mob: {fileID: 0}
@@ -2735,6 +2735,7 @@ MonoBehaviour:
   minRange: {x: 0, y: -15}
   maxRange: {x: 15, y: 10}
   isMove: 0
+  speed: 15
 --- !u!4 &331058997
 Transform:
   m_ObjectHideFlags: 0
@@ -9397,7 +9398,7 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 72
+  field of view: 90
   orthographic: 0
   orthographic size: 5
   m_Depth: -1
@@ -9422,8 +9423,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.32556805, y: 0, z: 0, w: 0.9455186}
-  m_LocalPosition: {x: 7.5, y: 13, z: -14}
+  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 10, y: 15, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -19101,7 +19102,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   count: 10
   fileName: Upgrade
-  isFirst: 0
 --- !u!4 &1714911474
 Transform:
   m_ObjectHideFlags: 0

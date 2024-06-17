@@ -7,6 +7,7 @@ public class Item : MonoBehaviour
     public Sprite itemImg;
     public string ex;
 
+    public int id;
     protected int range = 1;
 
     private void Awake()

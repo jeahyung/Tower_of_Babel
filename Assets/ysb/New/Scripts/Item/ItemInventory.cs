@@ -37,9 +37,9 @@ public class ItemInventory : Singleton<ItemInventory>
 
     public void SetItem()
     {
-        //for(int i = 0; i < getItems.Count; ++i)
+        //for (int i = 0; i < getItems.Count; ++i)
         //{
-        //    PickUpItem(getItems[i]);
+        //    itemUI.PickUpItem(getItems[i]);
         //}
     }
 
@@ -84,21 +84,35 @@ public class ItemInventory : Singleton<ItemInventory>
     {
         if(itemUI.PickUpItem(i) == true)
         {
+            int id = i.id;
+            //for(int j = 0; j < datas.Count; ++j)
+            //{
+            //    if(datas[j].id == id)
+            //    {
+            //        getItems.Add(datas[j]);
+            //    }
+            //}
             //items.Add(i);
-            //Item getItem = i;
-            //getItems.Add(getItem);
             return true;
         }
         return false;
     }
     public void RemoveItem(Item i)
     {
-        if(itemUI.RemoveItem(i) == true)
+        bool b = itemUI.RemoveItem(i);
+        if (b == true)
         {
             count_useItem++;
-            //getItems.Remove(i);
+            //for(int j = 0; j < getItems.Count; ++j)
+            //{
+            //    if(i.id == getItems[j].id)
+            //    {
+            //        getItems.Remove(getItems[j]);
+            //    }
+            //}
             //items.Remove(i);
         }
+        Debug.Log(b);
     }
 
     //매턴 마다
@@ -112,7 +126,7 @@ public class ItemInventory : Singleton<ItemInventory>
     }
     public void ChangeGetList(int num, Item i)
     {
-        //if(num >= getItems.Count) { return; }
+        //if (num >= getItems.Count) { return; }
         //getItems[num] = i;
     }
 }
