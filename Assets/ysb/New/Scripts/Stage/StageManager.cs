@@ -145,17 +145,17 @@ public class StageManager : Singleton<StageManager>
     }
     void NextChapter()
     {
-        if(chapterCount > sName.Length)
+        if(chapterCount > 3)
         {
             GameOver(); //юс╫ц
             return;
         }
-        SceneManager.LoadScene(sName[chapterCount-1]);
+        SceneManager.LoadScene(chapterCount-1);
     }
 
     public void NextStage()
     {
-        if(stageCount >= index_Upgrade)
+        if(stageCount % index_Upgrade == 0)
         {
             chapterCount += 1;
             NextChapter();
