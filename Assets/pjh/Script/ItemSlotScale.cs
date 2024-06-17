@@ -16,7 +16,7 @@ public class ItemSlotScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
     private bool check = false;
     
     public RectTransform uiElement;
-    public float scaleMultiplier = 2f;
+    private float scaleMultiplier = 0.3f;
     public GameObject borderLine;
 
     private UiTrans uiT;
@@ -90,7 +90,7 @@ public class ItemSlotScale : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         this.uiElement.DOSizeDelta(originalScale, 0.3f);
         if(check)
         {
-            uiT.ResetUIPositions();
+            uiT.ResetUIPositions(num);
         }       
 
         if (borderLine != null)
