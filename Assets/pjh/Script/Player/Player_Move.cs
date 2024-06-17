@@ -16,15 +16,18 @@ public class Player_Move : MonoBehaviour
     private float duration = 2f;
     //public Transform target;
     private bool isMoving = true;
-    Vector3 targetPosition;
+    Vector3 targetPosition; //나아갈 거리
+    private SpawnPoint spawnPoint;
+    
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         player = GetComponent<PlayerMovement>();
         audio = GetComponent<AudioSource>();
         ani = GetComponentInChildren<Animator>();
-        move = true;
-        targetPosition = new Vector3(transform.position.x, transform.position.y, -14f);
+
+        move = true;        
         control = player.isControl;
     }
 
@@ -33,6 +36,11 @@ public class Player_Move : MonoBehaviour
         isMoving = true;
     }
 
+    private void Start()
+    {
+        spawnPoint = FindObjectOfType<SpawnPoint>();
+        targetPosition = spawnPoint.GetCurrentPosition();
+    }
     void Update()
     {
         Moving();
