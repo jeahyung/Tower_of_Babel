@@ -1185,10 +1185,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElement: {fileID: 8054099360921602073}
-  scaleMultiplier: 2
   borderLine: {fileID: 1982140554394421130}
   fadeInDuration: 2
   fadeOutDuration: 1
+  num: 1
 --- !u!114 &2068777549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3588,6 +3588,7 @@ GameObject:
   - component: {fileID: 1528677974295364114}
   - component: {fileID: 1528677974295364115}
   - component: {fileID: 1528677974295364112}
+  - component: {fileID: 8239158834976608002}
   m_Layer: 5
   m_Name: ItemUI
   m_TagString: Untagged
@@ -3698,6 +3699,21 @@ MonoBehaviour:
   slots: []
   itemExplain: {fileID: 685214270}
   itemText: {fileID: 507541516}
+--- !u!114 &8239158834976608002
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528677974295364118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ada5f94425c3f742953d6ac56032e58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiElements: []
+  size: 30
+  scaleMultiplier: 1.3
 --- !u!1 &1528677974463061760
 GameObject:
   m_ObjectHideFlags: 0
@@ -7631,10 +7647,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElement: {fileID: 7422744882077175911}
-  scaleMultiplier: 2
   borderLine: {fileID: 6249232912336743126}
   fadeInDuration: 2
   fadeOutDuration: 1
+  num: 3
 --- !u!114 &1919659361
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12927,10 +12943,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElement: {fileID: 3884302884104225286}
-  scaleMultiplier: 2
   borderLine: {fileID: 6904645371044557188}
   fadeInDuration: 2
   fadeOutDuration: 1
+  num: 2
 --- !u!114 &94013411
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13812,10 +13828,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   uiElement: {fileID: 1827345682462398567}
-  scaleMultiplier: 2
   borderLine: {fileID: 3966725557700834976}
   fadeInDuration: 2
   fadeOutDuration: 1
+  num: 0
 --- !u!114 &471974776
 MonoBehaviour:
   m_ObjectHideFlags: 0
