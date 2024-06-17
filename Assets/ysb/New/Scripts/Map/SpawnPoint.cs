@@ -17,4 +17,9 @@ public class SpawnPoint : MonoBehaviour
     {
         
     }
+
+    public Vector3 GetCurrentPosition()
+    {        
+        return transform.position;
+    }
 }

@@ -9,7 +9,7 @@ public class UiTrans : MonoBehaviour
 
     private Vector2[] originalPositions; // UI 요소들의 원래 위치를 저장할 배열
     public int size = 30;
-
+    private bool move = true;
     void Start()
     {
         // 자식 오브젝트들을 자동으로 배열에 등록
@@ -29,16 +29,21 @@ public class UiTrans : MonoBehaviour
 
         // 원래 위치를 저장
         originalPositions = new Vector2[uiElements.Length];
-
+        move = true;
     }
 
     // uiMove 메서드
     public void UiMove(int n)
     {
-        for (int i = 0; i < uiElements.Length; i++)
+        if(move) 
         {
-            originalPositions[i] = uiElements[i].anchoredPosition;
+            for (int i = 0; i < uiElements.Length; i++)
+            {
+                originalPositions[i] = uiElements[i].anchoredPosition;
+            }
+            move = false;
         }
+   
 
         if (n < 0 || n >= uiElements.Length)
         {
