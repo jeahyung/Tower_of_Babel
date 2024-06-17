@@ -12,13 +12,14 @@ public class Cam2_Move : MonoBehaviour
     public Vector2Int maxRange;
 
     public bool isMove = false;
+    [SerializeField]private float speed = 15f;
 
     private void Update()
     {
         if(isMove == false) { return; }
 
-        float xPos = Input.GetAxisRaw("Horizontal");
-        float zPos = Input.GetAxisRaw("Vertical");
+        float xPos = Input.GetAxisRaw("Horizontal") * Time.deltaTime * speed;
+        float zPos = Input.GetAxisRaw("Vertical") * Time.deltaTime * speed;
         
         targetPos = transform.position + new Vector3(xPos, 0, zPos);
         if (targetPos.z < minRange.y) { targetPos.z = minRange.y; }
