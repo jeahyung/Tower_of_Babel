@@ -127,7 +127,7 @@ public class StageManager : Singleton<StageManager>
 
     public bool CheckStage()
     {
-        if(chapterCount == 1 && stageCount == 1) { return true; }
+        if(SceneManager.GetActiveScene().buildIndex == 1) { return true; }
         //if (SceneManager.GetActiveScene().name == stageName)
         //{
         //    return true;
@@ -150,7 +150,7 @@ public class StageManager : Singleton<StageManager>
             GameOver(); //юс╫ц
             return;
         }
-        SceneManager.LoadScene(chapterCount-1);
+        SceneManager.LoadScene(chapterCount);
     }
 
     public void NextStage()

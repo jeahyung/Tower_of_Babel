@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CamMovement : MonoBehaviour
 {
+    
     Transform player;
     Vector3 targetPos;
 

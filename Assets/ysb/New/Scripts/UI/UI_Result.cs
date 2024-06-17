@@ -33,15 +33,15 @@ public class UI_Result : MonoBehaviour
         }
         height = -50;
 
-        back.SetActive(false);
-        panel.SetActive(false);
-
         text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
 
         for(int i = 0; i< sText.Count; ++i)
         {
             sText[i].HideText();
         }
+
+        back.SetActive(false);
+        panel.SetActive(false);
     }
 
     //private void SetText()

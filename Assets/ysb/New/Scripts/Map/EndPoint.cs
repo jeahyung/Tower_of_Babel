@@ -8,6 +8,8 @@ public class EndPoint : MonoBehaviour
     private TurnManager turn;
     [SerializeField]
     private UpgradeController up;
+    [SerializeField]
+    private Cam2_Move cam2;
 
     private bool isEnd = false;
     private Player_Move player;
@@ -21,8 +23,9 @@ public class EndPoint : MonoBehaviour
         if (up == null)
             up = FindObjectOfType<UpgradeController>();
         player = FindObjectOfType<Player_Move>();
+        if (cam2 == null) { cam2 = FindObjectOfType<Cam2_Move>(); }
 
-        if(wall == null) { wall = GameObject.Find("wall_end"); }
+        if (wall == null) { wall = GameObject.Find("wall_end"); }
         if(wall2 == null) { wall2 = GameObject.Find("wall_end (1)"); }
     }
     private void Start()
@@ -38,6 +41,7 @@ public class EndPoint : MonoBehaviour
     }
     private void EndGame()
     {
+        cam2.isMove = false;
         ScoreManager.instance.CalculateScore();
         Camera.main.SendMessage("BackMainCam");
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Clear);
