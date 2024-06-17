@@ -152,18 +152,23 @@ public class PlayerMovement : MonoBehaviour
         }
         anim.SetInteger("isRotate", rot);
         anim.SetTrigger("StartRotate");
-        float speed = from.y == 0 ? 0.5f : 0.5f * Mathf.Abs(from.y / 45);
+        //float speed = from.y == 0 ? 0.5f : 0.5f * Mathf.Abs(from.y / 45);
+        float speed = 0.8f;
         transform.DORotate(from, speed).OnComplete(() => EndRotate());
 
     }
 
+    public void Rotate_Phys()
+    {
+        if (!canMove) { return; }
+        from = new Vector3(0, 0, 0);
+        transform.DORotate(from, 0.8f).OnComplete(() => EndPlayerTurn());
+    }
+
     private void RotateBack()
     {
-        from = new Vector3(0, 0, 0);
         anim.SetInteger("isRotate", degree_back);
-
         anim.SetTrigger("StartRotate");
-        transform.DORotate(from, 1f).OnComplete(() => EndPlayerTurn());
     }
     public void EndRotate()
     {
@@ -299,7 +304,7 @@ public class PlayerMovement : MonoBehaviour
         }
         transform.position = endPos;
         rigid.useGravity = true;
-
+        canMove = true;
         if (degree_back != 8)
         {
             RotateBack();
@@ -311,7 +316,6 @@ public class PlayerMovement : MonoBehaviour
                 EndPlayerTurn();
             }
         }
-        canMove = true;
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
     }
 
@@ -331,6 +335,7 @@ public class PlayerMovement : MonoBehaviour
 
         transform.position = endPos;
         rigid.useGravity = true;
+        canMove = true;
         if (jumpCount > 0)
         {
             jumpCount--;
@@ -350,7 +355,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        canMove = true;
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
     }
     #endregion

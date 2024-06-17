@@ -7,11 +7,13 @@ public class ClearScore : MonoBehaviour
 {
     private RectTransform rectT;
     [SerializeField]private TMP_Text score;
-
+    [SerializeField] private Vector3 pos;
     private void Awake()
     {
         rectT = GetComponent<RectTransform>();
         if(score == null) { transform.Find("Text_Score").GetComponent<TMP_Text>(); }
+
+        pos = rectT.anchoredPosition;
         //score = GetComponent<TMP_Text>();
         //score.enabled = false;
     }
@@ -20,7 +22,7 @@ public class ClearScore : MonoBehaviour
     {
         score.text = "";
         score.enabled = false;
-        rectT.anchoredPosition = new Vector3(-250, 0, 0);
+        rectT.anchoredPosition = pos;//new Vector3(-250, -20, 0);
         transform.DOKill();
 
         gameObject.SetActive(false);

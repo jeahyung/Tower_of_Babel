@@ -123,8 +123,8 @@ public class UI_Result : MonoBehaviour
 
     private IEnumerator Result()
     {
-        text_Stage.text = StageManager.instance.GetChapterCount.ToString() + " - "
-            + StageManager.instance.GetStageCount.ToString() + " Stage Clear";
+        //text_Stage.text = StageManager.instance.GetChapterCount.ToString() + " - "
+        //    + StageManager.instance.GetStageCount.ToString() + " Stage Clear";
 
         yield return new WaitForSeconds(0.2f);
         panel.SetActive(true);
