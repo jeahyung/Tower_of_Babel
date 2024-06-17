@@ -4,6 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
 using TMPro;
+using TreeEditor;
 
 public class Player_Move : MonoBehaviour
 {
@@ -18,7 +19,10 @@ public class Player_Move : MonoBehaviour
     private bool isMoving = true;
     Vector3 targetPosition; //나아갈 거리
     private SpawnPoint spawnPoint;
-    
+
+    public float distance=1f;
+
+
 
     void Awake()
     {
@@ -26,8 +30,10 @@ public class Player_Move : MonoBehaviour
         player = GetComponent<PlayerMovement>();
         audio = GetComponent<AudioSource>();
         ani = GetComponentInChildren<Animator>();
-
-        move = true;        
+        spawnPoint = FindObjectOfType<SpawnPoint>();
+        move = true;
+        Vector3 sumVec = spawnPoint.GetCurrentPosition();
+        targetPosition = new Vector3(transform.position.x, transform.position.y, sumVec.z + distance);
         control = player.isControl;
     }
 
@@ -37,9 +43,9 @@ public class Player_Move : MonoBehaviour
     }
 
     private void Start()
-    {
-        spawnPoint = FindObjectOfType<SpawnPoint>();
-        targetPosition = spawnPoint.GetCurrentPosition();
+    {        
+        //spawnPoint = FindObjectOfType<SpawnPoint>();
+        //targetPosition = spawnPoint.GetCurrentPosition();
     }
     void Update()
     {
