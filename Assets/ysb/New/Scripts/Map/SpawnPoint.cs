@@ -20,7 +20,7 @@ public class SpawnPoint : MonoBehaviour
 
     public Vector3 GetCurrentPosition()
     {
-        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 5f);
+        Vector3 newPosition = new Vector3(transform.position.x, transform.position.y, transform.position.z + 1f);
 
         return newPosition;
     }
