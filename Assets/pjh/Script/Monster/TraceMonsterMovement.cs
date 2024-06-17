@@ -54,6 +54,10 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     private void Start()
     {
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
+
+        Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
+        transform.position = pos;
+
         tile = curTile;
         tile.mob = this.GetComponent<Mob>();
         HideEffect();
