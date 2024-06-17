@@ -58,6 +58,7 @@ public class StageManager : Singleton<StageManager>
             ui_turn = FindObjectOfType<UI_Turn>();
         }
         if (ui_gameover == null) { ui_gameover = FindObjectOfType<UI_GameOver>(); }
+        if(map == null) { map = FindObjectOfType<Map>(); }
 
         StartCoroutine(Loading());
 

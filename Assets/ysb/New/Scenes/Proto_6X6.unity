@@ -1155,7 +1155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad6631e51d7ae5248a933771505cf4b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  map: {fileID: 0}
+  map: {fileID: 266689875}
   ui_turn: {fileID: 1985965047}
   ui_gameover: {fileID: 1622846563}
   isPlaying: 0
