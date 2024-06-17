@@ -127,7 +127,7 @@ public class StageManager : Singleton<StageManager>
 
     public bool CheckStage()
     {
-        if(chapterCount == 1 && stageCount == 1) { return true; }
+        if(SceneManager.GetActiveScene().buildIndex == 1) { return true; }
         //if (SceneManager.GetActiveScene().name == stageName)
         //{
         //    return true;
@@ -145,17 +145,17 @@ public class StageManager : Singleton<StageManager>
     }
     void NextChapter()
     {
-        if(chapterCount > sName.Length)
+        if(chapterCount > 3)
         {
             GameOver(); //임시
             return;
         }
-        SceneManager.LoadScene(sName[chapterCount-1]);
+        SceneManager.LoadScene(chapterCount);
     }
 
     public void NextStage()
     {
-        if(stageCount >= index_Upgrade)
+        if(stageCount % index_Upgrade == 0)
         {
             chapterCount += 1;
             NextChapter();
@@ -236,6 +236,7 @@ public class StageManager : Singleton<StageManager>
 
         isGameOver = false;
         //아이템 리셋
+        ItemInventory.instance.ResetItem();
         UpgradeDatabase.instance.ResetUpgradeData();
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
         ScoreManager.instance.ResetScore();//스코어 리셋

@@ -29,7 +29,7 @@ public class MobMovement : MonoBehaviour, Mob
 
     public List<Tile> range;    //움직일 수 있는 범위
     public int leftRagne = 1;   //왼쪽으로 몇 칸까지?(아래)
-    public int rightRange = 1;  //오른쪽으로 몇 칸까지?(위)
+    public int rightRange = 1;  //오른쪽으로 몇 칸까지?(위)   //오른쪽을 기준으로 잡는다(-1,1 동일)
 
     //[SerializeField] private float moveSpeed;
 
@@ -146,6 +146,7 @@ public class MobMovement : MonoBehaviour, Mob
             yield return null;
         }
         transform.position = nextPos;
+        curTile = nextTile;
         nextTile.tileType = TileType.impossible;
         nextTile.mob = this.GetComponent<Mob>();
 

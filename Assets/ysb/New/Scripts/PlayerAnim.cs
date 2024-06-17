@@ -22,6 +22,13 @@ public class PlayerAnim : MonoBehaviour
         player.StartMove();
     }
 
+    public void PlayerRotate()
+    {
+        player.Rotate_Phys();
+    }
+
+
+
     public void PlayerJump()
     {
         //if(canJump == false) //점프할 수 없다면 턴 종료 - 착지 후 되돌아올 때 발동

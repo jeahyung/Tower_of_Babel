@@ -8,6 +8,8 @@ public class StartPoint : MonoBehaviour
     private SAManager action;
     [SerializeField]
     private TurnManager turn;
+    [SerializeField]
+    private Cam2_Move cam2;
 
     [SerializeField]
     private Collider col;
@@ -30,6 +32,8 @@ public class StartPoint : MonoBehaviour
             action = FindObjectOfType<SAManager>();
         if (turn == null)
             turn = FindObjectOfType<TurnManager>();
+
+        if(cam2 == null) { cam2 = FindObjectOfType<Cam2_Move>(); }
 
        // interactMessage = GameObject.Find("Interact");
        //interactMessage.SetActive(false);
@@ -84,6 +88,8 @@ public class StartPoint : MonoBehaviour
 
         action.SetAct();    //액션 세팅
         action.ActActionBtn(true);
+
+        cam2.isMove = true;
         //turn.StartGame();   //게임 시작
 
         //interactMessage.SetActive(false);

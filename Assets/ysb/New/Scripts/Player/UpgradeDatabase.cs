@@ -57,7 +57,9 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
         LoadCSVFile();
 
         if (StageManager.instance.CheckStage() == true)
+        {
             SetActionData();
+        }
         else//테스트용
         {
             SetData();

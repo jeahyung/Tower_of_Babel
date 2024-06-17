@@ -14,4 +14,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/ysb/New/Scenes/Proto_5X5.unity
     guid: 83671caf140fe1c40b5638ba06206702
+  - enabled: 1
+    path: Assets/ysb/New/Scenes/Proto_6X6.unity
+    guid: a4d35cd8f1d270d449b72f9e052a2bb5
   m_configObjects: {}

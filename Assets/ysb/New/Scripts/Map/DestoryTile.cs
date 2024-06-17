@@ -7,16 +7,20 @@ public class DestoryTile : MonoBehaviour
     private CamMovement cam;
     private Map map;
 
+    [SerializeField] private GameObject effect;
     [SerializeField] private int tileCount = 5; //∂≥±º ≈∏¿œ
     private void Awake()
     {
         cam = FindObjectOfType<CamMovement>();
         map = GetComponent<Map>();
+
+        effect.SetActive(false);
     }
 
     public void DropTile()
     {
         cam.SetMove(false);
+        effect.SetActive(true);
         StartCoroutine(Drop());
     }
     private IEnumerator Drop()

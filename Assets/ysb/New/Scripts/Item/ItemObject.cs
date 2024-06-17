@@ -26,7 +26,7 @@ public class ItemObject : MonoBehaviour
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
 
         Vector3 pos = new Vector3(curTile.GetPosition().x,
-            curTile.GetPosition().y + 2.8f, curTile.GetPosition().z);
+            curTile.GetPosition().y + (curTile.transform.localScale.y / 2) + (transform.localScale.y / 2), curTile.GetPosition().z);
         transform.position = pos;
     }
 

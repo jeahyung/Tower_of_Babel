@@ -33,15 +33,15 @@ public class UI_Result : MonoBehaviour
         }
         height = -50;
 
-        back.SetActive(false);
-        panel.SetActive(false);
-
         text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
 
         for(int i = 0; i< sText.Count; ++i)
         {
             sText[i].HideText();
         }
+
+        back.SetActive(false);
+        panel.SetActive(false);
     }
 
     //private void SetText()
@@ -123,8 +123,8 @@ public class UI_Result : MonoBehaviour
 
     private IEnumerator Result()
     {
-        text_Stage.text = StageManager.instance.GetChapterCount.ToString() + " - "
-            + StageManager.instance.GetStageCount.ToString() + " Stage Clear";
+        //text_Stage.text = StageManager.instance.GetChapterCount.ToString() + " - "
+        //    + StageManager.instance.GetStageCount.ToString() + " Stage Clear";
 
         yield return new WaitForSeconds(0.2f);
         panel.SetActive(true);

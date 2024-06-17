@@ -21,13 +21,14 @@ public class UI_GameOver : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
-        back.SetActive(false);
-        panel.SetActive(false);
 
         for (int i = 0; i < sText.Count; ++i)
         {
             sText[i].HideText();
         }
+
+        back.SetActive(false);
+        panel.SetActive(false);
     }
     private void SetText()
     {
