@@ -236,6 +236,7 @@ public class StageManager : Singleton<StageManager>
 
         isGameOver = false;
         //아이템 리셋
+        ItemInventory.instance.ResetItem();
         UpgradeDatabase.instance.ResetUpgradeData();
         UpgradeManager.instance.ResetUpgrade();//강화 리셋
         ScoreManager.instance.ResetScore();//스코어 리셋

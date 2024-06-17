@@ -146,6 +146,7 @@ public class MobMovement : MonoBehaviour, Mob
             yield return null;
         }
         transform.position = nextPos;
+        curTile = nextTile;
         nextTile.tileType = TileType.impossible;
         nextTile.mob = this.GetComponent<Mob>();
 

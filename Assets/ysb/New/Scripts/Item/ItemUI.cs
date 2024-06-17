@@ -60,13 +60,16 @@ public class ItemUI : MonoBehaviour
 
     public void ChangeItem(List<Item> items)
     {
+        int j = 0;
         foreach (ItemUISlot slot in slots)
         {
             int i = Random.Range(0, items.Count);
             if(slot.addItem != null)
             {
                 slot.ChangeItem(items[i]);
+                ItemInventory.instance.ChangeGetList(j, items[i]);
             }
+            j++;
         }
     }
 
