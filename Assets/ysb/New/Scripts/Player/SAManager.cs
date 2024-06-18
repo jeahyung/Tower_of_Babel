@@ -96,6 +96,10 @@ public class SAManager : MonoBehaviour
 
     private void Start()
     {
+        if(UpgradeManager.instance.GetSANum() != -1)
+        {
+            SetAct();
+        }
         //플레이 전까진 액션 버튼은 비활성화합니다.
         ActActionBtn(false);
     }

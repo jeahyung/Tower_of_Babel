@@ -10,7 +10,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public UI_Setting ui_Setting;
     private static List<Upgrade> selectedUp = new List<Upgrade>();
 
-    public static int saNum;               //선택한 행동 번호(0)
+    public static int saNum = -1;               //선택한 행동 번호(0)
     public static int bonusCount = 0;      //특수행동 보너스(1)
 
     public static int energy = 0;
@@ -57,7 +57,7 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public void ResetUpgrade()
     {
         selectedUp.Clear();
-        saNum = 0;               //선택한 행동 번호(0)    
+        saNum = -1;               //선택한 행동 번호(0)    
         bonusCount = 0;      //특수행동 보너스(1)    
         energy = 0;
     
