@@ -247,11 +247,13 @@ public class StageManager : Singleton<StageManager>
 
     public void ReStart()
     {
+        Img_loading.SetActive(true);
         SceneManager.LoadScene(1);  //1스테이지로
     }
 
     public void BackTile()
     {
+        Img_loading.SetActive(true);
         ResetData();
         SceneManager.LoadScene(0);
     }

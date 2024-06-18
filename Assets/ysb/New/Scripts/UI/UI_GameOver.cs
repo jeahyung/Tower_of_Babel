@@ -16,15 +16,20 @@ public class UI_GameOver : MonoBehaviour
 
     private void Awake()
     {
+        
+    }
+
+    private void Start()
+    {
         sText.AddRange(GetComponentsInChildren<ClearScore>());
-        foreach (var t in sText)
-        {
-            t.gameObject.SetActive(false);
-        }
 
         for (int i = 0; i < sText.Count; ++i)
         {
             sText[i].HideText();
+        }
+        foreach (var t in sText)
+        {
+            t.gameObject.SetActive(false);
         }
 
         back.SetActive(false);
@@ -115,11 +120,13 @@ public class UI_GameOver : MonoBehaviour
 
     public void Restart()
     {
+        HideResult();
         StageManager.instance.ReStart();
     }
     
     public void BackTitle()
     {
+        HideResult();
         StageManager.instance.BackTile();
     }
 }
