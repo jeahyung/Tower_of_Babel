@@ -19,6 +19,7 @@ public class Player_Move : MonoBehaviour
     private bool isMoving = true;
     Vector3 targetPosition; //나아갈 거리
     private SpawnPoint spawnPoint;
+   
 
     public float distance=1f;
 
@@ -50,7 +51,6 @@ public class Player_Move : MonoBehaviour
     void Update()
     {
         Moving();
-
     }
 
     public void CheckAndMoving()

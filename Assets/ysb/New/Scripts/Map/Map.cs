@@ -295,9 +295,7 @@ public class Map : MonoBehaviour
     public void ShowArea(List<Tile> tileInArea)
     {
         foreach (var tile in tileInArea)
-        {
-            Debug.Log("mapShow@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@");
-            Debug.Log(mapCount);
+        {          
             mapCount++;
             tile.ShowArea();
         }

@@ -24,10 +24,10 @@ public class UpgradeSelector : MonoBehaviour
     {
         upController = GetComponentInParent<UpgradeController>();
 
-        upname = transform.GetChild(0).GetComponent<TMP_Text>();
-        explain = transform.GetChild(1).GetComponent<TMP_Text>();
+        upname = transform.GetChild(1).GetComponent<TMP_Text>();
+        explain = transform.GetChild(2).GetComponent<TMP_Text>();
 
-        icon = transform.GetChild(2).GetComponent<Image>();
+        icon = transform.GetChild(3).GetComponent<Image>();
 
         btn = GetComponent<Button>();
         //state = GetComponentInChildren<TMP_Text>();
