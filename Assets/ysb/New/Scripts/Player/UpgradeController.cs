@@ -21,10 +21,17 @@ public class UpgradeController : MonoBehaviour
 
     [SerializeField] public List<Sprite> img = new List<Sprite>();
 
+    private UiWH uiwh;
+
     private void Awake()
     {
         upgrades.Clear();
-
+        uiwh = GetComponent<UiWH>();
+        if (uiwh == null)
+        {
+            Debug.Log("uiwhÇÒ´ç ¾ÈµÊ!!!!!!!!!!!!");
+            uiwh = FindObjectOfType<UiWH>();
+        }
         sa = FindObjectOfType<SAManager>();
         paenl = transform.Find("Panel").transform;        
 
@@ -80,9 +87,11 @@ public class UpgradeController : MonoBehaviour
 
     //Áõ°­Ã¼ ¿ÀÇÂ
     public void OpenUpgradePanel()
-    {
+    {        
         StageManager.instance.PlayerMoving(false);
         SetSelectList();
+        uiwh.UIImageSize(0.5f);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.UiOpen);
     }
 
     private void SetSelectList()
@@ -113,6 +122,7 @@ public class UpgradeController : MonoBehaviour
 
         //ui
         paenl.localScale = new Vector3(0, 1, 1);
+        uiwh.ResetUIImageSize();
 
         UpgradeManager.instance.AddUpgrade(up);
         UpgradeDatabase.instance.RemoveData(up);

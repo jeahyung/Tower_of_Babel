@@ -132,6 +132,6 @@ public class UpgradeDatabase : Singleton<UpgradeDatabase>
     public void OpenUpgrade()
     {
         SetData();
-        upController.OpenUpgradePanel();
+        upController.OpenUpgradePanel();       
     }
 }
