@@ -512,7 +512,7 @@ public class Map : MonoBehaviour
 
         //GameObject newObejct = Instantiate(obj);
         Vector3 pos = clickTile.GetPosition();
-        float yPos = obj.transform.localScale.y + 3 + clickTile.transform.position.y;
+        float yPos = obj.transform.localScale.y + 2 + clickTile.transform.position.y;
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
         playerTile = clickTile;
