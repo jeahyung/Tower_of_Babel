@@ -5,16 +5,16 @@ using UnityEngine;
 public class ImageClickHandler : MonoBehaviour
 {
     private IntroPlayer player;
-  
+    
     //  public BtnType currentType;
     private void Awake()
     {
-        player = FindObjectOfType<IntroPlayer>();
+        InitializePlayer();
     }
     private void Start()
     {
-       
 
+       
     }
 
     public void OnImageClick()
@@ -26,6 +26,21 @@ public class ImageClickHandler : MonoBehaviour
             ui.HideUI();
         }
         else
+        {
             Debug.Log("추가못함");
+            InitializePlayer();
+            player.Moving();
+            ui.HideUI();
+        }
+           
+    }
+
+    private void InitializePlayer()
+    {
+        player = FindObjectOfType<IntroPlayer>();
+        if (player == null)
+        {
+            Debug.LogWarning("missing player");
+        }
     }
 }

@@ -25,15 +25,16 @@ public class IntroPlayer : MonoBehaviour
 
     public void Moving()
     {
-        control = false; // 이동 중에는 추가 입력을 받지 않도록 설정
+        if (!control) return; // control이 false이면 함수 종료
 
+        control = false; // 이동 중에는 추가 입력을 받지 않도록 설정
         // 플레이어 애니메이션 및 오디오 재생 설정
         ani.SetBool("isRun", true);
         if (!audio.isPlaying)
         {
             audio.Play();
         }
-        Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, target.position.z);
+        Vector3 targetPosition = new Vector3(transform.position.x, transform.position.y, 12.8f);
 
         // 두트윈을 사용하여 타겟 위치까지 이동
         transform.DOMove(targetPosition, duration).SetEase(Ease.Linear).OnComplete(() => {

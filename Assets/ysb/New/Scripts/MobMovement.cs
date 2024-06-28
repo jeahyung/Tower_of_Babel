@@ -142,7 +142,7 @@ public class MobMovement : MonoBehaviour, Mob
 
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, 30f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, nextPos, 8f * Time.deltaTime);
             yield return null;
         }
         transform.position = nextPos;
