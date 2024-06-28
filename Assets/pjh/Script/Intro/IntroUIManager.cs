@@ -34,8 +34,9 @@ public class IntroUIManager : MonoBehaviour
             .OnStart(() =>
             {
                 // 페이드 인이 시작될 때 상호작용 불가능하도록 설정
-             //   uiCanvasGroup.interactable = false;
-               // uiCanvasGroup.blocksRaycasts = false;
+                //   uiCanvasGroup.interactable = false;
+                // uiCanvasGroup.blocksRaycasts = false;
+                uiObject.SetActive(true);
             })
             .OnComplete(() =>
             {
@@ -50,10 +51,15 @@ public class IntroUIManager : MonoBehaviour
         uiCanvasGroup.DOFade(0f, fadeDuration).SetUpdate(true)
     .OnStart(() =>
     {
+       // uiObject.SetActive(false);
         // 페이드 아웃이 시작될 때 상호작용 불가능하도록 설정
         //uiCanvasGroup.interactable = true;
-       // uiCanvasGroup.blocksRaycasts = false;
-    });
+        // uiCanvasGroup.blocksRaycasts = false;
+    })
+     .OnComplete(() =>
+     {
+         uiObject.SetActive(false);
+     });
     }
 
     private void Awake()
