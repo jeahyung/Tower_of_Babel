@@ -72,11 +72,11 @@ public class UI_GameOver : MonoBehaviour
     IEnumerator Show()
     {
         int sIndex = 0;
-        int height = -50;
+        int height = 50;
         //AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over);
         while (sIndex < 5)
         {
-            float h = height * (sIndex - 2);//(sCount - sIndex - 2);
+            float h = height * (4-sIndex);//(sCount - sIndex - 2);
             sText[sIndex].gameObject.SetActive(true);
             sText[sIndex].SetText(textContent[sIndex]);
             sText[sIndex].SetTarget(h);

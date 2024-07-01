@@ -144,8 +144,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: "\uC548\uB155\uD558\uC2DC\uC624\n"
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1cc6a056fb6ad0642936db892566f31e, type: 2}
-  m_sharedMaterial: {fileID: 854783548438077882, guid: 1cc6a056fb6ad0642936db892566f31e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
+  m_sharedMaterial: {fileID: -1939339519034135465, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -417,8 +417,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: hhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhhh
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: 1cc6a056fb6ad0642936db892566f31e, type: 2}
-  m_sharedMaterial: {fileID: 854783548438077882, guid: 1cc6a056fb6ad0642936db892566f31e, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
+  m_sharedMaterial: {fileID: -1939339519034135465, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

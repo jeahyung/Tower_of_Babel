@@ -25,6 +25,7 @@ public class StageManager : Singleton<StageManager>
 
     private bool isGameOver = false;
     private Player_Move playerMover;
+    private EnergySystem energy;
 
     public RectTransform uiElement;
     public string[] sName;
@@ -41,6 +42,7 @@ public class StageManager : Singleton<StageManager>
         ////첫 번째 스테이지 활성화
         //SelectStage();
         playerMover = FindObjectOfType<Player_Move>();
+        energy = playerMover.GetComponent<EnergySystem>();
     }
     void OnEnable()
     {
@@ -234,6 +236,8 @@ public class StageManager : Singleton<StageManager>
     {
         chapterCount = 1;
         stageCount = 1;
+
+        energy.ResetEnergy();
 
         isGameOver = false;
         //아이템 리셋

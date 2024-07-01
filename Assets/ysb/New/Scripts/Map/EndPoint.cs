@@ -23,6 +23,7 @@ public class EndPoint : MonoBehaviour
         if (up == null)
             up = FindObjectOfType<UpgradeController>();
         player = FindObjectOfType<Player_Move>();
+
         if (cam2 == null) { cam2 = FindObjectOfType<Cam2_Move>(); }
 
         if (wall == null) { wall = GameObject.Find("wall_end"); }

@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.33044672, g: 0.2941223, b: 0.326964, a: 1}
+  m_IndirectSpecularColor: {r: 0.33023176, g: 0.29404122, b: 0.32682568, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -10484,7 +10484,7 @@ BoxCollider:
   m_GameObject: {fileID: 866492038}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 2.4825718, y: 9.381992, z: 8.828817}
   m_Center: {x: 0.00003951788, y: 0.0000072717676, z: 4.4144077}
@@ -17917,7 +17917,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1381274432}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 8.659561e-17, w: 0.7071068}
-  m_LocalPosition: {x: 149.708, y: 2.2262776, z: -7.807}
+  m_LocalPosition: {x: 149.71, y: 2.2262776, z: -7.81}
   m_LocalScale: {x: 0.442919, y: 0.442919, z: 0.442919}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22520,7 +22520,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   count: 10
   fileName: Upgrade
-  isFirst: 0
 --- !u!4 &1714911474
 Transform:
   m_ObjectHideFlags: 0

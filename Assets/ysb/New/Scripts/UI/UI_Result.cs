@@ -31,7 +31,7 @@ public class UI_Result : MonoBehaviour
         {
             t.gameObject.SetActive(false);
         }
-        height = -50;
+        height = 50;
 
         text_Stage = panel.transform.GetChild(0).GetComponent<TMP_Text>();
 
@@ -144,7 +144,7 @@ public class UI_Result : MonoBehaviour
     {
         while(sIndex < sCount)
         {
-            float h = height * (sIndex - 2);//(sCount - sIndex - 2);
+            float h = height * (4 - sIndex);//(sCount - sIndex - 2);
             sText[sIndex].gameObject.SetActive(true);
             sText[sIndex].SetText(textContent[sIndex]);
             sText[sIndex].SetTarget(h);

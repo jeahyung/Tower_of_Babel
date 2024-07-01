@@ -23,8 +23,8 @@ public class ClearScore : MonoBehaviour
         score.text = "";
         score.enabled = false;
         rectT.anchoredPosition = pos;//new Vector3(-250, -20, 0);
-        transform.DOKill();
-
+        //transform.DOKill();
+        rectT.DOKill();
         gameObject.SetActive(false);
     }
 
@@ -38,8 +38,9 @@ public class ClearScore : MonoBehaviour
     public void SetTarget(float h)
     {
         if(rectT == null) { rectT = GetComponent<RectTransform>(); }
-        float height = transform.position.y + h;
-        Debug.Log(height);
-        transform.DOMoveY(height, 0.5f);
+        float height = rectT.anchoredPosition.y + h;//transform.position.y + h;
+        //Debug.Log(height);
+        rectT.DOAnchorPosY(height, 0.5f);
+        //transform.DOMoveY(height, 0.5f);
     }    
 }
