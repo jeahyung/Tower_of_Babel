@@ -5139,7 +5139,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ani: {fileID: 1605256122}
   move: 1
-  distance: 3
+  distance: 5
 --- !u!82 &1022878749
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11148,7 +11148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2405577759320499745, guid: 2b36bf3b01b2a8347ba1121aa445300d, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -121.9
+      value: -123.69
       objectReference: {fileID: 0}
     - target: {fileID: 2405577759320499750, guid: 2b36bf3b01b2a8347ba1121aa445300d, type: 3}
       propertyPath: player
