@@ -208,6 +208,7 @@ public class StageManager : Singleton<StageManager>
     {
         if(isGameOver == true) { return; }
         isGameOver = true;
+        manager_turn.GameOver();
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         map.GetComponent<DestoryTile>().DropTile(); //≈∏¿œ ∂≥±∏±‚
         for(int i = 0; i<4; i++)

@@ -14,6 +14,7 @@ public class TurnManager : MonoBehaviour
 
     public MobManager manager_Mob;
 
+    bool isGameOver = false;
     public bool isPlayerTurn = false;
     public bool isEnemyTurn = true;
 
@@ -80,10 +81,15 @@ public class TurnManager : MonoBehaviour
         return manager_map.IsLastTile();
     }
 
+    public void GameOver()
+    {
+        StopAllCoroutines();
+    }
+
     #region player turn
     public void StartPlayerTurn()
     {
-        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+        if (StageManager.instance.isPlaying == false || isGameOver) { return; }    //게임 시작 여부
         if (isEnemyTurn == true || player.TurnEnd() == false || IsLastTile() == true) { return; }
 
         StartCoroutine(PlayerTurn());
@@ -118,7 +124,7 @@ public class TurnManager : MonoBehaviour
     #region end player turn
     public void EndPlayerTurn()
     {
-        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+        if (StageManager.instance.isPlaying == false || isGameOver) { return; }    //게임 시작 여부
 
         Debug.Log("player turn end");
         StartCoroutine(EndPlayer());        
@@ -146,7 +152,7 @@ public class TurnManager : MonoBehaviour
     #region enemy turn
     public void StartEnemyTurn()
     {
-        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+        if (StageManager.instance.isPlaying == false || isGameOver) { return; }    //게임 시작 여부
         if (isPlayerTurn == true || isEnemyTurn == true || IsLastTile() == true) { return; }
         //isEnemyTurn = true;
 
@@ -168,7 +174,7 @@ public class TurnManager : MonoBehaviour
 
     public void EndEnemyTurn()
     {
-        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+        if (StageManager.instance.isPlaying == false || isGameOver) { return; }    //게임 시작 여부
 
         if (isEnemyTurn == false) { return; }
         //isEnemyTurn = false;
