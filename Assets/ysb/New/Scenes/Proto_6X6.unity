@@ -12478,7 +12478,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e48f9f24e7a23d44b76f9239ea6d81d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  delayTime: 1
+  delayTime: 2
   ui_turn: {fileID: 1985965047}
   manager_Mob: {fileID: 0}
   isPlayerTurn: 0

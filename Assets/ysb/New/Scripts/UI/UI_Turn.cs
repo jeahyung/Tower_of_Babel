@@ -96,7 +96,10 @@ public class UI_Turn : MonoBehaviour
 
     public void ShowImg(int i)
     {
+        if (TurnShowImg[i].activeSelf) { return; }
+        
         TurnShowImg[i].SetActive(true);
+        Debug.Log("ghcnf");
     }
     public void HideImg(int i)
     {

@@ -101,7 +101,7 @@ public class TurnManager : MonoBehaviour
 
         if (!manager_Action.usedKing) { ui_turn.ShowImg(0); }
         yield return new WaitForSeconds(delayTime);
-        ui_turn.HideImg(0);
+        //ui_turn.HideImg(0);
 
         player.SetUseEnergy();  //에너지 설정
 
@@ -167,7 +167,7 @@ public class TurnManager : MonoBehaviour
 
         ui_turn.ShowImg(1);
         yield return new WaitForSeconds(delayTime);
-        ui_turn.HideImg(1);
+        //ui_turn.HideImg(1);
 
         manager_Mob.ActMob();
     }
