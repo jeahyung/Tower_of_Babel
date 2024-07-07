@@ -17,6 +17,9 @@ public class AudioManager : MonoBehaviour
 
     public enum Sfx { Monster_Change, Monster_Destroy, Monster_Move, Player_Hit, Player_Itemget, Player_Step, Player_Teleport,Player_Walk, Door_Open, Stage_Clear, UI_Click, UI_Hover,Game_Over,Game_Over_Broken, UiOpen }
 
+    private Player_Move playerWalk;
+    private IntroPlayer introPlayer;
+
     void Awake()
     {
         instance = this;
@@ -25,6 +28,7 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
+        playerWalk = FindObjectOfType<Player_Move>();
       //  sfxPlayers[13].volume = 0.1f;
         PlayBgm(true);
     }
@@ -111,5 +115,7 @@ public class AudioManager : MonoBehaviour
         {
             sfxPlayers[i].volume = sfxVolume;
         }
+        if(playerWalk != null)
+            playerWalk.WalkSfxSet(sfxVolume);
     }
 }

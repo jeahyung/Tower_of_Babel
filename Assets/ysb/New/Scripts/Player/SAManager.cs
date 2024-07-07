@@ -22,7 +22,7 @@ public class SA_Rock : SpecialAction
     public SA_Rock(Map map) : base(map) { }
 
     public override void Action()
-    {
+    {    
         map.HideArea();
         map.FindTileInRange_FourLong();
     }
@@ -40,7 +40,7 @@ public class SA_King : SpecialAction
 {
     public SA_King(Map map) : base(map) { }
     public override void Action()
-    {
+    {       
         map.HideArea();
         map.FindTileInRange_Eight(null, 1);
     }
@@ -195,14 +195,15 @@ public class SAManager : MonoBehaviour
     }
     public void UseAction()
     {
+       
         if(actionBtn.enabled == false) { return; }
         map.useAction = true;
         actionBtn.enabled = false;
 
         es.useEnergy = action.energy;
-
+     
         if (UpgradeManager.instance.GetSANum() == 2)    //킹
-        {
+        {            
             UpgradeManager.instance.getBonusTurn(1);
             isKing = true;
         }
@@ -232,11 +233,11 @@ public class SAManager : MonoBehaviour
 
     //킹에 의한 추가 행동
     public void UseAction_Bonus()
-    {
+    {                
         map.useAction = true;
         actionBtn.enabled = false;
 
-        action.Action();
+        action.Action();        
     }
 
     //액션 버튼 동작 여부

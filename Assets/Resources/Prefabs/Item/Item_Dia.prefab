@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 3642050818187629792}
   - component: {fileID: 3642050818187629793}
   - component: {fileID: 3642050818187629794}
+  - component: {fileID: 5665495042317420178}
   m_Layer: 0
   m_Name: Item_Dia
   m_TagString: Untagged
@@ -81,7 +82,21 @@ MonoBehaviour:
   ex: "\uCD94\uACA9\uD615 \uBAAC\uC2A4\uD130\uB97C \uC720\uC778\uD558\uB294 \uC544\uC774\uD15C.
     \uBAAC\uC2A4\uD130\uAC00 \uC774 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD558\uBA74
     \uB2E4\uC2DC \uD50C\uB808\uC774\uC5B4\uB97C \uCD94\uACA9\uD55C\uB2E4."
+  id: 0
   itemPrefab: {fileID: 2489763940767993259, guid: f45e33f9af420cd4fb56b7634d61ee87, type: 3}
+--- !u!65 &5665495042317420178
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3642050818187629795}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 4, z: 1}
+  m_Center: {x: 0, y: 1.74, z: 0}
 --- !u!1001 &3228838488228643240
 PrefabInstance:
   m_ObjectHideFlags: 0
