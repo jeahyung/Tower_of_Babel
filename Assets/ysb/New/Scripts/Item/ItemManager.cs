@@ -77,6 +77,7 @@ public class ItemManager : MonoBehaviour
     public void CreateObject(GameObject obj)
     {
         GameObject newObejct = Instantiate(obj);
+        newObejct.tag = "Dia";
         map.SetObjectPosition(newObejct);
 
         objs.Add(newObejct.GetComponent<CreatedObject>());

@@ -31,8 +31,11 @@ public class Map : MonoBehaviour
 
     public Tile TempTile = null;
     public Tile playerTile = null;
+    public Tile temp = null;
     //public Tile endtile;
     private int mapCount = 0;
+    public bool isKing = false;
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
@@ -165,6 +168,7 @@ public class Map : MonoBehaviour
         moveArea.Clear();
         if(startTile == null) { startTile = nowTile; }
         startCoord = startTile.coord;
+        isKing = true;
 
         CheckTileObject();
 
@@ -220,10 +224,10 @@ public class Map : MonoBehaviour
     }
     //4방향 쭉
     public void FindTileInRange_FourLong()
-    {
+    {        
         moveArea.Clear();
         startCoord = nowTile.coord;
-
+        isKing = true;
         CheckTileObject();
 
         //시작점에서 4방향으로 쭉 탐색 -> 못 가는 타일이 있으면 탐색 종료 다음 방향으로
@@ -249,7 +253,7 @@ public class Map : MonoBehaviour
             }
             i++;
         }
-        ShowArea(moveArea);
+        ShowArea(moveArea);        
     }
     #endregion
 
@@ -513,6 +517,7 @@ public class Map : MonoBehaviour
         float yPos = obj.transform.localScale.y + 2 + clickTile.transform.position.y;
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
+        temp = playerTile;
         playerTile = clickTile;
         TempTile = playerTile;
         //clickTile.ChangeTileState(TileType.impossible);
@@ -668,5 +673,13 @@ public class Map : MonoBehaviour
     public void SetPlayerTile()
     {
         playerTile = TempTile;
+    }
+
+    public void RestPlayerTile()
+    {
+        playerTile = temp;
+        Debug.Log(playerTile.coord.x);
+        Debug.Log(playerTile.coord.y);
+
     }
 }

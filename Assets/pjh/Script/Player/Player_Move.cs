@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using DG.Tweening;
-using TMPro;
-using TreeEditor;
 
 public class Player_Move : MonoBehaviour
 {
@@ -158,4 +156,10 @@ public class Player_Move : MonoBehaviour
 
         isMoving = false;
     }
+
+    public void WalkSfxSet(float v)
+    {
+        audio.volume = v;
+    }
+
 }

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using Unity.Burst.CompilerServices;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -126,10 +127,11 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
             }
         }
 
-
-        SetPosition(nextPos);
-        ShowEffect();
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+        
+         SetPosition(nextPos);
+         ShowEffect();
+         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+       
 
     }
     
@@ -163,10 +165,12 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         if (minA)
         {
             a = targetX - 1;
+            transform.forward = new Vector3(0, 0, -1);
         }
         else
         {
             a = targetX + 1;
+            transform.forward = new Vector3(0, 0, 1);
         }
         // 조건을 만족하는 타일을 찾습니다.
         foreach (Tile tile in allTiles)
@@ -193,10 +197,13 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         if (minB)
         {
             a = targetY- 1;
+            transform.forward = new Vector3(-1, 0, 0);
         }
         else
         {
             a = targetY + 1;
+            transform.forward = new Vector3(1, 0, 0);
+
         }
         // 조건을 만족하는 타일을 찾습니다.
         foreach (Tile tile in allTiles)
@@ -222,6 +229,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     {
         if (target == Vector3.zero) { return; }
 
+
         Vector3 pos1 = new Vector3(target.x, this.transform.position.y, target.z);
         manager_Turn.isDone = false;
         StartCoroutine(MonsterMove(pos1));
@@ -241,8 +249,8 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         CheckTile();
         if (ch)
         {
-            Think();
             ch = false;
+            Think();           
         }       
      //   manager_Turn.EndEnemyTurn();
       //  Debug.Log("Dddddd");
@@ -254,6 +262,15 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         {
             tile = other.GetComponent<Tile>();
         }
+        else if (other.CompareTag("Dia"))
+        {
+            map.RestPlayerTile();
+            other.gameObject.SetActive(false);
+            
+            Debug.Log("Dia Find");
+            
+        }
+        
     }
 
     public void Act()
@@ -319,4 +336,5 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     {
         return tile;
     }
+
 }

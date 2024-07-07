@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using System;
+using JetBrains.Annotations;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -38,6 +39,7 @@ public class PlayerMovement : MonoBehaviour
     public int moveRange = 1;
 
     public int degree_back = 0;   //되돌올 때 회전할 각
+    private int cnt = 0;
 
     public bool TurnEnd()
     {
@@ -187,7 +189,7 @@ public class PlayerMovement : MonoBehaviour
         if(target == Vector3.zero || canMove == false) { return; }
         canMove = false;
         h = 0f;
-
+      
         manager_Turn.isDone = false;
         rigid.useGravity = false;   //중력을 끈다.
 
@@ -198,8 +200,23 @@ public class PlayerMovement : MonoBehaviour
         endZ = target.z - transform.position.z;
         endPos = startPos + new Vector3(endX, 0, endZ);
 
+        if (map.isKing)
+        {
+            cnt++;
+            if (cnt < 2)
+            {
+                energySysteam.UseEnergy(1); //킹 소모량 요기서 정해짐
+            }
+            else
+            {
+                energySysteam.UseEnergy(999);
+                cnt = 0;               
+            }
+            map.isKing = false;
+        }
         //에너지 사용
-        if(UpgradeManager.instance.getNoneEnergy() == false) { if(UseEnergy() == false) { return; } }
+        else if (UpgradeManager.instance.getNoneEnergy() == false) { if(UseEnergy() == false) { return; } }
+     
         //회전
         RotatePlayer(rot);
     }
@@ -209,7 +226,7 @@ public class PlayerMovement : MonoBehaviour
     int rt;
 
     public void SetPosition_Continue(int count, Vector3 target, int rot)
-    {
+    {        
         if (target == Vector3.zero || canMove == false) { return; }
         canMove = false;
         h = 2f;

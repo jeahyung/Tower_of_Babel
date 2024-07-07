@@ -41,10 +41,16 @@ public class EnergySystem : MonoBehaviour
     {
         if (i == 0)
         {
+            Debug.Log("0case????????");
             curEnergy = curEnergy - useEnergy > 0 ? curEnergy - useEnergy : 0;
+        }     
+        else if(i==999)
+        {
+            curEnergy = curEnergy > 0 ? curEnergy : 0;
         }
         else
         {
+            Debug.Log("1case????????");
             curEnergy = curEnergy - i > 0 ? curEnergy - i : 0;
         }
         //UpgradeManager.instance.getEnergy(curEnergy);
