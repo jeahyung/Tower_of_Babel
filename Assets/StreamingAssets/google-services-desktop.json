@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "156474661782",
+    "project_id": "babel-4c2c2",
+    "storage_bucket": "babel-4c2c2.appspot.com",
+    "firebase_url": "https://babel-4c2c2-default-rtdb.firebaseio.com/"    
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156474661782:android:0d0ac73b0a2acc94f05bb7",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.Babel"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCMbZl-v5cLagWpevIZ00DhKXX0nXBqDLo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

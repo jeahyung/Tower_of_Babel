@@ -9,7 +9,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public ScoreUI scoreUI;
     public UI_Result resultUI;
     public int[] turnScore = new int[4];
-
+    public Rank rankUI;
     //두 개 묶어서 계산
     int stageClearScore = 0;
     int clearTurnScore = 0; //클리어 턴에 따른 스코어
@@ -41,7 +41,7 @@ public class ScoreManager : Singleton<ScoreManager>
         scoreUI.SetSumSocre(scoreSum);
 
         resultUI = FindObjectOfType<UI_Result>();
-
+        rankUI = FindObjectOfType<Rank>();
         for (int i = 0; i < turnScore.Length; ++i)
         {
             if (i == 3) { turnScore[i] = 3000; return; }
@@ -232,7 +232,7 @@ public class ScoreManager : Singleton<ScoreManager>
 
         int totalScore = scoreSum + stageClearScore + clearTurnScore + actScore + noneItemSocre;
         resultUI.ShowResult(scoreSum, totalScore, scoreList);
-
+        rankUI.UpdateUserScore(totalScore);
         //resultUI.ShowResult(sc, scoreSum, totalScore, scoreList);
 
         scoreSum = totalScore;
