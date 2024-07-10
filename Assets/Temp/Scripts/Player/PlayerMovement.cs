@@ -41,6 +41,8 @@ public class PlayerMovement : MonoBehaviour
     public int degree_back = 0;   //되돌올 때 회전할 각
     private int cnt = 0;
 
+    bool isSuperJump = false;
+
     public bool TurnEnd()
     {
         if(isDamaged == true) { return false; }
@@ -231,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         h = 2f;
 
+        isSuperJump = true;
         manager_Turn.isDone = false;
         rigid.useGravity = false;   //중력을 끈다.
 
@@ -293,6 +296,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartJump()
     {
+        if(isSuperJump)
+        {
+            anim.SetTrigger("SuperJump");
+            return;
+        }
         anim.SetTrigger("StartJump");
         //anim.SetBool("isJump", true);
     }
@@ -322,6 +330,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = endPos;
         rigid.useGravity = true;
         canMove = true;
+        isSuperJump = false;
         if (degree_back != 8)
         {
             RotateBack();
