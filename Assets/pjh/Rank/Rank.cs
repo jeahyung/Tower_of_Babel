@@ -11,14 +11,14 @@ using Firebase.Extensions;
 public class Rank : MonoBehaviour
 {
     public TMP_Text displayText; //Á¡¼ö
-
+    public DB_Manager manager;
    
     public int score = 0;
     public int a = 0;
   
     void Start()
     {
-     //   manager = FindObjectOfType<DB_Manager>();
+        manager = FindObjectOfType<DB_Manager>();
     }
 
    
@@ -26,7 +26,7 @@ public class Rank : MonoBehaviour
     {
         score = total;
         displayText.text = total.ToString();
-      
+        manager.CompareNumber(total);
     }
     
     

@@ -5,7 +5,7 @@ using UnityEngine;
 public class Rook : MonoBehaviour
 {
     public Map map;
-
+   
     [Header("몬스터 시작점")] //이건 추후 데이터 받아오는 형식으로 수정
     [SerializeField] private int startX;
     [SerializeField] private int startY;
@@ -13,6 +13,7 @@ public class Rook : MonoBehaviour
     public Tile curTile = null;
     private void Start()
     {
+       
         map = FindObjectOfType<Map>();
 
         curTile = map.GetTile(map.tiles[startX, startY].coord);
@@ -36,6 +37,9 @@ public class Rook : MonoBehaviour
     {
         curTile.tileType = TileType.possible;
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Destroy);
+        EffectManage.Instance.PlayEffect("Key_Effect", this.transform.position);
         gameObject.SetActive(false);
+    
     }
+
 }

@@ -250,7 +250,8 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         if (ch)
         {
             ch = false;
-            Think();           
+            Think();
+            yield break;
         }       
      //   manager_Turn.EndEnemyTurn();
       //  Debug.Log("Dddddd");

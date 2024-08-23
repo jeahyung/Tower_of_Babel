@@ -14,6 +14,7 @@ public class CreatedObject : MonoBehaviour
             if(this.gameObject != null)
             {
                 Destroy(this.gameObject);
+                EffectManage.Instance.PlayEffect("Diamond_Destroy", this.transform.position);
                 return true;
             }
 

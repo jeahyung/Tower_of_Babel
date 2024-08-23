@@ -17,11 +17,16 @@ public class DB_Manager : MonoBehaviour
     List<Rankdata> rankList = new List<Rankdata>();
 
     public TMP_InputField input; // 입력한 닉네임
-    public TMP_Text displayText; // 랭킹판에 보이는 닉네임  
+    public TMP_Text[] displayText; // 랭킹판에 보이는 닉네임  
     public TMP_Text RkText; //결과창 순위
+    public string[] userNames;
+
+    public Transform contentTransform; // ScrollView의 Content Transform
+    public GameObject textPrefab; // TMP_Text 프리팹
 
     void Start()
     {
+        //displayText.fontSize = 36;
         // Firebase 초기화
         FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
         {
@@ -33,8 +38,10 @@ public class DB_Manager : MonoBehaviour
 
                 reference = FirebaseDatabase.DefaultInstance.RootReference;
 
-      
-            
+                Debug.Log("Firebase 초기화 완료");
+               // WriteDB();
+                ReadDB(); // 데이터베이스 읽기 메서드 호출
+
             }
             else
             {
@@ -42,8 +49,10 @@ public class DB_Manager : MonoBehaviour
             }
         });
         
+     
     }
 
+  
     public void WriteDB()
     {
         if (reference == null)
@@ -63,33 +72,79 @@ public class DB_Manager : MonoBehaviour
 
     public void ReadDB()
     {
-        if (reference == null)
-        {
-            Debug.LogError("Firebase database reference is not initialized.");
-            return;
-        }
-
-        reference.Child("RankingBoard").GetValueAsync().ContinueWith(task =>
+        reference.Child("RankingBoard").GetValueAsync().ContinueWithOnMainThread(task =>
         {
             if (task.IsCompleted)
             {
                 DataSnapshot snapshot = task.Result;
+                List<(string userName, int rankScore)> userList = new List<(string userName, int rankScore)>();
 
                 foreach (DataSnapshot data in snapshot.Children)
                 {
-                    IDictionary Rankdata = (IDictionary)data.Value;
-                    Debug.Log("이름 : " + Rankdata["name"] + " 점수 : " + Rankdata["rankScore"]);
+                    IDictionary rankData = (IDictionary)data.Value;
+                    string userName = rankData["name"].ToString();
+                    int rankScore = Convert.ToInt32(rankData["rankScore"]);
+                    userList.Add((userName, rankScore));
+                }
+
+                // 정렬
+                userList.Sort((a, b) => b.rankScore.CompareTo(a.rankScore)); // 점수 내림차순 정렬
+
+                // 최대 50개의 데이터만 출력
+                int displayCount = Mathf.Min(userList.Count, 50);
+                for (int i = 0; i < displayCount; i++)
+                {
+                    GameObject newObject = Instantiate(textPrefab, contentTransform);
+                    TMP_Text tmpText = newObject.GetComponent<TMP_Text>();
+                    tmpText.fontSize = 36; // 기본 폰트 사이즈 설정
+                    tmpText.text = $"{i + 1}. {userList[i].userName}    {userList[i].rankScore}";
                 }
             }
+            else
+            {
+                Debug.LogError("Firebase 데이터 읽기 실패: " + task.Exception);
+            }
         });
+        //reference.Child("RankingBoard").GetValueAsync().ContinueWith(task =>
+        //{
+        //    if (task.IsCompleted)
+        //    {
+        //        DataSnapshot snapshot = task.Result;
+        //        int i = 0;
+        //        foreach (DataSnapshot data in snapshot.Children)
+        //        {
+        //            IDictionary Rankdata = (IDictionary)data.Value;
+        //            Debug.Log("이름 : " + Rankdata["name"] + " 점수 : " + Rankdata["rankScore"]);
+        //            string rankInfo = $"{i + 1}. {Rankdata["name"]}                  {Rankdata["rankScore"]}";
+
+        //            displayText[i].text = rankInfo;
+        //            //UpdateTxet(rankInfo);
+        //            //if (i < 5)
+        //            //{
+        //            //    displayText.text = rankInfo;
+        //            //}
+        //            //else
+        //            //{
+        //            //    Debug.LogWarning($"displayText 배열의 크기()가 너무 작습니다. 데이터를 모두 출력할 수 없습니다.");
+        //            //    break;
+        //            //}
+
+        //            i++; // 다음 인덱스로 이동
+
+        //        }
+        //    }
+        //});
+        //Canvas.ForceUpdateCanvases();
     }
 
-    public void AddRankdata(string name, int rankScore)
+    public void AddRankdata(string name, int rankScore) //이걸로 서버에 등록
     {
         rankList.Add(new Rankdata(name, rankScore));
 
         // 추가 후 다시 정렬
         rankList = rankList.OrderByDescending(data => data.rankScore).ToList();
+
+        SaveDataToFirebase();
     }
 
     void SaveDataToFirebase()
@@ -102,9 +157,9 @@ public class DB_Manager : MonoBehaviour
             index++;
         }
     }
-    public void UpdateTxet()
+    public void UpdateTxet(int i)
     {
-        displayText.text = input.text;
+        displayText[i].text = input.text;
     }
 
     public void CompareNumber(int compareScore)
@@ -135,6 +190,7 @@ public class DB_Manager : MonoBehaviour
 
                 // compareScore의 순위 계산
                 int rank = scores.IndexOf(compareScore) + 1;
+
                 RkText.text = rank.ToString();              
 
             }

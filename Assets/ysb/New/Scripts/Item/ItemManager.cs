@@ -60,6 +60,7 @@ public class ItemManager : MonoBehaviour
             return;
         }
         player.UseItem();   //¾Ö´Ï
+        EffectManage.Instance.PlayEffect("Item_Use", player.transform.position);
         ScoreManager.instance.Score_ItemUse();
         energy.UseEnergy();
         ItemInventory.instance.RemoveItem(selectedItem);
@@ -79,7 +80,7 @@ public class ItemManager : MonoBehaviour
         GameObject newObejct = Instantiate(obj);
         newObejct.tag = "Dia";
         map.SetObjectPosition(newObejct);
-
+   
         objs.Add(newObejct.GetComponent<CreatedObject>());
     }
     public void MovePlayer(Item item)

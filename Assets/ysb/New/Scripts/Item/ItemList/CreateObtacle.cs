@@ -5,10 +5,10 @@ using UnityEngine;
 public class CreateObtacle : Item
 {
     public GameObject itemPrefab;
-
+    
     private void Start()
     {
-        range = 2;
+        range = 2;   
     }
     public override void SelectItem()
     {

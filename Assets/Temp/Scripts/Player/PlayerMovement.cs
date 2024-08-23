@@ -41,6 +41,9 @@ public class PlayerMovement : MonoBehaviour
     public int degree_back = 0;   //되돌올 때 회전할 각
     private int cnt = 0;
 
+  //  private float effectDown = 0.2f;
+
+
     public bool TurnEnd()
     {
         if(isDamaged == true) { return false; }
@@ -333,7 +336,10 @@ public class PlayerMovement : MonoBehaviour
                 EndPlayerTurn();
             }
         }
+        Vector3 effpos = new(transform.position.x, 0.2f,transform.position.z);
+        EffectManage.Instance.PlayEffect("Player_BigStep", effpos);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
+       
     }
 
     protected IEnumerator MoveToEnd()
@@ -372,6 +378,8 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+        Vector3 effpos1 = new(transform.position.x, 0.2f, transform.position.z);
+        EffectManage.Instance.PlayEffect("Player_Step", effpos1);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
     }
     #endregion
@@ -411,6 +419,7 @@ public class PlayerMovement : MonoBehaviour
         int dmg = 3 * per;
 
         anim.SetTrigger("isDamaged");
+        EffectManage.Instance.PlayEffect("Player_Hit", transform.position);
         energySysteam.UseEnergy(dmg);
         DamagedMove(map.CheckNearTile());
     }

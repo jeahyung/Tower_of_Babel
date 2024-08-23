@@ -90,8 +90,8 @@ public class StageManager : Singleton<StageManager>
         if(curStage != null) { curStage.SetActive(false); }
         manager_turn.KingReset();
         //새 스테이지
-        int si = Random.Range(0, stages.Count);    
-        //int si = 8;
+        //int si = Random.Range(0, stages.Count);    
+        int si = 2;
         curStage = stages[si];
         curStage.SetActive(true);
         mob = curStage.GetComponentInChildren<MobManager>();

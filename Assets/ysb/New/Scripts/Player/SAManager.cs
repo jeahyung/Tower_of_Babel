@@ -199,6 +199,8 @@ public class SAManager : MonoBehaviour
         if(actionBtn.enabled == false) { return; }
         map.useAction = true;
         actionBtn.enabled = false;
+       // Debug.Log("click btn!@@@@@@@@@@@@@@@@@@");
+        EffectManage.Instance.PlayEffect("Player_Skill", map.nowTile.GetPosition());
 
         es.useEnergy = action.energy;
      

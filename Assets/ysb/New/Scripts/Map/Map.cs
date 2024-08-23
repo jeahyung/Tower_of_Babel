@@ -493,6 +493,9 @@ public class Map : MonoBehaviour
 
     public Mob UseRope()
     {
+        //타일 좌표라 마이너스에 처 박혀있음
+        Vector3 pos = new(clickTile.transform.position.x, 0 , clickTile.transform.position.z);
+        EffectManage.Instance.PlayEffect("Rope_Effect", pos);
         return clickTile.mob;
     }
 
@@ -514,8 +517,13 @@ public class Map : MonoBehaviour
 
         //GameObject newObejct = Instantiate(obj);
         Vector3 pos = clickTile.GetPosition();
+       
+
         float yPos = obj.transform.localScale.y + 2 + clickTile.transform.position.y;
-        obj.transform.position = new Vector3(pos.x, yPos, pos.z);
+        //수정 yPos 사용 여부 :  사용시 오브젝트가 너무 공중에 생성됨
+        obj.transform.position = new Vector3(pos.x, 0, pos.z);
+        EffectManage.Instance.PlayEffect("Diamond_Create", obj.transform.position);
+        Debug.Log(obj.transform.position);
 
         temp = playerTile;
         playerTile = clickTile;
@@ -530,6 +538,7 @@ public class Map : MonoBehaviour
     public void SetPlayerPosition()
     {
         HideArea();
+        EffectManage.Instance.PlayEffect("Player_Teleport", player.transform.position);
         player.TeleportPlayer(tiles[0, 0].GetPosition());
         nowTile = tiles[0, 0];
         playerTile = nowTile;

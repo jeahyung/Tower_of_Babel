@@ -8,29 +8,31 @@ TagManager:
   - PuzzleGrid
   - Wall
   - Tile
+  - Dia
+  - Start
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Conductor
   - Water
   - UI
-  - 
-  - 
-  - 
+  - Tornado
+  - Flamer
+  - Flammable
   - Tile
   - Object
   - Enemy
   - Player
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
-  - 
+  - Grass
+  - Butter
+  - Freezable
+  - PPaint
+  - FlameThrow
+  - VortexSafe
+  - NoForcePDM
+  - PDM_Batch_Pool
+  - PDM_Batch_Pool_Break
   - 
   - 
   - 

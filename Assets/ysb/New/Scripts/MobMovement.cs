@@ -113,7 +113,9 @@ public class MobMovement : MonoBehaviour, Mob
                     nextCoord = curTile.coord + moveDir;
                     nextTile = map.GetTile(nextCoord);
                 }
+                EffectManage.Instance.PlayEffect("Monster_Move", this.transform.position);
                 transform.forward = new Vector3(moveDir.y, 0, moveDir.x);
+
                 tile.tileType = TileType.possible;
                 tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
