@@ -145,7 +145,6 @@ GameObject:
   - component: {fileID: 4404525191097327239}
   - component: {fileID: 1207765343962576102}
   - component: {fileID: 6292979433505288895}
-  - component: {fileID: 8431146941009689449}
   - component: {fileID: 499434620804960411}
   m_Layer: 0
   m_Name: Mob_Bishop
@@ -201,19 +200,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 112
   m_CollisionDetection: 0
---- !u!114 &8431146941009689449
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8150193643051113708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 332c4001875ccb7499d8501fb13be6c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mon: {fileID: 499434620804960411}
 --- !u!114 &499434620804960411
 MonoBehaviour:
   m_ObjectHideFlags: 0

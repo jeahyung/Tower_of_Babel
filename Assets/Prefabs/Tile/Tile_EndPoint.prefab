@@ -150,7 +150,11 @@ MonoBehaviour:
   coord: {x: 0, y: 0}
   rend: {fileID: 2624536765379879924}
   effectPrefab: {fileID: 5718832471167662971}
+  flame: {fileID: 0}
+  flameCnt: 1
+  flameHP: 0
   rook: {fileID: 0}
+  dropSpeed: 0.5
 --- !u!114 &6779303268168222485
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -165,6 +169,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   turn: {fileID: 0}
   up: {fileID: 0}
+  cam2: {fileID: 0}
+  wall: {fileID: 0}
+  wall2: {fileID: 0}
 --- !u!1001 &1122936331884153412
 PrefabInstance:
   m_ObjectHideFlags: 0

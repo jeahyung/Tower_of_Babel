@@ -8,6 +8,8 @@ public class TurnManager : MonoBehaviour
     private PlayerMovement player;
     private ItemManager manager_Item;
     private SAManager manager_Action;
+    private TileDown downTile;
+    
 
     [SerializeField] private float delayTime = 1f;
     [SerializeField]private UI_Turn ui_turn;
@@ -30,6 +32,8 @@ public class TurnManager : MonoBehaviour
         manager_map = FindObjectOfType<Map>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Item = player.GetComponent<ItemManager>();
+        downTile = FindObjectOfType<TileDown>();
+       
 
         //manager_Mob = FindObjectOfType<MobManager>();
         manager_Action = FindObjectOfType<SAManager>();
@@ -133,6 +137,8 @@ public class TurnManager : MonoBehaviour
     {
         isPlayerTurn = false;
         isDone = true;
+        downTile.DownTile();
+        
 
         if (UpgradeManager.instance.getBonusTurn() > 0)
         {
@@ -151,13 +157,14 @@ public class TurnManager : MonoBehaviour
 
     #region enemy turn
     public void StartEnemyTurn()
-    {
+    {       
         if (StageManager.instance.isPlaying == false || isGameOver) { return; }    //게임 시작 여부
         if (isPlayerTurn == true || isEnemyTurn == true || IsLastTile() == true) { return; }
         //isEnemyTurn = true;
 
         //manager_Mob.ActMob();
         //Debug.Log("몬스터 턴");
+        manager_map.CheckPlayerTile(player.moveRange);  // 킹 패턴 시작
         StartCoroutine(EnemyTurn());
     }
     private IEnumerator EnemyTurn()

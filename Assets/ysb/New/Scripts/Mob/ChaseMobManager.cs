@@ -26,7 +26,7 @@ public class ChaseMobManager : MonoBehaviour
             transform.parent.SendMessage("EndChase");
         }
         else
-        {
+        {           
             knightList[mi].Act();
         }
     }
@@ -38,6 +38,7 @@ public class ChaseMobManager : MonoBehaviour
             return;
         }
         mi = 0;
+        knightList[mi].BurnOff();
         knightList[mi].Act();
     }
 }

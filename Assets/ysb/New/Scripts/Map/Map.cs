@@ -127,6 +127,11 @@ public class Map : MonoBehaviour
         FindTileInRange_Four(nowTile, range);
     }
 
+    public void CheckPlayerTile(int range)
+    {
+        FindTileInRange_List(nowTile, range);
+    }
+
     #region 타일 탐색
     private void CheckTileObject()
     {
@@ -138,6 +143,30 @@ public class Map : MonoBehaviour
             }
         }
     }
+
+    public void FindTileInRange_List(Tile startTile, int range)
+    {
+        moveArea.Clear();
+        startCoord = startTile.coord;
+
+        CheckTileObject();
+
+        for (int i = 0; i < 4; ++i)
+        {
+            for (int j = 0; j < range; ++j)
+            {
+                Vector2Int nowCoord = startCoord + distance[i] * (j + 1);
+                Tile findTile = GetTile(nowCoord);
+
+                if (findTile != null)
+                {
+                    moveArea.Add(findTile);
+                }
+            }
+        }
+       
+    }
+
     //4방향
     public void FindTileInRange_Four(Tile startTile, int range) //시작점 / 범위
     {

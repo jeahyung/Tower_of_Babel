@@ -23,6 +23,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     [SerializeField] private int startY;
     
     public List<Tile> allTiles = new List<Tile>();
+    public List<Tile> burnedTile = new List<Tile>();
     [SerializeField] private Tile tile = null;
    // private Tile tile1 = null;
     public Vector3 nextPos;
@@ -40,6 +41,8 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
 
     public bool isRope = false; //로프에 걸렸는가?
 
+    public bool isUpgradeMob = false;
+
     private void Awake()
     {
 
@@ -52,7 +55,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         //tile1 = FindObjectOfType<Tile>();
         allTiles.AddRange(tiles);
     }
-    private void Start()
+    private void Start() 
     {
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
 
@@ -84,7 +87,12 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     private void Think()
     {
         tile.tileType = TileType.possible;
+        tile.TileBurning(tile);
+        burnedTile.Add(tile);
+
         tile.mob = null;
+     //   BurnOff(tile);
+
         //tiles.coord = new Vector2Int(tiles.coord.x + 1, tiles.coord.y);
         //SetPosition(tiles.coord.GetPosition());
         int i = tile.coord.x;
@@ -336,6 +344,24 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     public Tile ShowTile()
     {
         return tile;
+    }
+
+    public void BurnOff()
+    {
+        /*
+        for (int i = 0; i < burnedTile.Count; i++)
+        {
+            burnedTile[i].flameHP--;
+            
+            if (burnedTile[i].flameHP <= 0)
+            {
+              //  burnedTilep[i].TileBurnOff(burnedTilep[i]);
+            }
+        }
+        */
+        Debug.Log("BurnOff");
+        tile.TileBurnOff(burnedTile);
+        
     }
 
 }
