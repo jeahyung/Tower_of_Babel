@@ -63,14 +63,11 @@ public class EnergySystem : MonoBehaviour
         if (curEnergy <= 0)
         {
             curEnergy = -1;
-            gameObject.SendMessage("Die");
-            //StageManager.instance.GameOver();//GameOver_suicide();
+            StageManager.instance.GameOver();
             Debug.Log("gameOver");
             return false;
         }
 
         return true;
     }
-
-    public int GetEnergy() { return curEnergy; }
 }

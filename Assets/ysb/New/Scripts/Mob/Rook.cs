@@ -15,18 +15,15 @@ public class Rook : MonoBehaviour
     {
        
         map = FindObjectOfType<Map>();
+
         curTile = map.GetTile(map.tiles[startX, startY].coord);
-        if (curTile!=null)
-        {
-            curTile.tileType = TileType.impossible;
-            curTile.rook = this;
+        curTile.tileType = TileType.impossible;
+        curTile.rook = this;
 
-            Vector3 pos = new Vector3(curTile.GetPosition().x,
-                curTile.GetPosition().y + 3, curTile.GetPosition().z);
-            transform.position = pos;
-        }        
+        Vector3 pos = new Vector3(curTile.GetPosition().x, 
+            curTile.GetPosition().y + 3, curTile.GetPosition().z);
+        transform.position = pos;
     }
-
     public void ResetMob()
     {
         curTile.tileType = TileType.impossible;
@@ -45,16 +42,4 @@ public class Rook : MonoBehaviour
     
     }
 
-<<<<<<< HEAD
-=======
-    public void DontMove()
-    {
-        return;
-    }
-
-    public Tile ShowTile()
-    {
-        return null;
-    }
->>>>>>> main
 }

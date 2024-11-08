@@ -52,12 +52,6 @@ public class ItemInventory : Singleton<ItemInventory>
             AddBonusItem();
         }
         count_useItem = 0;
-
-        int box = UpgradeManager.instance.GetBoxCount();
-        for (int i = 0; i < box; ++i)
-        {
-            AddBox();
-        }
     }
 
     //private void Awake()
@@ -86,19 +80,11 @@ public class ItemInventory : Singleton<ItemInventory>
         int rand = Random.Range(0, datas.Count);
         PickUpItem(datas[rand]);
     }
-    public void AddBox()
-    {
-        PickUpItem(datas[datas.Count - 1]);
-    }
     public bool PickUpItem(Item i)
     {
         if(itemUI.PickUpItem(i) == true)
         {
             int id = i.id;
-            if(id == 10)    //·£´ý ¹Ú½º
-            {
-                UpgradeManager.instance.SetBoxCount(1);
-            }
             //for(int j = 0; j < datas.Count; ++j)
             //{
             //    if(datas[j].id == id)
@@ -117,7 +103,6 @@ public class ItemInventory : Singleton<ItemInventory>
         if (b == true)
         {
             count_useItem++;
-            if(i.id == 10) { UpgradeManager.instance.SetBoxCount(-1); }
             //for(int j = 0; j < getItems.Count; ++j)
             //{
             //    if(i.id == getItems[j].id)
@@ -143,9 +128,5 @@ public class ItemInventory : Singleton<ItemInventory>
     {
         //if (num >= getItems.Count) { return; }
         //getItems[num] = i;
-    }
-    public void SetBoxCount(int i)
-    {
-        UpgradeManager.instance.SetBoxCount(i);
     }
 }

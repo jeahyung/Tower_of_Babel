@@ -8,14 +8,8 @@ TagManager:
   - PuzzleGrid
   - Wall
   - Tile
-<<<<<<< HEAD
   - Dia
   - Start
-=======
-  - Start
-  - Dia
-  - Key1
->>>>>>> main
   layers:
   - Default
   - TransparentFX

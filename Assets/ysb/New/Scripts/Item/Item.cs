@@ -10,11 +10,9 @@ public class Item : MonoBehaviour
     public int id;
     protected int range = 1;
 
-    public bool canAdd = false; //융합 가능?
-
     private void Awake()
     {
-        manager_Item = FindObjectOfType<ItemManager>();
+        manager_Item =FindObjectOfType<ItemManager>();
     }
 
     public virtual void SelectItem()

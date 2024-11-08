@@ -10,16 +10,14 @@ public class BackStartPoint : Item
     }
     public override void SelectItem()
     {
-        if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
-        manager_Item.SetPlayerPos_UI(this, 0);
-        //UseItem();
+        UseItem();
     }
     public override bool UseItem()
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
 
         range = 2;
-        
-        return manager_Item.SetPlayerPos(this, 0);
+        manager_Item.SetPlayerPos(this);
+        return true;
     }
 }

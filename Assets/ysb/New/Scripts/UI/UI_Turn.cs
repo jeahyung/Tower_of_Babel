@@ -97,8 +97,6 @@ public class UI_Turn : MonoBehaviour
     public void ShowImg(int i)
     {
         if (TurnShowImg[i].activeSelf) { return; }
-
-        if (StageManager.instance.isBonusStage) { i += 2; }
         
         TurnShowImg[i].SetActive(true);
         Debug.Log("ghcnf");

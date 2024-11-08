@@ -44,7 +44,7 @@ MeshFilter:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8137467698110949544}
-  m_Mesh: {fileID: -7553716758358721678, guid: 3f567dcbc8a86c44bbe71b0513674416, type: 3}
+  m_Mesh: {fileID: 3840146784067909648, guid: dbf4dfa7a5c38b442b8e28923bc0b284, type: 3}
 --- !u!23 &7777412755911461245
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -65,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 318a3436972e2e74eb7a9b227c898a0e, type: 2}
+  - {fileID: 2100000, guid: 5f1fcf1b25026874aaf861891c49a71f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -112,11 +112,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbadbe9113681c249a1ab1ce0b810a66, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImg: {fileID: 21300000, guid: d96cf74f1b1a0274885bea85fc1397d4, type: 3}
+  itemImg: {fileID: 21300000, guid: 2aba5cbe63bbbe747bd22e953b6827b2, type: 3}
   ex: "\uD55C \uD134 \uB3D9\uC548 \uBAAC\uC2A4\uD130\uC758 \uC6C0\uC9C1\uC784\uC744
     \uC81C\uD55C\uD55C\uB2E4."
   id: 2
-  canAdd: 0
 --- !u!114 &5160194016249276534
 MonoBehaviour:
   m_ObjectHideFlags: 0

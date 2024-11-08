@@ -6,6 +6,6 @@ public class YouDie : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        //StageManager.instance.GameOver_suicide();
+        StageManager.instance.GameOver();
     }
 }

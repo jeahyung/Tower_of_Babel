@@ -24,8 +24,6 @@ public class ScoreManager : Singleton<ScoreManager>
 
     int killSocre = 0;      //몬스터 파괴 스코어
 
-    int energyScore = 0;
-    List<float> esPer;
     public int TotalScore => scoreSum;
     private void OnEnable()
     {
@@ -62,8 +60,6 @@ public class ScoreManager : Singleton<ScoreManager>
         getSocre = 0;
 
         killSocre = 0;      //몬스터 파괴 스코어
-
-        energyScore = 0;
     }
 
     public void ResetScore()
@@ -270,109 +266,15 @@ public class ScoreManager : Singleton<ScoreManager>
         Score_NoneItem();
 
         List<int> scoreList = new List<int>();
-        scoreList.Add(0);//stageClearScore + clearTurnScore);
+        scoreList.Add(stageClearScore + clearTurnScore);
         scoreList.Add(actScore);
         scoreList.Add(getSocre);
         scoreList.Add(itemScore + noneItemSocre);
         scoreList.Add(killSocre);
 
-        int totalScore = scoreSum + actScore + noneItemSocre; //stageClearScore + clearTurnScore
+        int totalScore = scoreSum + stageClearScore + clearTurnScore + actScore + noneItemSocre;
         scoreList.Add(scoreSum);
         scoreList.Add(totalScore);
-        scoreSum = totalScore;
         return scoreList;
-    }
-
-
-    //자살
-    void SetESPer()
-    {
-        energyScore = 0;
-
-        esPer = new List<float>();
-        esPer.Clear();
-
-        esPer.Add(10f);
-        esPer.Add(20f);
-        esPer.Add(30f);
-    }
-    public void GetEnergyScore(int stage = 1, int e = 0)
-    {
-        SetESPer();
-        energyScore = (int)(e * scoreSum * 0.05f);//(int)(e * esPer[stage - 1]);
-    }
-    public List<int> CalculateScore_Suicide()
-    {
-        if (StageManager.instance.isPlaying == true)
-        {
-            StageClear();
-            Score_ClearTurn();
-            Score_SACount();
-        }
-        else
-        {
-            stageClearScore = 0;
-            clearTurnScore = 0;
-            actScore = 0;
-        }
-        Score_NoneItem();
-
-        List<int> scoreList = new List<int>();
-        scoreList.Add(energyScore);
-        scoreList.Add(actScore);
-        scoreList.Add(getSocre);
-        scoreList.Add(itemScore + noneItemSocre);
-        scoreList.Add(killSocre);
-
-        int totalScore = scoreSum + energyScore + actScore + noneItemSocre;
-        scoreList.Add(scoreSum);
-        scoreList.Add(totalScore);
-        scoreSum = totalScore;
-        return scoreList;
-    }
-
-
-    public void AddBoxScore()
-    {
-        Debug.Log("box open");
-        //스테이지 넘버 가져와서 랜덤으로 계산하셈
-        int stageNumber = StageManager.instance.GetChapterCount;
-
-        int score = 0;
-        switch(stageNumber)
-        {
-            case 1:
-                score = 3000;//Random.Range(50, 100);
-                break;
-            case 2:
-                score = 8000;//Random.Range(100, 150);
-                break;
-            case 3:
-                score = 13000;//Random.Range(150, 200);
-                break;
-            case 4:
-                score = 20000;//Random.Range(200, 300);
-                break;
-            case 5:
-                score = 30000;//Random.Range(300, 500);
-                break;
-            default:
-                break;
-        }
-        if (scoreUI == null)
-            scoreUI = FindObjectOfType<ScoreUI>();
-
-        //int bonus = UpgradeManager.instance.GetScore_Item();//.bonusScore;
-        scoreSum += score;
-
-        itemScore += score; //결과창 용
-        //UpgradeManager.instance.SumScore = scoreSum;
-        scoreUI.UseItem(score);
-        scoreUI.SetSumSocre(scoreSum);
-    }
-
-    public void DecreaseScore(int del)
-    {
-        scoreSum -= del;
     }
 }

@@ -10,21 +10,12 @@ namespace MasterStylizedExplosion
 
         void OnWillRenderObject()
         {
-<<<<<<< HEAD
             if (Camera.current)
             {
                 if (bTurnOver)
                     transform.forward = Camera.current.transform.forward;
                 else
                     transform.forward = -Camera.current.transform.forward;
-=======
-            if (Camera.main)
-            {
-                if (bTurnOver)
-                    transform.forward = Camera.main.transform.forward;
-                else
-                    transform.forward = -Camera.main.transform.forward;
->>>>>>> main
             }
         }
     }

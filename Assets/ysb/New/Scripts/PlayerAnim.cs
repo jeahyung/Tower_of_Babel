@@ -41,9 +41,4 @@ public class PlayerAnim : MonoBehaviour
         //player.StartJump();
         //canJump = false;
     }
-
-    public void GameOver()
-    {
-        player.GameOver();
-    }
 }

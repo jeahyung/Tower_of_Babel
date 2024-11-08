@@ -31,8 +31,6 @@ public class UpgradeManager : Singleton<UpgradeManager>
 
     private int turn_bonus;
 
-    public static int boxCount = 0;
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -74,8 +72,6 @@ public class UpgradeManager : Singleton<UpgradeManager>
         bonusScore_noneItem = 0;  //보너스 스코어-아이템 미사용    
         bonusScore_turn = 0;      //보너스 스코어-제한 턴 수   
         bonusScore_killmob = 0;   //보너스 스코어-몬스터 파괴
-
-        boxCount = 0;
 }
 
     //게임 시작 시 세팅돼야 하는 것들
@@ -233,14 +229,6 @@ public class UpgradeManager : Singleton<UpgradeManager>
         return noneEnergy;
     }
 
-    public int GetBoxCount()
-    {
-        return boxCount;
-    }
-    public void SetBoxCount(int i)
-    {
-        boxCount += i;
-    }
     //public void SetData()
     //{
     //    saNum = LoadGameData.instance.SearchUpData("SA"); 
