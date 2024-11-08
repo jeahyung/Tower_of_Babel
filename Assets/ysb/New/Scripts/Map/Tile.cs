@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
 
     public Vector2Int coord;
 
-    public SpriteRenderer rend;
+    //public SpriteRenderer rend;
 
     public GameObject effectPrefab;
     public ParticleSystem flame;
@@ -53,12 +53,12 @@ public class Tile : MonoBehaviour
     {
         //if(tileType != TileType.possible) { return; }        
         ShowEffect();
-        rend.enabled = false;
+      //  rend.enabled = false;
 
     }
     public void HideArea()
     {
-        rend.enabled = false;
+       // rend.enabled = false;
         HideEffect();
     }
 

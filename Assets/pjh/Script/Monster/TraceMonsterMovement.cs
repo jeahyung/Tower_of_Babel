@@ -6,6 +6,7 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class TraceMonsterMovement : MonoBehaviour, Mob
 {
@@ -16,7 +17,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
    // [SerializeField]private GameObject player;
 
     [SerializeField] private Map map;
-  
+    private Animator ani;
 
     [Header("몬스터 시작점")] //이건 추후 데이터 받아오는 형식으로 수정
     [SerializeField] private int startX;
@@ -31,7 +32,9 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     public TurnManager manager_Turn;
     public bool minA;
     public bool minB;
-  
+    public bool isEnd = true;  //행동을 종료했는가?
+    public bool isDone = false;
+
     public Vector2Int pos; //현재 위치 보기용이라 지워도 됨
     
     public float smoothTime = 0.2f;
@@ -42,6 +45,12 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     public bool isRope = false; //로프에 걸렸는가?
 
     public bool isUpgradeMob = false;
+    public int moveCount = 2;
+    private int count = 0;
+
+    private Vector3 initialPosition;
+    private bool isAnimationPlaying = false;
+
 
     private void Awake()
     {
@@ -57,7 +66,9 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     }
     private void Start() 
     {
+        ani = GetComponent<Animator>();
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
+        count = moveCount;
 
         Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
@@ -69,9 +80,28 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         MonsterSetting(nextPos);
     }
     void Update()
-    {       
-     
+    {
+        //if (!ani.IsInTransition(0))
+        //{
+        //    AnimatorStateInfo stateInfo = ani.GetCurrentAnimatorStateInfo(0);
+        //    if (stateInfo.IsName("Take 001") && stateInfo.normalizedTime >= 1f)
+        //    {
+        //      //  Debug.Log("Run 애니메이션이 끝났습니다.");
+        //        ani.SetBool("Act", false); // Idle 상태로 돌아가기
+        //        Chase(tile);
+        //    }
+        //}
         //pos = tile.coord;
+
+        if (isAnimationPlaying)
+        {
+            transform.position = initialPosition;
+        }
+
+        if (Input.GetKeyDown(KeyCode.U))
+        {
+            CheckAni();
+        }
     }
 
     public void MonsterSetting(Vector3 target)
@@ -290,9 +320,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
             isRope = false;
             return;
         }
-
-        ch = true;
-        Think();     
+        Chase(tile);  
     }
     private void CheckTile()
     {
@@ -364,4 +392,138 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         
     }
 
+
+    public void Chase(Tile tile)
+    {
+        Vector2Int dirCheck = map.playerTile.coord - tile.coord;
+        Movepattern(dirCheck, tile);
+    }
+
+    public void Movepattern(Vector2Int dirCheck, Tile nowtile)
+    {
+        Vector2Int nextCoord;
+
+        if (Mathf.Abs(dirCheck.x) > Mathf.Abs(dirCheck.y))
+        {
+            tile = nowtile;
+            Tile nextTile;
+            if (0 < dirCheck.x)
+            {
+                nextCoord = new Vector2Int(tile.coord.x + 1, tile.coord.y);
+                nextTile = map.GetTile(nextCoord);
+                tile.tileType = TileType.possible;
+                tile.mob = null;
+                StartCoroutine(MoveMob(nextTile));
+                //CheckAni(nextTile);
+            }
+            else if (0 > dirCheck.x)
+            {
+                nextCoord = new Vector2Int(tile.coord.x - 1, tile.coord.y);
+                nextTile = map.GetTile(nextCoord);
+                tile.tileType = TileType.possible;
+                tile.mob = null;
+                StartCoroutine(MoveMob(nextTile));
+                //CheckAni(nextTile);
+            }
+
+        }
+        else
+        {
+            tile = nowtile;
+            Tile nextTile;
+            if (0 < dirCheck.y)
+            {
+                nextCoord = new Vector2Int(tile.coord.x, tile.coord.y + 1);
+                nextTile = map.GetTile(nextCoord);
+                tile.tileType = TileType.possible;
+                tile.mob = null;
+                StartCoroutine(MoveMob(nextTile));
+                //CheckAni(nextTile);
+
+            }
+            else if (0 > dirCheck.y)
+            {
+                nextCoord = new Vector2Int(tile.coord.x, tile.coord.y - 1);
+                nextTile = map.GetTile(nextCoord);
+                tile.tileType = TileType.possible;
+                tile.mob = null;
+                StartCoroutine(MoveMob(nextTile));
+                //CheckAni(nextTile);
+            }
+        }
+    }
+
+    private IEnumerator MoveMob(Tile nextTile)
+    {
+        //if(nextTile.tileType == TileType.impossible)
+        //{
+        //    Debug.Log("TileType.impossible choose Warring");
+        //    yield break;
+        //}
+        if (nextTile == null)
+        {
+            count = moveCount;
+            isEnd = true;
+            isDone = true;
+            tile.tileType = TileType.impossible;
+
+            mgr_Chase.CheckMobAction();
+            yield break;
+        }
+
+        if (nextTile.coord == map.playerTile.coord)
+        {
+            ani.SetTrigger("StartAttack");
+
+            yield return new WaitForSeconds(1.2f);
+            
+        }
+        map.TakeDamage(nextTile);
+        ani.SetTrigger("StartIdle");
+        float ypos = transform.position.y;
+        Vector3 nextPos = new Vector3(nextTile.transform.position.x, ypos, nextTile.transform.position.z);
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+
+        //map.TakeDamage(nextTile);
+
+        while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
+        {
+            transform.position = Vector3.Lerp(transform.position, nextPos, 8f * Time.deltaTime);
+            yield return null;
+        }
+        transform.position = nextPos;
+        tile = nextTile;
+        nextTile.tileType = TileType.impossible;
+        nextTile.mob = this.GetComponent<Mob>();
+
+        yield return new WaitForSeconds(0.5f);
+
+        if (--count > 0)
+        {
+            Act(); // 다음 행동
+            yield break;
+        }
+
+        count = moveCount;
+        isEnd = true;
+        isDone = true;
+
+        mgr_Chase.CheckMobAction();
+    }
+
+    private void CheckAni()
+    {
+        initialPosition = transform.position;
+        isAnimationPlaying = true;
+
+        ani.SetBool("Act", true);
+
+        Invoke("LateAni", 2f);
+    }
+
+    private void LateAni()
+    {
+        ani.SetBool("Act", false);
+        isAnimationPlaying = false;
+    }
 }

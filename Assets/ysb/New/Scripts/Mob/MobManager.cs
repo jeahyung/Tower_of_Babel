@@ -11,7 +11,7 @@ public class MobManager : MonoBehaviour
 
     private List<Mob> mobs = new List<Mob>();
 
-    private List<Rook> rooks = new List<Rook>();   //ท่ต้
+    private List<Rook> rooks = new List<Rook>();   //ท่ต้    
 
     //ผ๘ย๛วü
     private PatrolMobManager manager_Patrol;

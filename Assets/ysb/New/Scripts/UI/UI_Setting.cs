@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,10 @@ public class UI_Setting : Singleton<UI_Setting>
     public Slider sfxSlider;
 
     public List<UpSlot> slots = new List<UpSlot>();
+
+    private bool isAnimating = false;
+    private bool isOpen = false;
+    private RectTransform rect;
 
     private void Awake()
     {
@@ -42,7 +47,9 @@ public class UI_Setting : Singleton<UI_Setting>
             AudioManager.instance.SetSfxVolume(sfxVolume);
         }
 
-        Setting.SetActive(false);
+        //Setting.SetActive(false);
+        rect = Setting.GetComponent<RectTransform>();
+        rect.localScale = Vector3.zero;       
         Option.SetActive(false);
     }
 
@@ -55,6 +62,34 @@ public class UI_Setting : Singleton<UI_Setting>
         }
     }
 
+    public void ShowPopUp()
+    {
+        if (isAnimating || isOpen) return;
+
+        isAnimating = true;
+        isOpen = true;
+
+        rect.DOScale(Vector3.one, 0.5f).SetEase(Ease.OutBack)
+           .OnComplete(()=> {
+               isAnimating = false;
+              
+               });
+    }
+
+    public void HidePopUp() 
+    {
+        if (isAnimating || !isOpen) return;
+
+        isAnimating = true;
+        isOpen = false;
+
+        rect.DOScale(Vector3.zero, 0.5f).SetEase(Ease.InBack)
+            .OnComplete(() =>
+            {
+                isAnimating = false;
+                Debug.Log("Popup hidden"); // HidePopup가 호출되었음을 로그로 확인
+            });
+    }
 
     public void AddUpgrade(Upgrade up)
     {
@@ -79,13 +114,13 @@ public class UI_Setting : Singleton<UI_Setting>
     }
     public void OpenSetting()
     {
-        if(Setting.activeSelf == false)
+        if(isOpen == false)
         {
-            Setting.SetActive(true);
+            ShowPopUp();
         }
         else
         {
-            Setting.SetActive(false);
+            HidePopUp();
         }
     }
     public void OpenOption()

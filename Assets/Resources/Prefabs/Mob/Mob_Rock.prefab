@@ -4636,6 +4636,7 @@ GameObject:
   - component: {fileID: 1683901259165830521}
   - component: {fileID: 1683901259165830526}
   - component: {fileID: 8733622393217318031}
+  - component: {fileID: -1482395975342615457}
   m_Layer: 11
   m_Name: Mob_Rock
   m_TagString: Wall
@@ -4702,7 +4703,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   map: {fileID: 0}
-  eff: {fileID: 2386666733287535778}
   startX: 0
   startY: 0
   curTile: {fileID: 0}
@@ -4719,6 +4719,38 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2, y: 5, z: 2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &-1482395975342615457
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1683901259165830524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b36a837faf0e80046893d79ab01bbdd0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 0}
+  map: {fileID: 0}
+  startX: 0
+  startY: 0
+  allTiles: []
+  burnedTile: []
+  tile: {fileID: 0}
+  nextPos: {x: 0, y: 0, z: 0}
+  manager_Turn: {fileID: 0}
+  minA: 0
+  minB: 0
+  isEnd: 1
+  isDone: 0
+  pos: {x: 0, y: 0}
+  smoothTime: 0.2
+  moveRange: 1
+  effectPrefab: {fileID: 0}
+  isRope: 0
+  isUpgradeMob: 0
+  moveCount: 2
 --- !u!1 &2386666733287535778
 GameObject:
   m_ObjectHideFlags: 0

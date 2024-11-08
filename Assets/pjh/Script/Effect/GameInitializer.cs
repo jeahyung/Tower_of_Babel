@@ -26,6 +26,7 @@ public class GameInitializer : MonoBehaviour
         EffectManage.Instance.RegisterEffect("UI_Popup", effect[14]);
         EffectManage.Instance.RegisterEffect("UI_Use_Skill", effect[15]);
         EffectManage.Instance.RegisterEffect("Monster_Move", effect[16]);
+        EffectManage.Instance.RegisterEffect("Rope_Effect", effect[17]);
 
     }
 }

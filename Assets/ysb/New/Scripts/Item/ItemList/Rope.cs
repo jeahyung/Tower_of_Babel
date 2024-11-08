@@ -29,6 +29,7 @@ public class Rope : Item
             mob.DontMove();
             //ScoreManager.instance.KillMob();    //½ºÄÚ¾î
             manager_Item.NextTurn();
+            
             return true;
         }
         

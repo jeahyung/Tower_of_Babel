@@ -49,12 +49,6 @@ public class Player_Move : MonoBehaviour
     void Update()
     {
         Moving();
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-           // Debug.Log("Player_Step@@@@@@@@@@@@@@@@@@@");
-            EffectManage.Instance.PlayEffect("Diamond_Create", this.transform.position);
-        }
-    
     }
 
     public void CheckAndMoving()

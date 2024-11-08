@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class PatrolMobManager : MonoBehaviour
 {
-     private List<MobMovement> bishopList = new List<MobMovement>();
-    //private List<MobMoveChanger> bishopList = new List<MobMoveChanger>();
+    //private List<MobMovement> bishopList = new List<MobMovement>();
+    private List<MonsterAI> bishopList = new List<MonsterAI>();
 
     public int mi = 0;
     public int mCount = 0;
@@ -14,8 +14,8 @@ public class PatrolMobManager : MonoBehaviour
     private void Awake()
     {
         bishopList.Clear();
-        bishopList.AddRange(GetComponentsInChildren<MobMovement>());
-       // bishopList.AddRange(GetComponentsInChildren<MobMoveChanger>());
+    //    bishopList.AddRange(GetComponentsInChildren<MobMovement>());
+        bishopList.AddRange(GetComponentsInChildren<MonsterAI>());
 
         mi = 0;
         mCount = bishopList.Count;
@@ -42,4 +42,5 @@ public class PatrolMobManager : MonoBehaviour
         mi = 0;
         bishopList[mi].Act();
     }    
+
 }

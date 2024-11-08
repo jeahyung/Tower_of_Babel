@@ -81,6 +81,7 @@ public class MobMovement : MonoBehaviour, Mob
         if(isRope)
         {
             manager_Mob.CheckMobAction();
+            EffectManage.Instance.PlayEffect("Rope_Effect", this.transform.position);
             isRope = false;
             return;
         }

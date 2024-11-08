@@ -127,6 +127,7 @@ MonoBehaviour:
   startX: 0
   startY: 0
   allTiles: []
+  burnedTile: []
   tile: {fileID: 0}
   nextPos: {x: 0, y: 0, z: 0}
   manager_Turn: {fileID: 0}
@@ -137,6 +138,7 @@ MonoBehaviour:
   moveRange: 3
   effectPrefab: {fileID: 0}
   isRope: 0
+  isUpgradeMob: 0
 --- !u!1001 &2456817344266989665
 PrefabInstance:
   m_ObjectHideFlags: 0

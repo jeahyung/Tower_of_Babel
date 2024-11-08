@@ -35,6 +35,7 @@ public class Map : MonoBehaviour
     //public Tile endtile;
     private int mapCount = 0;
     public bool isKing = false;
+    public bool isBonus = true;
 
     private void Awake()
     {

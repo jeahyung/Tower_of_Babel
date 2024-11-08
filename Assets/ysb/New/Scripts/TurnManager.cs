@@ -138,7 +138,7 @@ public class TurnManager : MonoBehaviour
         isPlayerTurn = false;
         isDone = true;
         downTile.DownTile();
-        
+
 
         if (UpgradeManager.instance.getBonusTurn() > 0)
         {
@@ -151,7 +151,17 @@ public class TurnManager : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
 
         manager_Action.SetActionBtn(false);
+
+        //if (!manager_map.isBonus)
+        //{
+        //    StartEnemyTurn();
+        //}
+        //else
+        //{
+        //    StartPlayerTurn();
+        //}
         StartEnemyTurn();
+
     }
     #endregion
 
