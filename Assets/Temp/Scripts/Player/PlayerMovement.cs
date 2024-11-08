@@ -84,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     #region 순간이동
     public void TeleportPlayer(Vector3 target)
     {
-        if (target == Vector3.zero || canMove == false) { return; }
+        //if (target == Vector3.zero || canMove == false) { return; }
 
         Vector3 pos = new Vector3(target.x, transform.position.y, target.z);
         manager_Turn.isDone = false;
@@ -492,5 +492,14 @@ public class PlayerMovement : MonoBehaviour
     public void UseItem()
     {
         anim.SetTrigger("isUse");
+    }
+    public void Die()
+    {
+        anim.SetTrigger("isDie");
+    }
+
+    public void GameOver()
+    {
+        StageManager.instance.GameOver();
     }
 }

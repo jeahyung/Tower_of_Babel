@@ -10,7 +10,7 @@ public class Tile : MonoBehaviour
 
     public Vector2Int coord;
 
-    public SpriteRenderer rend;
+    //public SpriteRenderer rend;
 
     public GameObject effectPrefab;
 
@@ -20,6 +20,10 @@ public class Tile : MonoBehaviour
     public Mob mob; //로프
     [SerializeField] private float dropSpeed = 0.5f;
 
+    private ParticleSystem sfx;
+    private Color sfxBaseColor = new Color(1f, 0.9f, 0.45f, 1f);
+    private Color sfxMobColor = new Color(0.4f, 0.99f, 0.99f, 1f);
+    private Color sfxRedColor = Color.red;
     private void Start()
     {
         //map = FindObjectOfType<Map>();
@@ -28,6 +32,7 @@ public class Tile : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        sfx = effectPrefab.GetComponent<ParticleSystem>();
     }
 
     public void SetTileCoord(int i, int j)
@@ -41,14 +46,16 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        //if(tileType != TileType.possible) { return; }        
+        //if(tileType != TileType.possible) { return; }
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxBaseColor;
         ShowEffect();
-        rend.enabled = false;
+        //rend.enabled = false;
 
     }
     public void HideArea()
     {
-        rend.enabled = false;
+        //rend.enabled = false;
         HideEffect();
     }
 
@@ -111,5 +118,28 @@ public class Tile : MonoBehaviour
         //AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over_Broken);
         GetComponent<Collider>().enabled = false;
         transform.DOMoveY(-10, dropSpeed);
+    }
+
+    public void InitTile()
+    {
+        tileType = TileType.possible;
+        mob = null;
+        rook = null;
+    }
+
+    public void ShowMobArea()
+    {
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxMobColor;
+        ShowEffect();
+        //rend.enabled = false;
+    }
+    
+    public void ShowMobRedArea()
+    {
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxRedColor;
+        ShowEffect();
+        //rend.enabled = false;
     }
 }

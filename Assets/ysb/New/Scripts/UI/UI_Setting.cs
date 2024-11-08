@@ -42,8 +42,8 @@ public class UI_Setting : Singleton<UI_Setting>
             AudioManager.instance.SetSfxVolume(sfxVolume);
         }
 
-        Setting.SetActive(false);
-        Option.SetActive(false);
+        //Setting.SetActive(false);
+        //Option.SetActive(false);
     }
 
     private void Update()

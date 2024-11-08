@@ -72,7 +72,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7546383909149250021}
   m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: 10, y: 1, z: -1.73}
+  m_LocalPosition: {x: 5.961, y: 1.25, z: -5.186}
   m_LocalScale: {x: 2.5, y: 2.5, z: 2.5}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -124,16 +124,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   monster: {fileID: 7546383909149250021}
   map: {fileID: 0}
-  startX: 0
-  startY: 0
+  startX: 1
+  startY: 1
   allTiles: []
   tile: {fileID: 0}
   nextPos: {x: 0, y: 0, z: 0}
   manager_Turn: {fileID: 0}
+  minA: 0
+  minB: 0
   pos: {x: 0, y: 0}
   smoothTime: 0.2
   moveRange: 3
   effectPrefab: {fileID: 0}
+  isRope: 0
 --- !u!1001 &2456817344266989665
 PrefabInstance:
   m_ObjectHideFlags: 0
