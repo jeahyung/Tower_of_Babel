@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAI : MonoBehaviour, Mob
+public class MonsterAI : MonoBehaviour
 {
 
     public class MonsterState

@@ -41,8 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public int degree_back = 0;   //되돌올 때 회전할 각
     private int cnt = 0;
 
-  //  private float effectDown = 0.2f;
-
+    bool isSuperJump = false;
 
     public bool TurnEnd()
     {
@@ -85,7 +84,7 @@ public class PlayerMovement : MonoBehaviour
     #region 순간이동
     public void TeleportPlayer(Vector3 target)
     {
-        if (target == Vector3.zero || canMove == false) { return; }
+        //if (target == Vector3.zero || canMove == false) { return; }
 
         Vector3 pos = new Vector3(target.x, transform.position.y, target.z);
         manager_Turn.isDone = false;
@@ -234,6 +233,7 @@ public class PlayerMovement : MonoBehaviour
         canMove = false;
         h = 2f;
 
+        isSuperJump = true;
         manager_Turn.isDone = false;
         rigid.useGravity = false;   //중력을 끈다.
 
@@ -296,6 +296,11 @@ public class PlayerMovement : MonoBehaviour
 
     public void StartJump()
     {
+        if(isSuperJump)
+        {
+            anim.SetTrigger("SuperJump");
+            return;
+        }
         anim.SetTrigger("StartJump");
         //anim.SetBool("isJump", true);
     }
@@ -325,6 +330,7 @@ public class PlayerMovement : MonoBehaviour
         transform.position = endPos;
         rigid.useGravity = true;
         canMove = true;
+        isSuperJump = false;
         if (degree_back != 8)
         {
             RotateBack();
@@ -336,10 +342,7 @@ public class PlayerMovement : MonoBehaviour
                 EndPlayerTurn();
             }
         }
-        Vector3 effpos = new(transform.position.x, 0.2f,transform.position.z);
-        EffectManage.Instance.PlayEffect("Player_BigStep", effpos);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
-       
     }
 
     protected IEnumerator MoveToEnd()
@@ -378,8 +381,6 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        Vector3 effpos1 = new(transform.position.x, 0.2f, transform.position.z);
-        EffectManage.Instance.PlayEffect("Player_Step", effpos1);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
     }
     #endregion
@@ -419,7 +420,6 @@ public class PlayerMovement : MonoBehaviour
         int dmg = 3 * per;
 
         anim.SetTrigger("isDamaged");
-        EffectManage.Instance.PlayEffect("Player_Hit", transform.position);
         energySysteam.UseEnergy(dmg);
         DamagedMove(map.CheckNearTile());
     }
@@ -492,5 +492,14 @@ public class PlayerMovement : MonoBehaviour
     public void UseItem()
     {
         anim.SetTrigger("isUse");
+    }
+    public void Die()
+    {
+        anim.SetTrigger("isDie");
+    }
+
+    public void GameOver()
+    {
+        StageManager.instance.GameOver();
     }
 }

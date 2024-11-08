@@ -8,7 +8,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
-public class TraceMonsterMovement : MonoBehaviour, Mob
+public class TraceMonsterMovement : MonoBehaviour
 {
     private ChaseMobManager mgr_Chase;
     private bool ch = true;
@@ -117,7 +117,9 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     private void Think()
     {
         tile.tileType = TileType.possible;
-        tile.TileBurning(tile);
+       //------------------------------------------------------------------------------------------------------
+        //tile.TileBurning(tile);//타일 내용 추가 필요
+        //------------------------------------------------------------------------------------------------------
         burnedTile.Add(tile);
 
         tile.mob = null;
@@ -388,8 +390,9 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         }
         */
         Debug.Log("BurnOff");
-        tile.TileBurnOff(burnedTile);
-        
+        //------------------------------------------------------------------------------------------------------
+        //tile.TileBurnOff(burnedTile); //추가 필요
+        //------------------------------------------------------------------------------------------------------
     }
 
 

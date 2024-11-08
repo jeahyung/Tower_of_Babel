@@ -13,17 +13,17 @@ public class Tile : MonoBehaviour
     //public SpriteRenderer rend;
 
     public GameObject effectPrefab;
-    public ParticleSystem flame;
 
     //public Map map;
-    public int flameCnt = 1;
-    public int flameHP = 0;
+
     public Rook rook;   //ÇØÃ¼¸¦ À§ÇÑ
     public Mob mob; //로프
     [SerializeField] private float dropSpeed = 0.5f;
 
-  //  public List<Tile> burnedTile = new List<Tile>();
-
+    private ParticleSystem sfx;
+    private Color sfxBaseColor = new Color(1f, 0.9f, 0.45f, 1f);
+    private Color sfxMobColor = new Color(0.4f, 0.99f, 0.99f, 1f);
+    private Color sfxRedColor = Color.red;
     private void Start()
     {
         //map = FindObjectOfType<Map>();
@@ -32,12 +32,7 @@ public class Tile : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-        if(flame != null)
-        {
-            flame.Stop();
-
-        }
-    //    flameCnt =1;
+        sfx = effectPrefab.GetComponent<ParticleSystem>();
     }
 
     public void SetTileCoord(int i, int j)
@@ -51,14 +46,16 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        //if(tileType != TileType.possible) { return; }        
+        //if(tileType != TileType.possible) { return; }
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxBaseColor;
         ShowEffect();
-      //  rend.enabled = false;
+        //rend.enabled = false;
 
     }
     public void HideArea()
     {
-       // rend.enabled = false;
+        //rend.enabled = false;
         HideEffect();
     }
 
@@ -123,63 +120,26 @@ public class Tile : MonoBehaviour
         transform.DOMoveY(-10, dropSpeed);
     }
 
-    public void TileBurning(Tile tile)
+    public void InitTile()
     {
-        if(flame == null)
-        {
-            return;
-        }
-       
-      //  burnedTile.Add(tile);
-
-        tile.flameHP = flameCnt;
-        tile.flame.Play();
+        tileType = TileType.possible;
+        mob = null;
+        rook = null;
     }
 
-    public void TileBurnOff(List<Tile> tiles)
+    public void ShowMobArea()
     {
-        /*
-        //if (flame == null)
-        //{
-        //    Debug.Log("TileBurnOff return...");
-
-        //    return;
-        //}
-        //Debug.Log("TileBurnOff Doing...");
-
-        //foreach (Tile tile in burnedTile)
-        //{
-        //    tile.flameHP--;
-        //    Debug.Log("TileBurnOff Doing...");
-        //    if (tile.flameHP <= 0)
-        //    {
-        //        flame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        //    }
-        //}
-
-
-        //if (flameHP <= 0)
-        //{
-        //    flame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        //}
-        //else
-        //    return;
-        */
-
-        for (int i = 0; i < tiles.Count; i++)
-        {
-            tiles[i].flameHP--;
-            Debug.Log("TileBurnOff flameHP");
-            if (tiles[i].flameHP <= 0)
-            {
-                tiles[i].flame.Stop();//true, ParticleSystemStopBehavior.StopEmitting
-                Debug.Log("TileBurnOff");
-                tiles.RemoveAt(0);
-                i--;
-
-            }
-        }
-
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxMobColor;
+        ShowEffect();
+        //rend.enabled = false;
     }
-
+    
+    public void ShowMobRedArea()
+    {
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxRedColor;
+        ShowEffect();
+        //rend.enabled = false;
+    }
 }

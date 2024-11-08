@@ -9,7 +9,6 @@ public class LoadGameData : Singleton<LoadGameData>
     public GameObject dddd;
     //로드
     private bool isLoad = false;
-
     //스코어
     List<Dictionary<string, object>> sd = new List<Dictionary<string, object>>();   
     //업그레이드

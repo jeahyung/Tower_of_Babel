@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class StartPoint : MonoBehaviour
 {
     [SerializeField]
@@ -23,9 +22,7 @@ public class StartPoint : MonoBehaviour
 
     private Player_Move player;
 
- //   public TileDown downTile;
-
-    // private HideTile hide;
+   // private HideTile hide;
 
     private void Awake()
     {
@@ -80,7 +77,6 @@ public class StartPoint : MonoBehaviour
 
 
         //}
-      
     }
     private void StartGame()
     {
@@ -97,7 +93,6 @@ public class StartPoint : MonoBehaviour
         //turn.StartGame();   //게임 시작
 
         //interactMessage.SetActive(false);
-
     }
 
     private void OnTriggerEnter(Collider other)
@@ -117,10 +112,12 @@ public class StartPoint : MonoBehaviour
 
                 Vector3 target = new Vector3(another.transform.position.x, another.transform.position.y, another.transform.position.z);
                 Vector3 my = new Vector3(transform.position.x, another.transform.position.y, transform.position.z);
-                another.GetComponent<PlayerMovement>().MoveToStartPoint(my);
+            another.GetComponent<PlayerMovement>().MoveToStartPoint(my);
 
                 player.StopAni();
-                player.RotateObject();                               
+                player.RotateObject();
+
+            
         }
     }
 
@@ -141,6 +138,6 @@ public class StartPoint : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         isPlayerEnter = false;
-        //interactMessage.SetActive(false);              
+        //interactMessage.SetActive(false);
     }
 }

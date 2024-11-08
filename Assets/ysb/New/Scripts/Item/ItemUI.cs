@@ -11,7 +11,7 @@ public class ItemUI : MonoBehaviour
     public GameObject itemExplain;
     public TMP_Text itemText;
 
-
+    public List<Item> upItems = new List<Item>();   //업글 시 추가할 아이템들
     private void Awake()
     {
         slots.AddRange(GetComponentsInChildren<ItemUISlot>());
@@ -34,6 +34,20 @@ public class ItemUI : MonoBehaviour
     }
     public bool PickUpItem(Item i)
     {
+        if(i.canAdd == true)
+        {
+            foreach (ItemUISlot slot in slots)
+            {
+                if (slot.addItem != null && slot.addItem.id == i.id)
+                {
+                    //이펙트 재생
+                    slot.RemoveItem();
+                    slot.SetSlot(upItems[0]);
+                    return true;
+                }
+            }
+        }
+
         foreach (ItemUISlot slot in slots)
         {
             if (slot.addItem == null)
@@ -52,6 +66,7 @@ public class ItemUI : MonoBehaviour
             if (slot.addItem != null && slot.addItem == i)
             {
                 slot.RemoveItem();
+                HideExplain();
                 return true;
             }
         }
@@ -66,8 +81,10 @@ public class ItemUI : MonoBehaviour
             int i = Random.Range(0, items.Count);
             if(slot.addItem != null)
             {
+                if(slot.addItem.id == 10) { ItemInventory.instance.SetBoxCount(-1); }
                 slot.ChangeItem(items[i]);
                 ItemInventory.instance.ChangeGetList(j, items[i]);
+                if(items[i].id == 10) { ItemInventory.instance.SetBoxCount(1); }
             }
             j++;
         }

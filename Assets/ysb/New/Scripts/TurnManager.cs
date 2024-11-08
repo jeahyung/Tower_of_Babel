@@ -8,8 +8,6 @@ public class TurnManager : MonoBehaviour
     private PlayerMovement player;
     private ItemManager manager_Item;
     private SAManager manager_Action;
-    private TileDown downTile;
-    
 
     [SerializeField] private float delayTime = 1f;
     [SerializeField]private UI_Turn ui_turn;
@@ -27,13 +25,13 @@ public class TurnManager : MonoBehaviour
     public int TurnCount => turnCount;
     public bool IsMyTurn => isPlayerTurn;
 
+    bool isJumpTurn = false;
+
     private void Awake()
     {
         manager_map = FindObjectOfType<Map>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Item = player.GetComponent<ItemManager>();
-        downTile = FindObjectOfType<TileDown>();
-       
 
         //manager_Mob = FindObjectOfType<MobManager>();
         manager_Action = FindObjectOfType<SAManager>();
@@ -50,10 +48,10 @@ public class TurnManager : MonoBehaviour
         manager_Mob = mob;
     }
 
-    public List<Tile> ShowRookTile()
-    {
-        return manager_Mob.ShowRook();
-    }
+    //public List<Tile> ShowRookTile()
+    //{
+    //    return manager_Mob.ShowRook();
+    //}
 
     public List<Tile>ShowMobTile()
     {
@@ -102,6 +100,8 @@ public class TurnManager : MonoBehaviour
     {
         isPlayerTurn = true;
         isDone = true;
+        if(manager_map.isJump == true) { isJumpTurn = true; UpgradeManager.instance.getBonusTurn(1); }
+        else { isJumpTurn = false; }
 
         if (!manager_Action.usedKing) { ui_turn.ShowImg(0); }
         yield return new WaitForSeconds(delayTime);
@@ -110,7 +110,12 @@ public class TurnManager : MonoBehaviour
         player.SetUseEnergy();  //에너지 설정
 
         if (manager_Action == null) { manager_Action = FindObjectOfType<SAManager>(); }
-        if (manager_Action.usedKing == true)
+        if (isJumpTurn)
+        {
+            manager_Action.ActActionBtn(false);
+            manager_map.FindJumpTile();
+        }
+        else if (manager_Action.usedKing == true)
         {
             manager_Action.BonusUse();
         }
@@ -137,44 +142,30 @@ public class TurnManager : MonoBehaviour
     {
         isPlayerTurn = false;
         isDone = true;
-        downTile.DownTile();
-
-
         if (UpgradeManager.instance.getBonusTurn() > 0)
         {
             UpgradeManager.instance.getBonusTurn(-1);
             StartPlayerTurn();
-
             yield break;
         }
         ui_turn.RotateObj(turnCount + 1);    //턴 ui
         yield return new WaitForSeconds(delayTime);
 
+        manager_map.HideArea();
         manager_Action.SetActionBtn(false);
-
-        //if (!manager_map.isBonus)
-        //{
-        //    StartEnemyTurn();
-        //}
-        //else
-        //{
-        //    StartPlayerTurn();
-        //}
         StartEnemyTurn();
-
     }
     #endregion
 
     #region enemy turn
     public void StartEnemyTurn()
-    {       
+    {
         if (StageManager.instance.isPlaying == false || isGameOver) { return; }    //게임 시작 여부
         if (isPlayerTurn == true || isEnemyTurn == true || IsLastTile() == true) { return; }
         //isEnemyTurn = true;
 
         //manager_Mob.ActMob();
         //Debug.Log("몬스터 턴");
-        manager_map.CheckPlayerTile(player.moveRange);  // 킹 패턴 시작
         StartCoroutine(EnemyTurn());
     }
     private IEnumerator EnemyTurn()
@@ -182,7 +173,7 @@ public class TurnManager : MonoBehaviour
         isEnemyTurn = true;
         manager_Item.CheckObj();
 
-        ui_turn.ShowImg(1);
+        if (!StageManager.instance.isBonusStage) { ui_turn.ShowImg(1); }
         yield return new WaitForSeconds(delayTime);
         //ui_turn.HideImg(1);
 
@@ -209,9 +200,13 @@ public class TurnManager : MonoBehaviour
     {
         isEnemyTurn = false;
 
+        float spawnTime = manager_Mob.ActBoss();
+        yield return new WaitForSeconds(spawnTime);
+
         ui_turn.RotateObj(++turnCount + 1);    //턴 ui
         yield return new WaitForSeconds(delayTime);
 
+        manager_Mob.HideAllRange();
         manager_Item.RemoveObj();
 
         //turnCount++;
