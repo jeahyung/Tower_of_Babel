@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System.Collections;
+=======
+﻿using System.Collections;
+>>>>>>> main
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor;
@@ -10,21 +14,68 @@ using System.Reflection;
 [InitializeOnLoad]
 public class ReadmeEditor : Editor
 {
+<<<<<<< HEAD
     static string kShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
 
     static float kSpace = 16f;
+=======
+    static string s_ShowedReadmeSessionStateName = "ReadmeEditor.showedReadme";
+    
+    static string s_ReadmeSourceDirectory = "Assets/TutorialInfo";
+
+    const float k_Space = 16f;
+>>>>>>> main
 
     static ReadmeEditor()
     {
         EditorApplication.delayCall += SelectReadmeAutomatically;
     }
 
+<<<<<<< HEAD
     static void SelectReadmeAutomatically()
     {
         if (!SessionState.GetBool(kShowedReadmeSessionStateName, false))
         {
             var readme = SelectReadme();
             SessionState.SetBool(kShowedReadmeSessionStateName, true);
+=======
+    static void RemoveTutorial()
+    {
+        if (EditorUtility.DisplayDialog("Remove Readme Assets",
+            
+            $"All contents under {s_ReadmeSourceDirectory} will be removed, are you sure you want to proceed?",
+            "Proceed",
+            "Cancel"))
+        {
+            if (Directory.Exists(s_ReadmeSourceDirectory))
+            {
+                FileUtil.DeleteFileOrDirectory(s_ReadmeSourceDirectory);
+                FileUtil.DeleteFileOrDirectory(s_ReadmeSourceDirectory + ".meta");
+            }
+            else
+            {
+                Debug.Log($"Could not find the Readme folder at {s_ReadmeSourceDirectory}");
+            }
+
+            var readmeAsset = SelectReadme();
+            if (readmeAsset != null)
+            {
+                var path = AssetDatabase.GetAssetPath(readmeAsset);
+                FileUtil.DeleteFileOrDirectory(path + ".meta");
+                FileUtil.DeleteFileOrDirectory(path);
+            }
+
+            AssetDatabase.Refresh();
+        }
+    }
+
+    static void SelectReadmeAutomatically()
+    {
+        if (!SessionState.GetBool(s_ShowedReadmeSessionStateName, false))
+        {
+            var readme = SelectReadme();
+            SessionState.SetBool(s_ShowedReadmeSessionStateName, true);
+>>>>>>> main
 
             if (readme && !readme.loadedLayout)
             {
@@ -42,7 +93,10 @@ public class ReadmeEditor : Editor
         method.Invoke(null, new object[] { Path.Combine(Application.dataPath, "TutorialInfo/Layout.wlt"), false });
     }
 
+<<<<<<< HEAD
     [MenuItem("Tutorial/Show Tutorial Instructions")]
+=======
+>>>>>>> main
     static Readme SelectReadme()
     {
         var ids = AssetDatabase.FindAssets("Readme t:Readme");
@@ -70,8 +124,26 @@ public class ReadmeEditor : Editor
 
         GUILayout.BeginHorizontal("In BigTitle");
         {
+<<<<<<< HEAD
             GUILayout.Label(readme.icon, GUILayout.Width(iconWidth), GUILayout.Height(iconWidth));
             GUILayout.Label(readme.title, TitleStyle);
+=======
+            if (readme.icon != null)
+            {
+                GUILayout.Space(k_Space);
+                GUILayout.Label(readme.icon, GUILayout.Width(iconWidth), GUILayout.Height(iconWidth));
+            }
+            GUILayout.Space(k_Space);
+            GUILayout.BeginVertical();
+            {
+
+                GUILayout.FlexibleSpace();
+                GUILayout.Label(readme.title, TitleStyle);
+                GUILayout.FlexibleSpace();
+            }
+            GUILayout.EndVertical();
+            GUILayout.FlexibleSpace();
+>>>>>>> main
         }
         GUILayout.EndHorizontal();
     }
@@ -87,10 +159,18 @@ public class ReadmeEditor : Editor
             {
                 GUILayout.Label(section.heading, HeadingStyle);
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
             if (!string.IsNullOrEmpty(section.text))
             {
                 GUILayout.Label(section.text, BodyStyle);
             }
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
             if (!string.IsNullOrEmpty(section.linkText))
             {
                 if (LinkLabel(new GUIContent(section.linkText)))
@@ -98,12 +178,23 @@ public class ReadmeEditor : Editor
                     Application.OpenURL(section.url);
                 }
             }
+<<<<<<< HEAD
             GUILayout.Space(kSpace);
+=======
+
+            GUILayout.Space(k_Space);
+        }
+
+        if (GUILayout.Button("Remove Readme Assets", ButtonStyle))
+        {
+            RemoveTutorial();
+>>>>>>> main
         }
     }
 
     bool m_Initialized;
 
+<<<<<<< HEAD
     GUIStyle LinkStyle { get { return m_LinkStyle; } }
     [SerializeField] GUIStyle m_LinkStyle;
 
@@ -115,6 +206,47 @@ public class ReadmeEditor : Editor
 
     GUIStyle BodyStyle { get { return m_BodyStyle; } }
     [SerializeField] GUIStyle m_BodyStyle;
+=======
+    GUIStyle LinkStyle
+    {
+        get { return m_LinkStyle; }
+    }
+
+    [SerializeField]
+    GUIStyle m_LinkStyle;
+
+    GUIStyle TitleStyle
+    {
+        get { return m_TitleStyle; }
+    }
+
+    [SerializeField]
+    GUIStyle m_TitleStyle;
+
+    GUIStyle HeadingStyle
+    {
+        get { return m_HeadingStyle; }
+    }
+
+    [SerializeField]
+    GUIStyle m_HeadingStyle;
+
+    GUIStyle BodyStyle
+    {
+        get { return m_BodyStyle; }
+    }
+
+    [SerializeField]
+    GUIStyle m_BodyStyle;
+
+    GUIStyle ButtonStyle
+    {
+        get { return m_ButtonStyle; }
+    }
+
+    [SerializeField]
+    GUIStyle m_ButtonStyle;
+>>>>>>> main
 
     void Init()
     {
@@ -123,19 +255,37 @@ public class ReadmeEditor : Editor
         m_BodyStyle = new GUIStyle(EditorStyles.label);
         m_BodyStyle.wordWrap = true;
         m_BodyStyle.fontSize = 14;
+<<<<<<< HEAD
+=======
+        m_BodyStyle.richText = true;
+>>>>>>> main
 
         m_TitleStyle = new GUIStyle(m_BodyStyle);
         m_TitleStyle.fontSize = 26;
 
         m_HeadingStyle = new GUIStyle(m_BodyStyle);
+<<<<<<< HEAD
+=======
+        m_HeadingStyle.fontStyle = FontStyle.Bold;
+>>>>>>> main
         m_HeadingStyle.fontSize = 18;
 
         m_LinkStyle = new GUIStyle(m_BodyStyle);
         m_LinkStyle.wordWrap = false;
+<<<<<<< HEAD
+=======
+
+>>>>>>> main
         // Match selection color which works nicely for both light and dark skins
         m_LinkStyle.normal.textColor = new Color(0x00 / 255f, 0x78 / 255f, 0xDA / 255f, 1f);
         m_LinkStyle.stretchWidth = false;
 
+<<<<<<< HEAD
+=======
+        m_ButtonStyle = new GUIStyle(EditorStyles.miniButton);
+        m_ButtonStyle.fontStyle = FontStyle.Bold;
+
+>>>>>>> main
         m_Initialized = true;
     }
 

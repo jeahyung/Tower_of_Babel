@@ -17,12 +17,13 @@ public class Rope : Item
     }
     public override bool UseItem()
     {
-        //manager_Item.CreateObject(itemPrefab);
+        //manager_Item.CreateObject(itemPrefab);\
         return CheckMob();
     }
 
-    public bool CheckMob()
+    public virtual bool CheckMob()
     {
+<<<<<<< HEAD
         Mob mob = manager_Item.FindMob();
         if (mob != null)
         {
@@ -32,7 +33,21 @@ public class Rope : Item
             
             return true;
         }
+=======
+        //Mob mob = manager_Item.FindMob();
+        //if (mob != null)
+        //{
+        //    mob.DontMove();
+        //    //ScoreManager.instance.KillMob();    //½ºÄÚ¾î
+        //    manager_Item.NextTurn();
+        //    return true;
+        //}
+>>>>>>> main
         
-        return false;
+        //return false;
+
+        manager_Item.UseRope1();
+        manager_Item.NextTurn();
+        return true;
     }
 }

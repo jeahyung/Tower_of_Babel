@@ -37,13 +37,18 @@ public class Map : MonoBehaviour
     public bool isKing = false;
     public bool isBonus = true;
 
+    int backCount = 1;
+    public Tile[] backTiles = new Tile[2];
+
+    public bool isJump = false;
+    private MobManager mob = null;
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Turn = player.GetComponent<TurnManager>();
         manager_Item = FindObjectOfType<ItemManager>();
         manager_Action = FindObjectOfType<SAManager>();
-
+        mob = FindObjectOfType<MobManager>();
 
         tiles = new Tile[LineCount + 2, LineCount];
         for(int i = 0; i < LineCount + 2; ++i)  //스타트/엔드 지점 고려
@@ -100,6 +105,8 @@ public class Map : MonoBehaviour
             clickTile = null;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
+
+
             foreach (var hit in hits)
             {
                 if (hit.collider.GetComponent<Tile>() != null)
@@ -134,6 +141,35 @@ public class Map : MonoBehaviour
     }
 
     #region 타일 탐색
+    #region 범위표시
+    public void ShowMobRange(List<Tile> mTiles)
+    {
+        //HideArea();
+        ShowMobArea(mTiles);
+    }
+    public void HideMobRange(List<Tile> mTiles)
+    {
+        foreach (var t in mTiles)
+        {
+            t.HideArea();
+        }
+    }
+    public void AgainShowTile()
+    {
+        if(moveArea.Count == 0) { FindTileInRange_Four(nowTile, 1); }
+        ShowArea(moveArea);
+    }
+    void ShowMobArea(List<Tile> tileInArea)
+    {
+        foreach (var tile in tileInArea)
+        {
+            //mapCount++;
+            if(moveArea.Contains(tile) == true || tile == nowTile) { tile.ShowMobRedArea(); }
+            else { tile.ShowMobArea(); }
+        }
+    }
+    #endregion
+
     private void CheckTileObject()
     {
         foreach(var t in tiles)
@@ -287,6 +323,18 @@ public class Map : MonoBehaviour
     }
     #endregion
 
+    public bool CanSpawn(Vector2Int coord)
+    {
+        if(tiles[coord.x, coord.y] == nowTile) { return false; }
+
+        return true;
+    }
+    public Tile GetTileForSpawn(Vector2Int coord)
+    {
+        if (coord.x < 0 || coord.x >= LineCount + 2 || coord.y < 0 || coord.y >= LineCount) { return null; } //범위 밖
+        if (tiles[coord.x, coord.y].gameObject.activeSelf == false) { return null; }
+        return tiles[coord.x, coord.y];
+    }
     public Tile GetTile(Vector2Int coord)
     {
         if(coord.x < 0 || coord.x >= LineCount + 2 || coord.y < 0 || coord.y >= LineCount ) { return null; } //범위 밖
@@ -322,6 +370,7 @@ public class Map : MonoBehaviour
     {
         foreach (var t in moveArea)
         {
+            if(t == null) { continue; }
             t.HideArea();
         }
     }
@@ -330,8 +379,11 @@ public class Map : MonoBehaviour
     {
         foreach (var tile in tileInArea)
         {          
-            mapCount++;
-            tile.ShowArea();
+            if(tile != null)
+            {
+                mapCount++;
+                tile.ShowArea();
+            }
         }
     }
 
@@ -391,6 +443,7 @@ public class Map : MonoBehaviour
             manager_Action.SetActionBtn(false);
             manager_Action.CheckActionCount();
             previousTile = nowTile; //이전 타일 갱신
+            isJump = false;
         }
     }
 
@@ -457,10 +510,12 @@ public class Map : MonoBehaviour
 
     public void MovePlayerPosition()
     {
-
         player.SetPosition(clickTile.GetPosition(), HowRotate(clickTile));
+        SetBackTile();
+
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
+
         //에너지 사용 -> 플레이어쪽에서
         Debug.Log("player move");
     }
@@ -468,6 +523,7 @@ public class Map : MonoBehaviour
     public void MovePlayerPosition_Continue()
     {
         player.SetPosition_Continue(CalculateJumpCount(), clickTile.GetPosition(), HowRotate(clickTile));
+        SetBackTile();
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
         Debug.Log("player move_continue");
@@ -502,7 +558,18 @@ public class Map : MonoBehaviour
         HideArea();
 
         moveArea.Clear();
-        moveArea.AddRange(manager_Turn.ShowRookTile());
+        moveArea.AddRange(mob.ShowMob_key1());
+        //moveArea.AddRange(manager_Turn.ShowRookTile());
+        ShowArea(moveArea);
+    }
+    public void UseItem_Key2()
+    {
+        useItem = true;
+        HideArea();
+
+        moveArea.Clear();
+        moveArea.AddRange(mob.ShowMob_key2());
+        //moveArea.AddRange(manager_Turn.ShowRookTile());
         ShowArea(moveArea);
     }
 
@@ -513,6 +580,16 @@ public class Map : MonoBehaviour
 
         moveArea.Clear();
         moveArea.AddRange(manager_Turn.ShowMobTile());
+        ShowArea(moveArea);
+    }
+
+    public void SelectItem_Clock()
+    {
+        useItem = true;
+        HideArea();
+        moveArea.Clear();
+        moveArea.Add(backTiles[0]);
+        moveArea.Add(backTiles[1]);
         ShowArea(moveArea);
     }
 
@@ -565,15 +642,51 @@ public class Map : MonoBehaviour
     }
 
     //플레이어 순간이동
-    public void SetPlayerPosition()
+    public bool SetPlayerPosition(int i)
     {
+        if(backTiles[i].tileType != TileType.possible)
+        {
+            useItem = false;
+            HideArea();
+            FindTileInRange_Four(nowTile, 1);
+            return false;
+        }
         HideArea();
+<<<<<<< HEAD
         EffectManage.Instance.PlayEffect("Player_Teleport", player.transform.position);
         player.TeleportPlayer(tiles[0, 0].GetPosition());
         nowTile = tiles[0, 0];
+=======
+        int x = backTiles[i].coord.x;
+        int y = backTiles[i].coord.y;
+        player.TeleportPlayer(tiles[x,y].GetPosition());
+
+        Tile temp = backTiles[i];
+        SetBackTile();
+        nowTile = temp;
+>>>>>>> main
         playerTile = nowTile;
         //에너지 사용 -> 플레이어쪽에서
         useItem = false;
+        return true;
+    }
+    public bool SetPlayerPosition2()
+    {
+        if(clickTile.tileType != TileType.possible)
+        {
+            useItem = false;
+            HideArea();
+            FindTileInRange_Four(nowTile, 1);
+            return false;
+        }
+        HideArea();
+
+        player.TeleportPlayer(clickTile.GetPosition());
+        SetBackTile();
+        nowTile = clickTile;
+        playerTile = nowTile;
+        useItem = false;
+        return true;
     }
 
     //추적 변경
@@ -619,6 +732,7 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                SetBackTile();
                 nowTile = findTile;
                 return findTile;
             }
@@ -631,6 +745,7 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                SetBackTile();
                 nowTile = findTile;
                 return findTile;
             }
@@ -643,12 +758,14 @@ public class Map : MonoBehaviour
 
             if (findTile != null)
             {
+                SetBackTile();
                 nowTile = findTile;
                 return findTile;
             }
         }
         if (previousTile != null && GetTile(previousTile.coord) != null)
         {
+            SetBackTile();
             nowTile = previousTile;
             return previousTile;    //이전 타일로 갈 수 있으면 이전 타일로 ㄱㄱ
         }
@@ -693,6 +810,7 @@ public class Map : MonoBehaviour
 
         HideArea();
         nowTile = tiles[0, 0];
+        backCount = 1;
     }
 
 
@@ -720,5 +838,46 @@ public class Map : MonoBehaviour
         Debug.Log(playerTile.coord.x);
         Debug.Log(playerTile.coord.y);
 
+    }
+
+    public void SetBackTile()
+    {
+        if(backCount >= 1) { backCount--; return; }
+        if(backTiles[0] == null)
+        {
+            backTiles[0] = nowTile;
+            return;
+        }
+        backTiles[1] = backTiles[0];
+        backTiles[0] = nowTile;
+
+    }
+
+    public void PickUpJump()
+    {
+        isJump = true;
+    }
+    public void FindJumpTile()
+    {
+        Tile curTile = nowTile;
+        moveArea.Clear();
+        for(int i = 0; i < 4; ++i)
+        {
+            Tile newTile = GetTile(curTile.coord + distance[i] * 2);
+            moveArea.Add(newTile);
+        }
+        ShowArea(moveArea);
+        isJump = false;
+    }
+    public void GoHome()
+    {
+        HideArea();
+        player.TeleportPlayer(tiles[0, 0].GetPosition());
+
+        Tile temp = tiles[0, 0];
+        SetBackTile();
+        nowTile = temp;
+        playerTile = nowTile;
+        //에너지 사용 -> 플레이어쪽에서
     }
 }

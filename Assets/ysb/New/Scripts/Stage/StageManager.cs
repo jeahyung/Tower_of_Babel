@@ -9,6 +9,7 @@ public class StageManager : Singleton<StageManager>
     [SerializeField] private Map map;
     [SerializeField] private UI_Turn ui_turn;
     [SerializeField] private UI_GameOver ui_gameover;
+    [SerializeField] private UI_Suicide ui_go_s;
     public bool isPlaying = false;
 
     public static int chapterCount = 1;
@@ -29,6 +30,7 @@ public class StageManager : Singleton<StageManager>
 
     public RectTransform uiElement;
     public string[] sName;
+    public bool isBonusStage { get; set; }
 
     private void Start()
     {
@@ -60,6 +62,7 @@ public class StageManager : Singleton<StageManager>
             ui_turn = FindObjectOfType<UI_Turn>();
         }
         if (ui_gameover == null) { ui_gameover = FindObjectOfType<UI_GameOver>(); }
+        if(ui_go_s == null) { ui_go_s = FindObjectOfType<UI_Suicide>(); }
         if(map == null) { map = FindObjectOfType<Map>(); }
 
         StartCoroutine(Loading());
@@ -89,14 +92,24 @@ public class StageManager : Singleton<StageManager>
         //현재 스테이지 비활성화
         if(curStage != null) { curStage.SetActive(false); }
         manager_turn.KingReset();
+
         //새 스테이지
+<<<<<<< HEAD
         //int si = Random.Range(0, stages.Count);    
         int si = 3;
+=======
+        isBonusStage = false;
+        int si = Random.Range(0, stages.Count);
+>>>>>>> main
         curStage = stages[si];
+        stages.Remove(stages[si]);
+
+        if (chapterCount != 1 && si >= stages.Count - 2)
+        {
+            isBonusStage = true;
+        }
         curStage.SetActive(true);
         mob = curStage.GetComponentInChildren<MobManager>();
-
-        stages.Remove(stages[si]);
     }
 
 
@@ -150,8 +163,8 @@ public class StageManager : Singleton<StageManager>
     {
         if(chapterCount > 3)
         {
-            GameOver(); //임시
-            return;
+            //GameOver_suicide(); //임시
+            //return;
         }
         SceneManager.LoadScene(chapterCount);
     }
@@ -204,10 +217,14 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
-    public void GameOver()
+    //기존 게임 오버 - 자살로
+    public void GameOver_suicide()
     {
         if(isGameOver == true) { return; }
         isGameOver = true;
+        ScoreManager.instance.GetEnergyScore(chapterCount, energy.GetEnergy());
+        //PlayerMovement player = manager_turn.gameObject.GetComponent<PlayerMovement>();
+
         manager_turn.GameOver();
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
         map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
@@ -217,9 +234,29 @@ public class StageManager : Singleton<StageManager>
         }
     }
 
+    public void GameOver()
+    {
+        if (isGameOver == true) { return; }
+        isGameOver = true;
+        //ScoreManager.instance.GetEnergyScore(chapterCount, energy.GetEnergy());
+
+        manager_turn.GameOver();
+        manager_turn.GetComponent<PlayerMovement>().SetControl(false);
+
+        ui_gameover.ShowResult();
+
+        //자살 연출
+        //map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
+        for (int i = 0; i < 4; i++)
+        {
+            //AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over_Broken);
+        }
+    }
+
     public void ShowResult()
     {
-        ui_gameover.ShowResult();
+        //ui_gameover.ShowResult();
+        ui_go_s.ShowResult();
     }
 
     public void ResetStage()

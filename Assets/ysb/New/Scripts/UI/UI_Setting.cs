@@ -48,9 +48,13 @@ public class UI_Setting : Singleton<UI_Setting>
         }
 
         //Setting.SetActive(false);
+<<<<<<< HEAD
         rect = Setting.GetComponent<RectTransform>();
         rect.localScale = Vector3.zero;       
         Option.SetActive(false);
+=======
+        //Option.SetActive(false);
+>>>>>>> main
     }
 
     private void Update()

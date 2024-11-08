@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 using System;
+=======
+﻿using System;
+>>>>>>> main
 using UnityEngine;
 
 public class Readme : ScriptableObject

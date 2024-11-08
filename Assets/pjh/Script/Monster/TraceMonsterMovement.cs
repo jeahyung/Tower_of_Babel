@@ -58,13 +58,19 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         //  player = GameObject.FindWithTag("Player");
         manager_Turn = FindObjectOfType<TurnManager>();
         mgr_Chase = GetComponentInParent<ChaseMobManager>();
+        map = FindObjectOfType<Map>();
        // mgr_Chase = FindObjectOfType<ChaseMobManager>();
         //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
         //tile1 = FindObjectOfType<Tile>();
         allTiles.AddRange(tiles);
     }
+<<<<<<< HEAD
     private void Start() 
+=======
+
+    public void InitMob()
+>>>>>>> main
     {
         ani = GetComponent<Animator>();
         Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
@@ -374,6 +380,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         return tile;
     }
 
+<<<<<<< HEAD
     public void BurnOff()
     {
         /*
@@ -525,5 +532,33 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     {
         ani.SetBool("Act", false);
         isAnimationPlaying = false;
+=======
+    public List<Tile> ShowRange()
+    {
+        return allTiles;
+    }
+
+    public void SetStartPoint(Vector2Int sPoint, Tile curTile)
+    {
+        map = FindObjectOfType<Map>();
+        startX = sPoint.x;
+        startY = sPoint.y;
+        Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
+        transform.position = pos;
+
+        tile = curTile;
+        tile.mob = this.GetComponent<Mob>();
+        HideEffect();
+        FindTileWithCoords(startX, startY);
+        MonsterSetting(nextPos);
+    }
+
+    public void DestoryMob()
+    {
+        tile.tileType = TileType.possible;
+        tile.mob = null;
+
+        gameObject.SetActive(false);
+>>>>>>> main
     }
 }

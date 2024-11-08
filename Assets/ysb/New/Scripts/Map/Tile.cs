@@ -22,8 +22,15 @@ public class Tile : MonoBehaviour
     public Mob mob; //로프
     [SerializeField] private float dropSpeed = 0.5f;
 
+<<<<<<< HEAD
   //  public List<Tile> burnedTile = new List<Tile>();
 
+=======
+    private ParticleSystem sfx;
+    private Color sfxBaseColor = new Color(1f, 0.9f, 0.45f, 1f);
+    private Color sfxMobColor = new Color(0.4f, 0.99f, 0.99f, 1f);
+    private Color sfxRedColor = Color.red;
+>>>>>>> main
     private void Start()
     {
         //map = FindObjectOfType<Map>();
@@ -32,12 +39,16 @@ public class Tile : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+<<<<<<< HEAD
         if(flame != null)
         {
             flame.Stop();
 
         }
     //    flameCnt =1;
+=======
+        sfx = effectPrefab.GetComponent<ParticleSystem>();
+>>>>>>> main
     }
 
     public void SetTileCoord(int i, int j)
@@ -51,14 +62,24 @@ public class Tile : MonoBehaviour
 
     public void ShowArea()
     {
-        //if(tileType != TileType.possible) { return; }        
+        //if(tileType != TileType.possible) { return; }
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxBaseColor;
         ShowEffect();
+<<<<<<< HEAD
       //  rend.enabled = false;
+=======
+        //rend.enabled = false;
+>>>>>>> main
 
     }
     public void HideArea()
     {
+<<<<<<< HEAD
        // rend.enabled = false;
+=======
+        //rend.enabled = false;
+>>>>>>> main
         HideEffect();
     }
 
@@ -123,6 +144,7 @@ public class Tile : MonoBehaviour
         transform.DOMoveY(-10, dropSpeed);
     }
 
+<<<<<<< HEAD
     public void TileBurning(Tile tile)
     {
         if(flame == null)
@@ -182,4 +204,28 @@ public class Tile : MonoBehaviour
 
     }
 
+=======
+    public void InitTile()
+    {
+        tileType = TileType.possible;
+        mob = null;
+        rook = null;
+    }
+
+    public void ShowMobArea()
+    {
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxMobColor;
+        ShowEffect();
+        //rend.enabled = false;
+    }
+    
+    public void ShowMobRedArea()
+    {
+        ParticleSystem.MainModule main = sfx.main;
+        main.startColor = sfxRedColor;
+        ShowEffect();
+        //rend.enabled = false;
+    }
+>>>>>>> main
 }

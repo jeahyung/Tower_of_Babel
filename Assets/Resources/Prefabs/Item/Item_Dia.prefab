@@ -80,11 +80,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f21a1654cd68fe74f9c06a423bb61670, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImg: {fileID: 21300000, guid: 2bf2180bbcffdff419c060ff55054e7e, type: 3}
+  itemImg: {fileID: 21300000, guid: 070226b2a38bdb24e8e1a4a917f81b4d, type: 3}
   ex: "\uCD94\uACA9\uD615 \uBAAC\uC2A4\uD130\uB97C \uC720\uC778\uD558\uB294 \uC544\uC774\uD15C.
     \uBAAC\uC2A4\uD130\uAC00 \uC774 \uC544\uC774\uD15C\uC744 \uD68D\uB4DD\uD558\uBA74
     \uB2E4\uC2DC \uD50C\uB808\uC774\uC5B4\uB97C \uCD94\uACA9\uD55C\uB2E4."
   id: 0
+  canAdd: 0
   itemPrefab: {fileID: 2489763940767993259, guid: f45e33f9af420cd4fb56b7634d61ee87, type: 3}
 --- !u!65 &5665495042317420178
 BoxCollider:
