@@ -51,6 +51,10 @@ public class ChaseMobManager : MonoBehaviour
         }
         else
         {
+            if (knightList[mi].burnedTile != null)
+            {
+                knightList[mi].BurnOff();
+            }
             knightList[mi].Act();
         }
     }
@@ -62,6 +66,10 @@ public class ChaseMobManager : MonoBehaviour
             return;
         }
         mi = 0;
+        if (knightList[mi].burnedTile != null) 
+        {
+            knightList[mi].BurnOff();
+        }
         knightList[mi].Act();
     }
 

@@ -54,7 +54,7 @@ public class TraceMonsterMovement : MonoBehaviour
 
     private void Awake()
     {
-
+        map = FindObjectOfType<Map>();
         //  player = GameObject.FindWithTag("Player");
         manager_Turn = FindObjectOfType<TurnManager>();
         mgr_Chase = GetComponentInParent<ChaseMobManager>();
@@ -118,7 +118,7 @@ public class TraceMonsterMovement : MonoBehaviour
     {
         tile.tileType = TileType.possible;
        //------------------------------------------------------------------------------------------------------
-        //tile.TileBurning(tile);//타일 내용 추가 필요
+        tile.TileBurning(tile);//타일 내용 추가 필요
         //------------------------------------------------------------------------------------------------------
         burnedTile.Add(tile);
 
@@ -391,7 +391,7 @@ public class TraceMonsterMovement : MonoBehaviour
         */
         Debug.Log("BurnOff");
         //------------------------------------------------------------------------------------------------------
-        //tile.TileBurnOff(burnedTile); //추가 필요
+        tile.TileBurnOff(burnedTile); //추가 필요
         //------------------------------------------------------------------------------------------------------
     }
 
@@ -399,6 +399,11 @@ public class TraceMonsterMovement : MonoBehaviour
     public void Chase(Tile tile)
     {
         Vector2Int dirCheck = map.playerTile.coord - tile.coord;
+     
+        //------------------------------------------------------------------------------------------------------
+        tile.TileBurning(tile);//타일 내용 추가 필요
+        //------------------------------------------------------------------------------------------------------
+        burnedTile.Add(tile);
         Movepattern(dirCheck, tile);
     }
 
