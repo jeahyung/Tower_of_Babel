@@ -95,18 +95,10 @@ public class ItemInventory : Singleton<ItemInventory>
         if(itemUI.PickUpItem(i) == true)
         {
             int id = i.id;
-            if(id == 10)    //·£´ý ¹Ú½º
+            if(id == 20)    //·£´ý ¹Ú½º
             {
                 UpgradeManager.instance.SetBoxCount(1);
             }
-            //for(int j = 0; j < datas.Count; ++j)
-            //{
-            //    if(datas[j].id == id)
-            //    {
-            //        getItems.Add(datas[j]);
-            //    }
-            //}
-            //items.Add(i);
             return true;
         }
         return false;
