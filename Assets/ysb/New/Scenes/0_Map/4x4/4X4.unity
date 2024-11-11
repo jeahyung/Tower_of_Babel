@@ -572,7 +572,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 499434620804960411, guid: 6ad5e9aedd55d8a43a25d2beedd44a26, type: 3}
       propertyPath: moveDir.x
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 499434620804960411, guid: 6ad5e9aedd55d8a43a25d2beedd44a26, type: 3}
       propertyPath: moveDir.y
@@ -15966,6 +15966,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pMgr: {fileID: 0}
   cMgr: {fileID: 0}
+  tiles: []
   startX: 2
   startY: 2
   range: 1

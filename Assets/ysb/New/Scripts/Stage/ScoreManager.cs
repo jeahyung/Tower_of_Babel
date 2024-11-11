@@ -97,29 +97,38 @@ public class ScoreManager : Singleton<ScoreManager>
     public int SearchScore(string key)
     {
         int saNum = UpgradeManager.instance.GetSANum();
-        int score = LoadGameData.instance.SearchScoreData(key, saNum);
+        int score = 0;
         int bonus = 0;
-        int chapterNumber = StageManager.instance.GetChapterCount;
-        int stageNumber = StageManager.instance.GetStageCount;
-        boxScore = 0;
-        int max = 0;
-        switch (chapterNumber)
+        if (key == "Stage")
         {
-            case 1:
-                bonus = 1000 * (stageNumber - 3);
-                break;
-            case 2:
-                bonus = 1000 + 1000 * (stageNumber - 1);
-                break;
-            case 3:
-                bonus = 5000 + 2000 * (stageNumber - 1);
-                break;
-            case 4:
-                bonus = 15000 + 5000 * (stageNumber - 1);
-                break;
-            default:
-                break;
+            score = LoadGameData.instance.SearchStageScoreData(key);
+            int chapterNumber = StageManager.instance.GetChapterCount;
+            int stageNumber = StageManager.instance.GetStageCount;
+            boxScore = 0;
+            int max = 0;
+            switch (chapterNumber)
+            {
+                case 1:
+                    bonus = 1000 * (stageNumber - 3);
+                    break;
+                case 2:
+                    bonus = 1000 + 1000 * (stageNumber - 1);
+                    break;
+                case 3:
+                    bonus = 5000 + 2000 * (stageNumber - 1);
+                    break;
+                case 4:
+                    bonus = 15000 + 5000 * (stageNumber - 1);
+                    break;
+                default:
+                    break;
+            }
         }
+        else
+        {
+
+            score = LoadGameData.instance.SearchScoreData(key, saNum);
+        }        
         score += bonus;
         return score;
     }
