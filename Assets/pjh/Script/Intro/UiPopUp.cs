@@ -7,7 +7,7 @@ using UnityEngine.EventSystems;
 
 public class UiPopUp : MonoBehaviour, IPointerClickHandler
 {
-    public event Action<PointerEventData> OnPopupClicked;
+   // public event Action<PointerEventData> OnPopupClicked;
 
     public RectTransform popupRect;
     public float animationDuration = 0.5f;
@@ -20,12 +20,13 @@ public class UiPopUp : MonoBehaviour, IPointerClickHandler
         popupRect.localScale = Vector3.zero;
     }
 
+
     public void ShowPopup()
     {
         if (isAnimating || isOpen) return;
 
         isAnimating = true;
-        isOpen = true;
+        isOpen = true;     
 
         popupRect.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack)
             .OnComplete(() => isAnimating = false);
@@ -50,7 +51,7 @@ public class UiPopUp : MonoBehaviour, IPointerClickHandler
         if (isAnimating) return;
 
         Debug.Log("Click Scanning");
-        OnPopupClicked?.Invoke(eventData);
+        //OnPopupClicked?.Invoke(eventData);
 
         if (isOpen && !RectTransformUtility.RectangleContainsScreenPoint(popupRect, eventData.position, eventData.pressEventCamera))
         {

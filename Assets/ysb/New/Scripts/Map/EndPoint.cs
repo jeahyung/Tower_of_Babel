@@ -13,6 +13,7 @@ public class EndPoint : MonoBehaviour
 
     private bool isEnd = false;
     private Player_Move player;
+    private TileDown down;
 
     public GameObject wall = null;
     public GameObject wall2 = null;
@@ -28,6 +29,8 @@ public class EndPoint : MonoBehaviour
 
         if (wall == null) { wall = GameObject.Find("wall_end"); }
         if(wall2 == null) { wall2 = GameObject.Find("wall_end (1)"); }
+
+        down = FindObjectOfType<TileDown>();
     }
     private void Start()
     {
@@ -46,6 +49,7 @@ public class EndPoint : MonoBehaviour
         ScoreManager.instance.CalculateScore();
         Camera.main.SendMessage("BackMainCam");
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Clear);
+        down.ChageBool();
     }
 
     private void OnTriggerStay(Collider other)

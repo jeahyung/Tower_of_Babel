@@ -30,4 +30,12 @@ public class TileDown : MonoBehaviour
             return;
 
     }
+
+    public void ChageBool()
+    {
+        if (!check)
+        {
+            check = !check;
+        }
+    }
 }

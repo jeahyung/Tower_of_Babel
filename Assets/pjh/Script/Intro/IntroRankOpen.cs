@@ -3,26 +3,37 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class IntroRankOpen : MonoBehaviour, IPointerClickHandler
+public class IntroRankOpen : MonoBehaviour,IPointerClickHandler
 {
     public RectTransform popupRect;
     public RectTransform rankPanel;
     public float animationDuration = 0.5f;
     public CanvasGroup canvasGroup;
-
+    private ScrollViewUpdater sc;
     [SerializeField]private bool isAnimating = false;
     private bool isOpen = false;
+    private DB_Manager db;
 
     private void Start()
     {
+        db = FindObjectOfType<DB_Manager>();
         popupRect.localScale = Vector3.zero;
         canvasGroup.alpha = 0f;
         rankPanel.localScale = Vector3.zero;
-    }
 
-    public void ShowPopup()
+        sc = FindObjectOfType<ScrollViewUpdater>();
+    }
+    private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.O)) { 
+            ShowPopup();
+        }
+    }
+    public void ShowPopup()
+    {        
         if (isAnimating || isOpen) return;
+
+        sc.TopViewer();
 
         isAnimating = true;
         isOpen = true;
@@ -31,6 +42,8 @@ public class IntroRankOpen : MonoBehaviour, IPointerClickHandler
         //rankPlanel.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack);
         popupRect.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack)
             .OnComplete(() => isAnimating = false);
+
+        db.UserInfoUpdata();
     }
 
     public void HidePopup()

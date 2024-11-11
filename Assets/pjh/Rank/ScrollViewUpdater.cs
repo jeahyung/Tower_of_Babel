@@ -2,19 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ScrollViewUpdater : MonoBehaviour
 {
     public Transform contentParent;  // ScrollView의 Content 객체를 할당 (TextMeshPro들이 이미 자식으로 존재)
-
+    public ScrollRect scrollRect;
+    public TextMeshProUGUI[] textComponents;
     // string 리스트를 받아서 이미 생성된 TextMeshPro에 텍스트를 할당하는 함수
+    private void Start()
+    {
+        textComponents = contentParent.GetComponentsInChildren<TextMeshProUGUI>();
+    }
+    public void TopViewer()
+    {
+        scrollRect.verticalNormalizedPosition = 1f;
+    }
     public void UpdateScrollView(List<string> nameList, List<string> scoreList)
     {
+
+        TopViewer();
         bool isScore = false;
         int j = 0;
         int k = 0;
         // Content 하위에 있는 TextMeshPro를 배열로 가져옴
-        TextMeshProUGUI[] textComponents = contentParent.GetComponentsInChildren<TextMeshProUGUI>();
+       
 
         // nameList의 원소 개수와 contentParent에 있는 TextMeshPro 개수 중 작은 값을 사용
         //int count = Mathf.Min(nameList.Count, textComponents.Length);        
