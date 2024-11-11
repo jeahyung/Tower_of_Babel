@@ -129,9 +129,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemImg: {fileID: 21300000, guid: 5e33f3646c75e314fbcdb883d363ae04, type: 3}
-  ex: "\uB79C\uB364\uD558\uAC8C \uC810\uC218\uB97C \uD68D\uB4DD\uD558\uB294 \uC544\uC774\uD15C.
-    \uB2A6\uAC8C \uC5F4\uC218\uB85D \uB354 \uB192\uC740 \uC810\uC218\uB97C \uD68D\uB4DD\uD55C\uB2E4."
-  id: 20
+  ex: "\uC810\uC218 \uD68D\uB4DD"
+  id: 10
   canAdd: 0
 --- !u!1001 &2722735212853283218
 PrefabInstance:

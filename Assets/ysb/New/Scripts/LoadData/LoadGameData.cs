@@ -105,7 +105,7 @@ public class LoadGameData : Singleton<LoadGameData>
     {
         int baseScore = int.Parse(sd[0][key].ToString());
         int per = int.Parse(sd[sa + 1][key].ToString());
-        return baseScore;// * per;
+        return baseScore * per;
     }
 
     //private void ResetUpData()
