@@ -15311,9 +15311,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   workIcons:
-  - {fileID: 21300000, guid: e41f29ea834e69d47aa26e7004c9fe46, type: 3}
-  - {fileID: 21300000, guid: 659f9b2c0a5bf8744a581e0a7d9fee0d, type: 3}
-  - {fileID: 21300000, guid: c5a81a3c03df0764ea07ebddb123d792, type: 3}
+  - {fileID: 21300000, guid: fc8515dae282c8c4595b9b729203d53c, type: 3}
+  - {fileID: 21300000, guid: f57c56e24755357479d15decda5cd2fe, type: 3}
+  - {fileID: 21300000, guid: 6cf17b82082879a43a3eb75c42b6c019, type: 3}
   icon: {fileID: 6082980831366605063}
   offset: 0.15
   radius: 150

@@ -10,6 +10,7 @@ public class Queen : MonoBehaviour
     public ChaseMobManager cMgr;
 
     [Header("몬스터 시작점")]
+    [SerializeField] private List<Tile> tiles = new List<Tile>();
     [SerializeField] private int startX;
     [SerializeField] private int startY;
 
@@ -46,10 +47,10 @@ public class Queen : MonoBehaviour
 
     private void Start()
     {
-        Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
-        Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 2, curTile.GetPosition().z);
-        transform.position = pos;
-        curTile.tileType = TileType.impossible;
+        //Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
+        //Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 2, curTile.GetPosition().z);
+        //transform.position = pos;
+        //curTile.tileType = TileType.impossible;
 
         SpawnCount = new int[SpawnLimitCount.Length];
         for(int i = 0; i < SpawnCount.Length; ++i) { SpawnCount[i] = 0; }
@@ -76,22 +77,26 @@ public class Queen : MonoBehaviour
     void SetPositionData()
     {
         pos.Clear();
-        int count = range * 2 + 1;
-        for (int i = 0; i < count; ++i)
+        for(int i = 0; i < tiles.Count; ++i)
         {
-            for(int j = 0; j < count; ++j)
-            {
-                pos.Add(new Vector2Int(startX + j - 1, startY + i - 1));
-            }
+            pos.Add(tiles[i].coord);
         }
-        pos.Remove(new Vector2Int(startX, startY));
+        //int count = range * 2 + 1;
+        //for (int i = 0; i < count; ++i)
+        //{
+        //    for(int j = 0; j < count; ++j)
+        //    {
+        //        pos.Add(new Vector2Int(startX + j - 1, startY + i - 1));
+        //    }
+        //}
+        //pos.Remove(new Vector2Int(startX, startY));
 
         Tile playerTile = map.nowTile;
         if (pos.Contains(playerTile.coord)) { pos.Remove(playerTile.coord); }
 
-        Tile curTile = map.GetTile(map.tiles[startX, startY].coord); 
-        if(curTile == null) { return; }
-        curTile.tileType = TileType.impossible;
+        //Tile curTile = map.GetTile(map.tiles[startX, startY].coord); 
+        //if(curTile == null) { return; }
+        //curTile.tileType = TileType.impossible;
     }
 
     //Act

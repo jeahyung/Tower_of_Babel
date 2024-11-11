@@ -95,8 +95,7 @@ public class StageManager : Singleton<StageManager>
 
         //새 스테이지
         isBonusStage = false;
-        //int si = Random.Range(0, stages.Count);
-        int si = 2;
+        int si = Random.Range(0, stages.Count);
         curStage = stages[si];
         stages.Remove(stages[si]);
 
