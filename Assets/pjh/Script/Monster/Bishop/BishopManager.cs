@@ -33,6 +33,7 @@ public class BishopManager : MonoBehaviour
         if (mob == null) { return; }
         mob.transform.SetParent(transform);
         bishopList.Add(mob);
+        mob.InitMob();
 
         mCount++;
         if (mi != 0) { mi = 0; }

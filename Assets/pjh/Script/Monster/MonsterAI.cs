@@ -99,7 +99,11 @@ public class MonsterAI : MonoBehaviour, Mob
 
     private void MobSetting()
     {
-        curTile = map.GetTile(map.tiles[startX, startY].coord);
+
+        if (curTile == null)
+        {
+            curTile = map.GetTile(map.tiles[startX, startY].coord);
+        }//curTile = map.GetTileForSpawn(map.tiles[startX, startY].coord); }
         startTile = curTile;
         curTile.tileType = TileType.impossible;
         curTile.mob = this.GetComponent<Mob>();
@@ -616,6 +620,8 @@ public class MonsterAI : MonoBehaviour, Mob
         map = FindObjectOfType<Map>();
         startX = sPoint.x;
         startY = sPoint.y;
+
+        this.curTile = curTile;
     }
 
     public void DestoryMob()

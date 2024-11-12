@@ -68,12 +68,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2af10030785f116448fae13f3e02a8ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   monster: {fileID: 7546383909149250021}
+  moveDir: {x: 0, y: 0}
   map: {fileID: 0}
   startX: 0
   startY: 0
   allTiles: []
   burnedTile: []
+  arr: []
   tile: {fileID: 0}
   nextPos: {x: 0, y: 0, z: 0}
   manager_Turn: {fileID: 0}
@@ -658,6 +661,10 @@ PrefabInstance:
     - target: {fileID: 4328638336483643828, guid: 4f424ed9c9d97b145b5aedeb2af05b2a, type: 3}
       propertyPath: m_Name
       value: Monster_Move (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 4328638336483643828, guid: 4f424ed9c9d97b145b5aedeb2af05b2a, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_AddedGameObjects: []

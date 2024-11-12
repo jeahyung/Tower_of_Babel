@@ -53,8 +53,9 @@ public class MobMovement : MonoBehaviour, Mob
 
     public virtual void InitMob()
     {
-        curTile = map.GetTile(map.tiles[startX, startY].coord);
-        if(curTile == null) { curTile = map.GetTileForSpawn(map.tiles[startX, startY].coord); }
+        if(curTile == null) { curTile = map.GetTile(map.tiles[startX, startY].coord); }
+
+        //if(curTile == null) { curTile = map.GetTileForSpawn(map.tiles[startX, startY].coord); }
         curTile.tileType = TileType.impossible;
         curTile.mob = this.GetComponent<Mob>();
 
@@ -103,6 +104,8 @@ public class MobMovement : MonoBehaviour, Mob
         map = FindObjectOfType<Map>();
         startX = sPoint.x; 
         startY = sPoint.y;
+
+        curTile = cTile;
         //Vector3 pos = new Vector3(cTile.GetPosition().x, cTile.GetPosition().y + 4, cTile.GetPosition().z);
         //transform.position = pos;
 

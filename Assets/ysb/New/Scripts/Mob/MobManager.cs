@@ -141,6 +141,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
         if (manager_Chase == null) {
             if (manager_Bishop == null)
             {
+                if(manager_Patrol == null) { return; }
                 manager_Patrol.StartActMob();
                 return;
             }

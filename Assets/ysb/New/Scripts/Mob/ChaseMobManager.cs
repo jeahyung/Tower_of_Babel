@@ -32,6 +32,7 @@ public class ChaseMobManager : MonoBehaviour
         if (mob == null) { return; }
         mob.transform.SetParent(transform);
         knightList.Add(mob);
+        mob.InitMob();
 
         mCount++;
         if (mi != 0) { mi = 0; }

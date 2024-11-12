@@ -78,7 +78,8 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         mgr_Chase = GetComponentInParent<ChaseMobManager>();
 
         ani = GetComponent<Animator>();
-        curTile = map.GetTile(map.tiles[startX, startY].coord);
+        if (curTile == null) { curTile = map.GetTile(map.tiles[startX, startY].coord); }
+
         count = moveCount;
 
         Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
@@ -418,20 +419,19 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         return newRange;
     }
 
-  
+
     public void SetStartPoint(Vector2Int sPoint, Tile cTile)
     {
         //MobData_P data = MobDataBase.instance.GetpMobData();
 
         //moveDir = new Vector2Int(data.moveX, data.moveY);
-     
+
 
         map = FindObjectOfType<Map>();
         startX = sPoint.x;
         startY = sPoint.y;
 
-        InitMob();
-
+        curTile = cTile;
     }
 
     public void DestoryMob()
