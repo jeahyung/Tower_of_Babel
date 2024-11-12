@@ -72,7 +72,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     
 
     }
-    private void Start() 
+    public void InitMob() 
     {
         ani = GetComponent<Animator>();
         curTile = map.GetTile(map.tiles[startX, startY].coord);
@@ -418,14 +418,16 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
   
     public void SetStartPoint(Vector2Int sPoint, Tile cTile)
     {
-        MobData_P data = MobDataBase.instance.GetpMobData();
+        //MobData_P data = MobDataBase.instance.GetpMobData();
 
-        moveDir = new Vector2Int(data.moveX, data.moveY);
+        //moveDir = new Vector2Int(data.moveX, data.moveY);
      
 
         map = FindObjectOfType<Map>();
         startX = sPoint.x;
         startY = sPoint.y;
+
+        InitMob();
 
     }
 

@@ -22,7 +22,7 @@ public class ChaseMobManager : MonoBehaviour
     {
         for (int i = 0; i < knightList.Count; ++i)
         {
-            //knightList[i].InitMob();
+            knightList[i].InitMob();
             //추가수정 필수
         }
     }

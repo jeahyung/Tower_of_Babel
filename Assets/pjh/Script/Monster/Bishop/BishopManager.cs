@@ -22,6 +22,7 @@ public class BishopManager : MonoBehaviour
     {
         for (int i = 0; i < bishopList.Count; ++i)
         {
+            bishopList[i].InitMob();
             //knightList[i].InitMob();
             //추가수정 필수
         }

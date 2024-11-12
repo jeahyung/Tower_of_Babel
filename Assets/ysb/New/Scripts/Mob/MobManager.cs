@@ -228,6 +228,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     {
         List<Tile> tiles = new List<Tile>();
         tiles.AddRange(manager_Patrol.ShowMobTile());
+        tiles.AddRange(manager_Bishop.ShowMobTile());   //½ºÀ§Äª
         tiles.AddRange(ShowRook());
         return tiles;
     }
@@ -251,7 +252,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     {
         List<Mob> pMob = new List<Mob>();
         pMob.AddRange(manager_Patrol.GetPatrol());
-
+        pMob.AddRange(manager_Bishop.GetChase());
         foreach(Mob m in pMob)
         {
             m.DontMove();

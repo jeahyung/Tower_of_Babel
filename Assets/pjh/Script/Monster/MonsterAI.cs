@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MonsterAI : MonoBehaviour
+public class MonsterAI : MonoBehaviour, Mob
 {
 
   
@@ -86,7 +86,7 @@ public class MonsterAI : MonoBehaviour
         allTiles.AddRange(tiles);
     }
 
-    private void Start()
+    public void InitMob()
     {
         //ani = GetComponent<Animator>();
         currentState = State.Patrol; // 처음에는 순찰 상태로 시작
@@ -600,6 +600,31 @@ public class MonsterAI : MonoBehaviour
         return curTile;
     }
 
+    public List<Tile> ShowRange()
+    {
+        return range;
+    }
+
+    public void SetStartPoint(Vector2Int sPoint, Tile curTile)
+    {
+        MobData_P data = MobDataBase.instance.GetpMobData();
+
+        moveDir = new Vector2Int(data.moveX, data.moveY);
+        rightRange = data.rangeR;
+        leftRagne = data.rangeL;
+
+        map = FindObjectOfType<Map>();
+        startX = sPoint.x;
+        startY = sPoint.y;
+    }
+
+    public void DestoryMob()
+    {
+        curTile.tileType = TileType.possible;
+        curTile.mob = null;
+
+        gameObject.SetActive(false);
+    }
 }
 
 

@@ -8,6 +8,7 @@ public class Queen : MonoBehaviour
     private Animator anim;
     public PatrolMobManager pMgr;
     public ChaseMobManager cMgr;
+    public BishopManager bMgr;
 
     [Header("몬스터 시작점")]
     [SerializeField] private List<Tile> tiles = new List<Tile>();
@@ -42,6 +43,7 @@ public class Queen : MonoBehaviour
         map = FindObjectOfType<Map>();
         pMgr = FindObjectOfType<PatrolMobManager>();
         cMgr = FindObjectOfType<ChaseMobManager>();
+        bMgr = FindObjectOfType<BishopManager>();
         anim = GetComponentInChildren<Animator>();
     }
 
@@ -158,6 +160,7 @@ public class Queen : MonoBehaviour
                 tile.tileType = TileType.impossible;
                 tile.mob = mob.GetComponent<Mob>();
 
+                bMgr.AddMob(mob.GetComponent<MonsterAI>());
                 pMgr.AddMob(mob.GetComponent<MobMovement>());
                 cMgr.AddMob(mob.GetComponent<TraceMonsterMovement>());
             }
