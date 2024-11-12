@@ -63,7 +63,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         map = FindObjectOfType<Map>();
         //  player = GameObject.FindWithTag("Player");
         manager_Turn = FindObjectOfType<TurnManager>();
-        mgr_Chase = GetComponentInParent<ChaseMobManager>();
+        //mgr_Chase = GetComponentInParent<ChaseMobManager>();
        // mgr_Chase = FindObjectOfType<ChaseMobManager>();
         //tile = GetComponent<Tile>();
         Tile[] tiles = FindObjectsOfType<Tile>();
@@ -74,6 +74,9 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     }
     public void InitMob() 
     {
+        //manager_Turn = FindObjectOfType<TurnManager>();
+        mgr_Chase = GetComponentInParent<ChaseMobManager>();
+
         ani = GetComponent<Animator>();
         curTile = map.GetTile(map.tiles[startX, startY].coord);
         count = moveCount;
