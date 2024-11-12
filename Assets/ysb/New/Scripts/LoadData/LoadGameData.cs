@@ -107,6 +107,11 @@ public class LoadGameData : Singleton<LoadGameData>
         int per = int.Parse(sd[sa + 1][key].ToString());
         return baseScore * per;
     }
+    public int SearchStageScoreData(string key)
+    {
+        int baseScore = int.Parse(sd[0][key].ToString());
+        return baseScore;
+    }
 
     //private void ResetUpData()
     //{

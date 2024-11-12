@@ -26,6 +26,8 @@ public class ScoreManager : Singleton<ScoreManager>
 
     int energyScore = 0;
     List<float> esPer;
+
+    public int boxScore;
     public int TotalScore => scoreSum;
     private void OnEnable()
     {
@@ -95,7 +97,39 @@ public class ScoreManager : Singleton<ScoreManager>
     public int SearchScore(string key)
     {
         int saNum = UpgradeManager.instance.GetSANum();
-        int score = LoadGameData.instance.SearchScoreData(key, saNum);
+        int score = 0;
+        int bonus = 0;
+        if (key == "Stage")
+        {
+            score = LoadGameData.instance.SearchStageScoreData(key);
+            int chapterNumber = StageManager.instance.GetChapterCount;
+            int stageNumber = StageManager.instance.GetStageCount;
+            boxScore = 0;
+            int max = 0;
+            switch (chapterNumber)
+            {
+                case 1:
+                    bonus = 1000 * (stageNumber - 3);
+                    break;
+                case 2:
+                    bonus = 1000 + 1000 * (stageNumber - 1);
+                    break;
+                case 3:
+                    bonus = 5000 + 2000 * (stageNumber - 1);
+                    break;
+                case 4:
+                    bonus = 15000 + 5000 * (stageNumber - 1);
+                    break;
+                default:
+                    break;
+            }
+        }
+        else
+        {
+
+            score = LoadGameData.instance.SearchScoreData(key, saNum);
+        }        
+        score += bonus;
         return score;
     }
     public void Score_ItemGet()
@@ -336,25 +370,30 @@ public class ScoreManager : Singleton<ScoreManager>
     {
         Debug.Log("box open");
         //스테이지 넘버 가져와서 랜덤으로 계산하셈
-        int stageNumber = StageManager.instance.GetChapterCount;
-
-        int score = 0;
-        switch(stageNumber)
+        int chapterNumber = StageManager.instance.GetChapterCount;
+        int stageNumber = StageManager.instance.GetStageCount;
+        boxScore = 0;
+        int max = 0;
+        switch (chapterNumber)
         {
             case 1:
-                score = 3000;//Random.Range(50, 100);
+                max = 500;
+                boxScore = Random.Range(500, max  + 500 * stageNumber);
                 break;
             case 2:
-                score = 8000;//Random.Range(100, 150);
+                max = 2500;
+                boxScore = Random.Range(1000, max + 500 * stageNumber);
                 break;
             case 3:
-                score = 13000;//Random.Range(150, 200);
+                max = 4000;
+                boxScore = Random.Range(2000, max + 500 * stageNumber);
                 break;
             case 4:
-                score = 20000;//Random.Range(200, 300);
+                max = 5000;
+                boxScore = Random.Range(3000, max * stageNumber);
                 break;
             case 5:
-                score = 30000;//Random.Range(300, 500);
+                boxScore = 30000;//Random.Range(300, 500);
                 break;
             default:
                 break;
@@ -363,14 +402,46 @@ public class ScoreManager : Singleton<ScoreManager>
             scoreUI = FindObjectOfType<ScoreUI>();
 
         //int bonus = UpgradeManager.instance.GetScore_Item();//.bonusScore;
-        scoreSum += score;
+        scoreSum += boxScore;
 
-        itemScore += score; //결과창 용
+        itemScore += boxScore; //결과창 용
         //UpgradeManager.instance.SumScore = scoreSum;
-        scoreUI.UseItem(score);
+        scoreUI.UseItem(boxScore);
         scoreUI.SetSumSocre(scoreSum);
     }
 
+    public int CalculateBoxScore()
+    {
+        int chapterNumber = StageManager.instance.GetChapterCount;
+        int stageNumber = StageManager.instance.GetStageCount;
+        boxScore = 0;
+        int max = 0;
+        switch (chapterNumber)
+        {
+            case 1:
+                max = 500;
+                boxScore = Random.Range(500, max + 500 * stageNumber);
+                break;
+            case 2:
+                max = 2500;
+                boxScore = Random.Range(1000, max + 500 * stageNumber);
+                break;
+            case 3:
+                max = 4000;
+                boxScore = Random.Range(2000, max + 500 * stageNumber);
+                break;
+            case 4:
+                max = 5000;
+                boxScore = Random.Range(3000, max * stageNumber);
+                break;
+            case 5:
+                boxScore = 30000;//Random.Range(300, 500);
+                break;
+            default:
+                break;
+        }
+        return boxScore;
+    }
     public void DecreaseScore(int del)
     {
         scoreSum -= del;

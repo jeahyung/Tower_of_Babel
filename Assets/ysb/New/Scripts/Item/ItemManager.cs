@@ -87,6 +87,7 @@ public class ItemManager : MonoBehaviour
         mob.isUseItem = true;
         map.SelectItem(item);
         ShowRopeUI();
+
         //map.UseItem_Rope();
     }
 
@@ -98,6 +99,7 @@ public class ItemManager : MonoBehaviour
         mob.isUseItem = true;
         map.SelectItem(item);
         BoxUI.SetActive(true);
+        BoxUI.GetComponentInChildren<UI_Clock>().SetRandBoxText();
     }
 
     public void UseItem()
@@ -154,7 +156,6 @@ public class ItemManager : MonoBehaviour
         selectedItem = item;
         mob.isUseItem = true;
         map.SelectItem_Clock();
-        //ClockUI[i].SetActive(true);
     }
 
     public bool SetPlayerPos(Item item, int i)
@@ -241,6 +242,16 @@ public class ItemManager : MonoBehaviour
     public void ShowRopeUI()
     {
         RopeUI.SetActive(true);
+        string mob;
+        if(selectedItem.id == 2)
+        {
+            mob = "순찰형";
+        }
+        else
+        {
+            mob = "추격형";
+        }
+        RopeUI.GetComponentInChildren<UI_Rope>().SettingInfo(mob);
     }
     public void HideRopeUI()
     {
