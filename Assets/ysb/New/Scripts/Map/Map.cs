@@ -485,6 +485,11 @@ public class Map : MonoBehaviour
 
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
+        if (playerTile.f == true)
+        {
+            playerTile.TileBurnDamage(playerTile);
+            player.TileDamage(5);
+        }
 
         //에너지 사용 -> 플레이어쪽에서
         Debug.Log("player move");
@@ -496,6 +501,12 @@ public class Map : MonoBehaviour
         SetBackTile();
         nowTile = clickTile;    //현재 타일 갱신
         playerTile = nowTile;
+        if (playerTile.f == true)
+        {
+            playerTile.TileBurnDamage(playerTile);
+            player.TileDamage(5);
+        }
+
         Debug.Log("player move_continue");
     }
 

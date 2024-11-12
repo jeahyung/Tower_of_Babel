@@ -9,7 +9,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     private TurnManager manager_Turn;
     //돌격형 매니저
     private ChaseMobManager manager_Chase;
-
+    private KingManager manager_King;
+    private BishopManager manager_Bishop;
     private List<Mob> mobs = new List<Mob>();
 
     private List<Rook> rooks = new List<Rook>();   //룩들
@@ -33,6 +34,9 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
         manager_Turn = FindObjectOfType<TurnManager>();
         manager_Patrol = GetComponentInChildren<PatrolMobManager>();
         manager_Chase = GetComponentInChildren<ChaseMobManager>();
+        manager_King = GetComponentInChildren<KingManager>();
+        manager_Bishop = GetComponentInChildren<BishopManager>();
+
 
         mobs.AddRange(GetComponentsInChildren<Mob>());
         rooks.AddRange(GetComponentsInChildren<Rook>());
@@ -135,25 +139,58 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     public void ActMob()
     {
         if (manager_Chase == null) {
-            manager_Patrol.StartActMob();
-            return;        
+            if (manager_Bishop == null)
+            {
+                manager_Patrol.StartActMob();
+                return;
+            }
+            else
+            {
+                manager_Bishop.StartActMob();
+                return;
+            }            
         }
         manager_Chase.StartActMob();
     }
     public void EndChase()
     {
-        if(manager_Patrol == null)
+        if(manager_Bishop == null)
+        {
+            EndBishop();
+            return;
+        }
+        manager_Bishop.StartActMob();
+        //manager_King.OffSkill();
+    }
+
+    public void EndBishop()
+    {
+        if (manager_Patrol == null)
         {
             EndPatrol();
+            //manager_King.OffSkill();
             return;
         }
         manager_Patrol.StartActMob();
     }
+
     public void EndPatrol()
     {
-        manager_Turn.EndEnemyTurn();
+        if (manager_King == null)
+        {
+            manager_Turn.EndEnemyTurn();
+        }
+        if(manager_King != null)
+        {            
+            manager_King.OffSkill();
+            manager_King.StartActMob();
+        }     
     }
-
+    public void EndKing()
+    {
+        manager_Turn.EndEnemyTurn();
+        Debug.Log("EndKing Called and End EnemyTurn");
+    }
 
     //룩 보여주기
     public List<Tile> ShowRook()

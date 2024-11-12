@@ -405,6 +405,10 @@ public class PlayerMovement : MonoBehaviour
         anim.SetBool("isRun", false);
     }
 
+    public void TileDamage(int i)
+    {
+        energySysteam.UseEnergy(i);
+    }
 
     #region ÇÇ°Ý
     public void TakeDamage()

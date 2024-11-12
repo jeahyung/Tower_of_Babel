@@ -7,13 +7,14 @@ public enum TileType { none = -1, possible = 0, impossible = 1, }
 public class Tile : MonoBehaviour
 {
     public TileType tileType;
-
+    public bool f = false;
     public Vector2Int coord;
 
     //public SpriteRenderer rend;
 
     public GameObject effectPrefab;
-    public ParticleSystem flame;
+    public ParticleSystem flame;        //이동 가능 데미지 있음
+    public ParticleSystem block;
 
     public int flameCnt = 1;
     public int flameHP = 0;
@@ -29,6 +30,7 @@ public class Tile : MonoBehaviour
     private Color sfxRedColor = Color.red;
     private void Start()
     {
+        f = false;
         //map = FindObjectOfType<Map>();
         HideArea();
         if(tileType == TileType.none)
@@ -40,7 +42,11 @@ public class Tile : MonoBehaviour
         if (flame != null)
         {
             flame.Stop();
+        }
 
+        if (block != null)
+        {
+            block.Stop();
         }
     }
 
@@ -107,7 +113,6 @@ public class Tile : MonoBehaviour
         }
     }
 
-
     private void HideEffect()
     {   
         if (effectPrefab != null)
@@ -160,41 +165,14 @@ public class Tile : MonoBehaviour
         }
 
         //  burnedTile.Add(tile);
-
+        tile.f = true;
         tile.flameHP = flameCnt;
         tile.flame.Play();
     }
 
     public void TileBurnOff(List<Tile> tiles)
     {
-        /*
-        //if (flame == null)
-        //{
-        //    Debug.Log("TileBurnOff return...");
-
-        //    return;
-        //}
-        //Debug.Log("TileBurnOff Doing...");
-
-        //foreach (Tile tile in burnedTile)
-        //{
-        //    tile.flameHP--;
-        //    Debug.Log("TileBurnOff Doing...");
-        //    if (tile.flameHP <= 0)
-        //    {
-        //        flame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        //    }
-        //}
-
-
-        //if (flameHP <= 0)
-        //{
-        //    flame.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        //}
-        //else
-        //    return;
-        */
-
+        f = false;
         for (int i = 0; i < tiles.Count; i++)
         {
             tiles[i].flameHP--;
@@ -202,6 +180,44 @@ public class Tile : MonoBehaviour
             if (tiles[i].flameHP <= 0)
             {
                 tiles[i].flame.Stop();//true, ParticleSystemStopBehavior.StopEmitting
+                Debug.Log("TileBurnOff");
+                tiles.RemoveAt(0);
+                i--;
+
+            }
+        }
+
+    }
+
+    public void TileBurnDamage(Tile tile)
+    {
+        tile.flame.Stop();
+    }
+
+    public void TileBlockOn(Tile tile)
+    {
+        if (flame == null)
+        {
+            return;
+        }
+
+        //  burnedTile.Add(tile);
+        tile.tileType = TileType.impossible;
+        tile.flameHP = flameCnt;
+        tile.block.Play();
+    }
+
+    public void TileBlockOff(List<Tile> tiles)
+    {
+
+        for (int i = 0; i < tiles.Count; i++)
+        {
+            tiles[i].flameHP--;
+            Debug.Log("TileBurnOff flameHP");
+            if (tiles[i].flameHP <= 0)
+            {
+                tiles[i].block.Stop();//true, ParticleSystemStopBehavior.StopEmitting
+                tiles[i].tileType = TileType.possible;
                 Debug.Log("TileBurnOff");
                 tiles.RemoveAt(0);
                 i--;

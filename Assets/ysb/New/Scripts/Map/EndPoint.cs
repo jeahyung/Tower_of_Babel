@@ -50,6 +50,7 @@ public class EndPoint : MonoBehaviour
         Camera.main.SendMessage("BackMainCam");
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Clear);
         down.ChageBool();
+        down.UpTile();
     }
 
     private void OnTriggerStay(Collider other)

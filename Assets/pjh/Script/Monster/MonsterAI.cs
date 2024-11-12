@@ -1,3 +1,4 @@
+using Artngame.PDM;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,8 +6,7 @@ using UnityEngine;
 public class MonsterAI : MonoBehaviour
 {
 
-    public class MonsterState
-    {
+  
 
         //private Vector3 startPosition;
 
@@ -15,7 +15,7 @@ public class MonsterAI : MonoBehaviour
 
         public Map map;
         public Tile curTile;  //현재 위치한 타일
-        public Tile startTile;
+        //public Tile startTile;
 
 
         public int moveCount = 2;   //움직이는 칸 수
@@ -26,15 +26,21 @@ public class MonsterAI : MonoBehaviour
 
         public List<Tile> range;    //움직일 수 있는 범위
         
-    }
-    //public Transform[] patrolPoints;
-    //public Transform player;
-    //public float chaseDistance = 20f;
+    
+   // private Animator ani;
+    //변경된 추격 로직을 위한 변수
+    private List<Vector3> directions = new List<Vector3>();
+    public List<Tile> arr = new List<Tile>();
+    private List<Tile> allTiles = new List<Tile>();
+    private Tile pre;
+    private bool attackEnd = false;
+    //----------------------------------------------------------------------------------
 
-    //  private MonsterState currentState;
+
+    private BishopManager bishopManager;
     private Vector3 startPosition;
-    public MonsterState ms;
-    public PatrolMobManager manager_Mob;    //이거 스위칭 용으로 별도 제작 필요
+   
+    //public PatrolMobManager manager_Mob;    //이거 스위칭 용으로 별도 제작 필요
     // Enum으로 상태 정의
     public enum State
     {
@@ -47,7 +53,7 @@ public class MonsterAI : MonoBehaviour
     private State currentState;
 
     //x, y과 바꼈다. x = y축 / y = x축 / 1 = 오른쪽,위 / -1 = 왼쪽, 아래
-    //PatrolMobManager manager_Mob;
+ 
 
    
     private Tile startTile;
@@ -58,10 +64,9 @@ public class MonsterAI : MonoBehaviour
     [SerializeField] private int startY;
 
     //public int moveCount = 2;   //움직이는 칸 수
-    public int visualRange = 2;
     private int count;
     
-    //[SerializeField] private float moveSpeed;
+   
 
     public bool canAct = true;   //움직일 수 있는가?
     public bool isRope = false; //로프에 걸렸는가? 
@@ -69,81 +74,69 @@ public class MonsterAI : MonoBehaviour
     public int leftRagne = 1;   //왼쪽으로 몇 칸까지?(아래)
     public int rightRange = 1;  //오른쪽으로 몇 칸까지?(위)   //오른쪽을 기준으로 잡는다(-1,1 동일)
     public List<Tile> viewRange;
-
+    
     private void Awake()
     {
-        ms = new MonsterState();
-        manager_Mob = GetComponentInParent<PatrolMobManager>();
-        ms.map = FindObjectOfType<Map>();
-        count = ms.moveCount;                
+      
+       // manager_Mob = GetComponentInParent<PatrolMobManager>();
+        map = FindObjectOfType<Map>();
+        count = moveCount;
+        Tile[] tiles = FindObjectsOfType<Tile>();
+        //tile1 = FindObjectOfType<Tile>();
+        allTiles.AddRange(tiles);
     }
 
     private void Start()
     {
+        //ani = GetComponent<Animator>();
         currentState = State.Patrol; // 처음에는 순찰 상태로 시작
-
+        bishopManager = GetComponentInParent<BishopManager>();
         MobSetting();
 
         //SetState(new PatrolState(this)); // 순찰 상태로 시작
     }
 
-    private void Update()
-    {
-        // currentState?.Update();
-        //switch (currentState)
-        //{
-        //    case State.Patrol:
-        //        Patrol(curTile);
-        //        break;
-        //    case State.Chase:
-        //        Chase(curTile);
-        //        break;
-        //    case State.Return:
-        //        ReturnToStart(startTile);
-        //        break;
-        //}
-    }
 
     private void MobSetting()
     {
-        ms.curTile = ms.map.GetTile(ms.map.tiles[startX, startY].coord);
-        startTile = ms.curTile;
-        ms.curTile.tileType = TileType.impossible;
-        ms.curTile.mob = this.GetComponent<Mob>();
+        curTile = map.GetTile(map.tiles[startX, startY].coord);
+        startTile = curTile;
+        curTile.tileType = TileType.impossible;
+        curTile.mob = this.GetComponent<Mob>();
         isPatrol = true;
 
-        Vector3 pos = new Vector3(ms.curTile.GetPosition().x, ms.curTile.GetPosition().y + 3, ms.curTile.GetPosition().z);
+        Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
         transform.position = pos;
 
-        ms.range = new List<Tile>();
+        range = new List<Tile>();
         viewRange = new List<Tile>();
 
-        ms.range.Add(ms.curTile); //현재 칸
+        range.Add(curTile); //현재 칸
         for (int i = 0; i < leftRagne; ++i)
         {
-            Vector2Int nextCoord = ms.curTile.coord + -moveDir * (i + 1);
-            Tile nextTile = ms.map.GetTile(nextCoord);
+            Vector2Int nextCoord = curTile.coord + -moveDir * (i + 1);
+            Tile nextTile = map.GetTile(nextCoord);
             if (nextTile == null) { break; }
-            ms.range.Add(nextTile);
+            range.Add(nextTile);
         }
 
         for (int i = 0; i < rightRange; ++i)
         {
-            Vector2Int nextCoord = ms.curTile.coord + moveDir * (i + 1);
-            Tile nextTile = ms.map.GetTile(nextCoord);
+            Vector2Int nextCoord = curTile.coord + moveDir * (i + 1);
+            Tile nextTile = map.GetTile(nextCoord);
             if (nextTile == null) { break; }
-            ms.range.Add(nextTile);
+            range.Add(nextTile);
         }
     }
 
     public void CheckRange()
     {
-        SetViewRange();
+        SetViewRange(curTile);
         bool a = false;
 
         foreach (Tile tile in viewRange)
         {
-            if(tile.coord == ms.map.playerTile.coord)
+            if(tile.coord == map.playerTile.coord)
             {
                 currentState = State.Chase;
                 Debug.Log("State =====> Chase");
@@ -168,37 +161,135 @@ public class MonsterAI : MonoBehaviour
         }
     }
 
-    public void SetViewRange()
+    public void SetViewRange(Tile now) //now는 ms.curTile
     {
         viewRange.Clear();
 
-        for (int i = 0; i < visualRange;  ++i)
+        //for (int i = 0; i < visualRange;  ++i)
+        //{
+        //    Vector2Int addRange = ms.curTile.coord + moveDir * (i + 1);     // moveDir 이게 1이라 n번 더하기 위해 i+1
+        //    Tile findTile = ms.map.GetTile(addRange);
+        //    if(findTile !=  null)
+        //    {
+        //        viewRange.Add(findTile);
+        //    }
+        //    //viewRange.Add();
+        //}
+
+        Vector2Int nextCoord;
+        Tile nextTile = null;
+
+
+        foreach (Tile tile in allTiles)
         {
-            Vector2Int addRange = ms.curTile.coord + moveDir * (i + 1);     // moveDir 이게 1이라 n번 더하기 위해 i+1
-            Tile findTile = ms.map.GetTile(addRange);
-            if(findTile !=  null)
+            if (tile.coord.x == now.coord.x + 1 && tile.coord.y == now.coord.y)
             {
-                viewRange.Add(findTile);
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);                    
+                }
+
             }
-            //viewRange.Add();
+            if (tile.coord.x == now.coord.x - 1 && tile.coord.y == now.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == now.coord.x && tile.coord.y == now.coord.y + 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);                    
+                }
+            }
+            if (tile.coord.x == now.coord.x && tile.coord.y == now.coord.y - 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            //----------------------------1칸 대각선-----------------------------------
+            if (tile.coord.x == now.coord.x + 1 && tile.coord.y == now.coord.y+1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+
+            }
+            if (tile.coord.x == now.coord.x - 1 && tile.coord.y == now.coord.y-1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == now.coord.x-1 && tile.coord.y == now.coord.y + 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == now.coord.x+1 && tile.coord.y == now.coord.y - 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            //-----------------------------2칸 상하좌우---------------------------------
+            if (tile.coord.x == now.coord.x + 2 && tile.coord.y == now.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+
+            }
+            if (tile.coord.x == now.coord.x - 2 && tile.coord.y == now.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == now.coord.x && tile.coord.y == now.coord.y + 2)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == now.coord.x && tile.coord.y == now.coord.y - 2)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    viewRange.Add(tile);
+                }
+            }
+
         }
     }
 
 
     public void Patrol(Tile tile)
     {
-        ms.curTile = tile;
+        curTile = tile;
+        pre = tile;
+        Vector2Int nextCoord = curTile.coord + moveDir;
+        Tile nextTile = map.GetTile(nextCoord);
 
-        Vector2Int nextCoord = ms.curTile.coord + moveDir;
-        Tile nextTile = ms.map.GetTile(nextCoord);
-
-        if (nextTile == null || ms.range.Contains(nextTile) == false)
+        if (nextTile == null || range.Contains(nextTile) == false)
         {
             moveDir = new Vector2Int(-moveDir.x, -moveDir.y);
-            nextCoord = ms.curTile.coord + moveDir;
-            nextTile = ms.map.GetTile(nextCoord);
+            nextCoord = curTile.coord + moveDir;
+            nextTile = map.GetTile(nextCoord);
         }
-        EffectManage.Instance.PlayEffect("Monster_Move", this.transform.position);
+       // EffectManage.Instance.PlayEffect("Monster_Move", this.transform.position);
         transform.forward = new Vector3(moveDir.y, 0, moveDir.x);
 
         tile.tileType = TileType.possible;
@@ -208,8 +299,9 @@ public class MonsterAI : MonoBehaviour
 
     public void Chase(Tile tile)
     {
-        Vector2Int dirCheck = ms.map.playerTile.coord - ms.curTile.coord;
-        Movepattern(dirCheck, tile);
+        ArrSet(tile);      
+
+        FindAnyWay(tile, map.nowTile);
     }
 
     public void Movepattern(Vector2Int dirCheck, Tile tile)
@@ -218,12 +310,12 @@ public class MonsterAI : MonoBehaviour
 
         if (Mathf.Abs(dirCheck.x) > Mathf.Abs(dirCheck.y))
         {
-            ms.curTile = tile;
+            curTile = tile;
             Tile nextTile;
             if (0 < dirCheck.x)
             {
-                nextCoord = new Vector2Int(ms.curTile.coord.x + 1, ms.curTile.coord.y);
-                nextTile = ms.map.GetTile(nextCoord);
+                nextCoord = new Vector2Int(curTile.coord.x + 1, curTile.coord.y);
+                nextTile = map.GetTile(nextCoord);
                 tile.tileType = TileType.possible;
                 tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
@@ -231,8 +323,8 @@ public class MonsterAI : MonoBehaviour
             }
             else if (0 > dirCheck.x)
             {
-                nextCoord = new Vector2Int(ms.curTile.coord.x - 1, ms.curTile.coord.y);
-                nextTile = ms.map.GetTile(nextCoord);
+                nextCoord = new Vector2Int(curTile.coord.x - 1, curTile.coord.y);
+                nextTile = map.GetTile(nextCoord);
                 tile.tileType = TileType.possible;
                 tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
@@ -241,12 +333,12 @@ public class MonsterAI : MonoBehaviour
         }
         else
         {
-            ms.curTile = tile;
+            curTile = tile;
             Tile nextTile;
             if (0 < dirCheck.y)
             {
-                nextCoord = new Vector2Int(ms.curTile.coord.x, ms.curTile.coord.y + 1);
-                nextTile = ms.map.GetTile(nextCoord);
+                nextCoord = new Vector2Int(curTile.coord.x, curTile.coord.y + 1);
+                nextTile = map.GetTile(nextCoord);
                 tile.tileType = TileType.possible;
                 tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
@@ -254,8 +346,8 @@ public class MonsterAI : MonoBehaviour
             }
             else if (0 > dirCheck.y)
             {
-                nextCoord = new Vector2Int(ms.curTile.coord.x, ms.curTile.coord.y - 1);
-                nextTile = ms.map.GetTile(nextCoord);
+                nextCoord = new Vector2Int(curTile.coord.x, curTile.coord.y - 1);
+                nextTile = map.GetTile(nextCoord);
                 tile.tileType = TileType.possible;
                 tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
@@ -265,7 +357,7 @@ public class MonsterAI : MonoBehaviour
 
     public void ReturnToStart(Tile tile)
     {
-        Vector2Int dirCheck = startTile.coord - ms.curTile.coord;
+        Vector2Int dirCheck = startTile.coord - curTile.coord;
         if (dirCheck.x == 0 && dirCheck.y == 0)
         {
             Debug.Log("Return Turn Over");
@@ -276,7 +368,12 @@ public class MonsterAI : MonoBehaviour
             return;
         }
 
-        Movepattern(dirCheck, tile);
+        arr.Clear();
+        directions.Clear();
+
+        ArrSet(tile);
+
+        FindAnyWay(tile, startTile);
     }
 
     private void CheckTile(Tile nextTile)
@@ -296,20 +393,33 @@ public class MonsterAI : MonoBehaviour
         //}
         if (nextTile == null)
         {
-            count = ms.moveCount;
-            ms.isEnd = true;
-            ms.isDone = true;
-            ms.curTile.tileType = TileType.impossible;
+            count = moveCount;
+            isEnd = true;
+            isDone = true;
+            curTile.tileType = TileType.impossible;
 
-            manager_Mob.CheckMobAction();
+            bishopManager.CheckMobAction();
+            arr.Clear();
+            directions.Clear();
             yield break;
         }
+        attackEnd = false;
+        if (nextTile.coord == map.playerTile.coord)
+        {
+            //ani.SetTrigger("Attack");
 
+            while (!attackEnd)
+            {
+                yield return null;
+            }
+            ChangTileType();
+        }
+        ChangTileType();
         float ypos = transform.position.y;
         Vector3 nextPos = new Vector3(nextTile.transform.position.x, ypos, nextTile.transform.position.z);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
 
-        ms.map.TakeDamage(nextTile);
+       // ms.map.TakeDamage(nextTile);
 
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
@@ -317,7 +427,7 @@ public class MonsterAI : MonoBehaviour
             yield return null;
         }
         transform.position = nextPos;
-        ms.curTile = nextTile;
+        curTile = nextTile;
         nextTile.tileType = TileType.impossible;
         nextTile.mob = this.GetComponent<Mob>();
 
@@ -325,15 +435,18 @@ public class MonsterAI : MonoBehaviour
 
         if (--count > 0)
         {
+            arr.Clear();
+            directions.Clear();
             Act(); // 다음 행동
             yield break;
         }
 
-        count = ms.moveCount;
-        ms.isEnd = true;
-        ms.isDone = true;
-
-        manager_Mob.CheckMobAction();
+        count = moveCount;
+        isEnd = true;
+        isDone = true;
+        arr.Clear();
+        directions.Clear();
+        bishopManager.CheckMobAction();
     }
 
     public void DontMove()
@@ -351,15 +464,95 @@ public class MonsterAI : MonoBehaviour
         switch (currentState)
         {
             case State.Patrol:
-                Patrol(ms.curTile);
+                Patrol(curTile);
                 break;
             case State.Chase:
-                Chase(ms.curTile);
+                Chase(curTile);
                 break;
             case State.Return:
-                ReturnToStart(ms.curTile);
+                ReturnToStart(curTile);
                 break;
         }
+    }
+    public void ArrSet(Tile startTiles)
+    {
+        Vector2Int nextCoord;
+        Tile nextTile = null;
+
+
+        foreach (Tile tile in allTiles)
+        {
+            if (tile.coord.x == startTiles.coord.x + 1 && tile.coord.y == startTiles.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(0, 0, 1));
+                    
+                   
+                }
+
+            }
+            if (tile.coord.x == startTiles.coord.x - 1 && tile.coord.y == startTiles.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(0, 0, -1));
+                    
+                }
+            }
+            if (tile.coord.x == startTiles.coord.x && tile.coord.y == startTiles.coord.y + 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(1, 0, 0));
+                   
+                }
+            }
+            if (tile.coord.x == startTiles.coord.x && tile.coord.y == startTiles.coord.y - 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(-1, 0, 0));
+                  
+                }
+            }
+        }
+    }
+    private void ChangTileType()
+    {
+        pre.tileType = TileType.possible;
+    }
+
+    public void FindAnyWay(Tile tile, Tile goToThere)
+    {
+
+        pre = tile;
+        if (arr == null || arr.Count == 0)
+        {
+            Debug.Log("경로가 존재하지 않음");
+            //mgr_Chase.CheckMobAction();
+            return;
+        }
+
+        int closestIndex = 0;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < arr.Count; i++)
+        {
+            float distance = Vector2Int.Distance(goToThere.coord, arr[i].coord);
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestIndex = i;
+            }
+        }
+
+        StartCoroutine(MoveMob(arr[closestIndex]));
+        transform.forward = directions[closestIndex];
     }
 
     public void SetState(MonsterState newState)
@@ -404,7 +597,7 @@ public class MonsterAI : MonoBehaviour
 
     public Tile ShowTile()
     {
-        return ms.curTile;
+        return curTile;
     }
 
 }

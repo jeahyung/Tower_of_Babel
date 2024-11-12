@@ -16,7 +16,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6590680097269752343
 Transform:
   m_ObjectHideFlags: 0
@@ -148,7 +148,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tileType: 0
   coord: {x: 0, y: 0}
-  rend: {fileID: 2624536765379879924}
   effectPrefab: {fileID: 5718832471167662971}
   flame: {fileID: 0}
   flameCnt: 1

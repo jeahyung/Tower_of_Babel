@@ -146,7 +146,6 @@ GameObject:
   - component: {fileID: 1207765343962576102}
   - component: {fileID: 6292979433505288895}
   - component: {fileID: -4797720434237686915}
-  - component: {fileID: 499434620804960411}
   m_Layer: 0
   m_Name: Mob_Bishop
   m_TagString: Untagged
@@ -170,7 +169,7 @@ Transform:
   - {fileID: 7853819630420951579}
   - {fileID: 4666851331988822389}
   m_Father: {fileID: 0}
-  m_RootOrder: -1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!65 &1207765343962576102
 BoxCollider:
@@ -213,6 +212,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf9680af31cd30247bcb31cca31184e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  arr: []
   manager_Mob: {fileID: 0}
   moveDir: {x: 0, y: 0}
   startX: 0
@@ -224,28 +224,6 @@ MonoBehaviour:
   leftRagne: 1
   rightRange: 1
   viewRange: []
---- !u!114 &499434620804960411
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8150193643051113708}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 346017863ee3f944eafc3b1e34ff72f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  map: {fileID: 0}
-  curTile: {fileID: 0}
-  moveDir: {x: -1, y: 0}
-  startX: 0
-  startY: 0
-  moveCount: 2
-  leftRagne: 1
-  rightRange: 1
-  canAct: 1
-  isRope: 0
 --- !u!1001 &3235873801192179398
 PrefabInstance:
   m_ObjectHideFlags: 0

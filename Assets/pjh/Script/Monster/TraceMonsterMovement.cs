@@ -8,14 +8,15 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
-public class TraceMonsterMovement : MonoBehaviour
+public class TraceMonsterMovement : MonoBehaviour, Mob
 {
+    [SerializeField] private bool type = false;
     private ChaseMobManager mgr_Chase;
     private bool ch = true;
-
+    private bool attackEnd = false;
     [SerializeField] private GameObject monster;
-   // [SerializeField]private GameObject player;
-
+    // [SerializeField]private GameObject player;
+    public Vector2Int moveDir;     //움직일 방향
     [SerializeField] private Map map;
     private Animator ani;
 
@@ -25,6 +26,7 @@ public class TraceMonsterMovement : MonoBehaviour
     
     public List<Tile> allTiles = new List<Tile>();
     public List<Tile> burnedTile = new List<Tile>();
+    public List<Tile> arr = new List<Tile>();
     [SerializeField] private Tile tile = null;
    // private Tile tile1 = null;
     public Vector3 nextPos;
@@ -50,7 +52,11 @@ public class TraceMonsterMovement : MonoBehaviour
 
     private Vector3 initialPosition;
     private bool isAnimationPlaying = false;
-
+    private Tile next;
+    private Tile pre;
+    private List<Vector3> directions = new List<Vector3>();
+    private Tile curTile;
+    private List<Tile> newRange = new List<Tile>();
 
     private void Awake()
     {
@@ -63,11 +69,13 @@ public class TraceMonsterMovement : MonoBehaviour
         Tile[] tiles = FindObjectsOfType<Tile>();
         //tile1 = FindObjectOfType<Tile>();
         allTiles.AddRange(tiles);
+    
+
     }
     private void Start() 
     {
         ani = GetComponent<Animator>();
-        Tile curTile = map.GetTile(map.tiles[startX, startY].coord);
+        curTile = map.GetTile(map.tiles[startX, startY].coord);
         count = moveCount;
 
         Vector3 pos = new Vector3(curTile.GetPosition().x, curTile.GetPosition().y + 3, curTile.GetPosition().z);
@@ -78,32 +86,30 @@ public class TraceMonsterMovement : MonoBehaviour
         HideEffect();
         FindTileWithCoords(startX, startY);
         MonsterSetting(nextPos);
+        //type = false;
     }
-    void Update()
+    private void FindTileWithCoords(int targetX, int targetY)
     {
-        //if (!ani.IsInTransition(0))
-        //{
-        //    AnimatorStateInfo stateInfo = ani.GetCurrentAnimatorStateInfo(0);
-        //    if (stateInfo.IsName("Take 001") && stateInfo.normalizedTime >= 1f)
-        //    {
-        //      //  Debug.Log("Run 애니메이션이 끝났습니다.");
-        //        ani.SetBool("Act", false); // Idle 상태로 돌아가기
-        //        Chase(tile);
-        //    }
-        //}
-        //pos = tile.coord;
 
-        if (isAnimationPlaying)
+        // 조건을 만족하는 타일을 찾습니다.
+        foreach (Tile tile in allTiles)
         {
-            transform.position = initialPosition;
-        }
+            if (tile.coord.x == targetX && tile.coord.y == targetY)
+            {
+                //nextPos = tile.GetPosition();
+                if (tile.tileType == TileType.impossible)
+                {
+                    // FindTileWithCoords(targetX, targetY, !root);
+                }
+                else
+                {
+                    nextPos = tile.GetPosition();
+                    // tile1 = tile;
+                }
 
-        if (Input.GetKeyDown(KeyCode.U))
-        {
-            CheckAni();
+            }
         }
     }
-
     public void MonsterSetting(Vector3 target)
     {
         if (target == Vector3.zero) { return; }
@@ -114,188 +120,7 @@ public class TraceMonsterMovement : MonoBehaviour
     }
   
 
-    private void Think()
-    {
-        tile.tileType = TileType.possible;
-       //------------------------------------------------------------------------------------------------------
-        tile.TileBurning(tile);//타일 내용 추가 필요
-        //------------------------------------------------------------------------------------------------------
-        burnedTile.Add(tile);
-
-        tile.mob = null;
-     //   BurnOff(tile);
-
-        //tiles.coord = new Vector2Int(tiles.coord.x + 1, tiles.coord.y);
-        //SetPosition(tiles.coord.GetPosition());
-        int i = tile.coord.x;
-        int j = tile.coord.y;
-
-
-        //좌우가 x -> 같은 라인 coor y변화
-        //상하가 z ->라인 변화 coor x변화
-
-        Tile nowTile = map.playerTile;
-
-        //타일 라인 변화는 coor x 변화
-        //같은 라인 좌우는 coor y 변화
-        int a = Mathf.Abs(nowTile.coord.x - tile.coord.x);
-        int b = Mathf.Abs(nowTile.coord.y - tile.coord.y);
-        minA = nowTile.coord.x - tile.coord.x < 0;
-        minB = nowTile.coord.y - tile.coord.y < 0;
-        //x축 접근
-        if(a > b)
-        {
-            if (minA)
-            {
-                FindTileWithCoordsX(i, j);
-            }
-            else
-            {
-                FindTileWithCoordsX(i, j);
-            }
-
-        }
-        else
-        {
-            if(minB) //y축 접근
-            {
-                FindTileWithCoordsY(i, j);
-            }
-            else
-            {
-               FindTileWithCoordsY(i, j);
-            }
-        }
-
-        
-         SetPosition(nextPos);
-         ShowEffect();
-         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
-       
-
-    }
-    
-
-    private void FindTileWithCoords(int targetX, int targetY)
-    {
-       
-        // 조건을 만족하는 타일을 찾습니다.
-        foreach (Tile tile in allTiles)
-        {
-            if (tile.coord.x == targetX && tile.coord.y == targetY)
-            {
-                //nextPos = tile.GetPosition();
-                if(tile.tileType == TileType.impossible)
-                {
-                   // FindTileWithCoords(targetX, targetY, !root);
-                }
-                else
-                {
-                    nextPos = tile.GetPosition();
-                    // tile1 = tile;
-                }
-                   
-            }
-        }
-    }
-
-    private void FindTileWithCoordsX(int targetX, int targetY)
-    {
-        int a = 0;
-        if (minA)
-        {
-            a = targetX - 1;
-            transform.forward = new Vector3(0, 0, -1);
-        }
-        else
-        {
-            a = targetX + 1;
-            transform.forward = new Vector3(0, 0, 1);
-        }
-        // 조건을 만족하는 타일을 찾습니다.
-        foreach (Tile tile in allTiles)
-        {
-            if (tile.coord.x == a && tile.coord.y == targetY)
-            {
-
-                if (tile.tileType == TileType.impossible)
-                {
-                    FindTileWithCoordsY(targetX, targetY);
-                }
-                else
-                {
-                    map.TakeDamage(tile);
-                    nextPos = tile.GetPosition();
-                }
-
-            }
-        }
-    }
-    private void FindTileWithCoordsY(int targetX, int targetY)
-    {
-        int a = 0;
-        if (minB)
-        {
-            a = targetY- 1;
-            transform.forward = new Vector3(-1, 0, 0);
-        }
-        else
-        {
-            a = targetY + 1;
-            transform.forward = new Vector3(1, 0, 0);
-
-        }
-        // 조건을 만족하는 타일을 찾습니다.
-        foreach (Tile tile in allTiles)
-        {
-            if (tile.coord.x == targetX && tile.coord.y == a)
-            {
-                if (tile.tileType == TileType.impossible)
-                {
-                    FindTileWithCoordsX(targetX, targetY);
-                }
-                else
-                {
-                    map.TakeDamage(tile);
-                    nextPos = tile.GetPosition();
-                }
-
-            }
-        }
-    }
-
-    //이동
-    public void SetPosition(Vector3 target)
-    {
-        if (target == Vector3.zero) { return; }
-
-
-        Vector3 pos1 = new Vector3(target.x, this.transform.position.y, target.z);
-        manager_Turn.isDone = false;
-        StartCoroutine(MonsterMove(pos1));
-    }
-
-    private IEnumerator MonsterMove(Vector3 target)
-    {
-        
-        while (Vector3.Distance(transform.position, target) >= 0.05f)
-        {
-            Vector3 direction = target - transform.position;
-            transform.position = Vector3.SmoothDamp(transform.position, target, ref direction, 0.3f*smoothTime);
-            yield return null;
-        }
-       
-        transform.position = target;
-        CheckTile();
-        if (ch)
-        {
-            ch = false;
-            Think();
-            yield break;
-        }       
-     //   manager_Turn.EndEnemyTurn();
-      //  Debug.Log("Dddddd");
-    }
+  
 
     private void OnTriggerEnter(Collider other)
     {
@@ -322,6 +147,9 @@ public class TraceMonsterMovement : MonoBehaviour
             isRope = false;
             return;
         }
+        
+        
+
         Chase(tile);  
     }
     private void CheckTile()
@@ -367,10 +195,7 @@ public class TraceMonsterMovement : MonoBehaviour
         }
     }
 
-    public void DontMove()
-    {
-        isRope = true;
-    }
+ 
     public Tile ShowTile()
     {
         return tile;
@@ -378,88 +203,109 @@ public class TraceMonsterMovement : MonoBehaviour
 
     public void BurnOff()
     {
-        /*
-        for (int i = 0; i < burnedTile.Count; i++)
+
+        if (type)
         {
-            burnedTile[i].flameHP--;
-            
-            if (burnedTile[i].flameHP <= 0)
-            {
-              //  burnedTilep[i].TileBurnOff(burnedTilep[i]);
-            }
+            Debug.Log("BurnOff");
+            //------------------------------------------------------------------------------------------------------
+            //tile.TileBurnOff(burnedTile); //추가 필요
+            tile.TileBurnOff(burnedTile);
+            //------------------------------------------------------------------------------------------------------            
         }
-        */
-        Debug.Log("BurnOff");
-        //------------------------------------------------------------------------------------------------------
-        tile.TileBurnOff(burnedTile); //추가 필요
-        //------------------------------------------------------------------------------------------------------
+
     }
 
+    public void ArrSet(Tile startTile)
+    {
+        //Vector2Int nextCoord;
+        //Tile nextTile = null;
+ 
 
+        foreach(Tile tile in allTiles) {
+            if (tile.coord.x == startTile.coord.x+1 && tile.coord.y == startTile.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible)) 
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(0, 0, 1));
+                   
+                    //directions.Add (new Vector3(0, 0, 1));
+                }
+                
+            }
+            if (tile.coord.x == startTile.coord.x - 1 && tile.coord.y == startTile.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(0, 0, -1));
+                    
+                }
+            }
+            if (tile.coord.x == startTile.coord.x && tile.coord.y == startTile.coord.y + 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(1, 0, 0));
+                    
+                }
+            }
+            if (tile.coord.x == startTile.coord.x && tile.coord.y == startTile.coord.y - 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    arr.Add(tile);
+                    directions.Add(new Vector3(-1, 0, 0));
+                    
+                }
+            }
+        }
+    }
     public void Chase(Tile tile)
     {
-        Vector2Int dirCheck = map.playerTile.coord - tile.coord;
-     
+        ArrSet(tile);
         //------------------------------------------------------------------------------------------------------
-        tile.TileBurning(tile);//타일 내용 추가 필요
-        //------------------------------------------------------------------------------------------------------
-        burnedTile.Add(tile);
-        Movepattern(dirCheck, tile);
+
+        if (type)
+        {
+            tile.TileBurning(tile);//타일 내용 추가 필요
+                                   //------------------------------------------------------------------------------------------------------
+            burnedTile.Add(tile);
+        }     
+       
+
+        FindAnyWay(tile);
+       
     }
 
-    public void Movepattern(Vector2Int dirCheck, Tile nowtile)
+    public void FindAnyWay(Tile tile)
     {
-        Vector2Int nextCoord;
-
-        if (Mathf.Abs(dirCheck.x) > Mathf.Abs(dirCheck.y))
+      
+        pre = tile;
+        if(arr == null || arr.Count == 0)
         {
-            tile = nowtile;
-            Tile nextTile;
-            if (0 < dirCheck.x)
-            {
-                nextCoord = new Vector2Int(tile.coord.x + 1, tile.coord.y);
-                nextTile = map.GetTile(nextCoord);
-                tile.tileType = TileType.possible;
-                tile.mob = null;
-                StartCoroutine(MoveMob(nextTile));
-                //CheckAni(nextTile);
-            }
-            else if (0 > dirCheck.x)
-            {
-                nextCoord = new Vector2Int(tile.coord.x - 1, tile.coord.y);
-                nextTile = map.GetTile(nextCoord);
-                tile.tileType = TileType.possible;
-                tile.mob = null;
-                StartCoroutine(MoveMob(nextTile));
-                //CheckAni(nextTile);
-            }
-
+            Debug.Log("경로가 존재하지 않음");
+            mgr_Chase.CheckMobAction();
+            return;
         }
-        else
-        {
-            tile = nowtile;
-            Tile nextTile;
-            if (0 < dirCheck.y)
-            {
-                nextCoord = new Vector2Int(tile.coord.x, tile.coord.y + 1);
-                nextTile = map.GetTile(nextCoord);
-                tile.tileType = TileType.possible;
-                tile.mob = null;
-                StartCoroutine(MoveMob(nextTile));
-                //CheckAni(nextTile);
 
-            }
-            else if (0 > dirCheck.y)
-            {
-                nextCoord = new Vector2Int(tile.coord.x, tile.coord.y - 1);
-                nextTile = map.GetTile(nextCoord);
-                tile.tileType = TileType.possible;
-                tile.mob = null;
-                StartCoroutine(MoveMob(nextTile));
-                //CheckAni(nextTile);
+        int closestIndex = 0;
+        float closestDistance = float.MaxValue;
+
+        for (int i = 0; i < arr.Count; i++) 
+        {
+            float distance = Vector2Int.Distance(map.nowTile.coord, arr[i].coord);
+            if (distance < closestDistance) {
+                closestDistance = distance;
+                closestIndex = i;
             }
         }
+        
+        StartCoroutine(MoveMob(arr[closestIndex]));
+        transform.forward = directions[closestIndex];
     }
+
 
     private IEnumerator MoveMob(Tile nextTile)
     {
@@ -468,6 +314,7 @@ public class TraceMonsterMovement : MonoBehaviour
         //    Debug.Log("TileType.impossible choose Warring");
         //    yield break;
         //}
+        next = nextTile;
         if (nextTile == null)
         {
             count = moveCount;
@@ -476,18 +323,23 @@ public class TraceMonsterMovement : MonoBehaviour
             tile.tileType = TileType.impossible;
 
             mgr_Chase.CheckMobAction();
+            arr.Clear();
+            directions.Clear();
             yield break;
         }
-
+        attackEnd = false;  
         if (nextTile.coord == map.playerTile.coord)
         {
             ani.SetTrigger("StartAttack");
 
-            yield return new WaitForSeconds(1.2f);
-            
+            while (!attackEnd)
+            {
+                yield return null;
+            }
+            ChangTileType();
         }
-        map.TakeDamage(nextTile);
-        ani.SetTrigger("StartIdle");
+        //map.TakeDamage(nextTile);
+        ChangTileType();
         float ypos = transform.position.y;
         Vector3 nextPos = new Vector3(nextTile.transform.position.x, ypos, nextTile.transform.position.z);
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
@@ -508,6 +360,8 @@ public class TraceMonsterMovement : MonoBehaviour
 
         if (--count > 0)
         {
+            arr.Clear();
+            directions.Clear();
             Act(); // 다음 행동
             yield break;
         }
@@ -515,7 +369,8 @@ public class TraceMonsterMovement : MonoBehaviour
         count = moveCount;
         isEnd = true;
         isDone = true;
-
+        arr.Clear();
+        directions.Clear();
         mgr_Chase.CheckMobAction();
     }
 
@@ -525,13 +380,106 @@ public class TraceMonsterMovement : MonoBehaviour
         isAnimationPlaying = true;
 
         ani.SetBool("Act", true);
-
-        Invoke("LateAni", 2f);
     }
+
+    public void Attack()
+    {
+        map.TakeDamage(next);
+    }
+
+    public void AttackEnd()
+    {
+        attackEnd = true;
+    }
+
 
     private void LateAni()
     {
         ani.SetBool("Act", false);
         isAnimationPlaying = false;
     }
+
+    private void ChangTileType()
+    {
+        pre.tileType = TileType.possible;
+    }
+
+    public void DontMove()
+    {
+        isRope = true;
+    }
+    public List<Tile> ShowRange()
+    {
+        Debug.Log("Click mob");
+        rangeSet(tile);
+        return newRange;
+    }
+
+  
+    public void SetStartPoint(Vector2Int sPoint, Tile cTile)
+    {
+        MobData_P data = MobDataBase.instance.GetpMobData();
+
+        moveDir = new Vector2Int(data.moveX, data.moveY);
+     
+
+        map = FindObjectOfType<Map>();
+        startX = sPoint.x;
+        startY = sPoint.y;
+
+    }
+
+    public void DestoryMob()
+    {
+        curTile.tileType = TileType.possible;
+        curTile.mob = null;
+
+        gameObject.SetActive(false);
+    }
+
+    public void rangeSet(Tile startTile)
+    {
+        Vector2Int nextCoord;
+        Tile nextTile = null;
+
+
+        foreach (Tile tile in allTiles)
+        {
+            if (tile.coord.x == startTile.coord.x + 1 && tile.coord.y == startTile.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                 
+                    newRange.Add(tile);
+                    //directions.Add (new Vector3(0, 0, 1));
+                }
+
+            }
+            if (tile.coord.x == startTile.coord.x - 1 && tile.coord.y == startTile.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                  
+                    newRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == startTile.coord.x && tile.coord.y == startTile.coord.y + 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                
+                    newRange.Add(tile);
+                }
+            }
+            if (tile.coord.x == startTile.coord.x && tile.coord.y == startTile.coord.y - 1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+              
+                    newRange.Add(tile);
+                }
+            }
+        }
+    }
+
 }

@@ -59,7 +59,7 @@ public class DB_Manager : MonoBehaviour
                 Debug.Log("Firebase 초기화 완료");
                // WriteDB();
                
-                GetRankingData();
+                //GetRankingData();
                 //ReadDB(); // 데이터베이스 읽기 메서드 호출
 
             }

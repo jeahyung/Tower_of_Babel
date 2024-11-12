@@ -1,3 +1,4 @@
+using Artngame.PDM;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,6 +6,7 @@ using UnityEngine;
 public class KingMob : MonoBehaviour
 {
     private Map map;
+    private KingManager manager_King;
    // private Tile tile;
     //public Tile[,] tiles;
     public List<Tile> bTiles;
@@ -12,7 +14,7 @@ public class KingMob : MonoBehaviour
                             // public int endLine;
     public int burningCnt;
 
-   
+    private Animator ani;
     public int columnCount; // 타일의 열 개수 (LineCount)
 
     public List<Tile> allTiles;
@@ -20,17 +22,15 @@ public class KingMob : MonoBehaviour
 
     void Start()
     {
+        ani = GetComponent<Animator>();
+        manager_King = GetComponentInParent<KingManager>();
+        transform.forward = new Vector3(0, 0, -1);
         map = FindObjectOfType<Map>();
         //tile = FindObjectOfType<Tile>();
         allTiles = new List<Tile>();
-        selectedTiles = new List<Tile>();        
-        
-    }
+        selectedTiles = new List<Tile>();
 
-    public void SelectRandomTiles(int n)
-    {       
-        // 2차원 배열을 1차원 리스트로 변환
-        for (int i = 1; i < LineCount+1; i++)
+        for (int i = 1; i < LineCount + 1; i++)
         {
             for (int j = 0; j < columnCount; j++)
             {
@@ -41,6 +41,10 @@ public class KingMob : MonoBehaviour
             }
         }
 
+    }
+
+    public void SelectRandomTiles(int n)
+    {         
         // n이 전체 타일 개수보다 큰 경우, 전체 타일을 반환
         if (n > allTiles.Count)
         {
@@ -77,9 +81,14 @@ public class KingMob : MonoBehaviour
 
     }
 
-    public void KingAct()
+    public void Act()
     {
+        
+        ani.SetTrigger("Act");
+
         SelectRandomTiles(burningCnt);
+
+       // ani.SetTrigger("Act");
 
         if (AvoidOverlap())
         {
@@ -96,20 +105,28 @@ public class KingMob : MonoBehaviour
         }
         else
         {
+            allTiles.AddRange(selectedTiles);
             selectedTiles.Clear();
-            KingAct();
+            Act();
         }
+        manager_King.CheckMobAction();
+        return;
     }
 
     public void BurnOff()
     {        
+        
+
         foreach (Tile tile in selectedTiles)
         {
             if (tile != null)
             {
                 //------------------------------------------------------------------------------------------------------
+                allTiles.AddRange(selectedTiles);
+
                 tile.TileBurnOff(selectedTiles); // 자기 자신을 인자로 전달하며 TileBurning 호출
                 //추가 수정 필수------------------------------------------------------------------------------------------------------
+                selectedTiles.Clear();
                 break;
             }
         }
@@ -117,20 +134,20 @@ public class KingMob : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            KingAct();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            BurnOff();
-        }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    Act();
+        //}
+        //if (Input.GetKeyDown(KeyCode.N))
+        //{
+        //    BurnOff();
+        //}
     }
 
     public bool AvoidOverlap()
     {
         foreach (Tile tile in selectedTiles)
-        {
+        {           
             if (tile == map.moveArea[0])
             {
                 return false;
