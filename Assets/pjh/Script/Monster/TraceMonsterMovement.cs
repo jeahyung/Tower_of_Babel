@@ -1,3 +1,4 @@
+using Artngame.PDM.Kvant;
 using Newtonsoft.Json.Linq;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using Unity.Burst.CompilerServices;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
-using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
+//using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class TraceMonsterMovement : MonoBehaviour, Mob
 {
@@ -57,6 +58,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     private List<Vector3> directions = new List<Vector3>();
     private Tile curTile;
     private List<Tile> newRange = new List<Tile>();
+    public ParticleSystem lSpear;
 
     private void Awake()
     {
@@ -86,6 +88,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         transform.position = pos;
 
         tile = curTile;
+        tile.tileType = TileType.impossible;
         tile.mob = this.GetComponent<Mob>();
         HideEffect();
         FindTileWithCoords(startX, startY);
@@ -136,7 +139,9 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
         {
             map.RestPlayerTile();
             other.gameObject.SetActive(false);
-            
+            other.GetComponent<CreatedObject>()?.DestroyObj();
+
+
             Debug.Log("Dia Find");
             
         }
@@ -147,6 +152,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     {
         if (isRope)
         {
+            EffectManage.Instance.PlayEffect("Rope_Effect", this.transform.position);
             mgr_Chase.CheckMobAction();
             isRope = false;
             return;
@@ -299,7 +305,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
 
         for (int i = 0; i < arr.Count; i++) 
         {
-            float distance = Vector2Int.Distance(map.nowTile.coord, arr[i].coord);
+            float distance = Vector2Int.Distance(map.playerTile.coord, arr[i].coord);
             if (distance < closestDistance) {
                 closestDistance = distance;
                 closestIndex = i;
@@ -388,12 +394,14 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
 
     public void Attack()
     {
+        lSpear.Play();
         map.TakeDamage(next);
+        //EffectManage.Instance.PlayEffect("Knight_Attack", lSpear.transform.position);
     }
 
     public void AttackEnd()
     {
-        attackEnd = true;
+        attackEnd = true;       
     }
 
 
@@ -415,6 +423,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     public List<Tile> ShowRange()
     {
         Debug.Log("Click mob");
+        newRange.Clear();
         rangeSet(tile);
         return newRange;
     }
@@ -438,6 +447,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     {
         curTile.tileType = TileType.possible;
         curTile.mob = null;
+        EffectManage.Instance.PlayEffect("Monster_Destroy", transform.position);
 
         gameObject.SetActive(false);
     }

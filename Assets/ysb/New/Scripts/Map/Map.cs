@@ -36,11 +36,14 @@ public class Map : MonoBehaviour
     private int mapCount = 0;
     public bool isKing = false;
 
+    private List<Tile> allTiles = new List<Tile>();
+    public List<Tile> damageTiles = new List<Tile>();
     int backCount = 1;
     public Tile[] backTiles = new Tile[2];
 
     public bool isJump = false;
     private MobManager mob = null;
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
@@ -75,6 +78,8 @@ public class Map : MonoBehaviour
 
         distance[6] = new Vector2Int(1, -1); //»óÁÂ
         distance[7] = new Vector2Int(-1, -1); //ÇÏÁÂ
+        Tile[] addAllTiles = FindObjectsOfType<Tile>();
+        allTiles.AddRange(addAllTiles);
     }
 
     private void Start()
@@ -537,11 +542,12 @@ public class Map : MonoBehaviour
     {
         useItem = true;
         HideArea();
-
-        moveArea.Clear();
+        
         moveArea.AddRange(mob.ShowMob_key1());
+        
         //moveArea.AddRange(manager_Turn.ShowRookTile());
         ShowArea(moveArea);
+        moveArea.Clear();
     }
     public void UseItem_Key2()
     {
@@ -602,7 +608,7 @@ public class Map : MonoBehaviour
 
         //GameObject newObejct = Instantiate(obj);
         Vector3 pos = clickTile.GetPosition();
-        float yPos = obj.transform.localScale.y + 2 + clickTile.transform.position.y;
+        float yPos = obj.transform.localScale.y + 1.5f + clickTile.transform.position.y;
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
         temp = playerTile;
@@ -687,6 +693,7 @@ public class Map : MonoBehaviour
             //playerTile = nowTile;
         }
     }
+
     public Tile CheckNearTile(Tile tile = null)
     {
         if(tile == null) { tile = nowTile; }

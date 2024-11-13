@@ -40,6 +40,8 @@ public class MobMovement : MonoBehaviour, Mob
     public bool canAct = true;   //움직일 수 있는가?
     public bool isRope = false; //로프에 걸렸는가?
 
+    public GameObject spear;
+
     Animator anim;
     Tile attackTile = null;
     bool attackEnd = false;
@@ -88,7 +90,7 @@ public class MobMovement : MonoBehaviour, Mob
     {
         curTile.tileType = TileType.possible;
         curTile.mob = null;
-
+        EffectManage.Instance.PlayEffect("Monster_Destroy", transform.position);
         gameObject.SetActive(false);
     }
 
@@ -139,6 +141,7 @@ public class MobMovement : MonoBehaviour, Mob
     {
         if(isRope)
         {
+            EffectManage.Instance.PlayEffect("Rope_Effect", this.transform.position);
             if (manager_Mob == null) { manager_Mob = GetComponentInParent<PatrolMobManager>(); }
             manager_Mob.CheckMobAction();
             isRope = false;
@@ -212,7 +215,7 @@ public class MobMovement : MonoBehaviour, Mob
         attackEnd = false;
         float ypos = transform.position.y;
         Vector3 nextPos = new Vector3(nextTile.transform.position.x, ypos, nextTile.transform.position.z);
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
+       
 
         if(map.nowTile == nextTile)
         {
@@ -223,7 +226,7 @@ public class MobMovement : MonoBehaviour, Mob
                 yield return null;
             }
         }
-
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
             transform.position = Vector3.Lerp(transform.position, nextPos, 8f * Time.deltaTime);
@@ -265,6 +268,7 @@ public class MobMovement : MonoBehaviour, Mob
     public void Attack()
     {
         map.TakeDamage(attackTile);
+        EffectManage.Instance.PlayEffect("Pawn_Attack", spear.transform.position);
         attackTile = null;
     }
     public void AttackEnd()

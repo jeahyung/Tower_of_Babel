@@ -44,6 +44,25 @@ public class IntroRankOpen : MonoBehaviour,IPointerClickHandler
             .OnComplete(() => isAnimating = false);
 
         db.UserInfoUpdata();
+        db.IntroUserInfoUpdata();
+    }
+
+    public void IntroShowPop()
+    {
+        if (isAnimating || isOpen) return;
+
+        sc.TopViewer();
+
+        isAnimating = true;
+        isOpen = true;
+        rankPanel.localScale = Vector3.one;
+        canvasGroup.DOFade(1f, animationDuration);
+        //rankPlanel.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack);
+        popupRect.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack)
+            .OnComplete(() => isAnimating = false);
+
+      
+        db.IntroUserInfoUpdata();
     }
 
     public void HidePopup()

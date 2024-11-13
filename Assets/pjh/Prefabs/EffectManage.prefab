@@ -25,13 +25,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3584149614487462680}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 9.076587, y: 5.575923, z: -5.2508035}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 0
+  m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &951905227147805279
 MonoBehaviour:
@@ -48,11 +48,11 @@ MonoBehaviour:
   effect:
   - {fileID: 2930374520652304114, guid: 81dce85198930e94bb7b2265aaf40901, type: 3}
   - {fileID: 5112054213284246401, guid: 74f669a524930394882f4a99d78d347f, type: 3}
-  - {fileID: 879681129677348349, guid: e542e1af5f266f549b808bcd5023dc7c, type: 3}
-  - {fileID: 8773381781396489447, guid: 10bb6816f2a015846995bdefe851b56a, type: 3}
-  - {fileID: 2649134482686606474, guid: dc7b00d62ae662245a7c93e37ac5ba49, type: 3}
+  - {fileID: 205038165982785276, guid: 78b8bc32893c0df4082bcd3926108f79, type: 3}
+  - {fileID: 2726459868002845589, guid: 1d7a2beb9cd63094e807c9f0f510094b, type: 3}
+  - {fileID: 5008452476627660288, guid: 582db113f1cca0d4baec0bdd9ec67b66, type: 3}
   - {fileID: 4071751469577258166, guid: 8afafa65084b40a4ba50ac6d1d59d18f, type: 3}
-  - {fileID: 198583920760321224, guid: 5240a0cc723438e48880cc8858488289, type: 3}
+  - {fileID: 8289056794690124578, guid: 004d125bba73a4f4d808e33c611e8fb1, type: 3}
   - {fileID: 3070518327953465787, guid: 4801a6ae40e50004c8462d9b208b2574, type: 3}
   - {fileID: 8937386559117865193, guid: 84e192cbe9c151140a04519a7a96a7b4, type: 3}
   - {fileID: 3280519133390621004, guid: 2d57af8172673014687e4067b8228b8b, type: 3}
@@ -62,8 +62,15 @@ MonoBehaviour:
   - {fileID: 391568813548312141, guid: 7587004b22dba0b4fb8497cf3e8dc6be, type: 3}
   - {fileID: 8842872563972595545, guid: dc1de969c8b70c54aa9336e0c481faa0, type: 3}
   - {fileID: 8512573106964773282, guid: a0c949bb43ee8c745ad67e7e94732de6, type: 3}
-  - {fileID: 3407604102439438465, guid: 4845a57c33910844a94ec775356acd03, type: 3}
+  - {fileID: 7694341151430373044, guid: 7268859e4687c3e4c8d64836ae913098, type: 3}
   - {fileID: 3280519133390621004, guid: 2d57af8172673014687e4067b8228b8b, type: 3}
+  - {fileID: 6429848800526165982, guid: 21b67eba9aba07345aebd480eb2a85ab, type: 3}
+  - {fileID: 3894563636541966135, guid: 5aae0d3ed593ee04d91dc422a17de410, type: 3}
+  - {fileID: 879681129677348349, guid: 71de880eac2a9f74d8ea2f5691216315, type: 3}
+  - {fileID: 3894563636541966135, guid: ce503cd53bb025447b2331f2dbc50bce, type: 3}
+  - {fileID: 6055402189041935352, guid: 969dee640adbab740b3f9fbcfa8f3780, type: 3}
+  - {fileID: 6055402189041935352, guid: 36e11185eab3b694f95f9cf62d813607, type: 3}
+  - {fileID: 6055402189041935352, guid: 4b13bb2e50970a44e86927519bb455e1, type: 3}
 --- !u!114 &5239115232720160074
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -66,6 +66,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileType: 0
+  f: 0
   coord: {x: 0, y: 0}
   effectPrefab: {fileID: 3853313345591690016}
   flame: {fileID: 6858272822000246745}

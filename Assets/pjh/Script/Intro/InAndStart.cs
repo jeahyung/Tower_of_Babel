@@ -37,6 +37,6 @@ public class InAndStart : MonoBehaviour
         cam.MoveCam(2);
         //yield return null;
         yield return new WaitForSeconds(1f);
-        SceneManager.LoadScene("Proto_4X4");
+        SceneManager.LoadScene("4X4");
     }
 }

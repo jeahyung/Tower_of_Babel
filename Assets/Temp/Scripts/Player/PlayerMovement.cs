@@ -20,7 +20,8 @@ public class PlayerMovement : MonoBehaviour
     Vector3 startPos, endPos;
     float endZ, endX;    //z, x, height
     public float h = 1f;
-    
+    public Vector3 footPosition;
+    public GameObject foot;
     int jumpCount = 0;  //점프 횟수
 
     //Roate
@@ -94,6 +95,7 @@ public class PlayerMovement : MonoBehaviour
     {
         canMove = false;
         //애니메이션 or 이펙트 재생
+        EffectManage.Instance.PlayEffect("Player_Teleport", this.transform.position);
         yield return new WaitForSeconds(0.5f);
 
         transform.position = target;
@@ -343,6 +345,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
+        footPosition = foot.transform.position;
+        EffectManage.Instance.PlayEffect("Player_BigStep", footPosition);
     }
 
     protected IEnumerator MoveToEnd()
@@ -382,6 +386,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
+        footPosition = foot.transform.position;
+        EffectManage.Instance.PlayEffect("Player_Step", footPosition);
     }
     #endregion
 
@@ -408,6 +414,7 @@ public class PlayerMovement : MonoBehaviour
     public void TileDamage(int i)
     {
         energySysteam.UseEnergy(i);
+        EffectManage.Instance.PlayEffect("Player_Hit", this.transform.position);
     }
 
     #region 피격
@@ -424,6 +431,7 @@ public class PlayerMovement : MonoBehaviour
         int dmg = 3 * per;
 
         anim.SetTrigger("isDamaged");
+        EffectManage.Instance.PlayEffect("Player_Hit", this.transform.position);
         energySysteam.UseEnergy(dmg);
         DamagedMove(map.CheckNearTile());
     }
@@ -494,7 +502,8 @@ public class PlayerMovement : MonoBehaviour
     #endregion
 
     public void UseItem()
-    {
+    {      
+        EffectManage.Instance.PlayEffect("Item_Use", foot.transform.position);
         anim.SetTrigger("isUse");
     }
     public void Die()

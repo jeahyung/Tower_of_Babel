@@ -9,7 +9,8 @@ public class CreatedObject : MonoBehaviour
     {
         Debug.Log("using Dia!!!!!!!!!!!!!!!!!!!!!!!!!!!######");
         hp -= i;
-        if(hp <= 0)
+        EffectManage.Instance.PlayEffect("Diamond_Destroy", this.transform.position);
+        if (hp <= 0)
         {
             if(this.gameObject != null)
             {

@@ -25,6 +25,7 @@ public class Rook : MonoBehaviour
             transform.position = pos;
         }        
     }
+   
 
     public void ResetMob()
     {
@@ -39,6 +40,7 @@ public class Rook : MonoBehaviour
     {
         curTile.tileType = TileType.possible;
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Destroy);
+        EffectManage.Instance.PlayEffect("Monster_Destroy", transform.position);
         gameObject.SetActive(false);
     }
 

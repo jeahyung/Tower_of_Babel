@@ -134,7 +134,7 @@ public class ItemManager : MonoBehaviour
         GameObject newObejct = Instantiate(obj);
         newObejct.tag = "Dia";
         map.SetObjectPosition(newObejct);
-
+        EffectManage.Instance.PlayEffect("Diamond_Create", newObejct.transform.position);
         objs.Add(newObejct.GetComponent<CreatedObject>());
     }
     public void MovePlayer(Item item)

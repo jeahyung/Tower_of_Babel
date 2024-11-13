@@ -38,7 +38,7 @@ public class MonsterStatus : MonoBehaviour
                 nextCoord = curTile.coord + moveDir;
                 nextTile = map.GetTile(nextCoord);
             }
-            EffectManage.Instance.PlayEffect("Monster_Move", this.transform.position);
+            //EffectManage.Instance.PlayEffect("Monster_Move", this.transform.position);
             transform.forward = new Vector3(moveDir.y, 0, moveDir.x);
 
             tile.tileType = TileType.possible;

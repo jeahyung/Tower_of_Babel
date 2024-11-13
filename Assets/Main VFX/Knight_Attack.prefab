@@ -6398,10 +6398,8 @@ ParticleSystem:
     uvChannelMask: -1
     rowMode: 1
     sprites:
-    - sprite: {fileID: -8664114341009592047, guid: e31da1f5fcdb11b41acf654c31b588f3,
-        type: 3}
-    - sprite: {fileID: -5601505285550123188, guid: e31da1f5fcdb11b41acf654c31b588f3,
-        type: 3}
+    - sprite: {fileID: -8664114341009592047, guid: e31da1f5fcdb11b41acf654c31b588f3, type: 3}
+    - sprite: {fileID: -5601505285550123188, guid: e31da1f5fcdb11b41acf654c31b588f3, type: 3}
     flipU: 0
     flipV: 0
   VelocityModule:
@@ -19380,9 +19378,9 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3894563636541966133}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 3894563637395727037}
@@ -19392,7 +19390,7 @@ Transform:
   - {fileID: 441274362330608127}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
 --- !u!198 &3894563636541966135
 ParticleSystem:
   m_ObjectHideFlags: 0

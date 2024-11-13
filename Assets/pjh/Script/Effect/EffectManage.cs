@@ -18,12 +18,12 @@ public class EffectManage : MonoBehaviour
             // ¿Ã∆Â∆Æ µÒº≈≥ ∏Æ √ ±‚»≠
             effectDictionary = new Dictionary<string, ParticleSystem>();
         }
+        else
         {
             Destroy(gameObject);
-            return;
         }
 
-       
+
     }
 
     public void RegisterEffect(string effectName, ParticleSystem effect)
@@ -49,4 +49,6 @@ public class EffectManage : MonoBehaviour
             Debug.LogWarning("EffectManager: Effect not found - " + effectName);
         }
     }
+
+
 }

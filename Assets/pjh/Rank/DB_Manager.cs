@@ -72,28 +72,21 @@ public class DB_Manager : MonoBehaviour
     
     }
 
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.L))//마지막
-        {
-            Pasing();
-        }
-
-        if (Input.GetKeyDown(KeyCode.I)) //처음
-        {
-
-            GetRankingData();
-
-        }
-
-        //if(Input.GetKeyDown(KeyCode.U)) { GetRankingData(); }//두번째
-    }
+ 
     public void UserInfoUpdata()
     {
+        
         userInfo[0].text = "SCORE. " + scoreUI.sumScore.text;
-        userInfo[1].text = rank.ToString();                 
+        userInfo[1].text = rank.ToString();
+        
+        
         LoadingData();
     }
+    public void IntroUserInfoUpdata()
+    {
+        LoadingData();
+    }
+
     public void Pasing()
     {
         if (int.TryParse(scoreUI.sumScore.text, out int result))

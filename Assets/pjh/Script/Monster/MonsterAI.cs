@@ -6,12 +6,11 @@ using UnityEngine;
 public class MonsterAI : MonoBehaviour, Mob
 {
 
-  
-
+   
         //private Vector3 startPosition;
 
-        //x, y과 바꼈다. x = y축 / y = x축 / 1 = 오른쪽,위 / -1 = 왼쪽, 아래
-        //public PatrolMobManager manager_Mob;
+    //x, y과 바꼈다. x = y축 / y = x축 / 1 = 오른쪽,위 / -1 = 왼쪽, 아래
+    //public PatrolMobManager manager_Mob;
 
         public Map map;
         public Tile curTile;  //현재 위치한 타일
@@ -39,7 +38,8 @@ public class MonsterAI : MonoBehaviour, Mob
 
     private BishopManager bishopManager;
     private Vector3 startPosition;
-   
+    public GameObject[] stateEffect;
+
     //public PatrolMobManager manager_Mob;    //이거 스위칭 용으로 별도 제작 필요
     // Enum으로 상태 정의
     public enum State
@@ -84,8 +84,12 @@ public class MonsterAI : MonoBehaviour, Mob
         Tile[] tiles = FindObjectsOfType<Tile>();
         //tile1 = FindObjectOfType<Tile>();
         allTiles.AddRange(tiles);
+        AllEffectOff();
     }
-
+    private void Start()
+    {
+        stateEffect[0].SetActive(true);        
+    }
     public void InitMob()
     {
         //ani = GetComponent<Animator>();
@@ -96,7 +100,14 @@ public class MonsterAI : MonoBehaviour, Mob
         //SetState(new PatrolState(this)); // 순찰 상태로 시작
     }
 
-
+    public void AllEffectOff()
+    {
+        for(int i = 0; i < stateEffect.Length; i++)
+        {
+            stateEffect[i].SetActive(false);
+        }
+       
+    }
     private void MobSetting()
     {
 
@@ -282,6 +293,8 @@ public class MonsterAI : MonoBehaviour, Mob
 
     public void Patrol(Tile tile)
     {
+        
+
         curTile = tile;
         pre = tile;
         Vector2Int nextCoord = curTile.coord + moveDir;
@@ -303,7 +316,8 @@ public class MonsterAI : MonoBehaviour, Mob
 
     public void Chase(Tile tile)
     {
-        ArrSet(tile);      
+        ArrSet(tile);
+       
 
         FindAnyWay(tile, map.nowTile);
     }
@@ -361,6 +375,8 @@ public class MonsterAI : MonoBehaviour, Mob
 
     public void ReturnToStart(Tile tile)
     {
+       
+
         Vector2Int dirCheck = startTile.coord - curTile.coord;
         if (dirCheck.x == 0 && dirCheck.y == 0)
         {
@@ -411,9 +427,11 @@ public class MonsterAI : MonoBehaviour, Mob
         if (nextTile.coord == map.playerTile.coord)
         {
             //ani.SetTrigger("Attack");
-
+            map.TakeDamage(nextTile);
+            EffectManage.Instance.PlayEffect("Bishop_Attack", nextTile.GetPosition());
             while (!attackEnd)
             {
+                Invoke("EndAttack", 0.5f);
                 yield return null;
             }
             ChangTileType();
@@ -453,29 +471,64 @@ public class MonsterAI : MonoBehaviour, Mob
         bishopManager.CheckMobAction();
     }
 
+    private void EndAttack()
+    {
+        if(attackEnd == false)
+        {
+            attackEnd = !attackEnd;
+        }
+    }
+
     public void DontMove()
     {
         isRope = true;
     }
 
     public void Act()
-    {
+    {        
+
+        if (isRope) 
+        {
+            EffectManage.Instance.PlayEffect("Rope_Effect", this.transform.position);
+            if(bishopManager == null) { bishopManager = GetComponentInParent<BishopManager>(); }
+            bishopManager.CheckMobAction();
+            isRope = false;
+            return;
+        }
+
         if(currentState != State.Return)
         {
             CheckRange();
-        }       
+        }
 
+
+        
         switch (currentState)
         {
             case State.Patrol:
-                Patrol(curTile);
-                break;
+                {
+                    stateEffect[0].SetActive(true);
+                    stateEffect[1].SetActive(false);
+                    stateEffect[2].SetActive(false);
+                    Patrol(curTile);
+                    break;
+                }                
             case State.Chase:
-                Chase(curTile);
-                break;
+                {
+                    stateEffect[1].SetActive(true);
+                    stateEffect[0].SetActive(false);
+                    stateEffect[2].SetActive(false);
+                    Chase(curTile);
+                    break;
+                }              
             case State.Return:
-                ReturnToStart(curTile);
-                break;
+                {
+                    stateEffect[2].SetActive(true);
+                    stateEffect[1].SetActive(false);
+                    stateEffect[0].SetActive(false);
+                    ReturnToStart(curTile);
+                    break;
+                }              
         }
     }
     public void ArrSet(Tile startTiles)
@@ -628,6 +681,7 @@ public class MonsterAI : MonoBehaviour, Mob
     {
         curTile.tileType = TileType.possible;
         curTile.mob = null;
+        EffectManage.Instance.PlayEffect("Monster_Destroy", transform.position);
 
         gameObject.SetActive(false);
     }

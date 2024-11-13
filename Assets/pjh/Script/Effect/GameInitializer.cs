@@ -25,8 +25,16 @@ public class GameInitializer : MonoBehaviour
         EffectManage.Instance.RegisterEffect("Select_Upgrade", effect[13]);
         EffectManage.Instance.RegisterEffect("UI_Popup", effect[14]);
         EffectManage.Instance.RegisterEffect("UI_Use_Skill", effect[15]);
-        EffectManage.Instance.RegisterEffect("Monster_Move", effect[16]);
+        EffectManage.Instance.RegisterEffect("Monster_Destroy", effect[16]);
         EffectManage.Instance.RegisterEffect("Rope_Effect", effect[17]);
+        EffectManage.Instance.RegisterEffect("Bishop_Attack", effect[18]);
+        EffectManage.Instance.RegisterEffect("Knight_Attack", effect[19]);
+        EffectManage.Instance.RegisterEffect("Pawn_Attack", effect[20]);
+        EffectManage.Instance.RegisterEffect("Power_Knight_Attack", effect[21]);
+        EffectManage.Instance.RegisterEffect("Switch_A", effect[22]);
+        EffectManage.Instance.RegisterEffect("Switch_B", effect[23]);
+        EffectManage.Instance.RegisterEffect("Switch_C", effect[24]);
+
 
     }
 }

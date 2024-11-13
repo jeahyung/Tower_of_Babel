@@ -19,7 +19,7 @@ public class KingMob : MonoBehaviour
 
     public List<Tile> allTiles;
     public List<Tile> selectedTiles;
-
+    public List<Tile> moveArea = new List<Tile>();
     void Start()
     {
         ani = GetComponent<Animator>();
@@ -158,7 +158,41 @@ public class KingMob : MonoBehaviour
 
     }
 
-
+    public void MoveCheck()
+    {        
+        foreach(Tile tile in allTiles)
+        {
+            if(tile.coord.x == map.nowTile.coord.x + 1 && tile.coord.y == map.nowTile.coord.y) 
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    moveArea.Add(tile);
+                }
+            }
+            if (tile.coord.x == map.nowTile.coord.x - 1 && tile.coord.y == map.nowTile.coord.y)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    moveArea.Add(tile);
+                }
+            }
+            if (tile.coord.x == map.nowTile.coord.x && tile.coord.y == map.nowTile.coord.y+1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    moveArea.Add(tile);
+                }
+            }
+            if (tile.coord.x == map.nowTile.coord.x && tile.coord.y == map.nowTile.coord.y-1)
+            {
+                if ((tile != null) && (tile.tileType == TileType.possible))
+                {
+                    moveArea.Add(tile);
+                }
+            }
+         
+        }
+    }
 
 
     //public void FindTileInRange_Four(Tile startTile, int range) //시작점 / 범위
