@@ -4324,7 +4324,7 @@ RectTransform:
   m_GameObject: {fileID: 1429014291}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.5, y: 0.5, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1528677973580308907}
@@ -7462,7 +7462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB79C\uB364\uD558\uAC8C \uC810\uC218 \uD68D\uB4DD"
+  m_text: "\uB79C\uB364\uD558\uAC8C \uC810\uC218\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
   m_sharedMaterial: {fileID: -1939339519034135465, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
@@ -22142,7 +22142,7 @@ RectTransform:
   m_GameObject: {fileID: 3516290083943365091}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 382149640432267838}
@@ -22214,8 +22214,8 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 6013cc17f45b706419c4dcae79fce99f, type: 3}
   workImg: {fileID: 5329876207333191164}
   nText: {fileID: 606115180635005317}
-  exText: {fileID: 5738637528027069987}
-  wText: {fileID: 1149474519411418359}
+  exText: {fileID: 1149474519411418359}
+  wText: {fileID: 5738637528027069987}
   sImg:
   - {fileID: 1391308243509943981}
   - {fileID: 4876324538840937350}

@@ -179,6 +179,7 @@ public class Map : MonoBehaviour
             }
         }
     }
+    #region 범위 탐색
     //4방향
     public void FindTileInRange_Four(Tile startTile, int range) //시작점 / 범위
     {
@@ -281,7 +282,6 @@ public class Map : MonoBehaviour
                 if (j >= LineCount) { i++; }
                 Vector2Int nowCoord = startCoord + distance[i] * (j + 1);
                 Tile findTile = GetTile(nowCoord);
-
                 if (findTile != null && findTile.tileType == TileType.possible)
                 {
                     moveArea.Add(findTile);
@@ -297,7 +297,8 @@ public class Map : MonoBehaviour
         ShowArea(moveArea);        
     }
     #endregion
-
+    #endregion
+    #region 타일 반환
     public bool CanSpawn(Vector2Int coord)
     {
         if(tiles[coord.x, coord.y] == nowTile) { return false; }
@@ -333,7 +334,7 @@ public class Map : MonoBehaviour
         }
         return tiles[coord.x, coord.y];
     }
-
+    #endregion
     //이거 끝지점?
     public bool IsLastTile()
     {
@@ -348,10 +349,12 @@ public class Map : MonoBehaviour
             if(t == null) { continue; }
             t.HideArea();
         }
+        moveArea.Clear();
     }
 
     public void ShowArea(List<Tile> tileInArea)
     {
+        if (tileInArea.Contains(nowTile)) { tileInArea.Remove(nowTile); }
         foreach (var tile in tileInArea)
         {          
             if(tile != null)
@@ -367,11 +370,14 @@ public class Map : MonoBehaviour
     {
         if (useItem) //아이템 사용 시
         {
+            Debug.Log("Cancel");
             if (moveArea.Contains(clickTile) == false)
             {
+                manager_Item.CancelItem();
                 HideArea();
                 FindTileInRange_Four(nowTile, player.moveRange);
                 useItem = false;
+                Debug.Log("Cancel");
                 return;
             }
             HideArea();
@@ -422,6 +428,7 @@ public class Map : MonoBehaviour
         }
     }
 
+    #region Player move
     private int CalculateJumpCount()
     {
         int xCount = Mathf.Abs(clickTile.coord.y - nowTile.coord.y);
@@ -514,7 +521,7 @@ public class Map : MonoBehaviour
 
         Debug.Log("player move_continue");
     }
-
+    #endregion
     public void SelectItem(Item item)
     {
         useItem = true;
@@ -540,31 +547,28 @@ public class Map : MonoBehaviour
 
     public void UseItem_Key()
     {
+        mob = StageManager.instance.mob;
         useItem = true;
         HideArea();
-        
-        moveArea.AddRange(mob.ShowMob_key1());
-        
-        //moveArea.AddRange(manager_Turn.ShowRookTile());
-        ShowArea(moveArea);
         moveArea.Clear();
+        moveArea.AddRange(mob.ShowMob_key1());
+        ShowArea(moveArea);
     }
     public void UseItem_Key2()
     {
+        mob = StageManager.instance.mob;
         useItem = true;
         HideArea();
-
         moveArea.Clear();
         moveArea.AddRange(mob.ShowMob_key2());
-        //moveArea.AddRange(manager_Turn.ShowRookTile());
         ShowArea(moveArea);
     }
 
     public void UseItem_Rope()
     {
+        mob = StageManager.instance.mob;
         useItem = true;
         HideArea();
-
         moveArea.Clear();
         moveArea.AddRange(manager_Turn.ShowMobTile());
         ShowArea(moveArea);
@@ -572,6 +576,7 @@ public class Map : MonoBehaviour
 
     public void SelectItem_Clock()
     {
+        //if (backTiles[0] == null || backTiles[1] == null) { return; }
         useItem = true;
         HideArea();
         moveArea.Clear();
@@ -594,6 +599,7 @@ public class Map : MonoBehaviour
     public void CancelItem()
     {
         useItem = false;
+        manager_Item.CancelItem();
         HideArea();
         FindTileInRange_Four(nowTile, player.moveRange);
     }
@@ -623,6 +629,7 @@ public class Map : MonoBehaviour
     //플레이어 순간이동
     public bool SetPlayerPosition(int i)
     {
+        if(backTiles[i] == null) { return false; }
         if(backTiles[i].tileType != TileType.possible)
         {
             useItem = false;
@@ -683,6 +690,7 @@ public class Map : MonoBehaviour
     }
 
 
+    #region 피격
     //피격
     public void TakeDamage(Tile mTile)
     {
@@ -745,8 +753,9 @@ public class Map : MonoBehaviour
         }
         return nowTile;
     }
+    #endregion
 
-
+    #region 초기화
     //타일 상태 초기화
     public void ResetTile()
     {
@@ -785,8 +794,10 @@ public class Map : MonoBehaviour
         HideArea();
         nowTile = tiles[0, 0];
         backCount = 1;
+        backTiles[0] = null;
+        backTiles[1] = null;
     }
-
+    #endregion
 
     public void DropAllTile()
     {

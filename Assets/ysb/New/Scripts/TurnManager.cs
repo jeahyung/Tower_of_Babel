@@ -180,6 +180,7 @@ public class TurnManager : MonoBehaviour
         yield return new WaitForSeconds(delayTime);
         //ui_turn.HideImg(1);
 
+        
         manager_Mob.ActMob();
     }
 

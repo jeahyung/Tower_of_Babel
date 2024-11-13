@@ -400,7 +400,7 @@ public class ScoreManager : Singleton<ScoreManager>
         }
         if (scoreUI == null)
             scoreUI = FindObjectOfType<ScoreUI>();
-
+        boxScore = (boxScore / 100) * 100;
         //int bonus = UpgradeManager.instance.GetScore_Item();//.bonusScore;
         scoreSum += boxScore;
 
