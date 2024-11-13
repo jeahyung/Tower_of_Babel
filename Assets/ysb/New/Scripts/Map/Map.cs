@@ -370,7 +370,7 @@ public class Map : MonoBehaviour
     //클릭한 타일이 범위 내에 있는가?
     public void CheckClickTileInArea()
     {
-        if(isKey == true) { isKey = false; return; }
+        if(isKey == true) { isKey = false; HideArea(); return; }
         if (useItem) //아이템 사용 시
         {
             Debug.Log("Cancel");
