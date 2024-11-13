@@ -63,7 +63,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
             RaycastHit[] hits = Physics.RaycastAll(ray, 1000);
             foreach (var hit in hits)
             {
-                if(isKey)
+                if(isKey || isKey2)
                 {
                     if(hit.collider.GetComponent<Rook>() != null)
                     {
@@ -79,8 +79,9 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                     mob = hit.collider.GetComponent<Mob>();
                     clickMob = mob;
 
-                    if(isKey2 || isKey && hit.collider.GetComponent<MobMovement>() != null)
+                    if((isKey2 || isKey) && (hit.collider.GetComponent<MobMovement>() != null))
                     {
+                        
                         mob.DestoryMob();
                         manager_Patrol.RemoveMob(hit.collider.GetComponent<MobMovement>());
                         HideMobRange(clickMob);
@@ -91,10 +92,25 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                         return;
                     }
 
+                    if ((isKey2 || isKey) && (hit.collider.GetComponent<MonsterAI>() != null))
+                    {
+
+                        mob.DestoryMob();
+                        manager_Bishop.RemoveMob(hit.collider.GetComponent<MonsterAI>());
+                        HideMobRange(clickMob);
+                        clickMob = null;
+                        isKey = false;
+                        isUseItem = false;
+                        manager_Turn.gameObject.SendMessage("UseItem");
+                        return;
+                    }
+
+
                     if (isKey2 && hit.collider.GetComponent<TraceMonsterMovement>() != null)
                     {
+                        
                         mob.DestoryMob();
-                        manager_Chase.RemoveMob(GetComponent<TraceMonsterMovement>());
+                        manager_Chase.RemoveMob(hit.collider.GetComponent<TraceMonsterMovement>());
                         HideMobRange(clickMob);
                         clickMob = null;
                         isKey2 = false;
@@ -250,6 +266,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
 
     public void RemoveMob_UseKey1(MobMovement m)
     {
+
+        Debug.Log("TlqkfTKqtkqflqklktrqlktqlktlqktlqtq!!!!!!!!!!!!!!!!!!!!");
         manager_Patrol.RemoveMob(m);
         mobs.Remove(m.GetComponent<Mob>());
     }

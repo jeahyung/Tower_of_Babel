@@ -7,7 +7,7 @@ public class RandomBox : Item
     private void Start()
     {
         range = 10;
-        canAdd = true;
+       // canAdd = true;
     }
     public override void SelectItem()
     {

@@ -24,21 +24,27 @@ public class Tile : MonoBehaviour
     public Mob mob; //로프
     [SerializeField] private float dropSpeed = 0.5f;
 
-    private ParticleSystem sfx;
+    public ParticleSystem sfx;
     private Color sfxBaseColor = new Color(1f, 0.9f, 0.45f, 1f);
     private Color sfxMobColor = new Color(0.4f, 0.99f, 0.99f, 1f);
     private Color sfxRedColor = Color.red;
+  
     private void Start()
     {
         f = false;
+        
         //map = FindObjectOfType<Map>();
         HideArea();
         if(tileType == TileType.none)
         {
             gameObject.SetActive(false);
         }
-        sfx = effectPrefab.GetComponent<ParticleSystem>();
-
+        // sfx = effectPrefab.GetComponent<ParticleSystem>();
+        if (sfx != null)
+        {
+            sfx.Stop();
+        }
+        
         if (flame != null)
         {
             flame.Stop();
@@ -62,8 +68,24 @@ public class Tile : MonoBehaviour
     public void ShowArea()
     {
         //if(tileType != TileType.possible) { return; }
-        ParticleSystem.MainModule main = sfx.main;
-        main.startColor = sfxBaseColor;
+        //ParticleSystem.MainModule main = sfx.main;
+        //main.startColor = sfxBaseColor;
+
+
+        if (sfx != null)
+        {
+            ParticleSystem.MainModule main = sfx.main;
+            main.startColor = sfxBaseColor;
+        }
+        else
+        {
+            Debug.Log("non Tile Effect");
+           // sfx = effectPrefab.GetComponent<ParticleSystem>();
+          //  ShowArea();
+            return;
+        }
+
+
         ShowEffect();
         //rend.enabled = false;
 

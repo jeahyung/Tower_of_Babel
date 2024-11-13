@@ -74,6 +74,15 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
     
 
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            DestoryMob();
+        }
+     
+    }
     public void InitMob() 
     {
         //manager_Turn = FindObjectOfType<TurnManager>();
@@ -157,10 +166,17 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
             isRope = false;
             return;
         }
-        
-        
 
-        Chase(tile);  
+        if (gameObject.activeSelf)
+        {
+            Chase(tile);
+        }
+        else
+        {
+            mgr_Chase.CheckMobAction();
+            return;
+        }
+
     }
     private void CheckTile()
     {

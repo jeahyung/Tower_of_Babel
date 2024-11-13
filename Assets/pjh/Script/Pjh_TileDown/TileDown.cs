@@ -9,18 +9,24 @@ public class TileDown : MonoBehaviour
     public Tile tile;
     private Vector3 pos;
     private bool check = true;
-
+    private Map map;
+    private Vector2Int start;
     void Start()
     {
         tile = startTile.GetComponent<Tile>();
         check = true;
         pos = startTile.transform.position;
+        map = FindObjectOfType<Map>();
+        start = new Vector2Int(0, 0);
     }
 
     public void DownTile()
     {
-        if (check)
+        
+
+        if ((check) && (map.nowTile.coord != start))
         {
+           
             startTile.transform.DOMoveY(startTile.transform.position.y - 2f, 2f).SetEase(Ease.OutQuad);
 
             check = false;
@@ -33,12 +39,12 @@ public class TileDown : MonoBehaviour
     }
     public void UpTile()
     {
-        if (check)
+        if (!check)
         {
             Debug.Log("uptile calling");
             startTile.transform.position = pos;
 
-            check = false;
+            ChageBool();
 
             this.tile.tileType = TileType.possible;
         }

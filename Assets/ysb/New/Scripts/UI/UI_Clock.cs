@@ -19,6 +19,13 @@ public class UI_Clock : MonoBehaviour
         item.UseItem();
         gameObject.SetActive(false);
     }
+
+    public void RandomBoxOpen()
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Item_Use_box);
+        item.UseItem();
+        gameObject.SetActive(false);
+    }
     public void Cancle()
     {
         item.CancelItem();

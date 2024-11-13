@@ -4096,7 +4096,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1819096836}
         m_TargetAssemblyTypeName: UI_Clock, Assembly-CSharp
-        m_MethodName: Ok
+        m_MethodName: RandomBoxOpen
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7462,7 +7462,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB79C\uB364\uD558\uAC8C \uC810\uC218\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4."
+  m_text: "\uB79C\uB364\uD558\uAC8C \uC810\uC218\uB97C \uD68D\uB4DD\uD569\uB2C8\uB2E4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
   m_sharedMaterial: {fileID: -1939339519034135465, guid: fe25fb0a19d87be4eb7d7b2fd35295a7, type: 2}
@@ -7525,7 +7525,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: -16.976257, y: 0, z: -17.026733, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

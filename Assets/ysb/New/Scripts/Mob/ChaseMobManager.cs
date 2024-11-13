@@ -66,11 +66,12 @@ public class ChaseMobManager : MonoBehaviour
             transform.parent.SendMessage("EndChase");
             return;
         }
+
+        //if (knightList[mi].burnedTile != null) 
+        //{
+        //    knightList[mi].BurnOff();
+        //}
         mi = 0;
-        if (knightList[mi].burnedTile != null) 
-        {
-            knightList[mi].BurnOff();
-        }
         knightList[mi].Act();
     }
 

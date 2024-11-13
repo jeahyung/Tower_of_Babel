@@ -49,8 +49,8 @@ public class EndPoint : MonoBehaviour
         ScoreManager.instance.CalculateScore();
         Camera.main.SendMessage("BackMainCam");
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Clear);
-        down.ChageBool();
-        down.UpTile();
+        //down.ChageBool();
+        //down.UpTile();
     }
 
     private void OnTriggerStay(Collider other)
@@ -83,5 +83,6 @@ public class EndPoint : MonoBehaviour
         {
             wall.SetActive(true);
         }
+        down.UpTile();
     }
 }

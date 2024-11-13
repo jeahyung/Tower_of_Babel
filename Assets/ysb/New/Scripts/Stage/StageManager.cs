@@ -30,7 +30,14 @@ public class StageManager : Singleton<StageManager>
 
     public RectTransform uiElement;
     public string[] sName;
+
+ 
+    
     public bool isBonusStage { get; set; }
+
+
+   
+   
 
     private void Start()
     {
@@ -45,6 +52,7 @@ public class StageManager : Singleton<StageManager>
         //SelectStage();
         playerMover = FindObjectOfType<Player_Move>();
         energy = playerMover.GetComponent<EnergySystem>();
+        
     }
     void OnEnable()
     {
@@ -78,11 +86,13 @@ public class StageManager : Singleton<StageManager>
     {
         SelectStage();
         ui_turn.SetStageInfo(chapterCount, stageCount);
-
+        //요기 추가
+        
         //턴매니저에 현재 스테이지 몹 매니저 할당
         manager_turn.SetMobManager(curStage.GetComponentInChildren<MobManager>());
         spawnPoint.SetActive(false);
         spawnPoint.SetActive(true);
+        
         //로딩 종료
     }
 
@@ -95,9 +105,9 @@ public class StageManager : Singleton<StageManager>
 
         //새 스테이지
         isBonusStage = false;
-        //int si = Random.Range(0, stages.Count);
+        int si = Random.Range(0, stages.Count);
 
-        int si = 0;
+        //int si = 0;
         curStage = stages[si];
         stages.Remove(stages[si]);
 
