@@ -101,10 +101,10 @@ public class StageManager : Singleton<StageManager>
         curStage = stages[si];
         stages.Remove(stages[si]);
 
-        if (chapterCount != 1 && si >= stages.Count - 2)
-        {
-            isBonusStage = true;
-        }
+        //if (chapterCount != 1 && si >= stages.Count - 2)
+        //{
+        //    isBonusStage = true;
+        //}
         curStage.SetActive(true);
         mob = curStage.GetComponentInChildren<MobManager>();
     }
