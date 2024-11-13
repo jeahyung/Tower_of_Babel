@@ -14,7 +14,7 @@ public class CreatedObject : MonoBehaviour
         {
             if(this.gameObject != null)
             {
-                Destroy(this.gameObject);
+                this.gameObject.SetActive(false);
                 return true;
             }
 
