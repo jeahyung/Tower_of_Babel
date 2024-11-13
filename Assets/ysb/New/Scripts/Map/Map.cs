@@ -44,6 +44,8 @@ public class Map : MonoBehaviour
     public bool isJump = false;
     private MobManager mob = null;
 
+    bool isKey = false;
+
     private void Awake()
     {
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
@@ -368,6 +370,7 @@ public class Map : MonoBehaviour
     //클릭한 타일이 범위 내에 있는가?
     public void CheckClickTileInArea()
     {
+        if(isKey == true) { isKey = false; return; }
         if (useItem) //아이템 사용 시
         {
             Debug.Log("Cancel");
@@ -377,6 +380,7 @@ public class Map : MonoBehaviour
                 HideArea();
                 FindTileInRange_Four(nowTile, player.moveRange);
                 useItem = false;
+
                 Debug.Log("Cancel");
                 return;
             }
@@ -549,6 +553,7 @@ public class Map : MonoBehaviour
     {
         mob = StageManager.instance.mob;
         useItem = true;
+        isKey = true;
         HideArea();
         moveArea.Clear();
         moveArea.AddRange(mob.ShowMob_key1());
@@ -558,6 +563,7 @@ public class Map : MonoBehaviour
     {
         mob = StageManager.instance.mob;
         useItem = true;
+        isKey = true;
         HideArea();
         moveArea.Clear();
         moveArea.AddRange(mob.ShowMob_key2());
