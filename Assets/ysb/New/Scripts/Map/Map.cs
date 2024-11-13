@@ -540,31 +540,28 @@ public class Map : MonoBehaviour
 
     public void UseItem_Key()
     {
+        mob = StageManager.instance.mob;
         useItem = true;
         HideArea();
-        
-        moveArea.AddRange(mob.ShowMob_key1());
-        
-        //moveArea.AddRange(manager_Turn.ShowRookTile());
-        ShowArea(moveArea);
         moveArea.Clear();
+        moveArea.AddRange(mob.ShowMob_key1());
+        ShowArea(moveArea);
     }
     public void UseItem_Key2()
     {
+        mob = StageManager.instance.mob;
         useItem = true;
         HideArea();
-
         moveArea.Clear();
         moveArea.AddRange(mob.ShowMob_key2());
-        //moveArea.AddRange(manager_Turn.ShowRookTile());
         ShowArea(moveArea);
     }
 
     public void UseItem_Rope()
     {
+        mob = StageManager.instance.mob;
         useItem = true;
         HideArea();
-
         moveArea.Clear();
         moveArea.AddRange(manager_Turn.ShowMobTile());
         ShowArea(moveArea);
@@ -572,6 +569,7 @@ public class Map : MonoBehaviour
 
     public void SelectItem_Clock()
     {
+        //if (backTiles[0] == null || backTiles[1] == null) { return; }
         useItem = true;
         HideArea();
         moveArea.Clear();

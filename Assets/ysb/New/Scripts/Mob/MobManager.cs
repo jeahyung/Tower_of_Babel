@@ -86,6 +86,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                         HideMobRange(clickMob);
                         clickMob = null;
                         isKey = false;
+                        isUseItem = false;
                         manager_Turn.gameObject.SendMessage("UseItem");
                         return;
                     }
@@ -97,10 +98,10 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                         HideMobRange(clickMob);
                         clickMob = null;
                         isKey2 = false;
+                        isUseItem = false;
                         manager_Turn.gameObject.SendMessage("UseItem");
                         return;
                     }
-
                     ShowMobRange(mob);
                     return;
                 }
@@ -228,8 +229,10 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     public List<Tile> ShowMob_key1()
     {
         List<Tile> tiles = new List<Tile>();
-        tiles.AddRange(manager_Patrol.ShowMobTile());
-        tiles.AddRange(manager_Bishop.ShowMobTile());   //½ºÀ§Äª
+        if (manager_Patrol != null)
+            tiles.AddRange(manager_Patrol.ShowMobTile());
+        if (manager_Bishop != null)
+            tiles.AddRange(manager_Bishop.ShowMobTile());   //½ºÀ§Äª
         tiles.AddRange(ShowRook());
         return tiles;
     }
@@ -238,7 +241,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     {
         List<Tile> tiles = new List<Tile>();
         tiles.AddRange(ShowMob_key1());
-        tiles.AddRange(manager_Chase.ShowMobTile());
+        if (manager_Chase != null)
+            tiles.AddRange(manager_Chase.ShowMobTile());
         return tiles;
     }
 
@@ -252,8 +256,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     public void DontMovePatrol()
     {
         List<Mob> pMob = new List<Mob>();
-        pMob.AddRange(manager_Patrol.GetPatrol());
-        pMob.AddRange(manager_Bishop.GetChase());
+        if(manager_Patrol != null) { pMob.AddRange(manager_Patrol.GetPatrol()); }
+        if(manager_Bishop != null) { pMob.AddRange(manager_Bishop.GetChase()); }
         foreach(Mob m in pMob)
         {
             m.DontMove();
@@ -263,8 +267,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     public void DontMoveChase()
     {
         List<Mob> cMob = new List<Mob>();
-        cMob.AddRange(manager_Chase.GetChase());
-
+        if(manager_Chase != null) { cMob.AddRange(manager_Chase.GetChase()); }
         foreach (Mob m in cMob)
         {
             m.DontMove();

@@ -73,12 +73,12 @@ public class WorkPanel : MonoBehaviour
         Work w3 = new Work();
         w3.id = 0;
         w3.name = "안  |  An";
-        w3.explain = "자유로운 이동으로 다양한 플레이를 시도하라";
-        w3.word = "전 방향이동 및 추가 턴 획득";
-        w3.score = 5;
-        w3.move = 1;
-        w3.item = 5;
-        w3.itemuse = 5;
+        w3.explain = "균형있는 능력으로 직관적으로 플레이해라.";
+        w3.word = "맵 전역으로 십자 방향 이동"; 
+        w3.score = 3;
+        w3.move = 3;
+        w3.item = 3;
+        w3.itemuse = 3;
         works.Add(w3);
 
         //비숍
@@ -99,13 +99,13 @@ public class WorkPanel : MonoBehaviour
         Work w = new Work();
         w.id = 2;
         w.name =  "아다드  |  Adad";
-        w.explain = "균형있는 능력으로 직관적으로 플레이해라.";
-        w.word = "맵 전역으로 십자 방향 이동";
+        w.explain = "자유로운 이동으로 다양한 플레이를 시도하라";
+        w.word = "전 방향이동 및 추가 턴 획득";
 
-        w.score = 3;
-        w.move = 3;
-        w.item = 3;
-        w.itemuse = 3;
+        w.score = 5;
+        w.move = 1;
+        w.item = 5;
+        w.itemuse = 5;
 
         works.Add(w);
 

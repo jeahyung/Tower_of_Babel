@@ -57,9 +57,16 @@ public class ItemManager : MonoBehaviour
         map.UseItem_Eight(range);
     }
 
+    #region Key
+    void CancelKey()
+    {
+        map.SelectItem(null);
+        mob.isUseItem = false;
+        mob.isKey = false;
+    }
     public void SelectItem_Key(Item item)
     {
-        if (map.canControl == false) { return; }
+        //if (map.canControl == false) { return; }
         mob = StageManager.instance.mob;
         selectedItem = item;
         map.SelectItem(item);
@@ -67,6 +74,8 @@ public class ItemManager : MonoBehaviour
         mob.isKey = true;
         map.UseItem_Key();
     }
+
+    
 
     public void SelectItem_Key2(Item item)
     {
@@ -78,6 +87,7 @@ public class ItemManager : MonoBehaviour
         mob.isKey2 = true;
         map.UseItem_Key2();
     }
+    #endregion
 
     public void SelectItem_Rope(Item item)
     {
@@ -116,8 +126,8 @@ public class ItemManager : MonoBehaviour
         ItemInventory.instance.RemoveItem(selectedItem);
         selectedItem = null;
         map.useItem = false;
-        mob.isKey = false;
-        mob.isUseItem = false;
+        //mob.isKey = false;
+        //mob.isUseItem = false;
     }
 
     //아이템 사용 취소
@@ -127,6 +137,7 @@ public class ItemManager : MonoBehaviour
         map.CancelItem();
         selectedItem = null;
         mob.isUseItem = false;
+        CancelKey();
     }
 
     public void CreateObject(GameObject obj)
@@ -159,8 +170,7 @@ public class ItemManager : MonoBehaviour
     }
 
     public bool SetPlayerPos(Item item, int i)
-    {
-        
+    {        
         bool isUse = map.SetPlayerPosition(i);
         if(isUse == false && i != -1) { ClockUI[i].SetActive(false); return false; }
         selectedItem = item;
