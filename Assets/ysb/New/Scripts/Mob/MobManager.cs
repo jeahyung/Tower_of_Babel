@@ -47,7 +47,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     private void Update()
     {
         //몹 범위 표시때 플레이어는 이동하지 못하는가?
-        if (StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
+        if (StageManager.instance.isPlaying == false || !manager_Turn.isPlayerTurn) { return; }    //게임 시작 여부
         if (Input.GetMouseButtonDown(0))
         {
             if (clickMob != null) 
@@ -139,6 +139,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     }
     public void ActMob()
     {
+        HideAllRange();
         if (manager_Chase == null) {
             if (manager_Bishop == null)
             {

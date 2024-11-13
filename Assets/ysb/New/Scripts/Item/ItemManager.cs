@@ -60,13 +60,13 @@ public class ItemManager : MonoBehaviour
     #region Key
     void CancelKey()
     {
-        map.SelectItem(null);
         mob.isUseItem = false;
         mob.isKey = false;
+        mob.isKey2 = false;
     }
     public void SelectItem_Key(Item item)
     {
-        //if (map.canControl == false) { return; }
+        if (map.canControl == false) { return; }
         mob = StageManager.instance.mob;
         selectedItem = item;
         map.SelectItem(item);
@@ -115,7 +115,7 @@ public class ItemManager : MonoBehaviour
     public void UseItem()
     {
         mob = StageManager.instance.mob;
-        if (selectedItem.UseItem() == false)
+        if (selectedItem != null && selectedItem.UseItem() == false)
         {
             CancelItem();
             return;
@@ -133,8 +133,9 @@ public class ItemManager : MonoBehaviour
     //아이템 사용 취소
     public void CancelItem()
     {
+        mob = StageManager.instance.mob;
         //energy.UseEnergy(-energy.useEnergy);
-        map.CancelItem();
+        Debug.Log("Cancel");
         selectedItem = null;
         mob.isUseItem = false;
         CancelKey();
@@ -157,6 +158,7 @@ public class ItemManager : MonoBehaviour
 
     public void SetPlayerPos_UI(Item item, int i)
     {
+        mob = StageManager.instance.mob;
         selectedItem = item;
         mob.isUseItem = true;
         ClockUI[i].SetActive(true);
@@ -164,6 +166,7 @@ public class ItemManager : MonoBehaviour
     
     public void SetPlayerPos_UI2(Item item)
     {
+        mob = StageManager.instance.mob;
         selectedItem = item;
         mob.isUseItem = true;
         map.SelectItem_Clock();
@@ -240,11 +243,13 @@ public class ItemManager : MonoBehaviour
 
     public void UseRope1()
     {
+        mob = StageManager.instance.mob;
         mob.DontMovePatrol();
         map.HideArea();
     }
     public void UseRope2()
     {
+        mob = StageManager.instance.mob;
         mob.DontMoveChase();
         map.HideArea();
     }

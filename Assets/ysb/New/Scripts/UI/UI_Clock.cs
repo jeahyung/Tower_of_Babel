@@ -27,6 +27,6 @@ public class UI_Clock : MonoBehaviour
 
     public void SetRandBoxText()
     {
-        info.text = ScoreManager.instance.CalculateBoxScore().ToString() + "ÀÇ Á¡¼ö¸¦ È¹µæÇÕ´Ï´Ù.";
+        //info.text = ScoreManager.instance.CalculateBoxScore().ToString() + "ÀÇ Á¡¼ö¸¦ È¹µæÇÕ´Ï´Ù.";
     }
 }
