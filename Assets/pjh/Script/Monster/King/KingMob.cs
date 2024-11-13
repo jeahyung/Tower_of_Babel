@@ -134,14 +134,14 @@ public class KingMob : MonoBehaviour
 
     void Update()
     {
-        //if (Input.GetKeyDown(KeyCode.M))
-        //{
-        //    Act();
-        //}
-        //if (Input.GetKeyDown(KeyCode.N))
-        //{
-        //    BurnOff();
-        //}
+       
+        
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                Act();
+            }
+        
+
     }
 
     public bool AvoidOverlap()
