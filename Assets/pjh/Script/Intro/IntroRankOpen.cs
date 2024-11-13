@@ -44,7 +44,7 @@ public class IntroRankOpen : MonoBehaviour,IPointerClickHandler
             .OnComplete(() => isAnimating = false);
 
         db.UserInfoUpdata();
-        db.IntroUserInfoUpdata();
+       // db.IntroUserInfoUpdata();
     }
 
     public void IntroShowPop()
