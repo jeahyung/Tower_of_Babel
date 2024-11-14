@@ -16,6 +16,10 @@ public class SpecialAction
         this.map = map;
     }
     public virtual void Action() { }
+    public void Action_Bonus() {
+        map.HideArea();
+        map.StartPlayerTurn(1);
+    }
 }
 public class SA_Rock : SpecialAction
 {
@@ -182,7 +186,7 @@ public class SAManager : MonoBehaviour
 
     public void BonusUse()
     {
-        action.Action();
+        action.Action_Bonus();
         isKing = false;
     }
 

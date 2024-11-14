@@ -86,6 +86,7 @@ public class TurnManager : MonoBehaviour
 
     public void GameOver()
     {
+        isGameOver = true;
         StopAllCoroutines();
         isPlayerTurn = false;
         isEnemyTurn = false;
