@@ -65,6 +65,7 @@ public class ItemUI : MonoBehaviour
         {
             if (slot.addItem != null && slot.addItem == i)
             {
+                if (i.id == 20) { UpgradeManager.instance.RemoveBoxCount(1); }
                 slot.RemoveItem();
                 HideExplain();
                 return true;
@@ -81,10 +82,10 @@ public class ItemUI : MonoBehaviour
             int i = Random.Range(0, items.Count);
             if(slot.addItem != null)
             {
-                if(slot.addItem.id == 10) { ItemInventory.instance.SetBoxCount(-1); }
+                if(slot.addItem.id == 20) { UpgradeManager.instance.RemoveBoxCount(1); }
                 slot.ChangeItem(items[i]);
                 ItemInventory.instance.ChangeGetList(j, items[i]);
-                if(items[i].id == 10) { ItemInventory.instance.SetBoxCount(1); }
+                if(items[i].id == 20) { UpgradeManager.instance.SetBoxCount(1); }
             }
             j++;
         }

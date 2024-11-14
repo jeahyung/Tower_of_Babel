@@ -39,7 +39,6 @@ public class ItemUISlot : MonoBehaviour
         addItem = item;
         img.enabled = true;
         img.sprite = addItem.itemImg;
-
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => addItem.SelectItem());
 

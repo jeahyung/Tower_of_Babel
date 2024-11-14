@@ -32,7 +32,6 @@ public class UpgradeManager : Singleton<UpgradeManager>
     private int turn_bonus;
 
     public static int boxCount = 0;
-
     private void OnEnable()
     {
         SceneManager.sceneLoaded += OnSceneLoaded;
@@ -52,7 +51,6 @@ public class UpgradeManager : Singleton<UpgradeManager>
             Debug.Log("delete : " + selectedUp[i].name);
         }
         //UpgradeDatabase.instance.SetData();
-
         //ScoreManager.instance.SetSumSocre(SumScore);
     }
 
@@ -240,6 +238,12 @@ public class UpgradeManager : Singleton<UpgradeManager>
     public void SetBoxCount(int i)
     {
         boxCount += i;
+        Debug.Log("addbox + " + boxCount);
+    }
+    public void RemoveBoxCount(int i)
+    {
+        boxCount -= i;
+        Debug.Log("removebox + " + boxCount);
     }
     //public void SetData()
     //{
