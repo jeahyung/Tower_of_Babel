@@ -70,14 +70,18 @@ public class ItemInventory : Singleton<ItemInventory>
     }
     public void AddBox()
     {
-        PickUpItem(datas[datas.Count - 1]);
+        Item i = datas[datas.Count - 1];
+        if (itemUI.PickUpItem(i) == true)
+        {
+            return;
+        }
     }
     public bool PickUpItem(Item i)
     {
         if(itemUI.PickUpItem(i) == true)
         {
             int id = i.id;
-            if(id == 20)    //랜덤 박스
+            if (id == 20)    //랜덤 박스
             {
                 UpgradeManager.instance.SetBoxCount(1);
             }
@@ -87,11 +91,11 @@ public class ItemInventory : Singleton<ItemInventory>
     }
     public void RemoveItem(Item i)
     {
+        Debug.Log("use box");
         bool b = itemUI.RemoveItem(i);
         if (b == true)
         {
             count_useItem++;
-            if(i.id == 20) { UpgradeManager.instance.SetBoxCount(-1); }
         }
     }
 
@@ -99,6 +103,7 @@ public class ItemInventory : Singleton<ItemInventory>
     public void ChangeItem()
     {
         bool bi = UpgradeManager.instance.getItemChange();
+        Debug.Log(bi.ToString() + "체이니 아이템");
         if (bi == true)
         {
             itemUI.ChangeItem(datas);
