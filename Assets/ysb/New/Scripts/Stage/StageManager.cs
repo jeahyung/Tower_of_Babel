@@ -168,10 +168,10 @@ public class StageManager : Singleton<StageManager>
     }
     void NextChapter()
     {
-        if(chapterCount > 3)
+        if(chapterCount > 4)
         {
-            //GameOver_suicide(); //임시
-            //return;
+            GameOver_suicide(); //임시
+            return;
         }
         SceneManager.LoadScene(chapterCount);
     }
