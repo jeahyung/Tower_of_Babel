@@ -105,9 +105,9 @@ public class StageManager : Singleton<StageManager>
 
         //새 스테이지
         isBonusStage = false;
-        int si = Random.Range(0, stages.Count);
+        //int si = Random.Range(0, stages.Count);
 
-        //int si = 0;
+        int si = 0;
         curStage = stages[si];
         stages.Remove(stages[si]);
 
@@ -231,6 +231,7 @@ public class StageManager : Singleton<StageManager>
         isGameOver = true;
         ScoreManager.instance.GetEnergyScore(chapterCount, energy.GetEnergy());
         //PlayerMovement player = manager_turn.gameObject.GetComponent<PlayerMovement>();
+        
 
         manager_turn.GameOver();
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
@@ -251,7 +252,7 @@ public class StageManager : Singleton<StageManager>
         manager_turn.GetComponent<PlayerMovement>().SetControl(false);
 
         ui_gameover.ShowResult();
-
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Game_Over);
         //자살 연출
         //map.GetComponent<DestoryTile>().DropTile(); //타일 떨구기
         for (int i = 0; i < 4; i++)

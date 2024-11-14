@@ -21,7 +21,7 @@ public class EnergySystem : MonoBehaviour
     private void Start()
     {
         eText = slider.GetComponentInChildren<TMP_Text>();
-        maxEnergy = 80;
+        maxEnergy = 4;
 
         if(curEnergy <= 0) { curEnergy = maxEnergy; }
         slider.value = (float)curEnergy / maxEnergy;
@@ -64,7 +64,7 @@ public class EnergySystem : MonoBehaviour
         {
             curEnergy = -1;
             gameObject.SendMessage("Die");
-            //StageManager.instance.GameOver();//GameOver_suicide();
+            StageManager.instance.GameOver();//GameOver_suicide();
             Debug.Log("gameOver");
             return false;
         }

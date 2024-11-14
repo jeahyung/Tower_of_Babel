@@ -87,6 +87,10 @@ public class TurnManager : MonoBehaviour
     public void GameOver()
     {
         StopAllCoroutines();
+        isPlayerTurn = false;
+        isEnemyTurn = false;
+        
+       // isGameOver = false;
     }
 
     #region player turn

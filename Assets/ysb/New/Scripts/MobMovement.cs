@@ -39,7 +39,7 @@ public class MobMovement : MonoBehaviour, Mob
 
     public bool canAct = true;   //움직일 수 있는가?
     public bool isRope = false; //로프에 걸렸는가?
-
+    public Tile pre;
     public GameObject spear;
 
     Animator anim;
@@ -177,7 +177,8 @@ public class MobMovement : MonoBehaviour, Mob
                     nextTile = map.GetTile(nextCoord);
                 }
                 transform.forward = new Vector3(moveDir.y, 0, moveDir.x);
-                tile.tileType = TileType.possible;
+               
+                pre = tile;
                 tile.mob = null;
                 StartCoroutine(MoveMob(nextTile));
             }
@@ -225,13 +226,16 @@ public class MobMovement : MonoBehaviour, Mob
             {
                 yield return null;
             }
+            pre.tileType = TileType.possible;
         }
+        pre.tileType = TileType.possible;
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
             transform.position = Vector3.Lerp(transform.position, nextPos, 8f * Time.deltaTime);
             yield return null;
         }
+
         transform.position = nextPos;
         curTile = nextTile;
         nextTile.tileType = TileType.impossible;
