@@ -12446,6 +12446,10 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2345437113060831775, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
+      propertyPath: textComponents.Array.size
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2361285558459107623, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -13552,7 +13556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4983028512689847880, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0.000035506462
+      value: -0.00017889721
       objectReference: {fileID: 0}
     - target: {fileID: 5053376802325204650, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
       propertyPath: m_AnchorMax.x

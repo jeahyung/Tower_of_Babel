@@ -43,8 +43,7 @@ public class IntroRankOpen : MonoBehaviour,IPointerClickHandler
         popupRect.DOScale(Vector3.one, animationDuration).SetEase(Ease.OutBack)
             .OnComplete(() => isAnimating = false);
 
-        db.UserInfoUpdata();
-       // db.IntroUserInfoUpdata();
+        db.UserInfoUpdata();     
     }
 
     public void IntroShowPop()

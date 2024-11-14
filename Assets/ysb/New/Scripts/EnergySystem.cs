@@ -21,7 +21,7 @@ public class EnergySystem : MonoBehaviour
     private void Start()
     {
         eText = slider.GetComponentInChildren<TMP_Text>();
-        maxEnergy = 80;
+        maxEnergy = 4;
 
         if(curEnergy <= 0) { curEnergy = maxEnergy; }
         slider.value = (float)curEnergy / maxEnergy;

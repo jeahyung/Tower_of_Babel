@@ -129,7 +129,7 @@ public class DB_Manager : MonoBehaviour
         rankList = rankList.OrderByDescending(data => data.rankScore).ToList();
         Debug.Log("정렬 완료");
 
-        // 상위 100개만 유지 (선택적)
+        // 상위 50개만 유지 (선택적)
         if (rankList.Count > 50)
         {
             rankList = rankList.Take(50).ToList();
@@ -226,7 +226,7 @@ public class DB_Manager : MonoBehaviour
 
     private void GetRankingData()
     {
-
+       
         // "RankingBoard" 데이터베이스 경로 참조
         reference.Child("RankingBoard").GetValueAsync().ContinueWithOnMainThread(task =>
         {
@@ -308,7 +308,7 @@ public class DB_Manager : MonoBehaviour
         if (int.TryParse(scoreUI.sumScore.text, out int result))
         {
             UpdateOrAddRankData(input.text, result);
-            //GetRankingData(); // 랭킹 데이터 새로 불러오기
+            GetRankingData(); // 랭킹 데이터 새로 불러오기
             
         }
         else
