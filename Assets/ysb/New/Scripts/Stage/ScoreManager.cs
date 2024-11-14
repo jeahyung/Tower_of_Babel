@@ -208,7 +208,7 @@ public class ScoreManager : Singleton<ScoreManager>
         int turn = FindObjectOfType<TurnManager>().TurnCount;
 
         int score = 0;
-        int part = StageManager.instance.GetChapterCount;
+        int part = StageManager.instance.GetChapterCount - 1;
         if (UpgradeManager.instance.GetSANum() == 2)//.saNum == 2)
         {
             score = turnScore[part];
@@ -333,7 +333,7 @@ public class ScoreManager : Singleton<ScoreManager>
     public void GetEnergyScore(int stage = 1, int e = 0)
     {
         SetESPer();
-        energyScore = (int)(e * scoreSum * 0.05f);//(int)(e * esPer[stage - 1]);
+        energyScore = (int)(e * scoreSum * 0.005f);//(int)(e * esPer[stage - 1]);
     }
     public List<int> CalculateScore_Suicide()
     {
