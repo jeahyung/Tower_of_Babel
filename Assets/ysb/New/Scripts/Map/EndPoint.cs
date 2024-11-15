@@ -46,6 +46,8 @@ public class EndPoint : MonoBehaviour
     private void EndGame()
     {
         cam2.isMove = false;
+        BtnOff.Instance.DisableUIInteraction();
+        AnotherBtnActive.Instance.DisableUIInteraction();
         ScoreManager.instance.CalculateScore();
         Camera.main.SendMessage("BackMainCam");
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Stage_Clear);
