@@ -103,4 +103,19 @@ public class ItemUI : MonoBehaviour
     {
         itemExplain.SetActive(false);
     }
+
+    public void UseItem()
+    {
+        foreach(var slot in slots)
+        {
+            slot.UseItem();
+        }
+    }
+    public void CancelItem()
+    {
+        foreach(var slot in slots)
+        {
+            slot.CancelItem();
+        }
+    }
 }

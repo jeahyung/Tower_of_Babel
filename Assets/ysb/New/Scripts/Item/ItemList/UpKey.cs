@@ -7,7 +7,7 @@ public class UpKey : Key
     public override void SelectItem()
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
-
+        manager_Item.DisableItem();
         range = 10;
         manager_Item.SelectItem_Key2(this);
     }

@@ -71,4 +71,13 @@ public class ItemUISlot : MonoBehaviour
         GetComponentInParent<ItemUI>().HideExplain();
 
     }
+
+    public void UseItem()
+    {
+        btn.interactable = false;
+    }
+    public void CancelItem()
+    {
+        btn.interactable = true;
+    }
 }

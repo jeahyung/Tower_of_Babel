@@ -169,6 +169,11 @@ public class Map : MonoBehaviour
             else { tile.ShowMobArea(); }
         }
     }
+    public void ShowPlayerTile()
+    {
+        FindTileInRange_Four(nowTile, 1);
+        manager_Item.CancelItem();
+    }
     #endregion
 
     private void CheckTileObject()
@@ -370,7 +375,7 @@ public class Map : MonoBehaviour
     //클릭한 타일이 범위 내에 있는가?
     public void CheckClickTileInArea()
     {
-        if(isKey == true) { isKey = false; HideArea(); return; }
+        if(isKey == true) { isKey = false; useItem = false; HideArea(); return; }
         if (useItem) //아이템 사용 시
         {
             Debug.Log("Cancel");

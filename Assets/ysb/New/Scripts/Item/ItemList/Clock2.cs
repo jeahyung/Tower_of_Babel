@@ -7,6 +7,7 @@ public class Clock2 : BackStartPoint
     public override void SelectItem()
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
+        manager_Item.DisableItem();
         manager_Item.SetPlayerPos_UI(this, 1);
         //UseItem();
     }

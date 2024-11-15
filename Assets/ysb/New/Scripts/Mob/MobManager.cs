@@ -122,6 +122,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                     return;
                 }
             }
+            map.ShowPlayerTile();
         }
     }
 

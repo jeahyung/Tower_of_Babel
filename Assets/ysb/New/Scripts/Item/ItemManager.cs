@@ -16,6 +16,7 @@ public class ItemManager : MonoBehaviour
     GameObject RopeUI;
     GameObject[] ClockUI = new GameObject[2];
     GameObject BoxUI;
+    ItemUI itemui;
 
     private MobManager mob = null;
     private void Awake()
@@ -35,6 +36,8 @@ public class ItemManager : MonoBehaviour
 
         BoxUI = GameObject.Find("BoxUI");
         BoxUI.SetActive(false);
+
+        itemui = FindObjectOfType<ItemUI>();
     }
 
     public void SeletItem_Four(Item item, int range)
@@ -139,6 +142,7 @@ public class ItemManager : MonoBehaviour
         selectedItem = null;
         mob.isUseItem = false;
         CancelKey();
+        itemui.CancelItem();
     }
 
     public void CreateObject(GameObject obj)
@@ -272,5 +276,14 @@ public class ItemManager : MonoBehaviour
     {
         RopeUI.SetActive(false);
         CancelItem();
+    }
+
+    public void DisableItem()
+    {
+        itemui.UseItem();
+    }
+    public void EnableItem()
+    {
+        itemui.CancelItem();
     }
 }

@@ -114,6 +114,7 @@ public class TurnManager : MonoBehaviour
         //ui_turn.HideImg(0);
 
         player.SetUseEnergy();  //에너지 설정
+        manager_Item.EnableItem();
 
         if (manager_Action == null) { manager_Action = FindObjectOfType<SAManager>(); }
         if (isJumpTurn)
@@ -159,6 +160,7 @@ public class TurnManager : MonoBehaviour
         ui_turn.RotateObj(turnCount + 1);    //턴 ui
         yield return new WaitForSeconds(delayTime);
 
+        manager_Item.DisableItem();
         manager_map.HideArea();
         manager_Action.SetActionBtn(false);
         StartEnemyTurn();
