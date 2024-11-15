@@ -122,7 +122,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                     return;
                 }
             }
-            if (isKey || isKey2 || isUseItem)
+            if (isKey || isKey2)
             {
                 isKey = isKey2 = isUseItem = false;
                 map.ShowPlayerTile();
