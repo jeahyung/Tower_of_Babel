@@ -232,7 +232,7 @@ public class MobMovement : MonoBehaviour, Mob
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Monster_Move);
         while (Vector3.Distance(transform.position, nextPos) >= 0.05f)
         {
-            transform.position = Vector3.Lerp(transform.position, nextPos, 8f * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, nextPos, 10f * Time.deltaTime);
             yield return null;
         }
 
