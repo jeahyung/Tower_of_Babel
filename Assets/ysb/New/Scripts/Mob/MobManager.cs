@@ -122,6 +122,13 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                     return;
                 }
             }
+            if (isKey || isKey2 || isUseItem)
+            {
+                isKey = isKey2 = isUseItem = false;
+                map.ShowPlayerTile();
+                //AnotherBtnActive.Instance.EnableUIInteraction();
+                //BtnOff.Instance.EnableUIInteraction();
+            }
         }
     }
 

@@ -12,6 +12,7 @@ public class Rope : Item
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
         AnotherBtnActive.Instance.DisableUIInteraction();
+        BtnOff.Instance.DisableUIInteraction();
         range = 10;
         manager_Item.SelectItem_Rope(this);
     }

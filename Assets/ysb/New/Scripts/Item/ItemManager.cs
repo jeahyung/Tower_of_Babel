@@ -113,12 +113,13 @@ public class ItemManager : MonoBehaviour
         mob.isUseItem = true;
         map.SelectItem(item);
         BoxUI.SetActive(true);
-        BoxUI.GetComponentInChildren<UI_Clock>().SetRandBoxText();
+        //BoxUI.GetComponentInChildren<UI_Clock>().SetRandBoxText();
     }
 
     public void UseItem()
     {
         AnotherBtnActive.Instance.EnableUIInteraction();
+        BtnOff.Instance.EnableUIInteraction();
         mob = StageManager.instance.mob;
         if (selectedItem != null && selectedItem.UseItem() == false)
         {
@@ -145,8 +146,14 @@ public class ItemManager : MonoBehaviour
         //clock.Cancle();
         selectedItem = null;
         mob.isUseItem = false;
-        AnotherBtnActive.Instance.EnableUIInteraction();       
         CancelKey();
+        //ClockUI[0].SetActive(false);
+        //ClockUI[1].SetActive(false);
+        //RopeUI.SetActive(false);
+        //BoxUI.SetActive(false);
+
+        AnotherBtnActive.Instance.EnableUIInteraction();
+        BtnOff.Instance.EnableUIInteraction();
     }
 
     public void DeactivateAllUIElements()

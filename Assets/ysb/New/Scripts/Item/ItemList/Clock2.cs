@@ -9,6 +9,7 @@ public class Clock2 : BackStartPoint
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
         manager_Item.SetPlayerPos_UI(this, 1);
         AnotherBtnActive.Instance.DisableUIInteraction();
+        BtnOff.Instance.DisableUIInteraction();
         //UseItem();
     }
     public override bool UseItem()
