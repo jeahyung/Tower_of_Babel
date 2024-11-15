@@ -122,7 +122,7 @@ public class Map : MonoBehaviour
                 }
             }
 
-            if (clickTile != null)
+            if (clickTile != null || isKey)
             {
                 CheckClickTileInArea();
             }
@@ -189,6 +189,12 @@ public class Map : MonoBehaviour
                 t.CheckObject();
             }
         }
+    }
+
+    public void ShowPlayerTile2()
+    {
+        FindTileInRange_Four(nowTile, 1);
+
     }
     #region 범위 탐색
     //4방향
@@ -379,7 +385,7 @@ public class Map : MonoBehaviour
     //클릭한 타일이 범위 내에 있는가?
     public void CheckClickTileInArea()
     {
-        if(isKey == true) { isKey = false; useItem = false;  HideArea(); return; }
+        if(isKey == true) { isKey = false; useItem = false; return; }
         if (useItem) //아이템 사용 시
         {
             Debug.Log("Cancel");
