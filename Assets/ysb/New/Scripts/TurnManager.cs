@@ -131,6 +131,8 @@ public class TurnManager : MonoBehaviour
 
             manager_Action.SetActionBtn(true);  //액션 버튼 활성화
             manager_map.StartPlayerTurn(player.moveRange);
+            AnotherBtnActive.Instance.EnableUIInteraction();
+            BtnOff.Instance.EnableUIInteraction();
         }
         Debug.Log("player turn");
     }
@@ -159,6 +161,8 @@ public class TurnManager : MonoBehaviour
         ui_turn.RotateObj(turnCount + 1);    //턴 ui
         yield return new WaitForSeconds(delayTime);
 
+        AnotherBtnActive.Instance.DisableUIInteraction();
+        BtnOff.Instance.DisableUIInteraction();
         manager_map.HideArea();
         manager_Action.SetActionBtn(false);
         StartEnemyTurn();

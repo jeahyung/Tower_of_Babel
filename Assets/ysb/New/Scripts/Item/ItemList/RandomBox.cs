@@ -13,6 +13,7 @@ public class RandomBox : Item
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
         AnotherBtnActive.Instance.DisableUIInteraction();
+        BtnOff.Instance.DisableUIInteraction();
         manager_Item.SelectItem_Box(this);
         //UseItem();
     }

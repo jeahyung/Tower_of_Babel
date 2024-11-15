@@ -80,6 +80,9 @@ public class ItemInventory : Singleton<ItemInventory>
     {
         if(itemUI.PickUpItem(i) == true)
         {
+            //============================================아이템 버그 막기용
+            BtnOff.Instance.DisableUIInteraction();
+            //=================================================
             int id = i.id;
             if (id == 20)    //랜덤 박스
             {
