@@ -267,7 +267,7 @@ public class ItemManager : MonoBehaviour
     {
         RopeUI.SetActive(false);
         if(selectedItem != null && selectedItem.id != 20) { ItemInventory.instance.RemoveItem(selectedItem); }
-       // manager_Turn.EndPlayerTurn();
+        manager_Turn.EndPlayerTurn();
     }
 
 
