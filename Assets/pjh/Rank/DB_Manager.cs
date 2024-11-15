@@ -42,32 +42,32 @@ public class DB_Manager : MonoBehaviour
     private bool isLoading = false;
     void Start()
     {
-        scoreUI = FindObjectOfType<ScoreUI>();
-        isLoading = true;
-        //displayText.fontSize = 36;
-        // Firebase 초기화
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
-        {
-            if (task.Result == DependencyStatus.Available)
-            {
-                // Firebase 앱 준비 완료
-                FirebaseApp app = FirebaseApp.DefaultInstance;
-                app.Options.DatabaseUrl = new Uri(DBurl);
+        //scoreUI = FindObjectOfType<ScoreUI>();
+        //isLoading = true;
+        ////displayText.fontSize = 36;
+        //// Firebase 초기화
+        //FirebaseApp.CheckAndFixDependenciesAsync().ContinueWithOnMainThread(task =>
+        //{
+        //    if (task.Result == DependencyStatus.Available)
+        //    {
+        //        // Firebase 앱 준비 완료
+        //        FirebaseApp app = FirebaseApp.DefaultInstance;
+        //        app.Options.DatabaseUrl = new Uri(DBurl);
 
-                reference = FirebaseDatabase.DefaultInstance.RootReference;
+        //        reference = FirebaseDatabase.DefaultInstance.RootReference;
 
-                Debug.Log("Firebase 초기화 완료");
-               // WriteDB();
+        //        Debug.Log("Firebase 초기화 완료");
+        //       // WriteDB();
                
-                GetRankingData();
-                //ReadDB(); // 데이터베이스 읽기 메서드 호출
+        //        GetRankingData();
+        //        //ReadDB(); // 데이터베이스 읽기 메서드 호출
 
-            }
-            else
-            {
-                Debug.LogError("Could not resolve all Firebase dependencies: " + task.Result);
-            }
-        });
+        //    }
+        //    else
+        //    {
+        //        Debug.LogError("Could not resolve all Firebase dependencies: " + task.Result);
+        //    }
+        //});
 
     
     }

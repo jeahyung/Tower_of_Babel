@@ -10,12 +10,15 @@ public class ItemManager : MonoBehaviour
     private Map map;
     //private ItemInventory inven;
     private Item selectedItem;
+    //private UI_Clock clock;
 
     private List<CreatedObject> objs = new List<CreatedObject>();
+    public GameObject[] uiElements;
 
     GameObject RopeUI;
     GameObject[] ClockUI = new GameObject[2];
     GameObject BoxUI;
+  //  public GameObject uiPanel;
 
     private MobManager mob = null;
     private void Awake()
@@ -24,6 +27,7 @@ public class ItemManager : MonoBehaviour
         manager_Turn = GetComponent<TurnManager>();
         energy = GetComponent<EnergySystem>();
         player = GetComponent<PlayerMovement>();
+      //  clock = FindObjectOfType<UI_Clock>();
 
         RopeUI = GameObject.Find("RopeUI");
         RopeUI.SetActive(false);
@@ -114,6 +118,7 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem()
     {
+        AnotherBtnActive.Instance.EnableUIInteraction();
         mob = StageManager.instance.mob;
         if (selectedItem != null && selectedItem.UseItem() == false)
         {
@@ -133,12 +138,30 @@ public class ItemManager : MonoBehaviour
     //아이템 사용 취소
     public void CancelItem()
     {
+        DeactivateAllUIElements();
         mob = StageManager.instance.mob;
         //energy.UseEnergy(-energy.useEnergy);
-        Debug.Log("Cancel");
+        Debug.Log("Cancel!!!!!!!!!!!");
+        //clock.Cancle();
         selectedItem = null;
         mob.isUseItem = false;
+        AnotherBtnActive.Instance.EnableUIInteraction();       
         CancelKey();
+    }
+
+    public void DeactivateAllUIElements()
+    {
+        foreach (GameObject element in uiElements)
+        {
+            if (element != null)
+            {
+                element.SetActive(false);
+            }
+            else
+            {
+                Debug.LogWarning("Null UI element found in the array.");
+            }
+        }
     }
 
     public void CreateObject(GameObject obj)

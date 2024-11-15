@@ -30,6 +30,7 @@ public class ItemUISlot : MonoBehaviour
 
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => addItem.SelectItem());
+        //AnotherBtnActive.Instance.DisableUIInteraction();
     }
 
     public void SetSlot(Item item)
@@ -41,6 +42,7 @@ public class ItemUISlot : MonoBehaviour
         img.sprite = addItem.itemImg;
         btn.onClick.RemoveAllListeners();
         btn.onClick.AddListener(() => addItem.SelectItem());
+        //AnotherBtnActive.Instance.DisableUIInteraction();
 
         //img.enabled = true;
     }

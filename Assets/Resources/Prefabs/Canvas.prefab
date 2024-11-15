@@ -1220,7 +1220,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558792869}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -12420,9 +12420,9 @@ RectTransform:
   - {fileID: 1528677974552298922}
   - {fileID: 3301883061221733893}
   - {fileID: 2245554349290718603}
+  - {fileID: 558792870}
   - {fileID: 1448870300}
   - {fileID: 1176906553}
-  - {fileID: 558792870}
   - {fileID: 1819096835}
   - {fileID: 734304439784397633}
   m_Father: {fileID: 0}
@@ -13182,6 +13182,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1528677974170607307}
+  - component: {fileID: 8944369560747972894}
+  - component: {fileID: 5823271666214169027}
   m_Layer: 5
   m_Name: =====Work
   m_TagString: Untagged
@@ -13211,6 +13213,31 @@ RectTransform:
   m_AnchoredPosition: {x: 42, y: 30}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0, y: 0}
+--- !u!225 &8944369560747972894
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528677974170607304}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
+--- !u!114 &5823271666214169027
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528677974170607304}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0c41fa1bab788640aa5126a15542dfb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiGroup: {fileID: 8944369560747972894}
 --- !u!1 &1528677974199732867
 GameObject:
   m_ObjectHideFlags: 0
@@ -13360,6 +13387,8 @@ GameObject:
   - component: {fileID: 1528677974295364115}
   - component: {fileID: 1528677974295364112}
   - component: {fileID: 8239158834976608002}
+  - component: {fileID: 4706918810254225443}
+  - component: {fileID: 3374258498799776380}
   m_Layer: 5
   m_Name: ItemUI
   m_TagString: Untagged
@@ -13487,6 +13516,31 @@ MonoBehaviour:
   uiElements: []
   size: 30
   scaleMultiplier: 1.3
+--- !u!114 &4706918810254225443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528677974295364118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fc785549f2058924fb6d6d22a3a6f266, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  uiGroup: {fileID: 3374258498799776380}
+--- !u!225 &3374258498799776380
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1528677974295364118}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &1528677974463061760
 GameObject:
   m_ObjectHideFlags: 0
@@ -15431,7 +15485,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1528677975592759545}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4706918810254225443}
+        m_TargetAssemblyTypeName: BtnOff, Assembly-CSharp
+        m_MethodName: DisableUIInteraction
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1528677975592759547
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22860,7 +22926,7 @@ MonoBehaviour:
   m_MinValue: 0
   m_MaxValue: 1
   m_WholeNumbers: 0
-  m_Value: 1
+  m_Value: 0.79999995
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:

@@ -345,6 +345,9 @@ public class PlayerMovement : MonoBehaviour
             }
         }
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
+        //아이템 슬롯 활성화-----------------------------------------------------------------------------------------------------------------
+        BtnOff.Instance.EnableUIInteraction();
+        //-----------------------------------------------------------------------------------------------------------------------------------
         footPosition = foot.transform.position;
         EffectManage.Instance.PlayEffect("Player_BigStep", footPosition);
     }
@@ -385,6 +388,11 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
+
+        //아이템 슬롯 활성화-----------------------------------------------------------------------------------------------------------------
+        BtnOff.Instance.EnableUIInteraction();
+        //-----------------------------------------------------------------------------------------------------------------------------------
+        
         AudioManager.instance.PlaySfx(AudioManager.Sfx.Player_Step);
         footPosition = foot.transform.position;
         EffectManage.Instance.PlayEffect("Player_Step", footPosition);

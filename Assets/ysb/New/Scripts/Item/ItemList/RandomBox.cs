@@ -12,6 +12,7 @@ public class RandomBox : Item
     public override void SelectItem()
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
+        AnotherBtnActive.Instance.DisableUIInteraction();
         manager_Item.SelectItem_Box(this);
         //UseItem();
     }

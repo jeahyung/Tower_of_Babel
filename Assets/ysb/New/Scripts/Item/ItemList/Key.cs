@@ -12,7 +12,7 @@ public class Key : Item
     public override void SelectItem()
     {
         if(manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
-
+        AnotherBtnActive.Instance.DisableUIInteraction();
         range = 10;
         manager_Item.SelectItem_Key(this);
     }

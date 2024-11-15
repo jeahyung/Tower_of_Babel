@@ -73206,6 +73206,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 598f77cb9b8275c47b7b492a940d53c6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  uiElements:
+  - {fileID: 1528677974468597760}
+  - {fileID: 1528677974468597761}
+  - {fileID: 1528677974468597762}
+  - {fileID: 1528677974468597763}
 --- !u!114 &1022878747
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -75818,6 +75823,7 @@ MonoBehaviour:
   rightRange: 2
   canAct: 1
   isRope: 0
+  pre: {fileID: 0}
   spear: {fileID: 0}
   rotX: 5
   rotY: 4
@@ -150417,3 +150423,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c424bb30d84072b4e94c5337ae323329, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1528677974468597760 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1819096834, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
+  m_PrefabInstance: {fileID: 1528677974468597757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1528677974468597761 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1176906552, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
+  m_PrefabInstance: {fileID: 1528677974468597757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1528677974468597762 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1448870299, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
+  m_PrefabInstance: {fileID: 1528677974468597757}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &1528677974468597763 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 58025300, guid: fd828c1ecf3d91e45a48c93fd9fd2d59, type: 3}
+  m_PrefabInstance: {fileID: 1528677974468597757}
+  m_PrefabAsset: {fileID: 0}

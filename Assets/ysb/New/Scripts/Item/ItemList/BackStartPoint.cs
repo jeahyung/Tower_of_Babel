@@ -12,6 +12,7 @@ public class BackStartPoint : Item
     {
         if (manager_Item == null) { manager_Item = FindObjectOfType<ItemManager>(); }
         manager_Item.SetPlayerPos_UI(this, 0);
+        AnotherBtnActive.Instance.DisableUIInteraction();
         //UseItem();
     }
     public override bool UseItem()
