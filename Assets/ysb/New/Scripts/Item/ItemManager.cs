@@ -99,7 +99,10 @@ public class ItemManager : MonoBehaviour
         mob = StageManager.instance.mob;
         selectedItem = item;
         mob.isUseItem = true;
-        map.SelectItem(item);
+        //map.SelectItem(item);
+        //==========버그 막기
+        map.UseBox(true);
+        //============
         ShowRopeUI();
 
         //map.UseItem_Rope();
@@ -111,7 +114,10 @@ public class ItemManager : MonoBehaviour
         mob = StageManager.instance.mob;
         selectedItem = item;
         mob.isUseItem = true;
-        map.SelectItem(item);
+        //map.SelectItem(item);
+        //==========버그 막기
+        map.UseBox(true);
+        //============
         BoxUI.SetActive(true);
         //BoxUI.GetComponentInChildren<UI_Clock>().SetRandBoxText();
     }
@@ -147,6 +153,7 @@ public class ItemManager : MonoBehaviour
         selectedItem = null;
         mob.isUseItem = false;
         CancelKey();
+        map.UseBox(false);
         //ClockUI[0].SetActive(false);
         //ClockUI[1].SetActive(false);
         //RopeUI.SetActive(false);
@@ -191,6 +198,9 @@ public class ItemManager : MonoBehaviour
         mob = StageManager.instance.mob;
         selectedItem = item;
         mob.isUseItem = true;
+        //==========버그 막기
+        map.UseBox(true);
+        //============
         ClockUI[i].SetActive(true);
     }
     

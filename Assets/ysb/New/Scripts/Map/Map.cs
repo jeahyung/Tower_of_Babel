@@ -45,6 +45,7 @@ public class Map : MonoBehaviour
     private MobManager mob = null;
 
     bool isKey = false;
+    bool isBox = false;
 
     private void Awake()
     {
@@ -169,14 +170,16 @@ public class Map : MonoBehaviour
             else { tile.ShowMobArea(); }
         }
     }
-    public void ShowPlayerTile()
+    public bool ShowPlayerTile()
     {
+        if (isBox) { return false; }
         HideArea();
         isKey = false;
         useItem = false;
         manager_Item.CancelItem();
         FindTileInRange_Four(nowTile, 1);
         ShowArea(moveArea);
+        return true;
     }
     #endregion
 
@@ -579,6 +582,12 @@ public class Map : MonoBehaviour
         ShowArea(moveArea);
     }
 
+    public void UseBox(bool val)
+    {
+        if(val == true) { HideArea(); }
+        else { FindTileInRange_Four(nowTile, player.moveRange); }
+        isBox = val;
+    }
     public void UseItem_Rope()
     {
         mob = StageManager.instance.mob;
@@ -599,6 +608,7 @@ public class Map : MonoBehaviour
         moveArea.Add(backTiles[1]);
         ShowArea(moveArea);
     }
+
 
     public Rook UseKey()
     {

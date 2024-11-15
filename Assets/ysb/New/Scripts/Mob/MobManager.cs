@@ -124,8 +124,9 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
             }
             if (isKey || isKey2 || isUseItem)
             {
+                bool isCancel = map.ShowPlayerTile();
+                if (isCancel == false) { return; }
                 isKey = isKey2 = isUseItem = false;
-                map.ShowPlayerTile();
                 //AnotherBtnActive.Instance.EnableUIInteraction();
                 //BtnOff.Instance.EnableUIInteraction();
             }
