@@ -28,6 +28,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
 
     public bool isUseItem = false;
     public bool isDia = false;
+
+    public Tile CheckTile = null;
     private void Start()
     {
         if(map == null) { map = FindObjectOfType<Map>(); }
@@ -81,7 +83,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
 
                     if((isKey2 || isKey) && (hit.collider.GetComponent<MobMovement>() != null))
                     {
-                        
+                        CheckTile = mob.ShowTile();
+                        if (CheckTile != null) { CheckTile.tileType = TileType.possible; CheckTile = null; }
                         mob.DestoryMob();
                         manager_Patrol.RemoveMob(hit.collider.GetComponent<MobMovement>());
                         HideMobRange(clickMob);
@@ -94,7 +97,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
 
                     if ((isKey2 || isKey) && (hit.collider.GetComponent<MonsterAI>() != null))
                     {
-
+                        CheckTile = mob.ShowTile();
+                        if (CheckTile != null) { CheckTile.tileType = TileType.possible; CheckTile = null; }
                         mob.DestoryMob();
                         manager_Bishop.RemoveMob(hit.collider.GetComponent<MonsterAI>());
                         HideMobRange(clickMob);
@@ -108,7 +112,8 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
 
                     if (isKey2 && hit.collider.GetComponent<TraceMonsterMovement>() != null)
                     {
-                        
+                        CheckTile = mob.ShowTile();
+                        if (CheckTile != null) { CheckTile.tileType = TileType.possible; CheckTile = null; }
                         mob.DestoryMob();
                         manager_Chase.RemoveMob(hit.collider.GetComponent<TraceMonsterMovement>());
                         HideMobRange(clickMob);
