@@ -721,7 +721,9 @@ public class Map : MonoBehaviour
         HideArea();
         FindTileInRange_Four(nowTile, player.moveRange);
         manager_Action.ActCancel();
+
         useAction = false;
+        BtnOff.Instance.EnableUIInteraction();
     }
 
     public void BonusActOfKing()
