@@ -90,9 +90,6 @@ public class StartPoint : MonoBehaviour
         action.ActActionBtn(true);
 
         cam2.isMove = true;
-
-        BtnOff.Instance.EnableUIInteraction();
-        AnotherBtnActive.Instance.EnableUIInteraction();
         //turn.StartGame();   //게임 시작
 
         //interactMessage.SetActive(false);

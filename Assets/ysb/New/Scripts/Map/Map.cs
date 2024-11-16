@@ -89,7 +89,11 @@ public class Map : MonoBehaviour
     {
         ResetTile();
     }
-
+    public bool CheckStartTile()
+    {
+        if(nowTile == tiles[0, 0]) { return true; }
+        return false;
+    }
     private void Update()
     {
         if(StageManager.instance.isPlaying == false) { return; }    //게임 시작 여부
@@ -429,8 +433,7 @@ public class Map : MonoBehaviour
         }
         else
         {
-            if (moveArea.Contains(clickTile) == false) { return; }
-            
+            if (moveArea.Contains(clickTile) == false) { return; }            
             MovePlayerPosition();
             Debug.Log("ddd^^^^^^^^^^^^^^^dd");
         }
@@ -438,7 +441,6 @@ public class Map : MonoBehaviour
         {
             if(useItem == true) { useItem = false; }
             HideArea();
-
             //MovePlayerPosition();
             Debug.Log("ddd^^^^^^^^^^^^^^^");
 
