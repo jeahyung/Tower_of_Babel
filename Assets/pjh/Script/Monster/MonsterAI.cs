@@ -457,7 +457,7 @@ public class MonsterAI : MonoBehaviour, Mob
 
         if (--count > 0)
         {
-            arr.Clear();
+            //arr.Clear();
             directions.Clear();
             Act(); // 다음 행동
             yield break;
@@ -468,6 +468,7 @@ public class MonsterAI : MonoBehaviour, Mob
         isDone = true;
         arr.Clear();
         directions.Clear();
+        //CheckRange();
         bishopManager.CheckMobAction();
     }
 
@@ -485,7 +486,8 @@ public class MonsterAI : MonoBehaviour, Mob
     }
 
     public void Act()
-    {        
+    {
+        arr.Clear();
 
         if (isRope) 
         {
@@ -533,8 +535,8 @@ public class MonsterAI : MonoBehaviour, Mob
     }
     public void ArrSet(Tile startTiles)
     {
-        Vector2Int nextCoord;
-        Tile nextTile = null;
+        //Vector2Int nextCoord;
+        //Tile nextTile = null;
 
 
         foreach (Tile tile in allTiles)
@@ -659,7 +661,24 @@ public class MonsterAI : MonoBehaviour, Mob
 
     public List<Tile> ShowRange()
     {
-        return range;
+        if(currentState == State.Patrol)
+        {
+            return range;
+        }
+        else if(currentState == State.Chase)
+        {
+            ArrSet(curTile);
+            return arr;
+        }
+        else if(currentState == State.Return)
+        {
+            ArrSet(curTile);
+            return arr;
+        }
+        else
+        {
+            return range;
+        }
     }
 
     public void SetStartPoint(Vector2Int sPoint, Tile curTile)
