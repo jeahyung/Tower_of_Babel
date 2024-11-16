@@ -5,6 +5,14 @@ using UnityEngine;
 public class CreatedObject : MonoBehaviour
 {
     protected int hp = 1;
+
+    private Map map;
+
+    private void Start()
+    {
+        map = FindObjectOfType<Map>();
+    }
+
     public virtual bool DestroyObj(int i = 1)
     {
         Debug.Log("using Dia!!!!!!!!!!!!!!!!!!!!!!!!!!!######");
@@ -15,6 +23,7 @@ public class CreatedObject : MonoBehaviour
             if(this.gameObject != null)
             {
                 this.gameObject.SetActive(false);
+               map.ChageTempTile();
                 return true;
             }
 

@@ -64,7 +64,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e8e8b774d2e34ab429a0dd08862c43ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemImg: {fileID: 21300000, guid: 0181047c232ce2e479b26d0a9f44f4ed, type: 3}
+  itemImg: {fileID: 21300000, guid: 63a0f559eed9b8e4c8e3402093db505c, type: 3}
   ex: "\uACE0\uC815\uD615, \uC21C\uCC30\uD615 \uBAAC\uC2A4\uD130\uB97C \uD30C\uAD34\uD558\uB294
     \uC544\uC774\uD15C."
   id: 0
@@ -201,7 +201,7 @@ PrefabInstance:
     - target: {fileID: -540307495832851221, guid: 9ea67bb7c594b2f439357ff0b5cbda5a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 115d8443c767d124da1d36e662e5eb94, type: 2}
+      objectReference: {fileID: 2100000, guid: 1d878919ca6480a46898fd745e16ada8, type: 2}
     - target: {fileID: 919132149155446097, guid: 9ea67bb7c594b2f439357ff0b5cbda5a, type: 3}
       propertyPath: m_Name
       value: key_low
@@ -209,7 +209,7 @@ PrefabInstance:
     - target: {fileID: 8835409689826365435, guid: 9ea67bb7c594b2f439357ff0b5cbda5a, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
-      objectReference: {fileID: 2100000, guid: 115d8443c767d124da1d36e662e5eb94, type: 2}
+      objectReference: {fileID: 2100000, guid: 1d878919ca6480a46898fd745e16ada8, type: 2}
     m_RemovedComponents: []
     m_AddedGameObjects: []
   m_SourcePrefab: {fileID: 100100000, guid: 9ea67bb7c594b2f439357ff0b5cbda5a, type: 3}

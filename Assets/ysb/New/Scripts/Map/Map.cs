@@ -639,13 +639,28 @@ public class Map : MonoBehaviour
         obj.transform.position = new Vector3(pos.x, yPos, pos.z);
 
         temp = playerTile;
+        temp.tileType = TileType.impossible;
         playerTile = clickTile;
+       
         TempTile = playerTile;
         //clickTile.ChangeTileState(TileType.impossible);
         //player.UseEnergy(); //에너지 사용
 
         manager_Turn.EndPlayerTurn();
     }
+
+    public void ChageTempTile()
+    {
+        if(temp != null)
+        {
+            temp.tileType = TileType.possible;
+        }
+        else
+        {
+            return;
+        }
+    }
+
 
     //플레이어 순간이동
     public bool SetPlayerPosition(int i)

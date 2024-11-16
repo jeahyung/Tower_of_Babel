@@ -254,6 +254,7 @@ public class ItemManager : MonoBehaviour
         {
             //if(obj.gameObject == null) { return; }
             if(obj.DestroyObj() == true) { tempList.Add(obj); }
+
         }
         for(int i = 0; i < tempList.Count;++i)
         {

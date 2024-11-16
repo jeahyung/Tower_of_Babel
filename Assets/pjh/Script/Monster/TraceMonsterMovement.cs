@@ -149,6 +149,7 @@ public class TraceMonsterMovement : MonoBehaviour, Mob
             map.RestPlayerTile();
             other.gameObject.SetActive(false);
             other.GetComponent<CreatedObject>()?.DestroyObj();
+           // map.ChageTempTile();
 
 
             Debug.Log("Dia Find");
