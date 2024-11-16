@@ -126,8 +126,6 @@ public class ItemManager : MonoBehaviour
 
     public void UseItem()
     {
-        AnotherBtnActive.Instance.EnableUIInteraction();
-        BtnOff.Instance.EnableUIInteraction();
         mob = StageManager.instance.mob;
         if (selectedItem != null && selectedItem.UseItem() == false)
         {
@@ -140,6 +138,8 @@ public class ItemManager : MonoBehaviour
         ItemInventory.instance.RemoveItem(selectedItem);
         selectedItem = null;
         map.useItem = false;
+        AnotherBtnActive.Instance.EnableUIInteraction();
+        BtnOff.Instance.EnableUIInteraction();
         //mob.isKey = false;
         //mob.isUseItem = false;
     }
@@ -153,6 +153,8 @@ public class ItemManager : MonoBehaviour
         Debug.Log("Cancel!!!!!!!!!!!");
         //clock.Cancle();
         selectedItem = null;
+        map.useItem = false;
+        map.isDia = false;
         mob.isUseItem = false;
         mob.isDia = false;
         CancelKey();
