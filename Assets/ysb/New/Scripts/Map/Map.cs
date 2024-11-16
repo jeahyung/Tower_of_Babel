@@ -45,6 +45,7 @@ public class Map : MonoBehaviour
     private MobManager mob = null;
 
     bool isKey = false;
+   public  bool isDia = false;
 
     private void Awake()
     {
@@ -122,7 +123,7 @@ public class Map : MonoBehaviour
                 }
             }
 
-            if (clickTile != null || isKey)
+            if (clickTile != null || isKey || isDia)
             {
                 CheckClickTileInArea();
             }
@@ -171,6 +172,7 @@ public class Map : MonoBehaviour
     }
     public void ShowPlayerTile()
     {
+        if (isDia) { return; }
         HideArea();
         isKey = false;
         useItem = false;
@@ -391,8 +393,8 @@ public class Map : MonoBehaviour
             Debug.Log("Cancel");
             if (moveArea.Contains(clickTile) == false)
             {
-                manager_Item.CancelItem();
                 HideArea();
+                manager_Item.CancelItem();
                 FindTileInRange_Four(nowTile, player.moveRange);
                 useItem = false;
 

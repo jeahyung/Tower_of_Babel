@@ -27,7 +27,7 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
     public bool isKey2 = false;
 
     public bool isUseItem = false;
-
+    public bool isDia = false;
     private void Start()
     {
         if(map == null) { map = FindObjectOfType<Map>(); }
@@ -118,11 +118,15 @@ public class MobManager : MonoBehaviour//Singleton<MobManager>
                         manager_Turn.gameObject.SendMessage("UseItem");
                         return;
                     }
-                    ShowMobRange(mob);
-                    return;
+
+                    if(!isDia)
+                    {
+                        ShowMobRange(mob);
+                        return;
+                    }
                 }
             }
-            if (isKey || isKey2)
+            if (isKey || isKey2 || isDia)
             {
                 isKey = isKey2 = isUseItem = false;
                 map.ShowPlayerTile();

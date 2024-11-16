@@ -44,57 +44,6 @@ public class UI_Result : MonoBehaviour
         panel.SetActive(false);
     }
 
-    //private void SetText()
-    //{
-    //    textContent.Clear();
-
-    //    if (score[0] != 0)
-    //    {
-    //        textContent.Add("스테이지 클리어 : " + score[0].ToString());
-    //    }
-    //    if (score[1] != 0)
-    //    {
-    //        textContent.Add("제한 턴 수 내로 클리어 : " + score[1].ToString());
-    //    }
-    //    if (score[2] != 0)
-    //    {
-    //        textContent.Add("잔여 특수 행동 횟수 : " + score[2].ToString());
-    //    }
-    //    if (score[3] != 0)
-    //    {
-    //        textContent.Add("아이템 미사용 클리어 : " + score[3].ToString());
-    //    }
-
-
-    //    //textContent.Add("스테이지 클리어 : ");
-    //    //textContent.Add("제한 턴 수 내로 클리어 : ");
-    //    //textContent.Add("잔여 특수 행동 횟수 : ");
-
-    //    //for(int i = 0; i < score.Count; ++i)
-    //    //{
-    //    //    textContent[i] += score[i].ToString();
-    //    //}
-    //}
-
-
-    //public void ShowResult(int sc, int cur, int target, List<int> scoreList)
-    //{
-    //    score.Clear();
-
-    //    score.AddRange(scoreList);
-    //    SetText();  //문구 설정
-
-    //    sCount = sc;
-    //    sIndex = 0;
-
-    //    curScore = cur;
-    //    totalScore = target;
-
-    //    back.SetActive(true);
-    //    StartCoroutine(Result());
-    //}
-
-
     private void SetText()
     {
         textContent.Clear();
@@ -182,14 +131,12 @@ public class UI_Result : MonoBehaviour
     public void HidePanel()
     {
         if(isClickOk == false) { return; }
-        back.SetActive(false);
-        panel.SetActive(false);
-
         for(int i = 0; i < sCount; ++i)
         {
             sText[i].HideText();
         }
-
+        back.SetActive(false);
+        panel.SetActive(false);
         StageManager.instance.EndGame();
     }
 }

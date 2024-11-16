@@ -17,7 +17,6 @@ public class ClearScore : MonoBehaviour
         //score = GetComponent<TMP_Text>();
         //score.enabled = false;
     }
-
     public void HideText()
     {
         score.text = "";
@@ -31,6 +30,7 @@ public class ClearScore : MonoBehaviour
     public void SetText(string t)
     {
         if(score == null) { score = GetComponent<TMP_Text>(); }
+        rectT.anchoredPosition = pos;
         score.text = "";
         score.enabled = true;
         score.text = t;
@@ -43,4 +43,10 @@ public class ClearScore : MonoBehaviour
         rectT.DOAnchorPosY(height, 0.5f);
         //transform.DOMoveY(height, 0.5f);
     }    
+
+    public void InitText()
+    {
+        score.text = "";
+        rectT.anchoredPosition = pos;
+    }
 }

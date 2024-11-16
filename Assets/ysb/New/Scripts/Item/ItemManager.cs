@@ -56,7 +56,9 @@ public class ItemManager : MonoBehaviour
         if (map.canControl == false) { return; }
         mob = StageManager.instance.mob;
         selectedItem = item;
+        mob.isDia = true;
         mob.isUseItem = true;
+        map.isDia = true;
         map.SelectItem(item);
         map.UseItem_Eight(range);
     }
@@ -152,6 +154,7 @@ public class ItemManager : MonoBehaviour
         //clock.Cancle();
         selectedItem = null;
         mob.isUseItem = false;
+        mob.isDia = false;
         CancelKey();
         //ClockUI[0].SetActive(false);
         //ClockUI[1].SetActive(false);
