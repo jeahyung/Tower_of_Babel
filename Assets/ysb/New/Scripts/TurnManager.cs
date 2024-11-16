@@ -131,8 +131,11 @@ public class TurnManager : MonoBehaviour
 
             manager_Action.SetActionBtn(true);  //액션 버튼 활성화
             manager_map.StartPlayerTurn(player.moveRange);
+            if(manager_map.CheckStartTile() == false)
+            {
+                BtnOff.Instance.EnableUIInteraction();
+            }
             AnotherBtnActive.Instance.EnableUIInteraction();
-            BtnOff.Instance.EnableUIInteraction();
         }
         Debug.Log("player turn");
     }
