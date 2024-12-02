@@ -8,6 +8,7 @@ public class TurnManager : MonoBehaviour
     private PlayerMovement player;
     private ItemManager manager_Item;
     private SAManager manager_Action;
+    private TileDown downTile;
 
     [SerializeField] private float delayTime = 1f;
     [SerializeField]private UI_Turn ui_turn;
@@ -32,7 +33,7 @@ public class TurnManager : MonoBehaviour
         manager_map = FindObjectOfType<Map>();
         player = GameObject.FindWithTag("Player").GetComponent<PlayerMovement>();
         manager_Item = player.GetComponent<ItemManager>();
-
+        downTile = FindObjectOfType<TileDown>();
         //manager_Mob = FindObjectOfType<MobManager>();
         manager_Action = FindObjectOfType<SAManager>();
 
@@ -142,6 +143,8 @@ public class TurnManager : MonoBehaviour
     {
         isPlayerTurn = false;
         isDone = true;
+        downTile.DownTile();
+
         if (UpgradeManager.instance.getBonusTurn() > 0)
         {
             UpgradeManager.instance.getBonusTurn(-1);

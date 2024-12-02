@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ScoreUI : MonoBehaviour
 {
-    public TMP_Text sumScore;
+    public TMP_Text sumScore;    //랭킹 등록시 가져올 점수
 
     public int hIndex = -1;
     public TMP_Text[] h_Text;   //점수 내역

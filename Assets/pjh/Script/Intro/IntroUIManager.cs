@@ -11,6 +11,12 @@ public class IntroUIManager : MonoBehaviour
     public GameObject uiObject;
     public CanvasGroup uiCanvasGroup;
     public float fadeDuration = 1.0f; // 페이드 인 시간
+    private DB_Manager manager;
+
+    private void Start()
+    {
+        manager = FindObjectOfType<DB_Manager>();
+    }
 
 
     public static IntroUIManager Instance
@@ -37,6 +43,7 @@ public class IntroUIManager : MonoBehaviour
                 //   uiCanvasGroup.interactable = false;
                 // uiCanvasGroup.blocksRaycasts = false;
                 uiObject.SetActive(true);
+          
             })
             .OnComplete(() =>
             {
@@ -44,6 +51,8 @@ public class IntroUIManager : MonoBehaviour
                 uiCanvasGroup.interactable = true;
                 uiCanvasGroup.blocksRaycasts = true;
             });
+        manager.LoadingData();
+      //  Debug.Log("데이터 로드 횟수");
     }
 
     public void HideUI()

@@ -22,7 +22,8 @@ public class ChaseMobManager : MonoBehaviour
     {
         for (int i = 0; i < knightList.Count; ++i)
         {
-            knightList[i].InitMob();
+            //knightList[i].InitMob();
+            //추가수정 필수
         }
     }
 
@@ -50,6 +51,10 @@ public class ChaseMobManager : MonoBehaviour
         }
         else
         {
+            if (knightList[mi].burnedTile != null)
+            {
+                knightList[mi].BurnOff();
+            }
             knightList[mi].Act();
         }
     }
@@ -61,6 +66,10 @@ public class ChaseMobManager : MonoBehaviour
             return;
         }
         mi = 0;
+        if (knightList[mi].burnedTile != null) 
+        {
+            knightList[mi].BurnOff();
+        }
         knightList[mi].Act();
     }
 
